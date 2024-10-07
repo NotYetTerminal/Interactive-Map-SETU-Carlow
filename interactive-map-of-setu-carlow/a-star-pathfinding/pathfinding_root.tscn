@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqqfa42dwayvk"]
+
+[ext_resource type="Script" path="res://a-star-pathfinding/pathfinding_root.gd" id="1_c12ye"]
+[ext_resource type="PackedScene" uid="uid://ca3jxbsskiaei" path="res://a-star-pathfinding/waypoint.tscn" id="1_q1hga"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_f0utd"]
+
+[node name="PathfindingRoot" type="Node3D" node_paths=PackedStringArray("starting_waypoint", "end_waypoint")]
+script = ExtResource("1_c12ye")
+starting_waypoint = NodePath("Waypoint2")
+end_waypoint = NodePath("Waypoint10")
+
+[node name="Waypoint" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+neighour_waypoints_list = [NodePath("../Waypoint2")]
+
+[node name="Waypoint2" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.88324, -2.38419e-07, 1.71579)
+neighour_waypoints_list = [NodePath("../Waypoint8"), NodePath("../Waypoint3"), NodePath("../Waypoint4")]
+
+[node name="Waypoint3" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.883, 0, 6.634)
+neighour_waypoints_list = [NodePath("../Waypoint2"), NodePath("../Waypoint6")]
+
+[node name="Waypoint4" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.324, 0, 4.721)
+neighour_waypoints_list = [NodePath("../Waypoint2"), NodePath("../Waypoint9")]
+
+[node name="Waypoint5" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.053, 0, 10.316)
+neighour_waypoints_list = [NodePath("../Waypoint9")]
+
+[node name="Waypoint6" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.658, 0, 8.271)
+neighour_waypoints_list = [NodePath("../Waypoint3"), NodePath("../Waypoint8"), NodePath("../Waypoint11"), NodePath("../Waypoint7")]
+
+[node name="Waypoint7" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.655, 0, 13.204)
+neighour_waypoints_list = [NodePath("../Waypoint6")]
+
+[node name="Waypoint8" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.827, 0, 4.695)
+neighour_waypoints_list = [NodePath("../Waypoint2"), NodePath("../Waypoint6")]
+
+[node name="Waypoint9" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.988, 0, 9.459)
+neighour_waypoints_list = [NodePath("../Waypoint4"), NodePath("../Waypoint5")]
+
+[node name="Waypoint10" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.076, 0, 14.945)
+neighour_waypoints_list = [NodePath("../Waypoint11")]
+
+[node name="Waypoint11" parent="." node_paths=PackedStringArray("neighour_waypoints_list") instance=ExtResource("1_q1hga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.773, 0, 15.814)
+neighour_waypoints_list = [NodePath("../Waypoint6"), NodePath("../Waypoint10")]
+
+[node name="Connections" type="Node" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(3.73265, 0, -0.0902596, 0, 0.5, 0, 0.68507, 0, 0.491786, 3.94374, 0, 1.39155)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(6.41121, 0, -0.206552, 0, 0.5, 0, 2.90826, 0, 0.455342, 9.05034, 0, 3.13348)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(0.00823781, 0, -0.499999, 0, 0.5, 0, 4.71999, 0, 0.000872649, 5.95259, 0, 4.17746)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(1.06159, 0, 0.47712, 0, 0.5, 0, -3.38755, 0, 0.14952, 2.22827, 0, 6.42534)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(4.43252, 0, 0.17183, 0, 0.5, 0, -1.62207, 0, 0.469547, 3.88049, 0, 7.39647)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(0.210529, 0, -0.499805, 0, 0.5, 0, 7.53706, 0, 0.0139608, 1.72402, 0, 11.856)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(3.18583, 0, -0.425863, 0, 0.5, 0, 5.1785, 0, 0.261993, 3.23606, 0, 10.7136)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(7.12697, 0, 0.0400995, 0, 0.5, 0, -0.573422, 0, 0.498389, 5.48733, 0, 15.3841)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(-0.660621, 0, 0.495608, 0, 0.5, 0, -4.95112, 0, -0.0661282, 12.77, 0, 7.09308)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(3.84483, 0, 0.100539, 0, 0.5, 0, -0.789231, 0, 0.489788, 10.9263, 0, 9.96583)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Connections"]
+transform = Transform3D(-2.84378, 0, -0.347956, 0, 0.5, 0, 2.75581, 0, -0.359063, 4.23751, 0, 3.19129)
+mesh = SubResource("BoxMesh_f0utd")
+skeleton = NodePath("../..")
