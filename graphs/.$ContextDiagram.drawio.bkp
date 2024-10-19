@@ -1,0 +1,93 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram name="Page-1" id="FwhMwR3JGUcCWcq2U5jM">
+    <mxGraphModel dx="1404" dy="878" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-1" value="Interactive Map of SETU Carlow System" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="410" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-2" value="Students" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="120" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-5" value="Android API" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="600" y="420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-6" value="" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="JSFvfQoyIlQEfX68pwr8-1" target="JSFvfQoyIlQEfX68pwr8-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="450" as="sourcePoint" />
+            <mxPoint x="510" y="370" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="510" y="370" />
+              <mxPoint x="620" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-7" value="Request location" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JSFvfQoyIlQEfX68pwr8-6" vertex="1" connectable="0">
+          <mxGeometry x="-0.137" y="-2" relative="1" as="geometry">
+            <mxPoint x="26" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-8" value="" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="JSFvfQoyIlQEfX68pwr8-5" target="JSFvfQoyIlQEfX68pwr8-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="595" as="sourcePoint" />
+            <mxPoint x="590" y="545" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="640" y="530" />
+              <mxPoint x="500" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-9" value="Send location" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JSFvfQoyIlQEfX68pwr8-8" vertex="1" connectable="0">
+          <mxGeometry x="0.1671" y="-5" relative="1" as="geometry">
+            <mxPoint x="21" y="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-10" value="Admin" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="270" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-11" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="JSFvfQoyIlQEfX68pwr8-10" target="JSFvfQoyIlQEfX68pwr8-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="480" as="sourcePoint" />
+            <mxPoint x="440" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-12" value="Update map" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JSFvfQoyIlQEfX68pwr8-11" vertex="1" connectable="0">
+          <mxGeometry x="-0.3854" relative="1" as="geometry">
+            <mxPoint x="56" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-13" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JSFvfQoyIlQEfX68pwr8-2" target="JSFvfQoyIlQEfX68pwr8-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="480" as="sourcePoint" />
+            <mxPoint x="440" y="430" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="190" y="480" />
+              <mxPoint x="260" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-14" value="Search room" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JSFvfQoyIlQEfX68pwr8-13" vertex="1" connectable="0">
+          <mxGeometry x="-0.1651" y="1" relative="1" as="geometry">
+            <mxPoint x="13" y="-23" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-15" value="" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="JSFvfQoyIlQEfX68pwr8-1" target="JSFvfQoyIlQEfX68pwr8-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="480" as="sourcePoint" />
+            <mxPoint x="440" y="430" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="410" y="540" />
+              <mxPoint x="330" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JSFvfQoyIlQEfX68pwr8-16" value="Map route" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JSFvfQoyIlQEfX68pwr8-15" vertex="1" connectable="0">
+          <mxGeometry x="-0.2325" y="3" relative="1" as="geometry">
+            <mxPoint x="1" y="14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
