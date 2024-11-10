@@ -1,6 +1,7 @@
 # Script for waypoint for A* pathfinding
 # Author: Gábor Major
-# Date modified: 2024-10-13
+# Date modified: 2024-11-10
+
 extends Node3D
 class_name Waypoint
 
@@ -26,10 +27,19 @@ func _ready() -> void:
 
 
 func set_colour(new_colour: Color) -> void:
+	if from_waypoint == null && new_colour == Color.MAGENTA:
+		new_colour = Color.MAGENTA
+	
 	var material: StandardMaterial3D = StandardMaterial3D.new()
 	material.albedo_color = new_colour
-	var mesh_instance: MeshInstance3D = get_child(0)
-	mesh_instance.set_surface_override_material(0, material)
+	if new_colour == Color.BLUE:
+		var arrow_mesh_instance: MeshInstance3D = get_node("Arrow").get_child(0)
+		arrow_mesh_instance.set_surface_override_material(0, material)
+		arrow_mesh_instance = get_node("Arrow").get_child(1)
+		arrow_mesh_instance.set_surface_override_material(0, material)
+	else:
+		var mesh_instance: MeshInstance3D = get_child(0)
+		mesh_instance.set_surface_override_material(0, material)
 
 
 func rotate_arrow(towards_node: Waypoint) -> void:
@@ -41,4 +51,7 @@ func rotate_arrow(towards_node: Waypoint) -> void:
 func found() -> void:
 	set_colour(Color.BLUE)
 	await get_tree().create_timer(1).timeout
-	await from_waypoint.found()
+	if from_waypoint != null:
+		await from_waypoint.found()
+	else:
+		print("Finished")

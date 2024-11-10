@@ -1,13 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://ca3jxbsskiaei"]
+[gd_scene load_steps=7 format=3 uid="uid://ca3jxbsskiaei"]
 
 [ext_resource type="Script" path="res://a-star-pathfinding/waypoint.gd" id="1_dapji"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_kajay"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jx5o3"]
+albedo_color = Color(0.533333, 1, 1, 1)
+
 [sub_resource type="PrismMesh" id="PrismMesh_5x5cw"]
+material = SubResource("StandardMaterial3D_jx5o3")
 size = Vector3(0.5, 1, 0.2)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai5mm"]
+albedo_color = Color(0.51, 0.983667, 1, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_rm75n"]
+material = SubResource("StandardMaterial3D_ai5mm")
 size = Vector3(0.2, 0.2, 1)
 
 [node name="Waypoint" type="Node3D"]
