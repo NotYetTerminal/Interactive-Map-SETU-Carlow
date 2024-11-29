@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv55dpn0yopgu"]
+
+[ext_resource type="Script" path="res://camera/camera_2d.gd" id="1_6pl2a"]
+[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="2_d1x5s"]
+
+[node name="SubViewportContainer" type="SubViewportContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 472.0
+offset_bottom = 472.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="SubViewport"]
+script = ExtResource("1_6pl2a")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport"]
+texture = ExtResource("2_d1x5s")
