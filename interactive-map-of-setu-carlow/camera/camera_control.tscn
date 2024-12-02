@@ -1,17 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://cw3ckcw5hitqd"]
+[gd_scene load_steps=3 format=3 uid="uid://cw3ckcw5hitqd"]
 
-[ext_resource type="Script" path="res://camera/camera_2d.gd" id="1_c3ee0"]
-[ext_resource type="Script" path="res://firebase/firebase_connector.gd" id="1_gja6r"]
-[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="2_a6346"]
+[ext_resource type="Script" path="res://camera/camera_2d.gd" id="1_x54km"]
+[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="2_lkuxl"]
 
-[node name="Control" type="Control"]
+[node name="CameraControl" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_gja6r")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 1
@@ -32,12 +30,12 @@ visibility_layer = 3
 position = Vector2(640, 360)
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/Center"]
-script = ExtResource("1_c3ee0")
+script = ExtResource("1_x54km")
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/Center"]
-visibility_layer = 2
-texture = ExtResource("2_a6346")
+texture = ExtResource("2_lkuxl")
 
 [node name="Sprite2D2" type="Sprite2D" parent="SubViewportContainer/SubViewport/Center"]
+visibility_layer = 2
 position = Vector2(100, 0)
-texture = ExtResource("2_a6346")
+texture = ExtResource("2_lkuxl")

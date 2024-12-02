@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c632xxyai4jm5"]
+
+[ext_resource type="Script" path="res://firebase/firebase_connector.gd" id="1_jrn7t"]
+[ext_resource type="PackedScene" uid="uid://cw3ckcw5hitqd" path="res://camera/camera_control.tscn" id="2_moq8d"]
+
+[node name="Root" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FirebaseConnector" type="Node" parent="."]
+script = ExtResource("1_jrn7t")
+
+[node name="CameraControl" parent="." instance=ExtResource("2_moq8d")]
+layout_mode = 1
