@@ -9,7 +9,7 @@ var building_letter: String
 @export var rooms: Node
 
 var waypoints_updated_time: int
-var rooms_updated_times: int
+var rooms_updated_time: int
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> void:
@@ -25,7 +25,7 @@ func save_details(id_in: String, details: Dictionary) -> void:
 	@warning_ignore("unsafe_call_argument")
 	waypoints_updated_time = int(details["waypoints_updated_time"]["integerValue"])
 	@warning_ignore("unsafe_call_argument")
-	rooms_updated_times = int(details["rooms_updated_times"]["integerValue"])
+	rooms_updated_time = int(details["rooms_updated_time"]["integerValue"])
 
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
@@ -42,9 +42,9 @@ func update_details(details: Dictionary) -> void:
 
 # Used by children to update time
 func update_rooms_time(new_time: int) -> void:
-	rooms_updated_times = new_time
+	rooms_updated_time = new_time
 	var base_map: BaseMap = get_parent()
-	Globals.offline_data[base_map.id]['Buildings'][id]['rooms_updated_times'] = rooms_updated_times
+	Globals.offline_data[base_map.id]['Buildings'][id]['rooms_updated_time'] = rooms_updated_time
 
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time

@@ -20,11 +20,11 @@ script = ExtResource("1_gm02f")
 
 [node name="BaseMap" parent="." instance=ExtResource("3_l2cfj")]
 
-[node name="Building" parent="." instance=ExtResource("4_6011i")]
+[node name="Building" parent="BaseMap" instance=ExtResource("4_6011i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 
-[node name="Room" parent="." instance=ExtResource("5_p81yj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+[node name="Room" parent="BaseMap/Building" instance=ExtResource("5_p81yj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 
-[node name="Waypoint" parent="." instance=ExtResource("3_5bokq")]
+[node name="Waypoint" parent="BaseMap" instance=ExtResource("3_5bokq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)

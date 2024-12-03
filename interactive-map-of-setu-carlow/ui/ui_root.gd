@@ -70,7 +70,7 @@ func show_building_details(selected_structure: Building) -> void:
 	$VBoxContainer2/BuildingVBoxContainer/DescriptionTextEdit.text = selected_structure.description
 	$VBoxContainer2/BuildingVBoxContainer/BuildingLetterTextEdit.text = selected_structure.building_letter
 	$VBoxContainer2/BuildingVBoxContainer/WaypointsUpdatedTimeLabel.text = 'Waypoints Updated Time: ' + str(selected_structure.waypoints_updated_time)
-	$VBoxContainer2/BuildingVBoxContainer/RoomsUpdatedTimeLabel.text = 'Rooms Updated Time: ' + str(selected_structure.rooms_updated_times)
+	$VBoxContainer2/BuildingVBoxContainer/RoomsUpdatedTimeLabel.text = 'Rooms Updated Time: ' + str(selected_structure.rooms_updated_time)
 
 func show_room_details(selected_structure: Room) -> void:
 	$VBoxContainer2/RoomVBoxContainer/FloorNumberTextEdit.text = str(selected_structure.floor_number)
