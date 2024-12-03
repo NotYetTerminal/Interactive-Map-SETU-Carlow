@@ -1,0 +1,220 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8wl51gue5ps3"]
+
+[ext_resource type="Script" path="res://ui/ui_root.gd" id="1_sfv4s"]
+
+[node name="UIRoot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sfv4s")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 1000.0
+offset_top = 100.0
+offset_right = 1200.0
+offset_bottom = 140.0
+
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "Edit Mode"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = -120.0
+grow_vertical = 2
+
+[node name="StructureTypeLabel" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Base Map"
+
+[node name="IDLabel" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "ID: "
+
+[node name="LongitudeLabel" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Longitude: "
+
+[node name="LongitudeTextEdit" type="TextEdit" parent="VBoxContainer2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="LatitudeLabel" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Latitude: "
+
+[node name="LatitudeTextEdit" type="TextEdit" parent="VBoxContainer2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="BaseMapVBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+visible = false
+layout_mode = 2
+
+[node name="WaypointsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/BaseMapVBoxContainer"]
+layout_mode = 2
+text = "Waypoints Updated Time: "
+
+[node name="BuildingsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/BaseMapVBoxContainer"]
+layout_mode = 2
+text = "Buildings Updated Time: "
+
+[node name="BuildingVBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+visible = false
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+layout_mode = 2
+text = "Name: "
+
+[node name="NameTextEdit" type="TextEdit" parent="VBoxContainer2/BuildingVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+layout_mode = 2
+text = "Description: "
+
+[node name="DescriptionTextEdit" type="TextEdit" parent="VBoxContainer2/BuildingVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="BuildingLetterLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+layout_mode = 2
+text = "Building Letter: "
+
+[node name="BuildingLetterTextEdit" type="TextEdit" parent="VBoxContainer2/BuildingVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="WaypointsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+layout_mode = 2
+text = "Waypoints Updated Time: "
+
+[node name="RoomsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+layout_mode = 2
+text = "Rooms Updated Time: "
+
+[node name="RoomVBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+visible = false
+layout_mode = 2
+
+[node name="FloorNumberLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+layout_mode = 2
+text = "Floor Number: "
+
+[node name="FloorNumberTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="ParentIDLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+layout_mode = 2
+text = "Parent ID: "
+
+[node name="ParentIDTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="NameLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+layout_mode = 2
+text = "Name: "
+
+[node name="NameTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+layout_mode = 2
+text = "Description: "
+
+[node name="DescriptionTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="LecturersLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+layout_mode = 2
+text = "Lecturers: "
+
+[node name="LecturersTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="WaypointsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+layout_mode = 2
+text = "Waypoints Updated Time: "
+
+[node name="WaypointVBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+visible = false
+layout_mode = 2
+
+[node name="FloorNumberLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+layout_mode = 2
+text = "Floor Number: "
+
+[node name="FloorNumberTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="FeatureTypeLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+layout_mode = 2
+text = "Feature Type: "
+
+[node name="FeatureTypeTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="ParentIDLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+layout_mode = 2
+text = "Parent ID: "
+
+[node name="ParentIDTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="ParentTypeLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+layout_mode = 2
+text = "Parent Type: "
+
+[node name="ParentTypeTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="WaypointConnectionsIDsLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+layout_mode = 2
+text = "Waypoint Connections IDs: "
+
+[node name="WaypointConnectionsIDsTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+editable = false
+
+[node name="SaveButton" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+disabled = true
+text = "Save"
+
+[connection signal="toggled" from="VBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="pressed" from="VBoxContainer2/SaveButton" to="." method="_on_save_button_pressed"]

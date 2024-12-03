@@ -1,20 +1,20 @@
 extends Node
 
 # Used for distinguishing different collection types
-enum Structures { Base_Map, Building, Room }
+enum Structures { Base_Map, BuildingStruct, RoomStruct }
 const Base_Map: int = 0
-const Building: int = 1
-const Room: int = 2
+const BuildingStruct: int = 1
+const RoomStruct: int = 2
 
-# Offline data used to store map data
-# TODO change this to an Object
-var offline_data: Dictionary
+# New offline data from database
 var new_offline_data: Dictionary
 
 const BASE_MAP_COLLECTION: String = 'Base_Map'
 const BUILDINGS_COLLECTION: String = 'Buildings'
 const ROOMS_COLLECTION: String = 'Rooms'
 const WAYPOINTS_COLLECTION: String = 'Waypoints'
+
+signal map_data_loaded()
 
 func _ready() -> void:
 	# Connect signals to methods
@@ -23,7 +23,7 @@ func _ready() -> void:
 	_error = Firebase.Auth.login_failed.connect(on_login_failed)
 	_error = Firebase.Auth.auth_request.connect(on_auth_request)
 
-	load_offline_data()
+	Globals.load_offline_data()
 	
 	# If auth file is saved, then use that
 	var _success: bool =  Firebase.Auth.check_auth_file()
@@ -40,22 +40,27 @@ func _on_FirebaseAuth_login_succeeded(_auth: Dictionary) -> void:
 
 # Login unavailable, either authentication messed up or no internet.
 func on_login_failed(error_code: String, message: String) -> void:
-	print("error code: " + error_code)
+	print("Error code: " + error_code)
 	if error_code == "Connection error":
 		# Handle no internet connection
-		print("message: " + message)
+		print("Message: " + message)
 	else:
 		# Handle authentication error
-		print("message: " + message)
+		print("Message: " + message)
 
+# result_code either int or String
 # result_content either String or 
 @warning_ignore("untyped_declaration")
-func on_auth_request(result_code: int, _result_content) -> void:
-	if result_code == 1:
+func on_auth_request(result_code, _result_content) -> void:
+	if typeof(result_code) == TYPE_INT and result_code == 1:
 		# Saved data has been authenticated
 		print("OK Auth Request.")
 		query_data()
+	elif typeof(result_code) == TYPE_STRING and result_code == "Connection error":
+		# No internet continue with loading
+		map_data_loaded.emit()
 	else:
+		print("Error: " + result_code)
 		Firebase.Auth.login_anonymous()
 
 func delete_auth_file() -> void:
@@ -66,7 +71,8 @@ func delete_auth_file() -> void:
 func query_data() -> void:
 	print("Start query data.")
 	await query_structure_data('Base_Map', Structures.Base_Map)
-	save_offline_data()
+	Globals.save_offline_data()
+	map_data_loaded.emit()
 
 # Query the data for a structure recursively depending on last collection updated times
 func query_structure_data(collection_path: String, structure_type: Structures) -> void:
@@ -84,20 +90,20 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 		match structure_type:
 			Structures.Base_Map:
 				# Add reference to collections
-				var new_collection: bool = structure_document.doc_name not in offline_data.keys()
+				var new_collection: bool = structure_document.doc_name not in Globals.offline_data.keys()
 				if new_collection:
 					structure_document.document[WAYPOINTS_COLLECTION] = {}
 					structure_document.document[BUILDINGS_COLLECTION] = {}
 				else:
-					structure_document.document[WAYPOINTS_COLLECTION] = offline_data[structure_document.doc_name][WAYPOINTS_COLLECTION]
-					structure_document.document[BUILDINGS_COLLECTION] = offline_data[structure_document.doc_name][BUILDINGS_COLLECTION]
+					structure_document.document[WAYPOINTS_COLLECTION] = Globals.offline_data[structure_document.doc_name][WAYPOINTS_COLLECTION]
+					structure_document.document[BUILDINGS_COLLECTION] = Globals.offline_data[structure_document.doc_name][BUILDINGS_COLLECTION]
 				
 				# Save to Base_Map document id
 				new_offline_data[structure_document.doc_name] = structure_document.document
 				
 				# Run for Waypoints collection
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(offline_data[structure_document.doc_name]['waypoints_updated_time']['integerValue']):
+				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[structure_document.doc_name]['waypoints_updated_time']['integerValue']):
 					# Run for each Waypoint document in collection
 					for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
 						# Save to Base_Map document id -> Waypoints collection -> Waypoint document id
@@ -105,25 +111,25 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 				
 				# Run for Buildings collection if updated
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['buildings_updated_time']['integerValue']) > int(offline_data[structure_document.doc_name]['buildings_updated_time']['integerValue']):
-					await query_structure_data(sub_collection_path + BUILDINGS_COLLECTION, Structures.Building)
-			Structures.Building:
+				if new_collection || int(structure_document.document['buildings_updated_time']['integerValue']) > int(Globals.offline_data[structure_document.doc_name]['buildings_updated_time']['integerValue']):
+					await query_structure_data(sub_collection_path + BUILDINGS_COLLECTION, Structures.BuildingStruct)
+			Structures.BuildingStruct:
 				# Add reference to collections
 				@warning_ignore("unsafe_method_access")
-				var new_collection: bool = collection_path.split('/')[1] not in offline_data.keys() or structure_document.doc_name not in offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION].keys()
+				var new_collection: bool = collection_path.split('/')[1] not in Globals.offline_data.keys() or structure_document.doc_name not in Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION].keys()
 				if new_collection:
 					structure_document.document[WAYPOINTS_COLLECTION] = {}
 					structure_document.document[ROOMS_COLLECTION] = {}
 				else:
-					structure_document.document[WAYPOINTS_COLLECTION] = offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]
-					structure_document.document[ROOMS_COLLECTION] = offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][ROOMS_COLLECTION]
+					structure_document.document[WAYPOINTS_COLLECTION] = Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]
+					structure_document.document[ROOMS_COLLECTION] = Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][ROOMS_COLLECTION]
 				
 				# Save to Base_Map document id -> Buildings collection -> Building document id
 				new_offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name] = structure_document.document
 				
 				# Run for Waypoints collection
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION]['waypoints_updated_time']['integerValue']):
+				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION]['waypoints_updated_time']['integerValue']):
 					# Run for each Waypoint document in collection
 					for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
 						# Save to Base_Map document id -> Buildings collection -> Building document id -> Waypoints collection -> Waypoint document id
@@ -131,23 +137,23 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 				
 				# Run for Rooms collection if updated
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['rooms_updated_time']['integerValue']) > int(offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION]['rooms_updated_time']['integerValue']):
-					await query_structure_data(sub_collection_path + ROOMS_COLLECTION, Structures.Room)
-			Structures.Room:
+				if new_collection || int(structure_document.document['rooms_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION]['rooms_updated_time']['integerValue']):
+					await query_structure_data(sub_collection_path + ROOMS_COLLECTION, Structures.RoomStruct)
+			Structures.RoomStruct:
 				# Add reference to collection
 				@warning_ignore("unsafe_method_access")
-				var new_collection: bool = collection_path.split('/')[1] not in offline_data.keys() or collection_path.split('/')[3] not in offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION].keys() or structure_document.doc_name not in offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION].keys()
+				var new_collection: bool = collection_path.split('/')[1] not in Globals.offline_data.keys() or collection_path.split('/')[3] not in Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION].keys() or structure_document.doc_name not in Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION].keys()
 				if new_collection:
 					structure_document.document[WAYPOINTS_COLLECTION] = {}
 				else:
-					structure_document.document[WAYPOINTS_COLLECTION] = offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]
+					structure_document.document[WAYPOINTS_COLLECTION] = Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]
 				
 				# Save to Base_Map document id -> Buildings collection -> Building document id -> Rooms collection -> Room document id
 				new_offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name] = structure_document.document
 				
 				# Run for Waypoints collection
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION]['waypoints_updated_time']['integerValue']):
+				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION]['waypoints_updated_time']['integerValue']):
 					# Run for each Waypoint document in collection
 					for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
 						# Save to Base_Map document id -> Buildings collection -> Building document id -> Rooms collection -> Room document id -> Waypoints collection -> Waypoint document id
@@ -155,19 +161,4 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 	
 	# TODO if needed make this concurrent for speedup, by removing await
 	if structure_type == Structures.Base_Map:
-		offline_data = new_offline_data
-
-# Load offline data
-func load_offline_data() -> void:
-	var file: FileAccess = FileAccess.open("user://offline_data.txt", FileAccess.READ)
-	if file != null:
-		print("Loaded")
-		offline_data = file.get_var()
-
-# Save offline data
-func save_offline_data() -> void:
-	var file: FileAccess = FileAccess.open("user://offline_data.txt", FileAccess.WRITE)
-	if file != null:
-		print("Saved")
-		print(JSON.stringify(offline_data, "\t"))
-		file.store_var(offline_data)
+		Globals.offline_data = new_offline_data

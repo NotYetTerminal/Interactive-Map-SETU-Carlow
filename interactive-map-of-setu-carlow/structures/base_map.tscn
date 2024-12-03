@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://blp6a3470pxte"]
+
+[ext_resource type="Script" path="res://structures/base_map.gd" id="1_0d03c"]
+[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="2_caimf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftjfv"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission_texture = ExtResource("2_caimf")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1w8hw"]
+material = SubResource("StandardMaterial3D_ftjfv")
+size = Vector2(1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aqrrl"]
+
+[node name="BaseMap" type="StaticBody3D" node_paths=PackedStringArray("waypoints", "buildings")]
+script = ExtResource("1_0d03c")
+waypoints = NodePath("Waypoints")
+buildings = NodePath("Buildings")
+
+[node name="Waypoints" type="Node" parent="."]
+
+[node name="Buildings" type="Node" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_1w8hw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_aqrrl")
