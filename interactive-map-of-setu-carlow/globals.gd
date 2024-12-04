@@ -3,8 +3,12 @@ extends Node
 # Whether edit mode is active
 var edit_mode: bool = false
 
-# Save Base Map when nothing is selected
-var base_map: BaseMap
+# Save base position
+var base_longitude: float
+var base_latitude: float
+
+var pathfinder: Pathfinder
+
 # Currently selected structure
 signal select_structure(selected_structure: Structure)
 

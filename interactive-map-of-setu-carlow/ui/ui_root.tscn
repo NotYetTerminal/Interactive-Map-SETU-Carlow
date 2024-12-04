@@ -12,15 +12,46 @@ grow_vertical = 2
 script = ExtResource("1_sfv4s")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 2
-offset_left = 1000.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
 offset_top = 100.0
-offset_right = 1200.0
+offset_right = -100.0
 offset_bottom = 140.0
+grow_horizontal = 0
 
 [node name="CheckButton" type="CheckButton" parent="VBoxContainer"]
 layout_mode = 2
 text = "Edit Mode"
+
+[node name="StartWaypointLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start: "
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Select as Start"
+
+[node name="EndWaypointLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "End: "
+
+[node name="TargetButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Select as Target"
+
+[node name="PathfindingButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Calculate Path"
+
+[node name="ResetButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Reset Path"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -217,4 +248,8 @@ disabled = true
 text = "Save"
 
 [connection signal="toggled" from="VBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TargetButton" to="." method="_on_target_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PathfindingButton" to="." method="_on_pathfinding_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="VBoxContainer2/SaveButton" to="." method="_on_save_button_pressed"]

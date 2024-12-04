@@ -17,3 +17,6 @@ func update_details(details: Dictionary) -> void:
 @warning_ignore("unused_parameter")
 func update_waypoints_time(new_time: int) -> void:
 	pass
+
+func set_structure_global_position() -> void:
+	pass

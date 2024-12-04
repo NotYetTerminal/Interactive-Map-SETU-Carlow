@@ -18,6 +18,9 @@ func save_details(id_in: String, details: Dictionary) -> void:
 	waypoints_updated_time = int(details["waypoints_updated_time"]["integerValue"])
 	@warning_ignore("unsafe_call_argument")
 	buildings_updated_time = int(details["buildings_updated_time"]["integerValue"])
+	
+	set_structure_global_position()
+
 
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
@@ -31,8 +34,16 @@ func update_details(details: Dictionary) -> void:
 # Used by children to update time
 func update_buildings_time(new_time: int) -> void:
 	buildings_updated_time = new_time
-	Globals.offline_data[id]['buildings_updated_time'] = buildings_updated_time
+	Globals.offline_data[id]['buildings_updated_time'] = {'integerValue': str(buildings_updated_time)}
 
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
-	Globals.offline_data[id]['waypoints_updated_time'] = waypoints_updated_time
+	Globals.offline_data[id]['waypoints_updated_time'] = {'integerValue': str(waypoints_updated_time)}
+
+# Set global position, and update children
+func set_structure_global_position() -> void:
+	global_position = Vector3(longitude - Globals.base_longitude, 0, latitude - Globals.base_latitude)
+	for waypoint: Waypoint in $Waypoints.get_children():
+		waypoint.set_structure_global_position()
+	for building: Building in $Buildings.get_children():
+		building.set_structure_global_position()

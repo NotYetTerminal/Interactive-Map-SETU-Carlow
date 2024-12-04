@@ -12,7 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://mdi8cgpboqxi" path="res://structures/waypoint.tscn" id="8_ty4b8"]
 [ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/ui_root.tscn" id="11_1ljdu"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_58gnp"]
+[sub_resource type="Environment" id="Environment_knlak"]
+background_color = Color(0.537011, 0.537011, 0.537011, 1)
 
 [node name="Root" type="Node"]
 
@@ -37,16 +38,14 @@ room_manager = NodePath("../RoomManager")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+environment = SubResource("Environment_knlak")
 projection = 1
 current = true
 size = 10.0
 script = ExtResource("4_un6fr")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.052)
-mesh = SubResource("SphereMesh_58gnp")
-
 [node name="UIRoot" parent="." instance=ExtResource("11_1ljdu")]
 
 [connection signal="map_data_loaded" from="FirebaseConnector" to="StructureSpawner" method="_on_firebase_connector_map_data_loaded"]
+[connection signal="all_structures_done" from="StructureSpawner" to="Pathfinder" method="_on_structure_spawner_all_structures_done"]
 [connection signal="edit_mode_toggled" from="UIRoot" to="Pathfinder" method="_on_ui_root_edit_mode_toggled"]

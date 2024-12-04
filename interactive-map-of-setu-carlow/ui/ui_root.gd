@@ -8,6 +8,8 @@ signal edit_mode_toggled
 @onready var save_button: Button = $VBoxContainer2/SaveButton
 
 var selected_structure: Structure
+var starting_waypoint: Waypoint
+var end_waypoint: Waypoint
 
 func _ready() -> void:
 	Globals.connect('select_structure', _on_Globals_select_structure)
@@ -43,6 +45,9 @@ func _on_Globals_select_structure(structure: Structure) -> void:
 	$VBoxContainer2/RoomVBoxContainer.visible = false
 	$VBoxContainer2/WaypointVBoxContainer.visible = false
 	
+	# TODO for now only use Waypoints for pathfinding
+	$VBoxContainer/StartButton.disabled = true
+	$VBoxContainer/TargetButton.disabled = true
 	# Set individual ones
 	if selected_structure is BaseMap:
 		structure_label.text = 'Base Map'
@@ -56,10 +61,12 @@ func _on_Globals_select_structure(structure: Structure) -> void:
 		structure_label.text = 'Room'
 		show_room_details(selected_structure)
 		$VBoxContainer2/RoomVBoxContainer.visible = true
-	elif selected_structure is WaypointStructure:
+	elif selected_structure is Waypoint:
 		structure_label.text = 'Waypoint'
 		show_waypoint_details(selected_structure)
 		$VBoxContainer2/WaypointVBoxContainer.visible = true
+		$VBoxContainer/StartButton.disabled = false
+		$VBoxContainer/TargetButton.disabled = false
 
 func show_base_map_details(selected_structure: BaseMap) -> void:
 	$VBoxContainer2/BaseMapVBoxContainer/WaypointsUpdatedTimeLabel.text = 'Waypoints Updated Time: ' + str(selected_structure.waypoints_updated_time)
@@ -80,7 +87,7 @@ func show_room_details(selected_structure: Room) -> void:
 	$VBoxContainer2/RoomVBoxContainer/LecturersTextEdit.text = selected_structure.lectures
 	$VBoxContainer2/RoomVBoxContainer/WaypointsUpdatedTimeLabel.text = 'Waypoints Updated Time: ' + str(selected_structure.waypoints_updated_time)
 
-func show_waypoint_details(selected_structure: WaypointStructure) -> void:
+func show_waypoint_details(selected_structure: Waypoint) -> void:
 	$VBoxContainer2/WaypointVBoxContainer/FloorNumberTextEdit.text = str(selected_structure.floor_number)
 	$VBoxContainer2/WaypointVBoxContainer/FeatureTypeTextEdit.text = selected_structure.feature_type
 	$VBoxContainer2/WaypointVBoxContainer/ParentIDTextEdit.text = selected_structure.parent_id
@@ -120,10 +127,10 @@ func _on_save_button_pressed() -> void:
 			'waypoints_updated_time': {'integerValue': str(selected_structure.waypoints_updated_time)}
 		}
 		selected_structure.update_details(details)
-	elif selected_structure is WaypointStructure:
+	elif selected_structure is Waypoint:
 		var connection_array: Array[Dictionary]
-		var waypoint_connections_text_array: Array[String] = str_to_var($VBoxContainer2/WaypointVBoxContainer/WaypointConnectionsIDsTextEdit.text)
-		for waypoint_id: String in waypoint_connections_text_array:
+		var waypoint_connection_text_array: Array = str_to_var($VBoxContainer2/WaypointVBoxContainer/WaypointConnectionsIDsTextEdit.text)
+		for waypoint_id: String in waypoint_connection_text_array:
 			connection_array.append({'stringValue': waypoint_id})
 		
 		var details: Dictionary = {
@@ -133,6 +140,55 @@ func _on_save_button_pressed() -> void:
 			'feature_type': {'stringValue': $VBoxContainer2/WaypointVBoxContainer/FeatureTypeTextEdit.text},
 			'parent_id': {'stringValue': $VBoxContainer2/WaypointVBoxContainer/ParentIDTextEdit.text},
 			'parent_type': {'stringValue': $VBoxContainer2/WaypointVBoxContainer/ParentTypeTextEdit.text},
-			'waypoint_connection_ids': {'arrayValue': {'values': connection_array}}
+			'waypoint_connections_ids': {'arrayValue': {'values': connection_array}}
 		}
 		selected_structure.update_details(details)
+
+
+func _on_start_button_pressed() -> void:
+	# If previously selected change back colour
+	if starting_waypoint != null:
+		starting_waypoint.change_colour(Color.LIGHT_GRAY)
+	
+	starting_waypoint = selected_structure
+	$VBoxContainer/StartWaypointLabel.text = "Start: " + starting_waypoint.id
+	starting_waypoint.change_colour(Color.ROYAL_BLUE)
+	
+	check_pathfinding_button()
+
+func _on_target_button_pressed() -> void:
+	# If previously selected change back colour
+	if end_waypoint != null:
+		end_waypoint.change_colour(Color.LIGHT_GRAY)
+	
+	end_waypoint = selected_structure
+	$VBoxContainer/EndWaypointLabel.text = "End: " + end_waypoint.id
+	end_waypoint.change_colour(Color.INDIAN_RED)
+	
+	check_pathfinding_button()
+
+# Enable once both targets are set
+func check_pathfinding_button() -> void:
+	$VBoxContainer/PathfindingButton.disabled = starting_waypoint == null or end_waypoint == null
+
+
+func _on_pathfinding_button_pressed() -> void:
+	Globals.pathfinder.do_pathfinding(starting_waypoint, end_waypoint)
+
+
+func _on_reset_button_pressed() -> void:
+	# Reset start and end Waypoints labels
+	if starting_waypoint != null:
+		starting_waypoint.change_colour(Color.LIGHT_GRAY)
+	starting_waypoint = null
+	$VBoxContainer/StartWaypointLabel.text = "Start: "
+	
+	if end_waypoint != null:
+		end_waypoint.change_colour(Color.LIGHT_GRAY)
+	end_waypoint = null
+	$VBoxContainer/EndWaypointLabel.text = "End: "
+	
+	check_pathfinding_button()
+	
+	# Reset all Waypoints used in last pathfinding
+	Globals.pathfinder.reset()

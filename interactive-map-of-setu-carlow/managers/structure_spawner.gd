@@ -6,10 +6,6 @@ const BuildingStruct: int = 1
 const RoomStruct: int = 2
 const WaypointStruct: int = 3
 
-# Save base values
-var base_longitude: float
-var base_latitude: float
-
 # Variables for instantiating scenes
 @export var base_map_scene: PackedScene
 @export var building_scene: PackedScene
@@ -24,25 +20,24 @@ var base_latitude: float
 signal all_structures_done
 
 # Create and render structures after map data is loaded
-func _on_firebase_connector_map_data_loaded(map_data: Dictionary) -> void:
+func _on_firebase_connector_map_data_loaded() -> void:
 	print("YAY")
 	# Spawn BaseMap
-	spawn_base_map(map_data)
+	spawn_base_map(Globals.offline_data)
 	all_structures_done.emit()
 
 func spawn_base_map(map_data: Dictionary) -> void:
 	var base_map_id: String = map_data.keys()[0]
 	
 	# Save base location
-	base_longitude = map_data[base_map_id]["longitude"]["doubleValue"]
-	base_latitude = map_data[base_map_id]["latitude"]["doubleValue"]
+	Globals.base_longitude = map_data[base_map_id]["longitude"]["doubleValue"]
+	Globals.base_latitude = map_data[base_map_id]["latitude"]["doubleValue"]
 	
 	# Create new scene
 	var new_base_map: BaseMap = base_map_scene.instantiate()
+	get_parent().add_child(new_base_map)
 	@warning_ignore("unsafe_call_argument")
 	new_base_map.save_details(base_map_id, map_data[base_map_id])
-	get_parent().add_child(new_base_map)
-	Globals.base_map = new_base_map
 	
 	# Spawn Waypoints
 	for waypoint_id: String in map_data[base_map_id]["Waypoints"]:
@@ -86,17 +81,16 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 	match(structure_type):
 		Structures.BuildingStruct:
 			new_structure = building_scene.instantiate()
+			parent.get_child(1).add_child(new_structure)
 		Structures.RoomStruct:
 			new_structure = room_scene.instantiate()
+			parent.get_child(1).add_child(new_structure)
 		Structures.WaypointStruct:
 			new_structure = waypoint_scene.instantiate()
+			parent.get_child(0).add_child(new_structure)
 	
 	@warning_ignore("unsafe_call_argument")
 	new_structure.save_details(structure_id, structure_data)
-	parent.add_child(new_structure)
-	
-	# Set global position
-	new_structure.global_position = Vector3(new_structure.longitude - base_longitude, 0, new_structure.latitude - base_latitude)
 	
 	# Add structure to manager
 	match(structure_type):

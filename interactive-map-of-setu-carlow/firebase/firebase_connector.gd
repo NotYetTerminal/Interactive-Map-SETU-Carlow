@@ -71,7 +71,7 @@ func delete_auth_file() -> void:
 func query_data() -> void:
 	print("Start query data.")
 	await query_structure_data('Base_Map', Structures.Base_Map)
-	Globals.save_offline_data()
+	await Globals.save_offline_data()
 	map_data_loaded.emit()
 
 # Query the data for a structure recursively depending on last collection updated times

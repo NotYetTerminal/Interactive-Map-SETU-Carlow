@@ -26,11 +26,13 @@ func save_details(id_in: String, details: Dictionary) -> void:
 	waypoints_updated_time = int(details["waypoints_updated_time"]["integerValue"])
 	@warning_ignore("unsafe_call_argument")
 	rooms_updated_time = int(details["rooms_updated_time"]["integerValue"])
+	
+	set_structure_global_position()
 
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
 	save_details(id, details)
-	var base_map: BaseMap = get_parent()
+	var base_map: BaseMap = get_parent().get_parent()
 	var building_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][id]
 	
 	details['Rooms'] = building_data['Rooms']
@@ -43,10 +45,20 @@ func update_details(details: Dictionary) -> void:
 # Used by children to update time
 func update_rooms_time(new_time: int) -> void:
 	rooms_updated_time = new_time
-	var base_map: BaseMap = get_parent()
-	Globals.offline_data[base_map.id]['Buildings'][id]['rooms_updated_time'] = rooms_updated_time
+	var base_map: BaseMap = get_parent().get_parent()
+	Globals.offline_data[base_map.id]['Buildings'][id]['rooms_updated_time'] = {'integerValue': str(rooms_updated_time)}
+	base_map.update_buildings_time(waypoints_updated_time)
 
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
-	var base_map: BaseMap = get_parent()
-	Globals.offline_data[base_map.id]['Buildings'][id]['waypoints_updated_time'] = waypoints_updated_time
+	var base_map: BaseMap = get_parent().get_parent()
+	Globals.offline_data[base_map.id]['Buildings'][id]['waypoints_updated_time'] = {'integerValue': str(waypoints_updated_time)}
+	base_map.update_buildings_time(waypoints_updated_time)
+
+# Set global position, and update children
+func set_structure_global_position() -> void:
+	global_position = Vector3(longitude - Globals.base_longitude, 0, latitude - Globals.base_latitude)
+	for waypoint: Waypoint in $Waypoints.get_children():
+		waypoint.set_structure_global_position()
+	for room: Room in $Rooms.get_children():
+		room.set_structure_global_position()

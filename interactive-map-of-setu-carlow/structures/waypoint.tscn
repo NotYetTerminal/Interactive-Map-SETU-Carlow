@@ -1,24 +1,23 @@
 [gd_scene load_steps=6 format=3 uid="uid://mdi8cgpboqxi"]
 
-[ext_resource type="Script" path="res://structures/waypoint_structure.gd" id="1_nxo60"]
-[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="2_r7gjg"]
+[ext_resource type="Script" path="res://structures/waypoint.gd" id="1_nxo60"]
+[ext_resource type="PackedScene" uid="uid://bul6vw37l1nww" path="res://structures/link_node_3d.tscn" id="2_25spw"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftjfv"]
-albedo_color = Color(0, 0, 0, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2x5v"]
 emission_enabled = true
-emission_texture = ExtResource("2_r7gjg")
+emission = Color(0.827451, 0.827451, 0.827451, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_1w8hw"]
-material = SubResource("StandardMaterial3D_ftjfv")
-size = Vector2(1, 1)
+[sub_resource type="SphereMesh" id="SphereMesh_bd2ug"]
+material = SubResource("StandardMaterial3D_f2x5v")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_x83dd"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_ffppo"]
 
 [node name="Waypoint" type="StaticBody3D"]
 script = ExtResource("1_nxo60")
+link_node_3d_scene = ExtResource("2_25spw")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_1w8hw")
+mesh = SubResource("SphereMesh_bd2ug")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_x83dd")
+shape = SubResource("SphereShape3D_ffppo")

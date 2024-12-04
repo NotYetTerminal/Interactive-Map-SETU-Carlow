@@ -40,19 +40,18 @@ func _input(event: InputEvent) -> void:
 		# Divide move amount by zoom level to correct movement
 		position += Vector3(-input_event.relative.x * move_speed, 10, -input_event.relative.y * move_speed) / (20 - zoom_level) * 10
 
-
+# Ray cast to select an object on the map
 func ray_cast_select(input_event: InputEventMouseButton) -> void:
 	var ray_length: float = 1000
 	var from: Vector3 = project_ray_origin(input_event.position)
 	var to: Vector3 = from + project_ray_normal(input_event.position) * ray_length
 	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
+	
 	var ray_query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
 	ray_query.from = from
 	ray_query.to = to
 	var raycast_result: Dictionary = space.intersect_ray(ray_query)
-	print(raycast_result)
+	
 	if "collider" in raycast_result.keys():
 		Globals.select_structure.emit(raycast_result["collider"])
-	elif Globals.base_map != null:
-		Globals.select_structure.emit(Globals.base_map)
 	
