@@ -38,13 +38,12 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion && moving_camera:
 		var input_event: InputEventMouseMotion = event as InputEventMouseMotion
 		# Divide move amount by zoom level to correct movement
-		position += Vector3(-input_event.relative.x * move_speed, -10, input_event.relative.y * move_speed) / (20 - zoom_level) * 10
+		position += Vector3(-input_event.relative.x * move_speed, 0, input_event.relative.y * move_speed) / (20 - zoom_level) * 10
 
 # Ray cast to select an object on the map
 func ray_cast_select(input_event: InputEventMouseButton) -> void:
 	var ray_length: float = 50
 	var from: Vector3 = project_ray_origin(input_event.position)
-	from.y = -10
 	var to: Vector3 = from + project_ray_normal(input_event.position) * ray_length
 	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	
