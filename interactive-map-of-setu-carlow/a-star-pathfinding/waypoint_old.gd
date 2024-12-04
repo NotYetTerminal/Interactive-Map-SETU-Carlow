@@ -3,7 +3,7 @@
 # Date modified: 2024-11-10
 
 extends Node3D
-class_name Waypoint
+class_name WaypointOld
 
 @export var base_coordinate: Vector3
 @export var own_coordinate: Vector3
@@ -14,8 +14,8 @@ class_name Waypoint
 @export var g_cost: float
 @export var h_cost: float
 
-@export var neighour_waypoints_list: Array[Waypoint]
-@export var from_waypoint: Waypoint:
+@export var neighour_waypoints_list: Array[WaypointOld]
+@export var from_waypoint: WaypointOld:
 	set(value):
 		from_waypoint = value
 		rotate_arrow(value)
@@ -42,7 +42,7 @@ func set_colour(new_colour: Color) -> void:
 		mesh_instance.set_surface_override_material(0, material)
 
 
-func rotate_arrow(towards_node: Waypoint) -> void:
+func rotate_arrow(towards_node: WaypointOld) -> void:
 	var arrow_node: Node3D = get_node("Arrow")
 	arrow_node.look_at(Vector3(towards_node.position.x, arrow_node.position.y,towards_node.position.z))
 	arrow_node.show()

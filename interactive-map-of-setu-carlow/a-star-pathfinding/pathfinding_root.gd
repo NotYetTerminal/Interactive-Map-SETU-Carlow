@@ -3,18 +3,18 @@
 # Date modified: 2024-10-13
 extends Node3D
 
-@export var starting_waypoint: Waypoint
-@export var end_waypoint: Waypoint
+@export var starting_waypoint: WaypointOld
+@export var end_waypoint: WaypointOld
 
 func a_star_pathfinding() -> bool:
-	var remaining_waypoints_list: Array[Waypoint] = [starting_waypoint]
-	var checked_waypoints_list: Array[Waypoint] = []
+	var remaining_waypoints_list: Array[WaypointOld] = [starting_waypoint]
+	var checked_waypoints_list: Array[WaypointOld] = []
 	
 	end_waypoint.set_colour(Color.BLUE)
-	var current: Waypoint
+	var current: WaypointOld
 	while len(remaining_waypoints_list) != 0:
 		current = remaining_waypoints_list[0]
-		for waypoint: Waypoint in remaining_waypoints_list:
+		for waypoint: WaypointOld in remaining_waypoints_list:
 			if waypoint.f_cost < current.f_cost or (
 				waypoint.f_cost == current.f_cost and
 				waypoint.h_cost < current.h_cost
@@ -31,7 +31,7 @@ func a_star_pathfinding() -> bool:
 		current.set_colour(Color.RED)
 		await get_tree().create_timer(1).timeout
 		
-		for neighbour: Waypoint in current.neighour_waypoints_list:
+		for neighbour: WaypointOld in current.neighour_waypoints_list:
 			if neighbour in checked_waypoints_list:
 				continue
 			
