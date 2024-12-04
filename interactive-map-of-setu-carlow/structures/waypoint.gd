@@ -68,7 +68,7 @@ func update_details(details: Dictionary) -> void:
 
 # Set global position, and update children
 func set_structure_global_position() -> void:
-	global_position = Vector3(longitude - Globals.base_longitude, 0, latitude - Globals.base_latitude)
+	global_position = Vector3(longitude - Globals.base_longitude, 0, latitude - Globals.base_latitude) * 10000
 
 # Called to activate the links of this waypoint
 # May call on connections to do the same
@@ -87,13 +87,16 @@ func change_colour(new_colour: Color) -> void:
 	var material: StandardMaterial3D = StandardMaterial3D.new()
 	material.emission_enabled = true
 	material.emission = new_colour
-	var mesh_instance: MeshInstance3D = $MeshInstance3D
+	var mesh_instance: MeshInstance3D = $CollisionShape3D/MeshInstance3D
 	mesh_instance.set_surface_override_material(0, material)
 
 # Change the colour of the Link between Waypoints
 func change_link_colour(waypoint_id: String, new_colour: Color) -> void:
-	var link: Link = links_dictionary[waypoint_id]
-	link.change_colour(new_colour)
+	if waypoint_id in links_dictionary.keys():
+		var link: Link = links_dictionary[waypoint_id]
+		link.change_colour(new_colour)
+	else:
+		print("Link not found!")
 
 # Change the colour of Link and signal to next Waypoint
 func finish_pathfinding(to_waypoint: Waypoint = null) -> void:

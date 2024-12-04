@@ -38,7 +38,7 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion && moving_camera:
 		var input_event: InputEventMouseMotion = event as InputEventMouseMotion
 		# Divide move amount by zoom level to correct movement
-		position += Vector3(-input_event.relative.x * move_speed, 10, -input_event.relative.y * move_speed) / (20 - zoom_level) * 10
+		position += Vector3(-input_event.relative.x * move_speed, -10, input_event.relative.y * move_speed) / (20 - zoom_level) * 10
 
 # Ray cast to select an object on the map
 func ray_cast_select(input_event: InputEventMouseButton) -> void:
@@ -51,6 +51,10 @@ func ray_cast_select(input_event: InputEventMouseButton) -> void:
 	ray_query.from = from
 	ray_query.to = to
 	var raycast_result: Dictionary = space.intersect_ray(ray_query)
+	
+	print(ray_query.from)
+	print(ray_query.to)
+	print(raycast_result)
 	
 	if "collider" in raycast_result.keys():
 		Globals.select_structure.emit(raycast_result["collider"])

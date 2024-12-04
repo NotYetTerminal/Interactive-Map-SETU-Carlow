@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dc0fvyikedoll"]
+
+[ext_resource type="Texture2D" uid="uid://bukb8nkeh5ehk" path="res://map_images/map-239.png" id="1_onxvs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6mmc"]
+emission_enabled = true
+emission_texture = ExtResource("1_onxvs")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h1vn2"]
+material = SubResource("StandardMaterial3D_m6mmc")
+size = Vector2(10, 11)
+
+[node name="CateringServicesBuildingNode3D" type="Node3D"]
+transform = Transform3D(-0.275, 2.40413e-08, -0.476314, -4.80825e-08, -0.55, 0, -0.476314, 4.16407e-08, 0.275, 0, 0, 0)
+
+[node name="Level1MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, -7.10543e-15, -5.96046e-08, 1.42109e-14, 1, 0, 5.96046e-08, 1.06581e-14, 1, -0.114197, -0.000322987, -4.5187)
+visible = false
+mesh = SubResource("PlaneMesh_h1vn2")

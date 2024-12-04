@@ -129,7 +129,7 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 				
 				# Run for Waypoints collection
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION]['waypoints_updated_time']['integerValue']):
+				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name]['waypoints_updated_time']['integerValue']):
 					# Run for each Waypoint document in collection
 					for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
 						# Save to Base_Map document id -> Buildings collection -> Building document id -> Waypoints collection -> Waypoint document id
@@ -137,7 +137,7 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 				
 				# Run for Rooms collection if updated
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['rooms_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION]['rooms_updated_time']['integerValue']):
+				if new_collection || int(structure_document.document['rooms_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name]['rooms_updated_time']['integerValue']):
 					await query_structure_data(sub_collection_path + ROOMS_COLLECTION, Structures.RoomStruct)
 			Structures.RoomStruct:
 				# Add reference to collection
