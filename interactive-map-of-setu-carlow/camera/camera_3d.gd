@@ -42,8 +42,9 @@ func _input(event: InputEvent) -> void:
 
 # Ray cast to select an object on the map
 func ray_cast_select(input_event: InputEventMouseButton) -> void:
-	var ray_length: float = 1000
+	var ray_length: float = 50
 	var from: Vector3 = project_ray_origin(input_event.position)
+	from.y = -10
 	var to: Vector3 = from + project_ray_normal(input_event.position) * ray_length
 	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	

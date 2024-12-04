@@ -28,5 +28,4 @@ func save_offline_data() -> void:
 	var file: FileAccess = FileAccess.open("user://offline_data.txt", FileAccess.WRITE)
 	if file != null:
 		print("Saved")
-		print(JSON.stringify(offline_data, "\t"))
 		file.store_var(offline_data)
