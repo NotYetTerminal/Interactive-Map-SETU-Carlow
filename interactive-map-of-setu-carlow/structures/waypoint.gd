@@ -66,10 +66,6 @@ func update_details(details: Dictionary) -> void:
 	
 	Globals.save_offline_data()
 
-# Set global position, and update children
-func set_structure_global_position() -> void:
-	global_position = Vector3(longitude - Globals.base_longitude, 0, latitude - Globals.base_latitude) * 10000
-
 # Called to activate the links of this waypoint
 # May call on connections to do the same
 func activate_links() -> void:

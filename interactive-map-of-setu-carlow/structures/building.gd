@@ -62,7 +62,7 @@ func update_waypoints_time(new_time: int) -> void:
 
 # Set global position, and update children
 func set_structure_global_position() -> void:
-	global_position = Vector3(longitude - Globals.base_longitude, 0, latitude - Globals.base_latitude) * 10000
+	super.set_structure_global_position()
 	for waypoint: Waypoint in $Waypoints.get_children():
 		waypoint.set_structure_global_position()
 	for room: Room in $Rooms.get_children():
@@ -70,10 +70,10 @@ func set_structure_global_position() -> void:
 
 # Adds in the texture for the building
 func add_map_texture() -> void:
-	print(map_textures_dictionary)
 	if building_name in map_textures_dictionary.keys():
 		var building_texture_scene: PackedScene = map_textures_dictionary[building_name]
 		var building_texture_node: Node3D = building_texture_scene.instantiate()
 		add_child(building_texture_node)
 	else:
 		print("Not found key: " + building_name)
+		print(map_textures_dictionary)

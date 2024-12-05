@@ -42,7 +42,7 @@ func update_waypoints_time(new_time: int) -> void:
 
 # Set global position, and update children
 func set_structure_global_position() -> void:
-	global_position = Vector3(longitude - Globals.base_longitude, 0, latitude - Globals.base_latitude) * 10000
+	super.set_structure_global_position()
 	for waypoint: Waypoint in $Waypoints.get_children():
 		waypoint.set_structure_global_position()
 	for building: Building in $Buildings.get_children():

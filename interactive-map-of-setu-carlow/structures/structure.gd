@@ -18,5 +18,6 @@ func update_details(details: Dictionary) -> void:
 func update_waypoints_time(new_time: int) -> void:
 	pass
 
+# Set the position of the structue based on the GPS coordinates
 func set_structure_global_position() -> void:
-	pass
+	global_position = Vector3(longitude - Globals.base_longitude, 0, latitude - Globals.base_latitude) * 10000

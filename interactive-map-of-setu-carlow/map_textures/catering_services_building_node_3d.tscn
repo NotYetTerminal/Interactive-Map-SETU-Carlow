@@ -15,5 +15,4 @@ transform = Transform3D(-0.275, 2.40413e-08, -0.476314, -4.80825e-08, -0.55, 0, 
 
 [node name="Level1MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, -7.10543e-15, -5.96046e-08, 1.42109e-14, 1, 0, 5.96046e-08, 1.06581e-14, 1, -0.114197, -0.000322987, -4.5187)
-visible = false
 mesh = SubResource("PlaneMesh_h1vn2")

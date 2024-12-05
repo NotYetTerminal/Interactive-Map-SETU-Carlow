@@ -34,7 +34,12 @@ func change_text_edits() -> void:
 
 # Called when a structure is selected
 func _on_Globals_select_structure(structure: Structure) -> void:
+	# Change last selection colour back
+	if selected_structure != null && selected_structure is Waypoint && selected_structure != starting_waypoint && selected_structure != end_waypoint:
+		selected_structure.change_colour(Color.LIGHT_GRAY)
+	
 	selected_structure = structure
+	
 	# Set common values
 	$VBoxContainer2/IDLabel.text = 'ID: ' + selected_structure.id
 	$VBoxContainer2/LongitudeTextEdit.text = str(selected_structure.longitude)
@@ -62,6 +67,7 @@ func _on_Globals_select_structure(structure: Structure) -> void:
 		show_room_details(selected_structure)
 		$VBoxContainer2/RoomVBoxContainer.visible = true
 	elif selected_structure is Waypoint:
+		selected_structure.change_colour(Color.BLACK)
 		structure_label.text = 'Waypoint'
 		show_waypoint_details(selected_structure)
 		$VBoxContainer2/WaypointVBoxContainer.visible = true
