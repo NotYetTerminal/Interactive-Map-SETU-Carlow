@@ -11,245 +11,262 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sfv4s")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -300.0
-offset_top = 100.0
-offset_right = -100.0
-offset_bottom = 140.0
+offset_left = -350.0
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = 300.0
 grow_horizontal = 0
 
-[node name="CheckButton" type="CheckButton" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CheckButton" type="CheckButton" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "Edit Mode"
 
-[node name="StartWaypointLabel" type="Label" parent="VBoxContainer"]
+[node name="StartWaypointLabel" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "Start: "
 
-[node name="StartButton" type="Button" parent="VBoxContainer"]
+[node name="StartButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "Select as Start"
 
-[node name="EndWaypointLabel" type="Label" parent="VBoxContainer"]
+[node name="EndWaypointLabel" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "End: "
 
-[node name="TargetButton" type="Button" parent="VBoxContainer"]
+[node name="TargetButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "Select as Target"
 
-[node name="PathfindingButton" type="Button" parent="VBoxContainer"]
+[node name="PathfindingButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "Calculate Path"
 
-[node name="ResetButton" type="Button" parent="VBoxContainer"]
+[node name="ResetButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "Reset Path"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="Panel2" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 9
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 700.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 100.0
-offset_top = 100.0
-offset_right = 300.0
-offset_bottom = -120.0
+offset_left = 10.0
+offset_right = -10.0
+grow_horizontal = 2
 grow_vertical = 2
 
-[node name="StructureTypeLabel" type="Label" parent="VBoxContainer2"]
+[node name="StructureTypeLabel" type="Label" parent="Panel2/VBoxContainer2"]
 layout_mode = 2
 text = "Base Map"
 
-[node name="IDLabel" type="Label" parent="VBoxContainer2"]
+[node name="IDLabel" type="Label" parent="Panel2/VBoxContainer2"]
 layout_mode = 2
 text = "ID: "
 
-[node name="LongitudeLabel" type="Label" parent="VBoxContainer2"]
+[node name="LongitudeLabel" type="Label" parent="Panel2/VBoxContainer2"]
 layout_mode = 2
 text = "Longitude: "
 
-[node name="LongitudeTextEdit" type="TextEdit" parent="VBoxContainer2"]
+[node name="LongitudeTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="LatitudeLabel" type="Label" parent="VBoxContainer2"]
+[node name="LatitudeLabel" type="Label" parent="Panel2/VBoxContainer2"]
 layout_mode = 2
 text = "Latitude: "
 
-[node name="LatitudeTextEdit" type="TextEdit" parent="VBoxContainer2"]
+[node name="LatitudeTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="BaseMapVBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+[node name="BaseMapVBoxContainer" type="VBoxContainer" parent="Panel2/VBoxContainer2"]
 visible = false
 layout_mode = 2
 
-[node name="WaypointsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/BaseMapVBoxContainer"]
+[node name="WaypointsUpdatedTimeLabel" type="Label" parent="Panel2/VBoxContainer2/BaseMapVBoxContainer"]
 layout_mode = 2
 text = "Waypoints Updated Time: "
 
-[node name="BuildingsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/BaseMapVBoxContainer"]
+[node name="BuildingsUpdatedTimeLabel" type="Label" parent="Panel2/VBoxContainer2/BaseMapVBoxContainer"]
 layout_mode = 2
 text = "Buildings Updated Time: "
 
-[node name="BuildingVBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+[node name="BuildingVBoxContainer" type="VBoxContainer" parent="Panel2/VBoxContainer2"]
 visible = false
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+[node name="NameLabel" type="Label" parent="Panel2/VBoxContainer2/BuildingVBoxContainer"]
 layout_mode = 2
 text = "Name: "
 
-[node name="NameTextEdit" type="TextEdit" parent="VBoxContainer2/BuildingVBoxContainer"]
+[node name="NameTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/BuildingVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="DescriptionLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="Panel2/VBoxContainer2/BuildingVBoxContainer"]
 layout_mode = 2
 text = "Description: "
 
-[node name="DescriptionTextEdit" type="TextEdit" parent="VBoxContainer2/BuildingVBoxContainer"]
+[node name="DescriptionTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/BuildingVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="BuildingLetterLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+[node name="BuildingLetterLabel" type="Label" parent="Panel2/VBoxContainer2/BuildingVBoxContainer"]
 layout_mode = 2
 text = "Building Letter: "
 
-[node name="BuildingLetterTextEdit" type="TextEdit" parent="VBoxContainer2/BuildingVBoxContainer"]
+[node name="BuildingLetterTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/BuildingVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="WaypointsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+[node name="WaypointsUpdatedTimeLabel" type="Label" parent="Panel2/VBoxContainer2/BuildingVBoxContainer"]
 layout_mode = 2
 text = "Waypoints Updated Time: "
 
-[node name="RoomsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/BuildingVBoxContainer"]
+[node name="RoomsUpdatedTimeLabel" type="Label" parent="Panel2/VBoxContainer2/BuildingVBoxContainer"]
 layout_mode = 2
 text = "Rooms Updated Time: "
 
-[node name="RoomVBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+[node name="RoomVBoxContainer" type="VBoxContainer" parent="Panel2/VBoxContainer2"]
 visible = false
 layout_mode = 2
 
-[node name="FloorNumberLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="FloorNumberLabel" type="Label" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 layout_mode = 2
 text = "Floor Number: "
 
-[node name="FloorNumberTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="FloorNumberTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="ParentIDLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="ParentIDLabel" type="Label" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 layout_mode = 2
 text = "Parent ID: "
 
-[node name="ParentIDTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="ParentIDTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="NameLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="NameLabel" type="Label" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 layout_mode = 2
 text = "Name: "
 
-[node name="NameTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="NameTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="DescriptionLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 layout_mode = 2
 text = "Description: "
 
-[node name="DescriptionTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="DescriptionTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="LecturersLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="LecturersLabel" type="Label" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 layout_mode = 2
 text = "Lecturers: "
 
-[node name="LecturersTextEdit" type="TextEdit" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="LecturersTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="WaypointsUpdatedTimeLabel" type="Label" parent="VBoxContainer2/RoomVBoxContainer"]
+[node name="WaypointsUpdatedTimeLabel" type="Label" parent="Panel2/VBoxContainer2/RoomVBoxContainer"]
 layout_mode = 2
 text = "Waypoints Updated Time: "
 
-[node name="WaypointVBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+[node name="WaypointVBoxContainer" type="VBoxContainer" parent="Panel2/VBoxContainer2"]
 visible = false
 layout_mode = 2
 
-[node name="FloorNumberLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="FloorNumberLabel" type="Label" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 layout_mode = 2
 text = "Floor Number: "
 
-[node name="FloorNumberTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="FloorNumberTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="FeatureTypeLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="FeatureTypeLabel" type="Label" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 layout_mode = 2
 text = "Feature Type: "
 
-[node name="FeatureTypeTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="FeatureTypeTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="ParentIDLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="ParentIDLabel" type="Label" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 layout_mode = 2
 text = "Parent ID: "
 
-[node name="ParentIDTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="ParentIDTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="ParentTypeLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="ParentTypeLabel" type="Label" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 layout_mode = 2
 text = "Parent Type: "
 
-[node name="ParentTypeTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="ParentTypeTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="WaypointConnectionsIDsLabel" type="Label" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="WaypointConnectionsIDsLabel" type="Label" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 layout_mode = 2
 text = "Waypoint Connections IDs: "
 
-[node name="WaypointConnectionsIDsTextEdit" type="TextEdit" parent="VBoxContainer2/WaypointVBoxContainer"]
+[node name="WaypointConnectionsIDsTextEdit" type="TextEdit" parent="Panel2/VBoxContainer2/WaypointVBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 editable = false
 
-[node name="SaveButton" type="Button" parent="VBoxContainer2"]
+[node name="SaveButton" type="Button" parent="Panel2/VBoxContainer2"]
 layout_mode = 2
 disabled = true
 text = "Save"
 
-[connection signal="toggled" from="VBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
-[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/TargetButton" to="." method="_on_target_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/PathfindingButton" to="." method="_on_pathfinding_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="pressed" from="VBoxContainer2/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="toggled" from="Panel/VBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="pressed" from="Panel/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/TargetButton" to="." method="_on_target_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/PathfindingButton" to="." method="_on_pathfinding_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Panel2/VBoxContainer2/SaveButton" to="." method="_on_save_button_pressed"]

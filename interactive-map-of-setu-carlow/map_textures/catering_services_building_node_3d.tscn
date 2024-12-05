@@ -11,8 +11,8 @@ material = SubResource("StandardMaterial3D_m6mmc")
 size = Vector2(10, 11)
 
 [node name="CateringServicesBuildingNode3D" type="Node3D"]
-transform = Transform3D(-0.275, 2.40413e-08, -0.476314, -4.80825e-08, -0.55, 0, -0.476314, 4.16407e-08, 0.275, 0, 0, 0)
+transform = Transform3D(-0.275, 4.15239e-08, -0.476314, -8.30477e-08, -0.55, -2.84217e-14, -0.476314, 7.19214e-08, 0.275, 0, 0, 0)
 
 [node name="Level1MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, -7.10543e-15, -5.96046e-08, 1.42109e-14, 1, 0, 5.96046e-08, 1.06581e-14, 1, -0.114197, -0.000322987, -4.5187)
+transform = Transform3D(1.68, -4.26326e-14, -5.96046e-08, 0, 1.68, -7.10543e-15, 5.96046e-08, 2.13163e-14, 1.68, -1.049, -1, -7.138)
 mesh = SubResource("PlaneMesh_h1vn2")
