@@ -14,7 +14,7 @@ func _ready() -> void:
 	var screen_size: Vector2 = get_viewport().get_visible_rect().size
 	screen_ratio = screen_size.y / screen_size.x
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var input_event: InputEventMouseButton = event as InputEventMouseButton
 		# Activating dragging
