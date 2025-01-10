@@ -23,6 +23,7 @@ func _ready() -> void:
 	_error = Firebase.Auth.login_failed.connect(on_login_failed)
 	_error = Firebase.Auth.auth_request.connect(on_auth_request)
 
+	Globals.FirebaseConnector = self
 	Globals.load_offline_data()
 	
 	# If auth file is saved, then use that
@@ -162,3 +163,107 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 	# TODO if needed make this concurrent for speedup, by removing await
 	if structure_type == Structures.Base_Map:
 		Globals.offline_data = new_offline_data
+
+# Save the map data into the cloud
+func save_map_data(id: String, fields: Array[String]) -> void:
+	var base_map_id: String = Globals.offline_data.keys()[0]
+	print(Globals.offline_data)
+	var base_map_collection : FirestoreCollection = await Firebase.Firestore.collection('Base_Map')
+	var base_map_document: FirestoreDocument = await base_map_collection.get_doc(base_map_id)
+	
+	# Save only base map
+	if base_map_id == id:
+		for field_name: String in fields:
+			if field_name == "":
+				continue
+			base_map_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][field_name].values()[0])
+		base_map_collection.update(base_map_document)
+	# Compare Buildings last updated time
+	elif base_map_document.document['buildings_updated_time']['integerValue'] != Globals.offline_data[base_map_id]['buildings_updated_time']['integerValue']:
+		base_map_document.add_or_update_field('buildings_updated_time', int(Globals.offline_data[base_map_id]['buildings_updated_time'].values()[0]))
+		base_map_collection.update(base_map_document)
+		
+		for building_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION):
+			# Save only Building data
+			if building_document.doc_name == id:
+				for field_name: String in fields:
+					if field_name == "":
+						continue
+					building_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][field_name].values()[0])
+				(await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION)).update(building_document)
+				break
+			# Save Rooms data
+			elif building_document.document['rooms_updated_time']['integerValue'] != Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time']['integerValue']:
+				building_document.add_or_update_field('rooms_updated_time', int(Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time'].values()[0]))
+				(await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION)).update(building_document)
+				
+				for room_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION):
+					# Save only Room data
+					if room_document.doc_name == id:
+						for field_name: String in fields:
+							if field_name == "":
+								continue
+							room_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][field_name].values()[0])
+						(await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION)).update(room_document)
+						break
+					# Save Waypoints data
+					elif room_document.document['waypoints_updated_time']['integerValue'] != Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name]['waypoints_updated_time']['integerValue']:
+						room_document.add_or_update_field('waypoints_updated_time', int(Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name]['waypoints_updated_time'].values()[0]))
+						(await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION)).update(room_document)
+						
+						for waypoint_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION + '/' + room_document.doc_name + '/' + WAYPOINTS_COLLECTION):
+							if waypoint_document.doc_name == id:
+								for field_name: String in fields:
+									if field_name == "":
+										continue
+									if field_name == "waypoint_connections_ids":
+										var connections_array: Array[String] = []
+										for id_dictionaries: Dictionary in Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"]["arrayValue"]["values"]:
+											connections_array.append(id_dictionaries.values()[0])
+										waypoint_document.add_or_update_field(field_name, connections_array)
+									else:
+										waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
+								(await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION + '/' + room_document.doc_name + '/' + WAYPOINTS_COLLECTION)).update(waypoint_document)
+								break
+						break
+				break
+			# Save Waypoints data
+			elif building_document.document['waypoints_updated_time']['integerValue'] != Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['waypoints_updated_time']['integerValue']:
+				building_document.add_or_update_field('waypoints_updated_time', int(Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['waypoints_updated_time'].values()[0]))
+				(await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION)).update(building_document)
+				
+				for waypoint_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION):
+					if waypoint_document.doc_name == id:
+						for field_name: String in fields:
+							if field_name == "":
+								continue
+							if field_name == "waypoint_connections_ids":
+								var connections_array: Array[String] = []
+								for id_dictionaries: Dictionary in Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"]["arrayValue"]["values"]:
+									connections_array.append(id_dictionaries.values()[0])
+								waypoint_document.add_or_update_field(field_name, connections_array)
+							else:
+								waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
+						(await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION)).update(waypoint_document)
+						break
+				break
+	# Compare Waypoints last updated time
+	elif base_map_document.document['waypoints_updated_time']['integerValue'] != Globals.offline_data[base_map_id]['waypoints_updated_time']['integerValue']:
+		base_map_document.add_or_update_field('waypoints_updated_time', int(Globals.offline_data[base_map_id]['waypoints_updated_time'].values()[0]))
+		base_map_collection.update(base_map_document)
+		
+		for waypoint_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION):
+			if waypoint_document.doc_name == id:
+				for field_name: String in fields:
+					if field_name == "":
+						continue
+					if field_name == "waypoint_connections_ids":
+						var connections_array: Array[String] = []
+						for id_dictionaries: Dictionary in Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"]["arrayValue"]["values"]:
+							connections_array.append(id_dictionaries.values()[0])
+						waypoint_document.add_or_update_field(field_name, connections_array)
+					else:
+						waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
+					
+				(await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION)).update(waypoint_document)
+				break

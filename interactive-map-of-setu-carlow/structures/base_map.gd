@@ -8,7 +8,13 @@ var waypoints_updated_time: int
 var buildings_updated_time: int
 
 # Save details from map_data
-func save_details(id_in: String, details: Dictionary) -> void:
+func save_details(id_in: String, details: Dictionary) -> Array[String]:
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
+		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
+		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
+		"buildings_updated_time" if buildings_updated_time != int(details["buildings_updated_time"]["integerValue"]) else ""
+	]
 	id = id_in
 	
 	longitude = details["longitude"]["doubleValue"]
@@ -20,16 +26,16 @@ func save_details(id_in: String, details: Dictionary) -> void:
 	buildings_updated_time = int(details["buildings_updated_time"]["integerValue"])
 	
 	set_structure_global_position()
-
+	return changed_fields
 
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
-	save_details(id, details)
+	var fields: Array[String] = save_details(id, details)
 	var base_map_data: Dictionary = Globals.offline_data[id]
 	details['Buildings'] = base_map_data['Buildings']
 	details['Waypoints'] = base_map_data['Waypoints']
 	Globals.offline_data[id] = details
-	Globals.save_offline_data()
+	Globals.save_data(id, fields)
 
 # Used by children to update time
 func update_buildings_time(new_time: int) -> void:

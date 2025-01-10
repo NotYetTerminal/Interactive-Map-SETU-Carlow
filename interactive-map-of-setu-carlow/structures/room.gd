@@ -13,7 +13,16 @@ var waypoints_updated_time: int
 @export var waypoints: Node
 
 # Save details from map_data
-func save_details(id_in: String, details: Dictionary) -> void:
+func save_details(id_in: String, details: Dictionary) -> Array[String]:
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
+		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
+		"floor_number" if floor_number != int(details["floor_number"]["integerValue"]) else "",
+		"name" if room_name != details["name"]["stringValue"] else "",
+		"description" if description != details["description"]["stringValue"] else "",
+		"lecturers" if lectures != details["lecturers"]["stringValue"] else "",
+		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else ""
+	]
 	id = id_in
 	
 	longitude = details["longitude"]["doubleValue"]
@@ -31,10 +40,11 @@ func save_details(id_in: String, details: Dictionary) -> void:
 	waypoints_updated_time = int(details["waypoints_updated_time"]["integerValue"])
 	
 	set_structure_global_position()
+	return changed_fields
 
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
-	save_details(id, details)
+	var fields: Array[String] = save_details(id, details)
 	var building: Building = get_parent().get_parent()
 	var base_map: BaseMap = building.get_parent().get_parent()
 	var room_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]
@@ -43,7 +53,7 @@ func update_details(details: Dictionary) -> void:
 	Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id] = details
 	building.update_rooms_time(Time.get_unix_time_from_system())
 	
-	Globals.save_offline_data()
+	Globals.save_data(id, fields)
 
 # Used by children to update time
 func update_waypoints_time(new_time: int) -> void:

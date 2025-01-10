@@ -23,7 +23,14 @@ var h_cost: float
 var from_waypoint: Waypoint
 
 # Save details from map_data
-func save_details(id_in: String, details: Dictionary) -> void:
+func save_details(id_in: String, details: Dictionary) -> Array[String]:
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
+		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
+		"floor_number" if floor_number != int(details["floor_number"]["integerValue"]) else "",
+		"feature_type" if feature_type != details["feature_type"]["stringValue"] else "",
+		"waypoint_connections_ids"
+	]
 	id = id_in
 	
 	longitude = details["longitude"]["doubleValue"]
@@ -36,10 +43,12 @@ func save_details(id_in: String, details: Dictionary) -> void:
 	parent_id = details["parent_id"]["stringValue"]
 	parent_type = details["parent_type"]["stringValue"]
 	
+	waypoint_connections_ids = []
 	for id_dict: Dictionary in details["waypoint_connections_ids"]["arrayValue"]["values"]:
 		waypoint_connections_ids.append(id_dict.values()[0])
 	
 	set_structure_global_position()
+	return changed_fields
 
 # Makes waypoints visible on editing
 func check_toggle() -> void:
@@ -49,7 +58,7 @@ func check_toggle() -> void:
 
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
-	save_details(id, details)
+	var fields: Array[String] = save_details(id, details)
 	# Update Waypoint depending on the parent
 	var parent_1: Structure = get_parent().get_parent()
 	if parent_1 is BaseMap:
@@ -64,7 +73,7 @@ func update_details(details: Dictionary) -> void:
 	
 	parent_1.update_waypoints_time(Time.get_unix_time_from_system())
 	
-	Globals.save_offline_data()
+	Globals.save_data(id, fields)
 
 # Called to activate the links of this waypoint
 # May call on connections to do the same

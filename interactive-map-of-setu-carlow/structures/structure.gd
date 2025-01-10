@@ -7,8 +7,8 @@ var longitude: float
 var latitude: float
 
 @warning_ignore("unused_parameter")
-func save_details(id_in: String, details: Dictionary) -> void:
-	pass
+func save_details(id_in: String, details: Dictionary) -> Array[String]:
+	return []
 
 @warning_ignore("unused_parameter")
 func update_details(details: Dictionary) -> void:

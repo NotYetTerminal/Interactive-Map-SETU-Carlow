@@ -15,7 +15,16 @@ var rooms_updated_time: int
 @export var map_textures_dictionary: Dictionary
 
 # Save details from map_data
-func save_details(id_in: String, details: Dictionary) -> void:
+func save_details(id_in: String, details: Dictionary) -> Array[String]:
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
+		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
+		"name" if building_name != details["name"]["stringValue"] else "",
+		"description" if description != details["description"]["stringValue"] else "",
+		"building_letter" if building_letter != details["building_letter"]["stringValue"] else "",
+		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
+		"rooms_updated_time" if rooms_updated_time != int(details["rooms_updated_time"]["integerValue"]) else ""
+	]
 	id = id_in
 	
 	longitude = details["longitude"]["doubleValue"]
@@ -33,10 +42,11 @@ func save_details(id_in: String, details: Dictionary) -> void:
 	set_structure_global_position()
 	
 	add_map_texture()
+	return changed_fields
 
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
-	save_details(id, details)
+	var fields: Array[String] = save_details(id, details)
 	var base_map: BaseMap = get_parent().get_parent()
 	var building_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][id]
 	
@@ -45,7 +55,7 @@ func update_details(details: Dictionary) -> void:
 	Globals.offline_data[base_map.id]['Buildings'][id] = details
 	base_map.update_buildings_time(Time.get_unix_time_from_system())
 	
-	Globals.save_offline_data()
+	Globals.save_data(id, fields)
 
 # Used by children to update time
 func update_rooms_time(new_time: int) -> void:
