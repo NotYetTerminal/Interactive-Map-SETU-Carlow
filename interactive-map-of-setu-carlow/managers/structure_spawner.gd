@@ -37,7 +37,7 @@ func spawn_base_map(map_data: Dictionary) -> void:
 	var new_base_map: BaseMap = base_map_scene.instantiate()
 	get_parent().add_child(new_base_map)
 	@warning_ignore("unsafe_call_argument")
-	new_base_map.save_details(base_map_id, map_data[base_map_id])
+	var _fields: Array[String] = new_base_map.save_details(base_map_id, map_data[base_map_id])
 	
 	# Spawn Waypoints
 	for waypoint_id: String in map_data[base_map_id]["Waypoints"]:
@@ -90,7 +90,7 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 			parent.get_child(0).add_child(new_structure)
 	
 	@warning_ignore("unsafe_call_argument")
-	new_structure.save_details(structure_id, structure_data)
+	var _fields: Array[String] = new_structure.save_details(structure_id, structure_data)
 	
 	# Add structure to manager
 	match(structure_type):

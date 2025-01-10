@@ -10,6 +10,7 @@ var base_latitude: float
 var pathfinder: Pathfinder
 
 # Currently selected structure
+@warning_ignore("unused_signal")
 signal select_structure(selected_structure: Structure)
 
 # Offline data used to store map data
@@ -17,7 +18,7 @@ signal select_structure(selected_structure: Structure)
 var offline_data: Dictionary
 
 # Used for saving map data
-var FirebaseConnector: Node
+var firebaseConnector: FirebaseConnector
 
 # Load offline data
 func load_offline_data() -> void:
@@ -40,4 +41,4 @@ func save_offline_data() -> void:
 
 # Save data to cloud
 func save_online_data(id: String, fields: Array[String]) -> void:
-	FirebaseConnector.save_map_data(id, fields)
+	firebaseConnector.save_map_data(id, fields)

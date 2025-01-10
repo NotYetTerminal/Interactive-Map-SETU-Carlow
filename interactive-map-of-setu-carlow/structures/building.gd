@@ -16,6 +16,7 @@ var rooms_updated_time: int
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
+	@warning_ignore("unsafe_call_argument")
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
 		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
@@ -48,25 +49,31 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 func update_details(details: Dictionary) -> void:
 	var fields: Array[String] = save_details(id, details)
 	var base_map: BaseMap = get_parent().get_parent()
+	@warning_ignore("unsafe_property_access")
 	var building_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][id]
 	
 	details['Rooms'] = building_data['Rooms']
 	details['Waypoints'] = building_data['Waypoints']
+	@warning_ignore("unsafe_property_access")
 	Globals.offline_data[base_map.id]['Buildings'][id] = details
+	@warning_ignore("narrowing_conversion")
 	base_map.update_buildings_time(Time.get_unix_time_from_system())
 	
+	@warning_ignore("unsafe_method_access")
 	Globals.save_data(id, fields)
 
 # Used by children to update time
 func update_rooms_time(new_time: int) -> void:
 	rooms_updated_time = new_time
 	var base_map: BaseMap = get_parent().get_parent()
+	@warning_ignore("unsafe_property_access")
 	Globals.offline_data[base_map.id]['Buildings'][id]['rooms_updated_time'] = {'integerValue': str(rooms_updated_time)}
 	base_map.update_buildings_time(waypoints_updated_time)
 
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
 	var base_map: BaseMap = get_parent().get_parent()
+	@warning_ignore("unsafe_property_access")
 	Globals.offline_data[base_map.id]['Buildings'][id]['waypoints_updated_time'] = {'integerValue': str(waypoints_updated_time)}
 	base_map.update_buildings_time(waypoints_updated_time)
 
