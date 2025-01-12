@@ -20,6 +20,9 @@ var offline_data: Dictionary
 # Used for saving map data
 var firebaseConnector: FirebaseConnector
 
+# Used for various calculations, in meters
+const EARTH_RADIUS: float = 6378137
+
 # Load offline data
 func load_offline_data() -> void:
 	var file: FileAccess = FileAccess.open("user://offline_data.txt", FileAccess.READ)

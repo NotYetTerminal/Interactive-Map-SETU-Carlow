@@ -25,18 +25,17 @@ func set_structure_global_position() -> void:
 	@warning_ignore("unsafe_call_argument")
 	var global_base_position: Vector3 = convert_longitude_latitude_to_coordinate(Globals.base_longitude, Globals.base_latitude)
 	
-	global_position = (this_position - global_base_position) * 5
+	global_position = (this_position - global_base_position) / 20
 
 # Convert using Mercator projection
 func convert_longitude_latitude_to_coordinate(lon: float, lat: float) -> Vector3:
-	const EARTH_RADIUS: float = 63781.370
-
 	# Convert latitude and longitude to radians
 	var longitude_radians: float = deg_to_rad(lon)
 	var latitude_radians: float = deg_to_rad(lat)
 
 	# Calculate coordinates using the Mercator projection
-	var x_coordinate: float = longitude_radians * EARTH_RADIUS
-	var z_coordinate: float = log(tan(PI / 4.0 + latitude_radians / 2.0)) * EARTH_RADIUS
+	var x_coordinate: float = longitude_radians
+	var z_coordinate: float = log(tan(PI / 4.0 + latitude_radians / 2.0))
 
-	return Vector3(x_coordinate, 0, z_coordinate)
+	@warning_ignore("unsafe_property_access")
+	return Vector3(x_coordinate, 0, z_coordinate) * Globals.EARTH_RADIUS

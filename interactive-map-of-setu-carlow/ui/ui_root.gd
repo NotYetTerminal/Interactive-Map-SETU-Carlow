@@ -220,8 +220,29 @@ func _on_target_button_pressed() -> void:
 
 # Enable once both targets are set
 func check_pathfinding_button() -> void:
+	var both_waypoints_set: bool = starting_waypoint != null and end_waypoint != null
 	@warning_ignore("unsafe_property_access")
-	$Panel/VBoxContainer/PathfindingButton.disabled = starting_waypoint == null or end_waypoint == null
+	$Panel/VBoxContainer/PathfindingButton.disabled = not both_waypoints_set
+	var distance_calculated: String
+	if both_waypoints_set:
+		# Convert to radians
+		var end_lon_radian: float = deg_to_rad(end_waypoint.longitude)
+		var end_lat_radian: float = deg_to_rad(end_waypoint.latitude)
+		var start_lon_radian: float = deg_to_rad(starting_waypoint.longitude)
+		var start_lat_radian: float = deg_to_rad(starting_waypoint.latitude)
+		
+		# Calculate distance using Pythagoras’ theorem and equi­rectangular projec­tion
+		var x_distance: float = (end_lon_radian - start_lon_radian) * cos((start_lat_radian + start_lat_radian) / 2)
+		var y_distance: float = end_lat_radian - start_lat_radian
+		@warning_ignore("unsafe_property_access")
+		var distance: float = sqrt(x_distance*x_distance + y_distance*y_distance) * Globals.EARTH_RADIUS
+		# Round distance to 2 decimal places
+		distance = round(distance * 100) / 100
+		distance_calculated = str(distance) + " meters"
+	else:
+		distance_calculated = ""
+	@warning_ignore("unsafe_property_access")
+	$Panel/VBoxContainer/DistanceLabel.text = "Distance: " + distance_calculated
 
 
 func _on_pathfinding_button_pressed() -> void:
