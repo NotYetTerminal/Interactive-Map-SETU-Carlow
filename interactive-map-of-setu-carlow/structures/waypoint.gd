@@ -76,6 +76,51 @@ func update_details(details: Dictionary) -> void:
 	
 	Globals.save_data(id, fields)
 
+# Delete the structure and data related to it
+func delete_itself() -> void:
+	var waypoints_dictionary: Dictionary
+	var collection_path: String
+	
+	var parent_1: Structure = get_parent().get_parent()
+	if parent_1 is BaseMap:
+		waypoints_dictionary = Globals.offline_data[parent_1.id]['Waypoints']
+		collection_path = parent_1.id + '/Waypoints'
+	elif parent_1 is Building:
+		var parent_2: BaseMap = parent_1.get_parent().get_parent()
+		waypoints_dictionary = Globals.offline_data[parent_2.id]['Buildings'][parent_1.id]['Waypoints']
+		collection_path = parent_2.id + '/Buildings/' + parent_1.id + '/Waypoints'
+	elif parent_1 is Room:
+		var parent_2: Building = parent_1.get_parent().get_parent()
+		var parent_3: BaseMap = parent_2.get_parent().get_parent()
+		waypoints_dictionary = Globals.offline_data[parent_3.id]['Buildings'][parent_2.id]['Rooms'][parent_1.id]['Waypoints']
+		collection_path = parent_3.id + '/Buildings/' + parent_2.id + '/Rooms/' + parent_1.id + '/Waypoints'
+	
+	var _erased: bool = waypoints_dictionary.erase(id)
+	parent_1.update_waypoints_time(int(Time.get_unix_time_from_system()))
+	
+	# Delete connections with other Waypoints
+	for waypoint_id: String in waypoint_connections_ids:
+		var waypoint: Waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
+		waypoint.remove_connection(id)
+	
+	await Globals.delete_structure(collection_path, id)
+	self.queue_free()
+
+# Removes the id passed in from the connections
+func remove_connection(id_to_remove: String) -> void:
+	# Update parent structure Waypoints time
+	var parent_structure: Structure = get_parent().get_parent()
+	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
+	# Remove from connections
+	waypoint_connections_ids.erase(id_to_remove)
+	# Update save data
+	Globals.save_data(id, ["waypoint_connections_ids"])
+	
+	# Remove graphical link
+	var link_node: Node3D = links_dictionary[id_to_remove]
+	var _erased: bool = links_dictionary.erase(id_to_remove)
+	link_node.queue_free()
+
 # Called to activate the links of this waypoint
 # May call on connections to do the same
 func activate_links() -> void:

@@ -6,6 +6,8 @@ signal edit_mode_toggled
 
 @onready var structure_label: Label = $Panel2/VBoxContainer2/StructureTypeLabel
 @onready var save_button: Button = $Panel2/VBoxContainer2/SaveButton
+@onready var delete_button: Button = $Panel2/VBoxContainer2/DeleteButton
+@onready var delete_confirmation_panel: Panel = $Panel3
 
 var selected_structure: Structure
 var starting_waypoint: Waypoint
@@ -20,7 +22,13 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 	Globals.edit_mode = toggled_on
 	edit_mode_toggled.emit()
 	change_text_edits()
-	save_button.disabled = not Globals.edit_mode
+	check_save_and_delete_buttons()
+
+# Enable or disable buttons
+func check_save_and_delete_buttons() -> void:
+	save_button.disabled = selected_structure == null or not Globals.edit_mode
+	# Delete button not used for Base Map
+	delete_button.disabled = selected_structure is BaseMap or not Globals.edit_mode
 
 # Change the editable status of all Text Edits
 func change_text_edits() -> void:
@@ -62,6 +70,9 @@ func _on_Globals_select_structure(structure: Structure) -> void:
 	$Panel/VBoxContainer/StartButton.disabled = true
 	@warning_ignore("unsafe_property_access")
 	$Panel/VBoxContainer/TargetButton.disabled = true
+	
+	check_save_and_delete_buttons()
+	
 	# Set individual ones
 	if selected_structure is BaseMap:
 		structure_label.text = 'Base Map'
@@ -266,3 +277,18 @@ func _on_reset_button_pressed() -> void:
 	
 	# Reset all Waypoints used in last pathfinding
 	Globals.pathfinder.reset()
+
+# Used to delete a structure
+func _on_delete_button_pressed() -> void:
+	if selected_structure is not BaseMap:
+		delete_confirmation_panel.visible = true
+
+# Close confirmation window
+func _on_cancel_button_pressed() -> void:
+	delete_confirmation_panel.visible = false
+
+# Delete structure selected
+func _on_confirm_button_pressed() -> void:
+	if selected_structure is not BaseMap:
+		selected_structure.delete_itself()
+		delete_confirmation_panel.visible = false

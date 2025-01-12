@@ -15,6 +15,10 @@ func update_details(_details: Dictionary) -> void:
 func update_waypoints_time(_new_time: int) -> void:
 	pass
 
+# Delete the structure and data related to it
+func delete_itself() -> void:
+	pass
+
 # Set the position of the structue based on the GPS coordinates
 func set_structure_global_position() -> void:
 	var this_position: Vector3 = equirectangular_conversion(longitude, latitude)

@@ -84,8 +84,6 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 	# Run for each document in collection
 	for structure_document: FirestoreDocument in await Firebase.Firestore.list(collection_path):
 		sub_collection_path = collection_path + "/" + structure_document.doc_name + '/'
-		# Add reference to Waypoints collection
-		structure_document.document[WAYPOINTS_COLLECTION] = {}
 		print(structure_document)
 		
 		# Save data and run for specific sub collection
@@ -97,8 +95,9 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 					structure_document.document[WAYPOINTS_COLLECTION] = {}
 					structure_document.document[BUILDINGS_COLLECTION] = {}
 				else:
-					structure_document.document[WAYPOINTS_COLLECTION] = Globals.offline_data[structure_document.doc_name][WAYPOINTS_COLLECTION]
-					structure_document.document[BUILDINGS_COLLECTION] = Globals.offline_data[structure_document.doc_name][BUILDINGS_COLLECTION]
+					# Convert dictionary to deep copy
+					structure_document.document[WAYPOINTS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[structure_document.doc_name][WAYPOINTS_COLLECTION]) )
+					structure_document.document[BUILDINGS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[structure_document.doc_name][BUILDINGS_COLLECTION]))
 				
 				# Save to Base_Map document id
 				new_offline_data[structure_document.doc_name] = structure_document.document
@@ -123,8 +122,9 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 					structure_document.document[WAYPOINTS_COLLECTION] = {}
 					structure_document.document[ROOMS_COLLECTION] = {}
 				else:
-					structure_document.document[WAYPOINTS_COLLECTION] = Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]
-					structure_document.document[ROOMS_COLLECTION] = Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][ROOMS_COLLECTION]
+					# Convert dictionary to deep copy
+					structure_document.document[WAYPOINTS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]))
+					structure_document.document[ROOMS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][ROOMS_COLLECTION]))
 				
 				# Save to Base_Map document id -> Buildings collection -> Building document id
 				new_offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name] = structure_document.document
@@ -148,14 +148,15 @@ func query_structure_data(collection_path: String, structure_type: Structures) -
 				if new_collection:
 					structure_document.document[WAYPOINTS_COLLECTION] = {}
 				else:
-					structure_document.document[WAYPOINTS_COLLECTION] = Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]
+					# Convert dictionary to deep copy
+					structure_document.document[WAYPOINTS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]))
 				
 				# Save to Base_Map document id -> Buildings collection -> Building document id -> Rooms collection -> Room document id
 				new_offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name] = structure_document.document
 				
 				# Run for Waypoints collection
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION]['waypoints_updated_time']['integerValue']):
+				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name]['waypoints_updated_time']['integerValue']):
 					# Run for each Waypoint document in collection
 					for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
 						# Save to Base_Map document id -> Buildings collection -> Building document id -> Rooms collection -> Room document id -> Waypoints collection -> Waypoint document id
@@ -291,3 +292,9 @@ func save_map_data(id: String, fields: Array[String]) -> void:
 						waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
 				_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
 				break
+
+# Delete the specified document from the cloud
+func delete_structure(path: String, id: String) -> void:
+	var document_parent_collection: FirestoreCollection = Firebase.Firestore.collection('Base_Map/' + path)
+	var document: FirestoreDocument = await document_parent_collection.get_doc(id)
+	var _was_deleted: bool = await document_parent_collection.delete(document)

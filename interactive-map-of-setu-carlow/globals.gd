@@ -33,7 +33,8 @@ func load_offline_data() -> void:
 # Save data for both local and cloud
 func save_data(id: String, fields: Array[String]) -> void:
 	save_offline_data()
-	save_online_data(id, fields)
+	# Save data to cloud
+	firebaseConnector.save_map_data(id, fields)
 
 # Save offline data
 func save_offline_data() -> void:
@@ -42,6 +43,8 @@ func save_offline_data() -> void:
 		print("Saved")
 		file.store_var(offline_data)
 
-# Save data to cloud
-func save_online_data(id: String, fields: Array[String]) -> void:
-	firebaseConnector.save_map_data(id, fields)
+# Delete the structure according to id
+func delete_structure(path: String, id: String) -> void:
+	save_offline_data()
+	# Delete structure from cloud
+	await firebaseConnector.delete_structure(path, id)

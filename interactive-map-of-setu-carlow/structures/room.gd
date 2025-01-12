@@ -69,3 +69,18 @@ func set_structure_global_position() -> void:
 	super.set_structure_global_position()
 	for waypoint: Waypoint in $Waypoints.get_children():
 		waypoint.set_structure_global_position()
+
+# Delete the structure and data related to it
+func delete_itself() -> void:
+	# Delete all Waypoints in the Rooms
+	for waypoint: Waypoint in waypoints.get_children():
+		await waypoint.delete_itself()
+	
+	var building: Building = get_parent().get_parent()
+	var base_map: BaseMap = building.get_parent().get_parent()
+	var rooms_dictionary: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms']
+	var _erased: bool = rooms_dictionary.erase(id)
+	building.update_rooms_time(int(Time.get_unix_time_from_system()))
+	
+	await Globals.delete_structure(base_map.id + '/Buildings/' + building.id + '/Rooms', id)
+	self.queue_free()
