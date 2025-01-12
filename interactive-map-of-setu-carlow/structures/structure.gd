@@ -47,6 +47,8 @@ func equirectangular_conversion(lon: float, lat: float) -> Vector3:
 	var latitude_radians: float = deg_to_rad(lat)
 	
 	# Calculate coordinates using the Equirectangular projection
+	@warning_ignore("unsafe_property_access")
+	@warning_ignore("unsafe_call_argument")
 	var x_coordinate: float = longitude_radians * cos(deg_to_rad(Globals.base_latitude))
 	var z_coordinate: float = latitude_radians
 
