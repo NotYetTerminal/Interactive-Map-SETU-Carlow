@@ -86,19 +86,15 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 			new_structure = waypoint_scene.instantiate()
 			parent.get_child(0).add_child(new_structure)
 	
-	@warning_ignore("unsafe_call_argument")
 	var _fields: Array[String] = new_structure.save_details(structure_id, structure_data)
 	
 	# Add structure to manager
 	match(structure_type):
 		Structures.BuildingStruct:
-			@warning_ignore("unsafe_call_argument")
-			building_manager.add_new_building(new_structure)
+			building_manager.add_new_building(new_structure as Building)
 		Structures.RoomStruct:
-			@warning_ignore("unsafe_call_argument")
-			room_manager.add_new_room(new_structure)
+			room_manager.add_new_room(new_structure as Room)
 		Structures.WaypointStruct:
-			@warning_ignore("unsafe_call_argument")
-			pathfinder.add_new_waypoint(new_structure)
+			pathfinder.add_new_waypoint(new_structure as Waypoint)
 	
 	return new_structure

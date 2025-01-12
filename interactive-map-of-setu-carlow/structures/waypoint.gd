@@ -72,8 +72,7 @@ func update_details(details: Dictionary) -> void:
 		var parent_3: BaseMap = parent_2.get_parent().get_parent()
 		Globals.offline_data[parent_3.id]['Buildings'][parent_2.id]['Rooms'][parent_1.id]['Waypoints'][id] = details
 	
-	@warning_ignore("narrowing_conversion")
-	parent_1.update_waypoints_time(Time.get_unix_time_from_system())
+	parent_1.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	
 	Globals.save_data(id, fields)
 

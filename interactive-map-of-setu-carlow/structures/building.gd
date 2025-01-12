@@ -54,8 +54,7 @@ func update_details(details: Dictionary) -> void:
 	details['Rooms'] = building_data['Rooms']
 	details['Waypoints'] = building_data['Waypoints']
 	Globals.offline_data[base_map.id]['Buildings'][id] = details
-	@warning_ignore("narrowing_conversion")
-	base_map.update_buildings_time(Time.get_unix_time_from_system())
+	base_map.update_buildings_time(int(Time.get_unix_time_from_system()))
 	
 	Globals.save_data(id, fields)
 

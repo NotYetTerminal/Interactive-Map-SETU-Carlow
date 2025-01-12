@@ -6,16 +6,13 @@ var id: String
 var longitude: float
 var latitude: float
 
-@warning_ignore("unused_parameter")
-func save_details(id_in: String, details: Dictionary) -> Array[String]:
+func save_details(_id_in: String, _details: Dictionary) -> Array[String]:
 	return []
 
-@warning_ignore("unused_parameter")
-func update_details(details: Dictionary) -> void:
+func update_details(_details: Dictionary) -> void:
 	pass
 
-@warning_ignore("unused_parameter")
-func update_waypoints_time(new_time: int) -> void:
+func update_waypoints_time(_new_time: int) -> void:
 	pass
 
 # Set the position of the structue based on the GPS coordinates
