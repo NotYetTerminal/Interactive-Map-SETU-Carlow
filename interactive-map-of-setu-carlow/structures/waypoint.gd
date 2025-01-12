@@ -63,30 +63,24 @@ func update_details(details: Dictionary) -> void:
 	# Update Waypoint depending on the parent
 	var parent_1: Structure = get_parent().get_parent()
 	if parent_1 is BaseMap:
-		@warning_ignore("unsafe_property_access")
 		Globals.offline_data[parent_1.id]['Waypoints'][id] = details
 	elif parent_1 is Building:
 		var parent_2: BaseMap = parent_1.get_parent().get_parent()
-		@warning_ignore("unsafe_property_access")
 		Globals.offline_data[parent_2.id]['Buildings'][parent_1.id]['Waypoints'][id] = details
 	elif parent_1 is Room:
 		var parent_2: Building = parent_1.get_parent().get_parent()
 		var parent_3: BaseMap = parent_2.get_parent().get_parent()
-		@warning_ignore("unsafe_property_access")
 		Globals.offline_data[parent_3.id]['Buildings'][parent_2.id]['Rooms'][parent_1.id]['Waypoints'][id] = details
 	
 	@warning_ignore("narrowing_conversion")
 	parent_1.update_waypoints_time(Time.get_unix_time_from_system())
 	
-	@warning_ignore("unsafe_method_access")
 	Globals.save_data(id, fields)
 
 # Called to activate the links of this waypoint
 # May call on connections to do the same
 func activate_links() -> void:
 	for waypoint_id: String in waypoint_connections_ids:
-		@warning_ignore("unsafe_property_access")
-		@warning_ignore("unsafe_method_access")
 		var target_waypoint: Waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
 		# Create new link for connection
 		if waypoint_id not in links_dictionary:
@@ -136,8 +130,6 @@ func reset(to_waypoint: Waypoint = null) -> void:
 	
 	# Run for each waypoint with a connection
 	for waypoint_id : String in waypoint_connections_ids:
-		@warning_ignore("unsafe_property_access")
-		@warning_ignore("unsafe_method_access")
 		var waypoint: Waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
 		# Only run if values changed or final waypoint
 		if waypoint.from_waypoint != null or waypoint == temp_from_waypoint:

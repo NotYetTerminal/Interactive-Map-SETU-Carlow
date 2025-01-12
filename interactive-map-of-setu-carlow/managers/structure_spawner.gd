@@ -42,8 +42,7 @@ func spawn_base_map(map_data: Dictionary) -> void:
 	# Spawn Waypoints
 	for waypoint_id: String in map_data[base_map_id]["Waypoints"]:
 		@warning_ignore("unsafe_call_argument")
-		@warning_ignore("return_value_discarded")
-		spawn_structure(waypoint_id, map_data[base_map_id]["Waypoints"][waypoint_id], new_base_map, Structures.WaypointStruct) 
+		var _structure: Structure = spawn_structure(waypoint_id, map_data[base_map_id]["Waypoints"][waypoint_id], new_base_map, Structures.WaypointStruct) 
 	
 	# Spawn Buildings
 	for building_id: String in map_data[base_map_id]["Buildings"]:
@@ -57,8 +56,7 @@ func spawn_building(building_id: String, building_data: Dictionary, parent: Stru
 	# Spawn Waypoints
 	for waypoint_id: String in building_data["Waypoints"]:
 		@warning_ignore("unsafe_call_argument")
-		@warning_ignore("return_value_discarded")
-		spawn_structure(waypoint_id, building_data["Waypoints"][waypoint_id], parent_building, Structures.WaypointStruct)
+		var _structure: Structure = spawn_structure(waypoint_id, building_data["Waypoints"][waypoint_id], parent_building, Structures.WaypointStruct)
 	
 	# Spawn Rooms
 	for room_id: String in building_data["Rooms"]:
@@ -72,8 +70,7 @@ func spawn_room(room_id: String, room_data: Dictionary, parent: Structure) -> vo
 	# Spawn Waypoints
 	for waypoint_id: String in room_data["Waypoints"]:
 		@warning_ignore("unsafe_call_argument")
-		@warning_ignore("return_value_discarded")
-		spawn_structure(waypoint_id, room_data["Waypoints"][waypoint_id], parent_room, Structures.WaypointStruct)
+		var _structure: Structure = spawn_structure(waypoint_id, room_data["Waypoints"][waypoint_id], parent_room, Structures.WaypointStruct)
 
 func spawn_structure(structure_id: String, structure_data: Dictionary, parent: Structure, structure_type: Structures) -> Structure:
 	# Create new scene

@@ -7,7 +7,6 @@ var _all_waypoints: Dictionary = {}
 var final_waypoint: Waypoint
 
 func _ready() -> void:
-	@warning_ignore("unsafe_property_access")
 	Globals.pathfinder = self
 
 func add_new_waypoint(new_waypoint: Waypoint) -> void:
