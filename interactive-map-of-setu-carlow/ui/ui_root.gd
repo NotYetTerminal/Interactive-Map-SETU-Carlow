@@ -46,7 +46,10 @@ signal edit_mode_toggled
 
 # Window panels
 @onready var delete_confirmation_panel: Panel = $DeletionConfirmationPanel
-@onready var add_structure_panel: Panel = $NewStructurePanel
+@onready var add_structure_panel: Panel = $AddStructurePanel
+@onready var building_button: Button = $AddStructurePanel/Panel/VBoxContainer/BuildingButton
+@onready var room_button: Button = $AddStructurePanel/Panel/VBoxContainer/RoomButton
+@onready var waypoint_button: Button = $AddStructurePanel/Panel/VBoxContainer/WaypointButton
 
 var selected_structure: Structure
 var starting_waypoint: Waypoint
@@ -326,4 +329,11 @@ func _on_confirm_button_pressed() -> void:
 
 # Open up choosing window
 func _on_add_button_pressed() -> void:
-	pass
+	if selected_structure is not Waypoint:
+		building_button.visible = false
+		room_button.visible = false
+		if selected_structure is BaseMap:
+			building_button.visible = true
+		elif selected_structure is Building:
+			room_button.visible = true
+		add_structure_panel.visible = false
