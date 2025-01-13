@@ -7,9 +7,6 @@ const Base_Map: int = 0
 const BuildingStruct: int = 1
 const RoomStruct: int = 2
 
-# New offline data from database
-var new_offline_data: Dictionary
-
 const BASE_MAP_COLLECTION: String = 'Base_Map'
 const BUILDINGS_COLLECTION: String = 'Buildings'
 const ROOMS_COLLECTION: String = 'Rooms'
@@ -72,99 +69,75 @@ func delete_auth_file() -> void:
 # Query the map data down from Firebase to sync with local saved data.
 func query_data() -> void:
 	print("Start query data.")
-	await query_structure_data('Base_Map', Structures.Base_Map)
+	await query_structure_data('Base_Map', Structures.Base_Map, FirestoreDocument.new(), Globals.offline_data)
 	Globals.save_offline_data()
 	map_data_loaded.emit()
 
 # Query the data for a structure recursively depending on last collection updated times
-func query_structure_data(collection_path: String, structure_type: Structures) -> void:
-	var sub_collection_path: String
+func query_structure_data(collection_path: String, structure_type: Structures, parent_document: FirestoreDocument, parent_structure_collection: Dictionary) -> void:
 	print('Starting querying: ' + collection_path)
+	var waypoints_updated: bool
+	var child_structure_updated: bool
+	var child_structure_updated_time_name: String
+	var child_structure_collection_name: String
+	var child_structure_type: Structures
 	
 	# Run for each document in collection
 	for structure_document: FirestoreDocument in await Firebase.Firestore.list(collection_path):
-		sub_collection_path = collection_path + "/" + structure_document.doc_name + '/'
+		var sub_collection_path: String = collection_path + "/" + structure_document.doc_name + '/'
 		print(structure_document)
 		
-		# Save data and run for specific sub collection
 		match structure_type:
 			Structures.Base_Map:
-				# Add reference to collections
-				var new_collection: bool = structure_document.doc_name not in Globals.offline_data.keys()
-				if new_collection:
-					structure_document.document[WAYPOINTS_COLLECTION] = {}
-					structure_document.document[BUILDINGS_COLLECTION] = {}
-				else:
-					# Convert dictionary to deep copy
-					structure_document.document[WAYPOINTS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[structure_document.doc_name][WAYPOINTS_COLLECTION]) )
-					structure_document.document[BUILDINGS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[structure_document.doc_name][BUILDINGS_COLLECTION]))
-				
-				# Save to Base_Map document id
-				new_offline_data[structure_document.doc_name] = structure_document.document
-				
-				# Run for Waypoints collection
-				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[structure_document.doc_name]['waypoints_updated_time']['integerValue']):
-					# Run for each Waypoint document in collection
-					for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
-						# Save to Base_Map document id -> Waypoints collection -> Waypoint document id
-						new_offline_data[structure_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name] = waypoint_document.document
-				
-				# Run for Buildings collection if updated
-				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['buildings_updated_time']['integerValue']) > int(Globals.offline_data[structure_document.doc_name]['buildings_updated_time']['integerValue']):
-					await query_structure_data(sub_collection_path + BUILDINGS_COLLECTION, Structures.BuildingStruct)
+				# Save to Base_Map document
+				parent_document.document[structure_document.doc_name] = structure_document.document
+				child_structure_updated_time_name = 'buildings_updated_time'
+				child_structure_collection_name = BUILDINGS_COLLECTION
+				child_structure_type = Structures.BuildingStruct
 			Structures.BuildingStruct:
-				# Add reference to collections
-				@warning_ignore("unsafe_method_access")
-				var new_collection: bool = collection_path.split('/')[1] not in Globals.offline_data.keys() or structure_document.doc_name not in Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION].keys()
-				if new_collection:
-					structure_document.document[WAYPOINTS_COLLECTION] = {}
-					structure_document.document[ROOMS_COLLECTION] = {}
-				else:
-					# Convert dictionary to deep copy
-					structure_document.document[WAYPOINTS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]))
-					structure_document.document[ROOMS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][ROOMS_COLLECTION]))
-				
 				# Save to Base_Map document id -> Buildings collection -> Building document id
-				new_offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name] = structure_document.document
-				
-				# Run for Waypoints collection
-				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name]['waypoints_updated_time']['integerValue']):
-					# Run for each Waypoint document in collection
-					for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
-						# Save to Base_Map document id -> Buildings collection -> Building document id -> Waypoints collection -> Waypoint document id
-						new_offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name] = waypoint_document.document
-				
-				# Run for Rooms collection if updated
-				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['rooms_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][structure_document.doc_name]['rooms_updated_time']['integerValue']):
-					await query_structure_data(sub_collection_path + ROOMS_COLLECTION, Structures.RoomStruct)
+				parent_document.document[BUILDINGS_COLLECTION][structure_document.doc_name] = structure_document.document
+				child_structure_updated_time_name = 'rooms_updated_time'
+				child_structure_collection_name = ROOMS_COLLECTION
+				child_structure_type = Structures.RoomStruct
 			Structures.RoomStruct:
-				# Add reference to collection
-				@warning_ignore("unsafe_method_access")
-				var new_collection: bool = collection_path.split('/')[1] not in Globals.offline_data.keys() or collection_path.split('/')[3] not in Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION].keys() or structure_document.doc_name not in Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION].keys()
-				if new_collection:
-					structure_document.document[WAYPOINTS_COLLECTION] = {}
-				else:
-					# Convert dictionary to deep copy
-					structure_document.document[WAYPOINTS_COLLECTION] = str_to_var(var_to_str(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION]))
-				
 				# Save to Base_Map document id -> Buildings collection -> Building document id -> Rooms collection -> Room document id
-				new_offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name] = structure_document.document
-				
-				# Run for Waypoints collection
+				parent_document.document[ROOMS_COLLECTION][structure_document.doc_name] = structure_document.document
+		
+		var new_collection: bool = parent_structure_collection.is_empty() or structure_document.doc_name not in parent_structure_collection.keys()
+		if new_collection:
+			waypoints_updated = true
+			child_structure_updated = true
+		else:
+			@warning_ignore("unsafe_call_argument")
+			waypoints_updated = int(structure_document.document['waypoints_updated_time']['integerValue']) > int(parent_structure_collection[structure_document.doc_name]['waypoints_updated_time']['integerValue'])
+			# Check child structure
+			if structure_type != Structures.RoomStruct:
 				@warning_ignore("unsafe_call_argument")
-				if new_collection || int(structure_document.document['waypoints_updated_time']['integerValue']) > int(Globals.offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name]['waypoints_updated_time']['integerValue']):
-					# Run for each Waypoint document in collection
-					for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
-						# Save to Base_Map document id -> Buildings collection -> Building document id -> Rooms collection -> Room document id -> Waypoints collection -> Waypoint document id
-						new_offline_data[collection_path.split('/')[1]][BUILDINGS_COLLECTION][collection_path.split('/')[3]][ROOMS_COLLECTION][structure_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name] = waypoint_document.document
+				child_structure_updated = int(structure_document.document[child_structure_updated_time_name]['integerValue']) > int(parent_structure_collection[structure_document.doc_name][child_structure_updated_time_name]['integerValue'])
+		
+		# Run for Waypoints collection if updated
+		if new_collection || waypoints_updated:
+			structure_document.document[WAYPOINTS_COLLECTION] = {}
+			# Run for each Waypoint document in collection
+			for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
+				# Save to Parent Structure -> Waypoints collection -> Waypoint document id
+				structure_document.document[WAYPOINTS_COLLECTION][waypoint_document.doc_name] = waypoint_document.document
+		else:
+			structure_document.document[WAYPOINTS_COLLECTION] = parent_structure_collection[structure_document.doc_name][WAYPOINTS_COLLECTION]
+		
+		# Run for child structure collection if updated
+		if new_collection || child_structure_updated:
+			structure_document.document[child_structure_collection_name] = {}
+			# If the collection is new then it dosen't exist in Globals data so pass null
+			var collection_to_pass: Dictionary = {} if new_collection else parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
+			await query_structure_data(sub_collection_path + child_structure_collection_name, child_structure_type, structure_document, collection_to_pass)
+		else:
+			structure_document.document[child_structure_collection_name] = parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
 	
 	# TODO if needed make this concurrent for speedup, by removing await
 	if structure_type == Structures.Base_Map:
-		Globals.offline_data = new_offline_data
+		Globals.offline_data = parent_document.document
 
 # Save the map data into the cloud
 func save_map_data(id: String, fields: Array[String]) -> void:
