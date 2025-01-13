@@ -28,7 +28,7 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 func check_save_and_delete_buttons() -> void:
 	save_button.disabled = selected_structure == null or not Globals.edit_mode
 	# Delete button not used for Base Map
-	delete_button.disabled = selected_structure is BaseMap or not Globals.edit_mode
+	delete_button.disabled = selected_structure == null or selected_structure is BaseMap or not Globals.edit_mode
 
 # Change the editable status of all Text Edits
 func change_text_edits() -> void:
@@ -146,6 +146,8 @@ func show_waypoint_details(select_struct: Waypoint) -> void:
 
 # Save variables on Save button press
 func _on_save_button_pressed() -> void:
+	if selected_structure == null:
+		return
 	if selected_structure is BaseMap:
 		@warning_ignore("unsafe_property_access")
 		@warning_ignore("unsafe_call_argument")
@@ -206,6 +208,8 @@ func _on_save_button_pressed() -> void:
 
 
 func _on_start_button_pressed() -> void:
+	if selected_structure == null:
+		return
 	# If previously selected change back colour
 	if starting_waypoint != null:
 		starting_waypoint.change_colour(Color.LIGHT_GRAY)
@@ -218,6 +222,8 @@ func _on_start_button_pressed() -> void:
 	check_pathfinding_button()
 
 func _on_target_button_pressed() -> void:
+	if selected_structure == null:
+		return
 	# If previously selected change back colour
 	if end_waypoint != null:
 		end_waypoint.change_colour(Color.LIGHT_GRAY)
@@ -292,3 +298,4 @@ func _on_confirm_button_pressed() -> void:
 	if selected_structure is not BaseMap:
 		selected_structure.delete_itself()
 		delete_confirmation_panel.visible = false
+		selected_structure = null

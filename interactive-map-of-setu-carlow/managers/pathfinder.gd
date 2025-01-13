@@ -15,6 +15,9 @@ func add_new_waypoint(new_waypoint: Waypoint) -> void:
 func get_waypoint(waypoint_id: String) -> Waypoint:
 	return _all_waypoints[waypoint_id]
 
+func remove_waypoint(waypoint_id: String) -> void:
+	var _erased: bool = _all_waypoints.erase(waypoint_id)
+
 # Changes edit mode for waypoints
 func _on_ui_root_edit_mode_toggled() -> void:
 	for waypoint: Waypoint in _all_waypoints.values():

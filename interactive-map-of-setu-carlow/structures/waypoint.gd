@@ -92,6 +92,7 @@ func delete_itself() -> void:
 		waypoint.remove_connection(id)
 	
 	await Globals.delete_structure(collection_path, id)
+	Globals.pathfinder.remove_waypoint(id)
 	self.queue_free()
 
 # Removes the id passed in from the connections
