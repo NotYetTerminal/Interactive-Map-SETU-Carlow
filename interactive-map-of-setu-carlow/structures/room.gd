@@ -4,7 +4,7 @@ class_name Room
 var floor_number: int
 var parent_id: String
 
-var room_name: String
+var structure_name: String
 var description: String
 var lectures: String
 
@@ -19,7 +19,7 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
 		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
 		"floor_number" if floor_number != int(details["floor_number"]["integerValue"]) else "",
-		"name" if room_name != details["name"]["stringValue"] else "",
+		"name" if structure_name != details["name"]["stringValue"] else "",
 		"description" if description != details["description"]["stringValue"] else "",
 		"lecturers" if lectures != details["lecturers"]["stringValue"] else "",
 		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else ""
@@ -33,7 +33,7 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	floor_number = int(details["floor_number"]["integerValue"])
 	parent_id = details["parent_id"]["stringValue"]
 	
-	room_name = details["name"]["stringValue"]
+	structure_name = details["name"]["stringValue"]
 	description = details["description"]["stringValue"]
 	lectures = details["lecturers"]["stringValue"]
 	

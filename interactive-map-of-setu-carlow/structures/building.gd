@@ -1,7 +1,7 @@
 extends Structure
 class_name Building
 
-var building_name: String
+var structure_name: String
 var description: String
 var building_letter: String
 
@@ -11,7 +11,7 @@ var building_letter: String
 var waypoints_updated_time: int
 var rooms_updated_time: int
 
-# Contains textures for buildings { building_name: String: texture_scene: PackedScene }
+# Contains textures for buildings { structure_name: String: texture_scene: PackedScene }
 @export var map_textures_dictionary: Dictionary
 
 # Save details from map_data
@@ -20,7 +20,7 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
 		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
-		"name" if building_name != details["name"]["stringValue"] else "",
+		"name" if structure_name != details["name"]["stringValue"] else "",
 		"description" if description != details["description"]["stringValue"] else "",
 		"building_letter" if building_letter != details["building_letter"]["stringValue"] else "",
 		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
@@ -31,7 +31,7 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	longitude = details["longitude"]["doubleValue"]
 	latitude = details["latitude"]["doubleValue"]
 	
-	building_name = details["name"]["stringValue"]
+	structure_name = details["name"]["stringValue"]
 	description = details["description"]["stringValue"]
 	building_letter = details["building_letter"]["stringValue"]
 	
@@ -103,10 +103,10 @@ func get_offline_data_waypoints() -> Dictionary:
 
 # Adds in the texture for the building
 func add_map_texture() -> void:
-	if building_name in map_textures_dictionary.keys():
-		var building_texture_scene: PackedScene = map_textures_dictionary[building_name]
+	if structure_name in map_textures_dictionary.keys():
+		var building_texture_scene: PackedScene = map_textures_dictionary[structure_name]
 		var building_texture_node: Node3D = building_texture_scene.instantiate()
 		add_child(building_texture_node)
 	else:
-		print("Not found key: " + building_name)
+		print("Not found key: " + structure_name)
 		print(map_textures_dictionary)
