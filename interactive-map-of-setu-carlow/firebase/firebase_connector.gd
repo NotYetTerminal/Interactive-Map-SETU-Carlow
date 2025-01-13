@@ -157,8 +157,31 @@ func save_map_data(id: String, fields: Array[String]) -> void:
 			@warning_ignore("unsafe_method_access")
 			base_map_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][field_name].values()[0])
 		var _document: FirestoreDocument = await base_map_collection.update(base_map_document)
+		return
+	# Compare Waypoints last updated time
+	if base_map_document.document['waypoints_updated_time']['integerValue'] != waypoints_updated_time:
+		@warning_ignore("unsafe_method_access")
+		@warning_ignore("unsafe_call_argument")
+		base_map_document.add_or_update_field('waypoints_updated_time', int(Globals.offline_data[base_map_id]['waypoints_updated_time'].values()[0]))
+		var _document: FirestoreDocument = await base_map_collection.update(base_map_document)
+		
+		for waypoint_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION):
+			if waypoint_document.doc_name == id:
+				for field_name: String in fields:
+					if field_name == "":
+						continue
+					if field_name == "waypoint_connections_ids":
+						var connections_array: Array[String] = []
+						for id_dictionaries: Dictionary in Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"]["arrayValue"]["values"]:
+							connections_array.append(id_dictionaries.values()[0])
+						waypoint_document.add_or_update_field(field_name, connections_array)
+					else:
+						@warning_ignore("unsafe_method_access")
+						waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
+				_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
+				return
 	# Compare Buildings last updated time
-	elif base_map_document.document['buildings_updated_time']['integerValue'] != buildings_updated_time:
+	if base_map_document.document['buildings_updated_time']['integerValue'] != buildings_updated_time:
 		@warning_ignore("unsafe_method_access")
 		@warning_ignore("unsafe_call_argument")
 		base_map_document.add_or_update_field('buildings_updated_time', int(Globals.offline_data[base_map_id]['buildings_updated_time'].values()[0]))
@@ -176,9 +199,31 @@ func save_map_data(id: String, fields: Array[String]) -> void:
 					@warning_ignore("unsafe_method_access")
 					building_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][field_name].values()[0])
 				_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION).update(building_document)
-				break
+				return
+			# Save Waypoints data
+			if building_document.document['waypoints_updated_time']['integerValue'] != waypoints_updated_time:
+				@warning_ignore("unsafe_method_access")
+				@warning_ignore("unsafe_call_argument")
+				building_document.add_or_update_field('waypoints_updated_time', int(Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['waypoints_updated_time'].values()[0]))
+				_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION).update(building_document)
+				
+				for waypoint_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION):
+					if waypoint_document.doc_name == id:
+						for field_name: String in fields:
+							if field_name == "":
+								continue
+							if field_name == "waypoint_connections_ids":
+								var connections_array: Array[String] = []
+								for id_dictionaries: Dictionary in Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"]["arrayValue"]["values"]:
+									connections_array.append(id_dictionaries.values()[0])
+								waypoint_document.add_or_update_field(field_name, connections_array)
+							else:
+								@warning_ignore("unsafe_method_access")
+								waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
+						_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
+						return
 			# Save Rooms data
-			elif building_document.document['rooms_updated_time']['integerValue'] != rooms_updated_time:
+			if building_document.document['rooms_updated_time']['integerValue'] != rooms_updated_time:
 				@warning_ignore("unsafe_method_access")
 				@warning_ignore("unsafe_call_argument")
 				building_document.add_or_update_field('rooms_updated_time', int(Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time'].values()[0]))
@@ -195,7 +240,7 @@ func save_map_data(id: String, fields: Array[String]) -> void:
 								@warning_ignore("unsafe_method_access")
 							room_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][field_name].values()[0])
 						_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION).update(room_document)
-						break
+						return
 					# Save Waypoints data
 					elif room_document.document['waypoints_updated_time']['integerValue'] != waypoints_updated_time:
 						@warning_ignore("unsafe_method_access")
@@ -217,54 +262,7 @@ func save_map_data(id: String, fields: Array[String]) -> void:
 										@warning_ignore("unsafe_method_access")
 										waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
 								_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION + '/' + room_document.doc_name + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
-								break
-						break
-				break
-			# Save Waypoints data
-			elif building_document.document['waypoints_updated_time']['integerValue'] != waypoints_updated_time:
-				@warning_ignore("unsafe_method_access")
-				@warning_ignore("unsafe_call_argument")
-				building_document.add_or_update_field('waypoints_updated_time', int(Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['waypoints_updated_time'].values()[0]))
-				_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION).update(building_document)
-				
-				for waypoint_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION):
-					if waypoint_document.doc_name == id:
-						for field_name: String in fields:
-							if field_name == "":
-								continue
-							if field_name == "waypoint_connections_ids":
-								var connections_array: Array[String] = []
-								for id_dictionaries: Dictionary in Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"]["arrayValue"]["values"]:
-									connections_array.append(id_dictionaries.values()[0])
-								waypoint_document.add_or_update_field(field_name, connections_array)
-							else:
-								@warning_ignore("unsafe_method_access")
-								waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
-						_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
-						break
-				break
-	# Compare Waypoints last updated time
-	elif base_map_document.document['waypoints_updated_time']['integerValue'] != waypoints_updated_time:
-		@warning_ignore("unsafe_method_access")
-		@warning_ignore("unsafe_call_argument")
-		base_map_document.add_or_update_field('waypoints_updated_time', int(Globals.offline_data[base_map_id]['waypoints_updated_time'].values()[0]))
-		var _document: FirestoreDocument = await base_map_collection.update(base_map_document)
-		
-		for waypoint_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION):
-			if waypoint_document.doc_name == id:
-				for field_name: String in fields:
-					if field_name == "":
-						continue
-					if field_name == "waypoint_connections_ids":
-						var connections_array: Array[String] = []
-						for id_dictionaries: Dictionary in Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"]["arrayValue"]["values"]:
-							connections_array.append(id_dictionaries.values()[0])
-						waypoint_document.add_or_update_field(field_name, connections_array)
-					else:
-						@warning_ignore("unsafe_method_access")
-						waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name].values()[0])
-				_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
-				break
+								return
 
 # Delete the specified document from the cloud
 func delete_structure(path: String, id: String) -> void:

@@ -61,40 +61,28 @@ func check_toggle() -> void:
 func update_details(details: Dictionary) -> void:
 	var fields: Array[String] = save_details(id, details)
 	# Update Waypoint depending on the parent
-	var parent_1: Structure = get_parent().get_parent()
-	if parent_1 is BaseMap:
-		Globals.offline_data[parent_1.id]['Waypoints'][id] = details
-	elif parent_1 is Building:
-		var parent_2: BaseMap = parent_1.get_parent().get_parent()
-		Globals.offline_data[parent_2.id]['Buildings'][parent_1.id]['Waypoints'][id] = details
-	elif parent_1 is Room:
-		var parent_2: Building = parent_1.get_parent().get_parent()
-		var parent_3: BaseMap = parent_2.get_parent().get_parent()
-		Globals.offline_data[parent_3.id]['Buildings'][parent_2.id]['Rooms'][parent_1.id]['Waypoints'][id] = details
-	
-	parent_1.update_waypoints_time(int(Time.get_unix_time_from_system()))
+	var parent_structure: Structure = get_parent().get_parent()
+	parent_structure.get_offline_data_waypoints()[id] = details
+	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	
 	Globals.save_data(id, fields)
 
 # Delete the structure and data related to it
 func delete_itself() -> void:
-	var waypoints_dictionary: Dictionary
 	var collection_path: String
 	
 	var parent_1: Structure = get_parent().get_parent()
 	if parent_1 is BaseMap:
-		waypoints_dictionary = Globals.offline_data[parent_1.id]['Waypoints']
 		collection_path = parent_1.id + '/Waypoints'
 	elif parent_1 is Building:
 		var parent_2: BaseMap = parent_1.get_parent().get_parent()
-		waypoints_dictionary = Globals.offline_data[parent_2.id]['Buildings'][parent_1.id]['Waypoints']
 		collection_path = parent_2.id + '/Buildings/' + parent_1.id + '/Waypoints'
 	elif parent_1 is Room:
 		var parent_2: Building = parent_1.get_parent().get_parent()
 		var parent_3: BaseMap = parent_2.get_parent().get_parent()
-		waypoints_dictionary = Globals.offline_data[parent_3.id]['Buildings'][parent_2.id]['Rooms'][parent_1.id]['Waypoints']
 		collection_path = parent_3.id + '/Buildings/' + parent_2.id + '/Rooms/' + parent_1.id + '/Waypoints'
 	
+	var waypoints_dictionary: Dictionary = parent_1.get_offline_data_waypoints()
 	var _erased: bool = waypoints_dictionary.erase(id)
 	parent_1.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	
@@ -113,6 +101,13 @@ func remove_connection(id_to_remove: String) -> void:
 	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	# Remove from connections
 	waypoint_connections_ids.erase(id_to_remove)
+	var global_data_connections_array: Array = parent_structure.get_offline_data_waypoints()[id]['waypoint_connections_ids']['arrayValue']['values']
+	var deletion_dictionary: Dictionary
+	for connection_dictionary: Dictionary in global_data_connections_array:
+		if connection_dictionary['stringValue'] == id_to_remove:
+			deletion_dictionary = connection_dictionary
+			break
+	global_data_connections_array.erase(deletion_dictionary)
 	# Update save data
 	Globals.save_data(id, ["waypoint_connections_ids"])
 	

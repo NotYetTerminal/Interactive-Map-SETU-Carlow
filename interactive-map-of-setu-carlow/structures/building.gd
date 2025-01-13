@@ -96,6 +96,11 @@ func delete_itself() -> void:
 	await Globals.delete_structure(base_map.id + '/Buildings', id)
 	self.queue_free()
 
+# Used by Waypoint children to get data
+func get_offline_data_waypoints() -> Dictionary:
+	var base_map: BaseMap = get_parent().get_parent()
+	return Globals.offline_data[base_map.id]['Buildings'][id]['Waypoints']
+
 # Adds in the texture for the building
 func add_map_texture() -> void:
 	if building_name in map_textures_dictionary.keys():

@@ -84,3 +84,9 @@ func delete_itself() -> void:
 	
 	await Globals.delete_structure(base_map.id + '/Buildings/' + building.id + '/Rooms', id)
 	self.queue_free()
+
+# Used by Waypoint children to get data
+func get_offline_data_waypoints() -> Dictionary:
+	var building: Building = get_parent().get_parent()
+	var base_map: BaseMap = building.get_parent().get_parent()
+	return Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]['Waypoints']

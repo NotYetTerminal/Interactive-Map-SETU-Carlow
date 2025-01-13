@@ -48,6 +48,10 @@ func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
 	Globals.offline_data[id]['waypoints_updated_time'] = {'integerValue': str(waypoints_updated_time)}
 
+# Used by Waypoint children to get data
+func get_offline_data_waypoints() -> Dictionary:
+	return Globals.offline_data[id]['Waypoints']
+
 # Set global position, and update children
 func set_structure_global_position() -> void:
 	super.set_structure_global_position()
