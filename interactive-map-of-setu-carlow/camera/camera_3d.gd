@@ -1,5 +1,8 @@
 extends Camera3D
 
+# Currently selected structure
+signal select_structure(selected_structure: Structure)
+
 var moving_camera: bool = false
 var screen_ratio: float
 
@@ -61,5 +64,7 @@ func ray_cast_select(input_event: InputEventMouseButton) -> void:
 	print("Latitude: " + str((from.z / 10000) + Globals.base_latitude))
 	print()
 	
-	if "collider" in raycast_result.keys():
-		Globals.select_structure.emit(raycast_result["collider"])
+	if "collider" in raycast_result.keys() and raycast_result["collider"] is Structure:
+		select_structure.emit(raycast_result["collider"])
+	else:
+		select_structure.emit(null)

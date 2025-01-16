@@ -1,6 +1,10 @@
 extends Control
 
 signal edit_mode_toggled
+signal spawn_specific_structure(parent: Structure, structure_type: Structures)
+
+# Used for distinguishing different structure types
+enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 
 # Pathfinding Elements
 @onready var start_waypoint_label: Label = $PathfindingPanel/VBoxContainer/StartWaypointLabel
@@ -55,9 +59,6 @@ var selected_structure: Structure
 var starting_waypoint: Waypoint
 var end_waypoint: Waypoint
 
-func _ready() -> void:
-	var _error: int = Globals.connect('select_structure', _on_Globals_select_structure)
-
 # TODO add proper authentication
 # Edit mode toggled
 func _on_check_button_toggled(toggled_on: bool) -> void:
@@ -77,15 +78,13 @@ func check_save_and_delete_buttons() -> void:
 # Change the editable status of all Text Edits
 func change_text_edits() -> void:
 	for scene: Control in text_edit_v_box_container.get_children():
-		if scene is TextEdit:
-			(scene as TextEdit).editable = Globals.edit_mode
 		if scene is VBoxContainer:
 			for inner_scene: Control in scene.get_children():
 				if inner_scene is TextEdit:
-					(inner_scene as TextEdit).editable = Globals.edit_mode
+					(inner_scene as TextEdit).editable = selected_structure != null and Globals.edit_mode
 
 # Called when a structure is selected
-func _on_Globals_select_structure(structure: Structure) -> void:
+func _select_structure(structure: Structure) -> void:
 	# Change last selection colour back
 	if selected_structure != null && selected_structure is Waypoint && selected_structure != starting_waypoint && selected_structure != end_waypoint:
 		(selected_structure as Waypoint).change_colour(Color.LIGHT_GRAY)
@@ -93,9 +92,14 @@ func _on_Globals_select_structure(structure: Structure) -> void:
 	selected_structure = structure
 	
 	# Set common values
-	id_label.text = 'ID: ' + selected_structure.id
-	longitude_text_edit.text = str(selected_structure.longitude)
-	latitude_text_edit.text = str(selected_structure.latitude)
+	if selected_structure != null:
+		id_label.text = 'ID: ' + selected_structure.id
+		longitude_text_edit.text = str(selected_structure.longitude)
+		latitude_text_edit.text = str(selected_structure.latitude)
+	else:
+		id_label.text = 'ID: '
+		longitude_text_edit.text = ""
+		latitude_text_edit.text = ""
 	
 	name_v_box_container.visible = false
 	description_v_box_container.visible = false
@@ -128,11 +132,16 @@ func _on_Globals_select_structure(structure: Structure) -> void:
 		structure_type_label.text = 'Room'
 		show_room_details(selected_structure as Room)
 	elif selected_structure is Waypoint:
-		(selected_structure as Waypoint).change_colour(Color.BLACK)
+		if selected_structure != starting_waypoint && selected_structure != end_waypoint:
+			(selected_structure as Waypoint).change_colour(Color.BLACK)
 		structure_type_label.text = 'Waypoint'
 		show_waypoint_details(selected_structure as Waypoint)
 		start_button.disabled = false
 		target_button.disabled = false
+
+# Called from the camera
+func _on_camera_3d_select_structure(structure: Structure) -> void:
+	_select_structure(structure)
 
 # Show elements for BaseMap
 func show_base_map_details(select_struct: BaseMap) -> void:
@@ -317,7 +326,7 @@ func _on_delete_button_pressed() -> void:
 		delete_confirmation_panel.visible = true
 
 # Close confirmation window
-func _on_cancel_button_pressed() -> void:
+func _on_delete_cancel_button_pressed() -> void:
 	delete_confirmation_panel.visible = false
 
 # Delete structure selected
@@ -337,3 +346,26 @@ func _on_add_button_pressed() -> void:
 		elif selected_structure is Building:
 			room_button.visible = true
 		add_structure_panel.visible = false
+
+# Spawn the structure selected
+func _on_building_button_pressed() -> void:
+	if selected_structure is not Waypoint:
+		spawn_specific_structure.emit(selected_structure, Structures.BuildingStruct)
+
+
+func _on_room_button_pressed() -> void:
+	if selected_structure is not Waypoint:
+		spawn_specific_structure.emit(selected_structure, Structures.RoomStruct)
+
+
+func _on_waypoint_button_pressed() -> void:
+	if selected_structure is not Waypoint:
+		spawn_specific_structure.emit(selected_structure, Structures.WaypointStruct)
+
+# Close structure select screen
+func _on_add_structure_cancel_button_pressed() -> void:
+	add_structure_panel.visible = true
+
+
+func _on_structure_spawner_select_spawned_structure(structure: Structure) -> void:
+	_select_structure(structure)

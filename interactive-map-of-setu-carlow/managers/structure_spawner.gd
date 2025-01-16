@@ -18,6 +18,8 @@ const WaypointStruct: int = 3
 
 # Signal to Pathfinder to connect Waypoints
 signal all_structures_done
+# Signal to UI to select structure created
+signal select_spawned_structure(structure: Structure)
 
 # Create and render structures after map data is loaded
 func _on_firebase_connector_map_data_loaded() -> void:
@@ -98,3 +100,8 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 			pathfinder.add_new_waypoint(new_structure as Waypoint)
 	
 	return new_structure
+
+
+func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Structures) -> void:
+	var structure: Structure = spawn_structure("e", {}, parent, structure_type)
+	select_spawned_structure.emit(structure)

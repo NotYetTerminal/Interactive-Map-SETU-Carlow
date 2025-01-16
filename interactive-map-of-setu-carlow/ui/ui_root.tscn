@@ -316,7 +316,7 @@ alignment = 1
 layout_mode = 2
 text = "Delete"
 
-[node name="CancelButton" type="Button" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
+[node name="DeleteCancelButton" type="Button" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
@@ -372,7 +372,7 @@ text = "Add Room"
 layout_mode = 2
 text = "Add Waypoint"
 
-[node name="CancelButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
+[node name="AddStructureCancelButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
@@ -385,4 +385,8 @@ text = "Cancel"
 [connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
 [connection signal="pressed" from="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer/DeleteButton" to="." method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer/DeleteCancelButton" to="." method="_on_delete_cancel_button_pressed"]
+[connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/BuildingButton" to="." method="_on_building_button_pressed"]
+[connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/RoomButton" to="." method="_on_room_button_pressed"]
+[connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/WaypointButton" to="." method="_on_waypoint_button_pressed"]
+[connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/AddStructureCancelButton" to="." method="_on_add_structure_cancel_button_pressed"]

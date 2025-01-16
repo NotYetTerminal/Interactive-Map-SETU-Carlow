@@ -9,10 +9,6 @@ var base_latitude: float
 
 var pathfinder: Pathfinder
 
-# Currently selected structure
-@warning_ignore("unused_signal")
-signal select_structure(selected_structure: Structure)
-
 # Offline data used to store map data
 # TODO change this to an Object
 var offline_data: Dictionary
