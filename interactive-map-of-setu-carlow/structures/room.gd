@@ -54,7 +54,7 @@ func update_details(details: Dictionary) -> void:
 	Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id] = details
 	building.update_rooms_time(int(Time.get_unix_time_from_system()))
 	
-	Globals.save_data(id, fields)
+	Globals.save_data(id, fields, building.id)
 
 # Used by children to update time
 func update_waypoints_time(new_time: int) -> void:

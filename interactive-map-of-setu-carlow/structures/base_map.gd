@@ -21,6 +21,9 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	longitude = details["longitude"]["doubleValue"]
 	latitude = details["latitude"]["doubleValue"]
 	
+	Globals.base_longitude = longitude
+	Globals.base_latitude = latitude
+	
 	@warning_ignore("unsafe_call_argument")
 	waypoints_updated_time = int(details["waypoints_updated_time"]["integerValue"])
 	@warning_ignore("unsafe_call_argument")
@@ -37,7 +40,7 @@ func update_details(details: Dictionary) -> void:
 	details['Waypoints'] = base_map_data['Waypoints']
 	
 	Globals.offline_data[id] = details
-	Globals.save_data(id, fields)
+	Globals.save_data(id, fields, "")
 
 # Used by children to update time
 func update_buildings_time(new_time: int) -> void:

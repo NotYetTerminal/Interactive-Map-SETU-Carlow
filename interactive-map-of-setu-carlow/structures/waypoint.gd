@@ -65,7 +65,7 @@ func update_details(details: Dictionary) -> void:
 	parent_structure.get_offline_data_waypoints()[id] = details
 	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	
-	Globals.save_data(id, fields)
+	Globals.save_data(id, fields, parent_structure.id)
 
 # Delete the structure and data related to it
 func delete_itself() -> void:
@@ -110,7 +110,7 @@ func remove_connection(id_to_remove: String) -> void:
 			break
 	global_data_connections_array.erase(deletion_dictionary)
 	# Update save data
-	Globals.save_data(id, ["waypoint_connections_ids"])
+	Globals.save_data(id, ["waypoint_connections_ids"], parent_structure.id)
 	
 	# Remove graphical link
 	var link_node: Node3D = links_dictionary[id_to_remove]
