@@ -345,26 +345,29 @@ func _on_add_button_pressed() -> void:
 			building_button.visible = true
 		elif selected_structure is Building:
 			room_button.visible = true
-		add_structure_panel.visible = false
+		add_structure_panel.visible = true
 
 # Spawn the structure selected
 func _on_building_button_pressed() -> void:
 	if selected_structure is not Waypoint:
+		add_structure_panel.visible = false
 		spawn_specific_structure.emit(selected_structure, Structures.BuildingStruct)
 
 
 func _on_room_button_pressed() -> void:
 	if selected_structure is not Waypoint:
+		add_structure_panel.visible = false
 		spawn_specific_structure.emit(selected_structure, Structures.RoomStruct)
 
 
 func _on_waypoint_button_pressed() -> void:
 	if selected_structure is not Waypoint:
+		add_structure_panel.visible = false
 		spawn_specific_structure.emit(selected_structure, Structures.WaypointStruct)
 
 # Close structure select screen
 func _on_add_structure_cancel_button_pressed() -> void:
-	add_structure_panel.visible = true
+	add_structure_panel.visible = false
 
 
 func _on_structure_spawner_select_spawned_structure(structure: Structure) -> void:
