@@ -32,8 +32,8 @@ func spawn_base_map(map_data: Dictionary) -> void:
 	var base_map_id: String = map_data.keys()[0]
 	
 	# Save base location
-	Globals.base_longitude = map_data[base_map_id]["longitude"]["doubleValue"]
-	Globals.base_latitude = map_data[base_map_id]["latitude"]["doubleValue"]
+	Globals.base_longitude = map_data[base_map_id]["longitude"]
+	Globals.base_latitude = map_data[base_map_id]["latitude"]
 	
 	# Create new scene
 	var new_base_map: BaseMap = base_map_scene.instantiate()

@@ -105,8 +105,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Longitude: "
 
-[node name="LongitudeTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/LongitudeVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="LongitudeLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/LongitudeVBoxContainer"]
 layout_mode = 2
 editable = false
 
@@ -117,8 +116,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Latitude: "
 
-[node name="LatitudeTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/LatitudeVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="LatitudeLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/LatitudeVBoxContainer"]
 layout_mode = 2
 editable = false
 
@@ -130,8 +128,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Name: "
 
-[node name="NameTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/NameVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="NameLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/NameVBoxContainer"]
 layout_mode = 2
 editable = false
 
@@ -144,9 +141,10 @@ layout_mode = 2
 text = "Description: "
 
 [node name="DescriptionTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/DescriptionVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 editable = false
+wrap_mode = 1
 
 [node name="BuildingLetterVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
@@ -156,8 +154,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Building Letter: "
 
-[node name="BuildingLetterTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="BuildingLetterLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer"]
 layout_mode = 2
 editable = false
 
@@ -169,8 +166,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Lecturers: "
 
-[node name="LecturersTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="LecturersLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer"]
 layout_mode = 2
 editable = false
 
@@ -182,9 +178,11 @@ layout_mode = 2
 layout_mode = 2
 text = "Floor Number: "
 
-[node name="FloorNumberTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="FloorNumberSpinBox" type="SpinBox" parent="InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer"]
 layout_mode = 2
+min_value = 1.0
+max_value = 3.0
+value = 1.0
 editable = false
 
 [node name="FeatureTypeVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
@@ -195,8 +193,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Feature Type: "
 
-[node name="FeatureTypeTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="FeatureTypeLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer"]
 layout_mode = 2
 editable = false
 
@@ -208,8 +205,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Parent ID: "
 
-[node name="ParentIDTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="ParentIDLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer"]
 layout_mode = 2
 editable = false
 
@@ -221,8 +217,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Parent Type: "
 
-[node name="ParentTypeTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="ParentTypeLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer"]
 layout_mode = 2
 editable = false
 
@@ -235,9 +230,10 @@ layout_mode = 2
 text = "Waypoint Connections IDs: "
 
 [node name="WaypointConnectionsIDsTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 editable = false
+wrap_mode = 1
 
 [node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
@@ -337,9 +333,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
+offset_left = -110.0
 offset_top = -60.0
-offset_right = 70.0
+offset_right = 110.0
 offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -353,9 +349,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -60.0
+offset_top = -68.0
 offset_right = 100.0
-offset_bottom = 60.0
+offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -376,6 +372,57 @@ text = "Add Waypoint"
 layout_mode = 2
 text = "Cancel"
 
+[node name="InputMessagePanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6j0da")
+
+[node name="Panel" type="Panel" parent="InputMessagePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = -60.0
+offset_right = 135.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cgbs0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InputMessagePanel/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -60.0
+offset_right = 125.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="InputMessageLabel" type="Label" parent="InputMessagePanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="InputMessagePanel/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
 [connection signal="toggled" from="PathfindingPanel/VBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/TargetButton" to="." method="_on_target_button_pressed"]
@@ -390,3 +437,4 @@ text = "Cancel"
 [connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/RoomButton" to="." method="_on_room_button_pressed"]
 [connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/WaypointButton" to="." method="_on_waypoint_button_pressed"]
 [connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/AddStructureCancelButton" to="." method="_on_add_structure_cancel_button_pressed"]
+[connection signal="pressed" from="InputMessagePanel/Panel/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

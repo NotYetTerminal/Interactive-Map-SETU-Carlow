@@ -18,25 +18,25 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var text_edit_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer
 @onready var structure_type_label: Label = $InformationPanel/TextEditVBoxContainer/StructureTypeLabel
 @onready var id_label: Label = $InformationPanel/TextEditVBoxContainer/IDLabel
-@onready var longitude_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/LongitudeVBoxContainer/LongitudeTextEdit
-@onready var latitude_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/LatitudeVBoxContainer/LatitudeTextEdit
+@onready var longitude_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LongitudeVBoxContainer/LongitudeLineEdit
+@onready var latitude_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LatitudeVBoxContainer/LatitudeLineEdit
 
 @onready var name_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/NameVBoxContainer
-@onready var name_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/NameVBoxContainer/NameTextEdit
+@onready var name_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/NameVBoxContainer/NameLineEdit
 @onready var description_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/DescriptionVBoxContainer
 @onready var description_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/DescriptionVBoxContainer/DescriptionTextEdit
 @onready var building_letter_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer
-@onready var building_letter_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer/BuildingLetterTextEdit
+@onready var building_letter_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer/BuildingLetterLineEdit
 @onready var lecturers_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer
-@onready var lecturers_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer/LecturersTextEdit
+@onready var lecturers_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer/LecturersLineEdit
 @onready var floor_number_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer
-@onready var floor_number_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer/FloorNumberTextEdit
+@onready var floor_number_spin_box: SpinBox = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer/FloorNumberSpinBox
 @onready var feature_type_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer
-@onready var feature_type_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer/FeatureTypeTextEdit
+@onready var feature_type_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer/FeatureTypeLineEdit
 @onready var parent_id_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer
-@onready var parent_id_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer/ParentIDTextEdit
+@onready var parent_id_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer/ParentIDLineEdit
 @onready var parent_type_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer
-@onready var parent_type_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer/ParentTypeTextEdit
+@onready var parent_type_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer/ParentTypeLineEdit
 @onready var waypoint_connections_ids_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer
 @onready var waypoint_connections_ids_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer/WaypointConnectionsIDsTextEdit
 
@@ -54,6 +54,9 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var building_button: Button = $AddStructurePanel/Panel/VBoxContainer/BuildingButton
 @onready var room_button: Button = $AddStructurePanel/Panel/VBoxContainer/RoomButton
 @onready var waypoint_button: Button = $AddStructurePanel/Panel/VBoxContainer/WaypointButton
+
+@onready var input_message_panel: Panel = $InputMessagePanel
+@onready var input_message_label: Label = $InputMessagePanel/Panel/VBoxContainer/InputMessageLabel
 
 var selected_structure: Structure
 var starting_waypoint: Waypoint
@@ -82,6 +85,10 @@ func change_text_edits() -> void:
 			for inner_scene: Control in scene.get_children():
 				if inner_scene is TextEdit:
 					(inner_scene as TextEdit).editable = selected_structure != null and Globals.edit_mode
+				elif inner_scene is LineEdit:
+					(inner_scene as LineEdit).editable = selected_structure != null and Globals.edit_mode
+				elif inner_scene is SpinBox:
+					(inner_scene as SpinBox).editable = selected_structure != null and Globals.edit_mode
 
 # Called when a structure is selected
 func _select_structure(structure: Structure) -> void:
@@ -94,12 +101,12 @@ func _select_structure(structure: Structure) -> void:
 	# Set common values
 	if selected_structure != null:
 		id_label.text = 'ID: ' + selected_structure.id
-		longitude_text_edit.text = str(selected_structure.longitude)
-		latitude_text_edit.text = str(selected_structure.latitude)
+		longitude_line_edit.text = str(selected_structure.longitude)
+		latitude_line_edit.text = str(selected_structure.latitude)
 	else:
 		id_label.text = 'ID: '
-		longitude_text_edit.text = ""
-		latitude_text_edit.text = ""
+		longitude_line_edit.text = ""
+		latitude_line_edit.text = ""
 	
 	name_v_box_container.visible = false
 	description_v_box_container.visible = false
@@ -119,6 +126,7 @@ func _select_structure(structure: Structure) -> void:
 	start_button.disabled = true
 	target_button.disabled = true
 	
+	change_text_edits()
 	check_save_and_delete_buttons()
 	
 	# Set individual ones
@@ -152,11 +160,11 @@ func show_base_map_details(select_struct: BaseMap) -> void:
 
 # Show elements for Buildings
 func show_building_details(select_struct: Building) -> void:
-	name_text_edit.text = select_struct.structure_name
+	name_line_edit.text = select_struct.structure_name
 	name_v_box_container.visible = true
 	description_text_edit.text = select_struct.description
 	description_v_box_container.visible = true
-	building_letter_text_edit.text = select_struct.building_letter
+	building_letter_line_edit.text = select_struct.building_letter
 	building_letter_v_box_container.visible = true
 	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
 	waypoints_updated_time_label.visible = true
@@ -165,29 +173,30 @@ func show_building_details(select_struct: Building) -> void:
 
 # Show elements for Rooms
 func show_room_details(select_struct: Room) -> void:
-	name_text_edit.text = select_struct.structure_name
+	name_line_edit.text = select_struct.structure_name
 	name_v_box_container.visible = true
 	description_text_edit.text = select_struct.description
 	description_v_box_container.visible = true
-	lecturers_text_edit.text = select_struct.lectures
+	lecturers_line_edit.text = select_struct.lectures
 	lecturers_v_box_container.visible = true
-	floor_number_text_edit.text = str(select_struct.floor_number)
+	floor_number_spin_box.value = select_struct.floor_number
 	floor_number_v_box_container.visible = true
-	parent_id_text_edit.text = select_struct.parent_id
-	parent_id_v_box_container.visible = true
+	parent_id_line_edit.text = select_struct.parent_id
+	#TODO for now have Parent ID and Type disabled
+	#parent_id_v_box_container.visible = true
 	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
 	waypoints_updated_time_label.visible = true
 
 # Show elements for Waypoints
 func show_waypoint_details(select_struct: Waypoint) -> void:
-	floor_number_text_edit.text = str(select_struct.floor_number)
+	floor_number_spin_box.value = select_struct.floor_number
 	floor_number_v_box_container.visible = true
-	feature_type_text_edit.text = select_struct.feature_type
+	feature_type_line_edit.text = select_struct.feature_type
 	feature_type_v_box_container.visible = true
-	parent_id_text_edit.text = select_struct.parent_id
-	parent_id_v_box_container.visible = true
-	parent_type_text_edit.text = select_struct.parent_type
-	parent_type_v_box_container.visible = true
+	parent_id_line_edit.text = select_struct.parent_id
+	#parent_id_v_box_container.visible = true
+	parent_type_line_edit.text = select_struct.parent_type
+	#parent_type_v_box_container.visible = true
 	waypoint_connections_ids_text_edit.text = str(select_struct.waypoint_connections_ids)
 	waypoint_connections_ids_v_box_container.visible = true
 
@@ -195,59 +204,80 @@ func show_waypoint_details(select_struct: Waypoint) -> void:
 func _on_save_button_pressed() -> void:
 	if selected_structure == null:
 		return
+	
+	var longitude_value: float = longitude_line_edit.text.to_float()
+	var latitude_value: float = latitude_line_edit.text.to_float()
+	if longitude_value < -6.938 or longitude_value > -6.931:
+		show_input_message("Longitude must be between -6.938 and -6.931")
+		return
+	elif latitude_value < 52.822 or latitude_value > 52.83:
+		show_input_message("Latitude must be between 52.822 and 52.83")
+		return
+	
+	# Common values
+	var details: Dictionary = {
+		'longitude': longitude_value,
+		'latitude': latitude_value
+	}
 	if selected_structure is BaseMap:
-		@warning_ignore("unsafe_call_argument")
-		var details: Dictionary = {
-			'longitude': {'doubleValue': float(longitude_text_edit.text)},
-			'latitude': {'doubleValue': float(latitude_text_edit.text)},
-			'waypoints_updated_time': {'integerValue': (selected_structure as BaseMap).waypoints_updated_time},
-			'buildings_updated_time': {'integerValue': (selected_structure as BaseMap).buildings_updated_time}
-		}
-		selected_structure.update_details(details)
+		details['waypoints_updated_time'] = (selected_structure as BaseMap).waypoints_updated_time
+		details['buildings_updated_time'] = (selected_structure as BaseMap).buildings_updated_time
 	elif selected_structure is Building:
-		@warning_ignore("unsafe_call_argument")
-		var details: Dictionary = {
-			'longitude': {'doubleValue': float(longitude_text_edit.text)},
-			'latitude': {'doubleValue': float(latitude_text_edit.text)},
-			'name': {'stringValue': name_text_edit.text},
-			'description': {'stringValue': description_text_edit.text},
-			'building_letter': {'stringValue': building_letter_text_edit.text},
-			'waypoints_updated_time': {'integerValue': (selected_structure as Building).waypoints_updated_time},
-			'rooms_updated_time': {'integerValue': (selected_structure as Building).rooms_updated_time}
-		}
-		selected_structure.update_details(details)
-	elif selected_structure is Room:
-		@warning_ignore("unsafe_call_argument")
-		var details: Dictionary = {
-			'longitude': {'doubleValue': float(longitude_text_edit.text)},
-			'latitude': {'doubleValue': float(latitude_text_edit.text)},
-			'floor_number': {'integerValue': int(floor_number_text_edit.text)},
-			'parent_id': {'stringValue': parent_id_text_edit.text},
-			'name': {'stringValue': name_text_edit.text},
-			'description': {'stringValue': description_text_edit.text},
-			'lecturers': {'stringValue': lecturers_text_edit.text},
-			'waypoints_updated_time': {'integerValue': (selected_structure as Room).waypoints_updated_time}
-		}
-		selected_structure.update_details(details)
-	elif selected_structure is Waypoint:
-		var connection_array: Array[Dictionary]
-		@warning_ignore("unsafe_call_argument")
-		var waypoint_connection_text_array: Array = str_to_var(waypoint_connections_ids_text_edit.text)
-		for waypoint_id: String in waypoint_connection_text_array:
-			connection_array.append({'stringValue': waypoint_id})
+		if name_line_edit.text == "":
+			show_input_message("Name must not be empty.")
+			return
+		elif description_text_edit.text == "":
+			show_input_message("Description must not be empty.")
+			return
+		elif building_letter_line_edit.text == "":
+			show_input_message("Building Letter must not be empty.")
+			return
 		
-		@warning_ignore("unsafe_call_argument")
-		var details: Dictionary = {
-			'longitude': {'doubleValue': float(longitude_text_edit.text)},
-			'latitude': {'doubleValue': float(latitude_text_edit.text)},
-			'floor_number': {'integerValue': int(floor_number_text_edit.text)},
-			'feature_type': {'stringValue': feature_type_text_edit.text},
-			'parent_id': {'stringValue': parent_id_text_edit.text},
-			'parent_type': {'stringValue': parent_type_text_edit.text},
-			'waypoint_connections_ids': {'arrayValue': {'values': connection_array}}
-		}
-		selected_structure.update_details(details)
+		details['name'] = name_line_edit.text
+		details['description'] = description_text_edit.text
+		details['building_letter'] = building_letter_line_edit.text
+		
+		details['waypoints_updated_time'] = (selected_structure as Building).waypoints_updated_time
+		details['rooms_updated_time'] = (selected_structure as Building).rooms_updated_time
+	elif selected_structure is Room:
+		if name_line_edit.text == "":
+			show_input_message("Name must not be empty.")
+			return
+		elif description_text_edit.text == "":
+			show_input_message("Description must not be empty.")
+			return
+		
+		details['name'] = name_line_edit.text
+		details['description'] = description_text_edit.text
+		details['lecturers'] = lecturers_line_edit.text
+		details['floor_number'] = floor_number_spin_box.value
+		details['parent_id'] = (selected_structure as Room).parent_id
+		
+		details['waypoints_updated_time'] = (selected_structure as Room).waypoints_updated_time
+	elif selected_structure is Waypoint:
+		var waypoint_connection_text_array: Variant = str_to_var(waypoint_connections_ids_text_edit.text)
+		if feature_type_line_edit.text == "":
+			show_input_message("Feature Type must not be empty.")
+			return
+		elif typeof(waypoint_connection_text_array) != TYPE_ARRAY:
+			show_input_message('Incorrect Waypoint Connections IDs formatting. Make sure to have ["id1","id2"]')
+			return
+		
+		var connection_array: Array[String] = []
+		for waypoint_id: Variant in waypoint_connection_text_array:
+			connection_array.append(str(waypoint_id))
+		
+		details['floor_number'] = floor_number_spin_box.value
+		details['feature_type'] = feature_type_line_edit.text
+		details['parent_id'] = (selected_structure as Waypoint).parent_id
+		details['parent_type'] = (selected_structure as Waypoint).parent_type
+		details['waypoint_connections_ids'] = connection_array
+	
+	selected_structure.update_details(details)
 
+func show_input_message(message: String) -> void:
+	input_message_label.text = message
+	input_message_panel.visible = true
 
 func _on_start_button_pressed() -> void:
 	if selected_structure == null:
@@ -372,3 +402,7 @@ func _on_add_structure_cancel_button_pressed() -> void:
 
 func _on_structure_spawner_select_spawned_structure(structure: Structure) -> void:
 	_select_structure(structure)
+
+
+func _on_close_button_pressed() -> void:
+	input_message_panel.visible = false

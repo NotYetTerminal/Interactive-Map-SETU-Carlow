@@ -11,25 +11,22 @@ var buildings_updated_time: int
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in
 	
-	longitude = details["longitude"]["doubleValue"]
-	latitude = details["latitude"]["doubleValue"]
+	longitude = details["longitude"]
+	latitude = details["latitude"]
 	
 	Globals.base_longitude = longitude
 	Globals.base_latitude = latitude
 	
-	@warning_ignore("unsafe_call_argument")
-	waypoints_updated_time = int(details["waypoints_updated_time"]["integerValue"])
-	@warning_ignore("unsafe_call_argument")
-	buildings_updated_time = int(details["buildings_updated_time"]["integerValue"])
+	waypoints_updated_time = details["waypoints_updated_time"]
+	buildings_updated_time = details["buildings_updated_time"]
 	
 	set_structure_global_position()
 	
-	@warning_ignore("unsafe_call_argument")
 	var changed_fields: Array[String] = [
-		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
-		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
-		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
-		"buildings_updated_time" if buildings_updated_time != int(details["buildings_updated_time"]["integerValue"]) else ""
+		"longitude" if longitude != details["longitude"] else "",
+		"latitude" if latitude != details["latitude"] else "",
+		"waypoints_updated_time" if waypoints_updated_time != details["waypoints_updated_time"] else "",
+		"buildings_updated_time" if buildings_updated_time != details["buildings_updated_time"] else ""
 	]
 	return changed_fields
 
@@ -46,11 +43,11 @@ func update_details(details: Dictionary) -> void:
 # Used by children to update time
 func update_buildings_time(new_time: int) -> void:
 	buildings_updated_time = new_time
-	Globals.offline_data[id]['buildings_updated_time'] = {'integerValue': str(buildings_updated_time)}
+	Globals.offline_data[id]['buildings_updated_time'] = buildings_updated_time
 
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
-	Globals.offline_data[id]['waypoints_updated_time'] = {'integerValue': str(waypoints_updated_time)}
+	Globals.offline_data[id]['waypoints_updated_time'] = waypoints_updated_time
 
 # Used by Waypoint children to get data
 func get_offline_data_waypoints() -> Dictionary:

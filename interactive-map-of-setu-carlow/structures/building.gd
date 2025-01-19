@@ -22,30 +22,27 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	if details.is_empty():
 		return []
 	
-	longitude = details["longitude"]["doubleValue"]
-	latitude = details["latitude"]["doubleValue"]
+	longitude = details["longitude"]
+	latitude = details["latitude"]
 	
-	structure_name = details["name"]["stringValue"]
-	description = details["description"]["stringValue"]
-	building_letter = details["building_letter"]["stringValue"]
+	structure_name = details["name"]
+	description = details["description"]
+	building_letter = details["building_letter"]
 	
-	@warning_ignore("unsafe_call_argument")
-	waypoints_updated_time = int(details["waypoints_updated_time"]["integerValue"])
-	@warning_ignore("unsafe_call_argument")
-	rooms_updated_time = int(details["rooms_updated_time"]["integerValue"])
+	waypoints_updated_time = details["waypoints_updated_time"]
+	rooms_updated_time = details["rooms_updated_time"]
 	
 	set_structure_global_position()
 	add_map_texture()
 	
-	@warning_ignore("unsafe_call_argument")
 	var changed_fields: Array[String] = [
-		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
-		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
-		"name" if structure_name != details["name"]["stringValue"] else "",
-		"description" if description != details["description"]["stringValue"] else "",
-		"building_letter" if building_letter != details["building_letter"]["stringValue"] else "",
-		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
-		"rooms_updated_time" if rooms_updated_time != int(details["rooms_updated_time"]["integerValue"]) else ""
+		"longitude" if longitude != details["longitude"] else "",
+		"latitude" if latitude != details["latitude"] else "",
+		"name" if structure_name != details["name"] else "",
+		"description" if description != details["description"] else "",
+		"building_letter" if building_letter != details["building_letter"] else "",
+		"waypoints_updated_time" if waypoints_updated_time != details["waypoints_updated_time"] else "",
+		"rooms_updated_time" if rooms_updated_time != details["rooms_updated_time"] else ""
 	]
 	return changed_fields
 
@@ -66,13 +63,13 @@ func update_details(details: Dictionary) -> void:
 func update_rooms_time(new_time: int) -> void:
 	rooms_updated_time = new_time
 	var base_map: BaseMap = get_parent().get_parent()
-	Globals.offline_data[base_map.id]['Buildings'][id]['rooms_updated_time'] = {'integerValue': str(rooms_updated_time)}
+	Globals.offline_data[base_map.id]['Buildings'][id]['rooms_updated_time'] = rooms_updated_time
 	base_map.update_buildings_time(waypoints_updated_time)
 
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
 	var base_map: BaseMap = get_parent().get_parent()
-	Globals.offline_data[base_map.id]['Buildings'][id]['waypoints_updated_time'] = {'integerValue': str(waypoints_updated_time)}
+	Globals.offline_data[base_map.id]['Buildings'][id]['waypoints_updated_time'] = waypoints_updated_time
 	base_map.update_buildings_time(waypoints_updated_time)
 
 # Set global position, and update children

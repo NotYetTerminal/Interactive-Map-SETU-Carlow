@@ -30,28 +30,24 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	if details.is_empty():
 		return []
 	
-	longitude = details["longitude"]["doubleValue"]
-	latitude = details["latitude"]["doubleValue"]
+	longitude = details["longitude"]
+	latitude = details["latitude"]
 	
-	@warning_ignore("unsafe_call_argument")
-	floor_number = int(details["floor_number"]["integerValue"])
-	feature_type = details["feature_type"]["stringValue"]
+	floor_number = details["floor_number"]
+	feature_type = details["feature_type"]
 	
-	parent_id = details["parent_id"]["stringValue"]
-	parent_type = details["parent_type"]["stringValue"]
+	parent_id = details["parent_id"]
+	parent_type = details["parent_type"]
 	
-	waypoint_connections_ids = []
-	for id_dict: Dictionary in details["waypoint_connections_ids"]["arrayValue"]["values"]:
-		waypoint_connections_ids.append(id_dict.values()[0])
+	waypoint_connections_ids = details["waypoint_connections_ids"]
 	
 	set_structure_global_position()
 	
-	@warning_ignore("unsafe_call_argument")
 	var changed_fields: Array[String] = [
-		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
-		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
-		"floor_number" if floor_number != int(details["floor_number"]["integerValue"]) else "",
-		"feature_type" if feature_type != details["feature_type"]["stringValue"] else "",
+		"longitude" if longitude != details["longitude"] else "",
+		"latitude" if latitude != details["latitude"] else "",
+		"floor_number" if floor_number != details["floor_number"] else "",
+		"feature_type" if feature_type != details["feature_type"] else "",
 		"waypoint_connections_ids"
 	]
 	return changed_fields
@@ -107,13 +103,8 @@ func remove_connection(id_to_remove: String) -> void:
 	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	# Remove from connections
 	waypoint_connections_ids.erase(id_to_remove)
-	var global_data_connections_array: Array = parent_structure.get_offline_data_waypoints()[id]['waypoint_connections_ids']['arrayValue']['values']
-	var deletion_dictionary: Dictionary
-	for connection_dictionary: Dictionary in global_data_connections_array:
-		if connection_dictionary['stringValue'] == id_to_remove:
-			deletion_dictionary = connection_dictionary
-			break
-	global_data_connections_array.erase(deletion_dictionary)
+	var global_data_connections_array: Array = parent_structure.get_offline_data_waypoints()[id]['waypoint_connections_ids']
+	global_data_connections_array.erase(id_to_remove)
 	# Update save data
 	Globals.save_data(id, ["waypoint_connections_ids"], parent_structure.id)
 	
