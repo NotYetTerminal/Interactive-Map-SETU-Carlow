@@ -80,12 +80,15 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 	match(structure_type):
 		Structures.BuildingStruct:
 			new_structure = building_scene.instantiate()
+			# Add to Buildings holder
 			parent.get_child(1).add_child(new_structure)
 		Structures.RoomStruct:
 			new_structure = room_scene.instantiate()
+			# Add to Rooms holder
 			parent.get_child(1).add_child(new_structure)
 		Structures.WaypointStruct:
 			new_structure = waypoint_scene.instantiate()
+			# Add to Waypoints holder
 			parent.get_child(0).add_child(new_structure)
 	
 	var _fields: Array[String] = new_structure.save_details(structure_id, structure_data)
@@ -103,5 +106,16 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 
 
 func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Structures) -> void:
-	var structure: Structure = spawn_structure("e", {}, parent, structure_type)
+	var structure_id: String
+	# Assign an id for new structure
+	match(structure_type):
+		Structures.BuildingStruct:
+			structure_id = "Building_"
+		Structures.RoomStruct:
+			structure_id = "Room_"
+		Structures.WaypointStruct:
+			structure_id = "Waypoint_"
+	structure_id += str(int(Time.get_unix_time_from_system()))
+	
+	var structure: Structure = spawn_structure(structure_id, {}, parent, structure_type)
 	select_spawned_structure.emit(structure)

@@ -24,15 +24,11 @@ var from_waypoint: Waypoint
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
-	@warning_ignore("unsafe_call_argument")
-	var changed_fields: Array[String] = [
-		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
-		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
-		"floor_number" if floor_number != int(details["floor_number"]["integerValue"]) else "",
-		"feature_type" if feature_type != details["feature_type"]["stringValue"] else "",
-		"waypoint_connections_ids"
-	]
 	id = id_in
+	
+	# When the structure is created no data is passed to it
+	if details.is_empty():
+		return []
 	
 	longitude = details["longitude"]["doubleValue"]
 	latitude = details["latitude"]["doubleValue"]
@@ -49,6 +45,15 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 		waypoint_connections_ids.append(id_dict.values()[0])
 	
 	set_structure_global_position()
+	
+	@warning_ignore("unsafe_call_argument")
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
+		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
+		"floor_number" if floor_number != int(details["floor_number"]["integerValue"]) else "",
+		"feature_type" if feature_type != details["feature_type"]["stringValue"] else "",
+		"waypoint_connections_ids"
+	]
 	return changed_fields
 
 # Makes waypoints visible on editing

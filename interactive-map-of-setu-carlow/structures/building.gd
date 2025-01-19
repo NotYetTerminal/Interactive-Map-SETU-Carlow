@@ -16,17 +16,11 @@ var rooms_updated_time: int
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
-	@warning_ignore("unsafe_call_argument")
-	var changed_fields: Array[String] = [
-		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
-		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
-		"name" if structure_name != details["name"]["stringValue"] else "",
-		"description" if description != details["description"]["stringValue"] else "",
-		"building_letter" if building_letter != details["building_letter"]["stringValue"] else "",
-		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
-		"rooms_updated_time" if rooms_updated_time != int(details["rooms_updated_time"]["integerValue"]) else ""
-	]
 	id = id_in
+	
+	# When the structure is created no data is passed to it
+	if details.is_empty():
+		return []
 	
 	longitude = details["longitude"]["doubleValue"]
 	latitude = details["latitude"]["doubleValue"]
@@ -41,8 +35,18 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	rooms_updated_time = int(details["rooms_updated_time"]["integerValue"])
 	
 	set_structure_global_position()
-	
 	add_map_texture()
+	
+	@warning_ignore("unsafe_call_argument")
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
+		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
+		"name" if structure_name != details["name"]["stringValue"] else "",
+		"description" if description != details["description"]["stringValue"] else "",
+		"building_letter" if building_letter != details["building_letter"]["stringValue"] else "",
+		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
+		"rooms_updated_time" if rooms_updated_time != int(details["rooms_updated_time"]["integerValue"]) else ""
+	]
 	return changed_fields
 
 # Update the details when editing

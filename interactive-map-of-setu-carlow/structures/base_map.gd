@@ -9,13 +9,6 @@ var buildings_updated_time: int
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
-	@warning_ignore("unsafe_call_argument")
-	var changed_fields: Array[String] = [
-		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
-		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
-		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
-		"buildings_updated_time" if buildings_updated_time != int(details["buildings_updated_time"]["integerValue"]) else ""
-	]
 	id = id_in
 	
 	longitude = details["longitude"]["doubleValue"]
@@ -30,6 +23,14 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	buildings_updated_time = int(details["buildings_updated_time"]["integerValue"])
 	
 	set_structure_global_position()
+	
+	@warning_ignore("unsafe_call_argument")
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"]["doubleValue"] else "",
+		"latitude" if latitude != details["latitude"]["doubleValue"] else "",
+		"waypoints_updated_time" if waypoints_updated_time != int(details["waypoints_updated_time"]["integerValue"]) else "",
+		"buildings_updated_time" if buildings_updated_time != int(details["buildings_updated_time"]["integerValue"]) else ""
+	]
 	return changed_fields
 
 # Update the details when editing
