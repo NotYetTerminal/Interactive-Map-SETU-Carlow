@@ -137,7 +137,6 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 		else:
 			structure_document.document[child_structure_collection_name] = parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
 	
-	# TODO if needed make this concurrent for speedup, by removing await
 	if structure_type == Structures.Base_Map:
 		Globals.offline_data = parent_document.document
 

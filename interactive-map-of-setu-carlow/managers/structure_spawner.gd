@@ -44,14 +44,14 @@ func spawn_base_map(map_data: Dictionary) -> void:
 	if base_map_data.has('Waypoints'):
 		# Spawn Waypoints
 		for waypoint_id: String in base_map_data["Waypoints"]:
-			@warning_ignore("unsafe_call_argument")
-			var _structure: Structure = spawn_structure(waypoint_id, base_map_data["Waypoints"][waypoint_id], new_base_map, Structures.WaypointStruct) 
+			var structure_data: Dictionary = base_map_data["Waypoints"][waypoint_id]
+			var _structure: Structure = spawn_structure(waypoint_id, structure_data, new_base_map, Structures.WaypointStruct) 
 	
 	if base_map_data.has('Buildings'):
 		# Spawn Buildings
 		for building_id: String in base_map_data["Buildings"]:
-			@warning_ignore("unsafe_call_argument")
-			spawn_building(building_id, base_map_data["Buildings"][building_id], new_base_map)
+			var structure_data: Dictionary = base_map_data["Buildings"][building_id]
+			spawn_building(building_id, structure_data, new_base_map)
 
 func spawn_building(building_id: String, building_data: Dictionary, parent: Structure) -> void:
 	# Spawn this building
@@ -60,14 +60,14 @@ func spawn_building(building_id: String, building_data: Dictionary, parent: Stru
 	if building_data.has('Waypoints'):
 		# Spawn Waypoints
 		for waypoint_id: String in building_data["Waypoints"]:
-			@warning_ignore("unsafe_call_argument")
-			var _structure: Structure = spawn_structure(waypoint_id, building_data["Waypoints"][waypoint_id], parent_building, Structures.WaypointStruct)
+			var structure_data: Dictionary = building_data["Waypoints"][waypoint_id]
+			var _structure: Structure = spawn_structure(waypoint_id, structure_data, parent_building, Structures.WaypointStruct)
 	
 	if building_data.has('Rooms'):
 		# Spawn Rooms
 		for room_id: String in building_data["Rooms"]:
-			@warning_ignore("unsafe_call_argument")
-			spawn_room(room_id, building_data["Rooms"][room_id], parent_building)
+			var structure_data: Dictionary = building_data["Rooms"][room_id]
+			spawn_room(room_id, structure_data, parent_building)
 
 func spawn_room(room_id: String, room_data: Dictionary, parent: Structure) -> void:
 	# Spawn this room
@@ -76,8 +76,8 @@ func spawn_room(room_id: String, room_data: Dictionary, parent: Structure) -> vo
 	if room_data.has('Waypoints'):
 		# Spawn Waypoints
 		for waypoint_id: String in room_data["Waypoints"]:
-			@warning_ignore("unsafe_call_argument")
-			var _structure: Structure = spawn_structure(waypoint_id, room_data["Waypoints"][waypoint_id], parent_room, Structures.WaypointStruct)
+			var structure_data: Dictionary = room_data["Waypoints"][waypoint_id]
+			var _structure: Structure = spawn_structure(waypoint_id, structure_data, parent_room, Structures.WaypointStruct)
 
 func spawn_structure(structure_id: String, structure_data: Dictionary, parent: Structure, structure_type: Structures) -> Structure:
 	# Create new scene
@@ -109,19 +109,44 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 	
 	return new_structure
 
-
 func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Structures) -> void:
 	var structure_id: String
+	var default_data: Dictionary = {
+		'longitude': parent.longitude + 0.0001,
+		'latitude': parent.latitude,
+	}
 	# Assign an id for new structure
 	match(structure_type):
 		Structures.BuildingStruct:
 			structure_id = "Building_"
+			default_data['name'] = ''
+			default_data['description'] = ''
+			default_data['building_letter'] = ''
+			
+			default_data['waypoints_updated_time'] = 0
+			default_data['rooms_updated_time'] = 0
 		Structures.RoomStruct:
 			structure_id = "Room_"
+			default_data['name'] = ''
+			default_data['description'] = ''
+			default_data['lecturers'] = ''
+			default_data['floor_number'] = 1
+			default_data['parent_id'] = parent.id
+			
+			default_data['waypoints_updated_time'] = 0
 		Structures.WaypointStruct:
 			structure_id = "Waypoint_"
+			if parent is Room:
+				default_data['floor_number'] = (parent as Room).floor_number
+			else:
+				default_data['floor_number'] = 1
+			default_data['feature_type'] = ''
+			default_data['parent_id'] = parent.id
+			default_data['parent_type'] = type_string(typeof(parent))
+			var empty_array: Array[String] = []
+			default_data['waypoint_connections_ids'] = empty_array
+	
 	structure_id += str(int(Time.get_unix_time_from_system()))
 	
-	#TODO make default values
-	var structure: Structure = spawn_structure(structure_id, {}, parent, structure_type)
+	var structure: Structure = spawn_structure(structure_id, default_data, parent, structure_type)
 	select_spawned_structure.emit(structure)

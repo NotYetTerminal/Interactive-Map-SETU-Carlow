@@ -10,7 +10,6 @@ var base_latitude: float
 var pathfinder: Pathfinder
 
 # Offline data used to store map data
-# TODO change this to an Object
 var offline_data: Dictionary
 
 # Used for saving map data
