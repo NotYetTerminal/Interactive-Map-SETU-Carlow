@@ -250,7 +250,7 @@ func _on_save_button_pressed() -> void:
 		details['name'] = name_line_edit.text
 		details['description'] = description_text_edit.text
 		details['lecturers'] = lecturers_line_edit.text
-		details['floor_number'] = floor_number_spin_box.value
+		details['floor_number'] = int(floor_number_spin_box.value)
 		details['parent_id'] = (selected_structure as Room).parent_id
 		
 		details['waypoints_updated_time'] = (selected_structure as Room).waypoints_updated_time
@@ -267,7 +267,7 @@ func _on_save_button_pressed() -> void:
 		for waypoint_id: Variant in waypoint_connection_text_array:
 			connection_array.append(str(waypoint_id))
 		
-		details['floor_number'] = floor_number_spin_box.value
+		details['floor_number'] = int(floor_number_spin_box.value)
 		details['feature_type'] = feature_type_line_edit.text
 		details['parent_id'] = (selected_structure as Waypoint).parent_id
 		details['parent_type'] = (selected_structure as Waypoint).parent_type

@@ -162,26 +162,21 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 				structure_document.document['description'] = structure_document.document['description']['stringValue']
 				structure_document.document['lecturers'] = structure_document.document['lecturers']['stringValue']
 				
-				if 'integerValue' in structure_document.document['floor_number'].keys():
-					structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
-				else:
-					structure_document.document['floor_number'] = str(structure_document.document['floor_number']['doubleValue']).to_int()
+				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
 				structure_document.document['parent_id'] = structure_document.document['parent_id']['stringValue']
 				
 				structure_document.document['waypoints_updated_time'] = str(structure_document.document['waypoints_updated_time']['integerValue']).to_int()
 				
 			Structures.WaypointStruct:
-				if 'integerValue' in structure_document.document['floor_number'].keys():
-					structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
-				else:
-					structure_document.document['floor_number'] = str(structure_document.document['floor_number']['doubleValue']).to_int()
+				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
 				structure_document.document['feature_type'] = structure_document.document['feature_type']['stringValue']
 				
 				structure_document.document['parent_id'] = structure_document.document['parent_id']['stringValue']
 				structure_document.document['parent_type'] = structure_document.document['parent_type']['stringValue']
 				
 				var waypoint_connections_ids_array: Array[String] = []
-				if 'values' in structure_document.document['waypoint_connections_ids']['arrayValue'].keys():
+				var connection_array_dictionary: Dictionary = structure_document.document['waypoint_connections_ids']['arrayValue']
+				if 'values' in connection_array_dictionary.keys():
 					for connection_id_dictionary: Dictionary in structure_document.document['waypoint_connections_ids']['arrayValue']['values']:
 						waypoint_connections_ids_array.append(connection_id_dictionary.values()[0])
 				structure_document.document['waypoint_connections_ids'] = waypoint_connections_ids_array
