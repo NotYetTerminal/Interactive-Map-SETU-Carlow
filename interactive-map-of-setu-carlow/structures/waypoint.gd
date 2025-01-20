@@ -30,6 +30,14 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	if details.is_empty():
 		return []
 	
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"] else "",
+		"latitude" if latitude != details["latitude"] else "",
+		"floor_number" if floor_number != details["floor_number"] else "",
+		"feature_type" if feature_type != details["feature_type"] else "",
+		"waypoint_connections_ids"
+	]
+	
 	longitude = details["longitude"]
 	latitude = details["latitude"]
 	
@@ -42,14 +50,6 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	waypoint_connections_ids = details["waypoint_connections_ids"]
 	
 	set_structure_global_position()
-	
-	var changed_fields: Array[String] = [
-		"longitude" if longitude != details["longitude"] else "",
-		"latitude" if latitude != details["latitude"] else "",
-		"floor_number" if floor_number != details["floor_number"] else "",
-		"feature_type" if feature_type != details["feature_type"] else "",
-		"waypoint_connections_ids"
-	]
 	return changed_fields
 
 # Makes waypoints visible on editing
@@ -64,9 +64,9 @@ func update_details(details: Dictionary) -> void:
 	# Update Waypoint depending on the parent
 	var parent_structure: Structure = get_parent().get_parent()
 	parent_structure.get_offline_data_waypoints()[id] = details
-	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
+	await Globals.save_data(id, fields, parent_structure.get_firestore_path() + "/Waypoints/", details)
 	
-	Globals.save_data(id, fields, parent_structure.id)
+	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 
 # Delete the structure and data related to it
 func delete_itself() -> void:
@@ -101,12 +101,15 @@ func remove_connection(id_to_remove: String) -> void:
 	# Update parent structure Waypoints time
 	var parent_structure: Structure = get_parent().get_parent()
 	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
+	
 	# Remove from connections
 	waypoint_connections_ids.erase(id_to_remove)
-	var global_data_connections_array: Array = parent_structure.get_offline_data_waypoints()[id]['waypoint_connections_ids']
+	var structure_data: Dictionary = parent_structure.get_offline_data_waypoints()[id]
+	var global_data_connections_array: Array = structure_data['waypoint_connections_ids']
 	global_data_connections_array.erase(id_to_remove)
+	
 	# Update save data
-	Globals.save_data(id, ["waypoint_connections_ids"], parent_structure.id)
+	await Globals.save_data(id, ["waypoint_connections_ids"], parent_structure.get_firestore_path() + "/Waypoints/", structure_data)
 	
 	# Remove graphical link
 	var link_node: Node3D = links_dictionary[id_to_remove]
@@ -135,7 +138,7 @@ func change_colour(new_colour: Color) -> void:
 
 # Change the colour of the Link between Waypoints
 func change_link_colour(waypoint_id: String, new_colour: Color) -> void:
-	if waypoint_id in links_dictionary.keys():
+	if links_dictionary.has(waypoint_id):
 		var link: Link = links_dictionary[waypoint_id]
 		link.change_colour(new_colour)
 	else:
@@ -170,4 +173,3 @@ func reset(to_waypoint: Waypoint = null) -> void:
 		# Only run if values changed or final waypoint
 		if waypoint.from_waypoint != null or waypoint == temp_from_waypoint:
 			waypoint.reset(self)
-	

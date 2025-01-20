@@ -27,10 +27,10 @@ func load_offline_data() -> void:
 		offline_data = file.get_var()
 
 # Save data for both local and cloud
-func save_data(id: String, fields: Array[String], parent_id: String) -> void:
+func save_data(id: String, fields: Array[String], parent_id: String, global_structure_offline_data: Dictionary) -> void:
 	save_offline_data()
 	# Save data to cloud
-	firebaseConnector.save_map_data(id, fields, parent_id)
+	await firebaseConnector.save_map_data(id, fields, parent_id, global_structure_offline_data)
 
 # Save offline data
 func save_offline_data() -> void:

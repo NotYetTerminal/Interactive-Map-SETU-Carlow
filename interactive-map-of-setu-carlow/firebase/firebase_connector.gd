@@ -83,6 +83,7 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 	var child_structure_type: Structures
 	
 	# Run for each document in collection
+	print("First")
 	for structure_document: FirestoreDocument in await Firebase.Firestore.list(collection_path):
 		clean_structure_document_data(structure_document, structure_type)
 		var sub_collection_path: String = collection_path + "/" + structure_document.doc_name + '/'
@@ -105,7 +106,7 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 				# Save to Base_Map document id -> Buildings collection -> Building document id -> Rooms collection -> Room document id
 				parent_document.document[ROOMS_COLLECTION][structure_document.doc_name] = structure_document.document
 		
-		var new_collection: bool = parent_structure_collection.is_empty() or structure_document.doc_name not in parent_structure_collection.keys()
+		var new_collection: bool = parent_structure_collection.is_empty() or not parent_structure_collection.has(structure_document.doc_name)
 		if new_collection:
 			waypoints_updated = true
 			child_structure_updated = true
@@ -119,6 +120,7 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 		if new_collection || waypoints_updated:
 			structure_document.document[WAYPOINTS_COLLECTION] = {}
 			# Run for each Waypoint document in collection
+			print("Second")
 			for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
 				clean_structure_document_data(waypoint_document, Structures.WaypointStruct)
 				# Save to Parent Structure -> Waypoints collection -> Waypoint document id
@@ -176,173 +178,30 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 				
 				var waypoint_connections_ids_array: Array[String] = []
 				var connection_array_dictionary: Dictionary = structure_document.document['waypoint_connections_ids']['arrayValue']
-				if 'values' in connection_array_dictionary.keys():
+				if connection_array_dictionary.has('values'):
 					for connection_id_dictionary: Dictionary in structure_document.document['waypoint_connections_ids']['arrayValue']['values']:
 						waypoint_connections_ids_array.append(connection_id_dictionary.values()[0])
 				structure_document.document['waypoint_connections_ids'] = waypoint_connections_ids_array
 
 # Save the map data into the cloud
-func save_map_data(id: String, fields: Array[String], parent_id: String) -> void:
-	var _document: FirestoreDocument
-	var structure_updated_time: int
+func save_map_data(id: String, fields: Array[String], parent_collection_path: String, global_structure_offline_data: Dictionary) -> void:
+	var parent_collection: FirestoreCollection = Firebase.Firestore.collection(parent_collection_path)
 	
-	var updated_data: bool = false
-	var base_map_id: String = Globals.offline_data.keys()[0]
+	print("Third")
+	var firestore_documents_list: Array = await Firebase.Firestore.list(parent_collection_path)
+	var single_firestore_document_list: Array = firestore_documents_list.filter(func(x: FirestoreDocument) -> bool: return x.doc_name == id)
 	
-	var base_map_collection : FirestoreCollection = Firebase.Firestore.collection('Base_Map')
-	var base_map_document: FirestoreDocument = await base_map_collection.get_doc(base_map_id)
-	if base_map_document == null:
-		print("Retry")
-		base_map_document = await base_map_collection.get_doc(base_map_id)
-	
-	var buildings_updated_time: int = Globals.offline_data[base_map_id]['buildings_updated_time']
-	var waypoints_updated_time: int = Globals.offline_data[base_map_id]['waypoints_updated_time']
-	
-	# Save only base map
-	if base_map_id == id:
+	if single_firestore_document_list.is_empty():
+		# Create new Structure
+		var _document: FirestoreDocument = await parent_collection.add(id, global_structure_offline_data)
+	else:
+		# Update Structure
+		var structure_document: FirestoreDocument = single_firestore_document_list[0]
 		for field_name: String in fields:
 			if field_name == "":
 				continue
-			base_map_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][field_name])
-		_document = await base_map_collection.update(base_map_document)
-		return
-	# Compare Waypoints last updated time
-	if base_map_document.document['waypoints_updated_time']['integerValue'] != str(waypoints_updated_time) and (parent_id == "" or parent_id == base_map_id):
-		var firestore_document_list: Array = await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION)
-		firestore_document_list = firestore_document_list.filter(func(x: FirestoreDocument) -> bool: return x.doc_name == id)
-		
-		# Create new Waypoint
-		if firestore_document_list.is_empty():
-			if parent_id != "" and base_map_id == parent_id:
-				var new_structure_dictionary: Dictionary = Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][id]
-				_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION).add(id, new_structure_dictionary)
-				updated_data = true
-		else:
-			var waypoint_document: FirestoreDocument = firestore_document_list[0]
-			for field_name: String in fields:
-				if field_name == "":
-					continue
-				if field_name == "waypoint_connections_ids":
-					waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"])
-				else:
-					waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name])
-			_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
-			updated_data = true
-		
-		if updated_data:
-			# Update Waypoints time
-			structure_updated_time = Globals.offline_data[base_map_id]['waypoints_updated_time']
-			await update_structure_time(base_map_document, 'waypoints_updated_time', 'Base_Map', structure_updated_time)
-			return
-	# Compare Buildings last updated time
-	if base_map_document.document['buildings_updated_time']['integerValue'] != str(buildings_updated_time):
-		#TODO delete for loop
-		for building_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION):
-			var rooms_updated_time: int = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time']
-			waypoints_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['waypoints_updated_time']
-			
-			# Save only Building data
-			if building_document.doc_name == id:
-				for field_name: String in fields:
-					if field_name == "":
-						continue
-					building_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][field_name])
-				_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION).update(building_document)
-				
-				# Update Buildings time
-				structure_updated_time = Globals.offline_data[base_map_id]['buildings_updated_time']
-				await update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map', structure_updated_time)
-				return
-			# Save Waypoints data
-			if building_document.document['waypoints_updated_time']['integerValue'] != str(waypoints_updated_time) and (parent_id == "" or parent_id == building_document.doc_name):
-				var firestore_document_list: Array = await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION)
-				firestore_document_list = firestore_document_list.filter(func(x: FirestoreDocument) -> bool: return x.doc_name == id)
-				
-				if firestore_document_list.is_empty():
-					# Create new Waypoint
-					if parent_id != "" and building_document.doc_name == parent_id:
-						var new_structure_dictionary: Dictionary = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][id]
-						_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION).add(id, new_structure_dictionary)
-						updated_data = true
-				else:
-					var waypoint_document: FirestoreDocument = firestore_document_list[0]
-					for field_name: String in fields:
-						if field_name == "":
-							continue
-						if field_name == "waypoint_connections_ids":
-							waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"])
-						else:
-							waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name])
-					_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
-					updated_data = true
-				
-				if updated_data:
-					# Update Waypoints time
-					structure_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['waypoints_updated_time']
-					await update_structure_time(building_document, 'waypoints_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
-					
-					# Update Buildings time
-					structure_updated_time = Globals.offline_data[base_map_id]['buildings_updated_time']
-					await update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map', structure_updated_time)
-					return
-			# Save Rooms data
-			if building_document.document['rooms_updated_time']['integerValue'] != str(rooms_updated_time):
-				#TODO delete for loop
-				for room_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION):
-					waypoints_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name]['waypoints_updated_time']
-					
-					# Save only Room data
-					if room_document.doc_name == id:
-						for field_name: String in fields:
-							if field_name == "":
-								continue
-							room_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][field_name])
-						_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION).update(room_document)
-						
-						# Update Rooms time
-						structure_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time']
-						await update_structure_time(building_document, 'rooms_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
-						
-						# Update Buildings time
-						structure_updated_time = Globals.offline_data[base_map_id]['buildings_updated_time']
-						await update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map', structure_updated_time)
-						return
-					# Save Waypoints data
-					elif room_document.document['waypoints_updated_time']['integerValue'] != str(waypoints_updated_time) and (parent_id == "" or parent_id == room_document.doc_name):
-						var firestore_document_list: Array = await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION + '/' + room_document.doc_name + '/' + WAYPOINTS_COLLECTION)
-						firestore_document_list = firestore_document_list.filter(func(x: FirestoreDocument) -> bool: return x.doc_name == id)
-						
-						if firestore_document_list.is_empty():
-							# Create new Waypoint
-							if parent_id != "" and room_document.doc_name == parent_id:
-								var new_structure_dictionary: Dictionary = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][WAYPOINTS_COLLECTION][id]
-								_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION + '/' + room_document.doc_name + '/' + WAYPOINTS_COLLECTION).add(id, new_structure_dictionary)
-								updated_data = true
-						else:
-							var waypoint_document: FirestoreDocument = firestore_document_list[0]
-							for field_name: String in fields:
-								if field_name == "":
-									continue
-								if field_name == "waypoint_connections_ids":
-									waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name]["waypoint_connections_ids"])
-								else:
-									waypoint_document.add_or_update_field(field_name, Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name][WAYPOINTS_COLLECTION][waypoint_document.doc_name][field_name])
-							_document = await Firebase.Firestore.collection('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION + '/' + room_document.doc_name + '/' + WAYPOINTS_COLLECTION).update(waypoint_document)
-							updated_data = true
-						
-						if updated_data:
-							# Update Waypoints time
-							structure_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name]['waypoints_updated_time']
-							await update_structure_time(room_document, 'waypoints_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION, structure_updated_time)
-							
-							# Update Rooms time
-							structure_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time']
-							await update_structure_time(building_document, 'rooms_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
-							
-							# Update Buildings time
-							structure_updated_time = Globals.offline_data[base_map_id]['buildings_updated_time']
-							await update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map', structure_updated_time)
-							return
+			structure_document.add_or_update_field(field_name, global_structure_offline_data[field_name])
+		var _document: FirestoreDocument = await parent_collection.update(structure_document)
 
 # Update the structure updated time for the specific document
 func update_structure_time(structure_document: FirestoreDocument, structure_updated_time_name: String, firestore_structure_collection_path: String, globals_offline_data_updated_time: int) -> void:

@@ -19,9 +19,13 @@ func update_waypoints_time(_new_time: int) -> void:
 func delete_itself() -> void:
 	pass
 
-# Used by waypoint children to get data
+# Used by Waypoint children to get data
 func get_offline_data_waypoints() -> Dictionary:
 	return {}
+
+# Used by Waypoint children to get path of parent
+func get_firestore_path() -> String:
+	return ""
 
 # Set the position of the structue based on the GPS coordinates
 func set_structure_global_position() -> void:

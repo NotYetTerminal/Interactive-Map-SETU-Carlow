@@ -20,6 +20,16 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	if details.is_empty():
 		return []
 	
+	var changed_fields: Array[String] = [
+		"longitude" if longitude != details["longitude"] else "",
+		"latitude" if latitude != details["latitude"] else "",
+		"name" if structure_name != details["name"] else "",
+		"description" if description != details["description"] else "",
+		"lecturers" if lectures != details["lecturers"] else "",
+		"floor_number" if floor_number != details["floor_number"] else "",
+		"waypoints_updated_time" if waypoints_updated_time != details["waypoints_updated_time"] else ""
+	]
+	
 	longitude = details["longitude"]
 	latitude = details["latitude"]
 	
@@ -33,16 +43,6 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	waypoints_updated_time = details["waypoints_updated_time"]
 	
 	set_structure_global_position()
-	
-	var changed_fields: Array[String] = [
-		"longitude" if longitude != details["longitude"] else "",
-		"latitude" if latitude != details["latitude"] else "",
-		"name" if structure_name != details["name"] else "",
-		"description" if description != details["description"] else "",
-		"lecturers" if lectures != details["lecturers"] else "",
-		"floor_number" if floor_number != details["floor_number"] else "",
-		"waypoints_updated_time" if waypoints_updated_time != details["waypoints_updated_time"] else ""
-	]
 	return changed_fields
 
 # Update the details when editing
@@ -50,13 +50,22 @@ func update_details(details: Dictionary) -> void:
 	var fields: Array[String] = save_details(id, details)
 	var building: Building = get_parent().get_parent()
 	var base_map: BaseMap = building.get_parent().get_parent()
-	var room_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]
 	
-	details['Waypoints'] = room_data['Waypoints']
-	Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id] = details
+	var room_dictionary: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]
+	if not room_dictionary.has('Rooms'):
+		room_dictionary['Rooms'] = {}
+	
+	room_dictionary = room_dictionary['Rooms']
+	if room_dictionary.has(id):
+		var room_data: Dictionary = room_dictionary[id]
+		if not room_data.has('Waypoints'):
+			room_data['Waypoints'] = {}
+		details['Waypoints'] = room_data['Waypoints']
+	
+	room_dictionary[id] = details
+	await Globals.save_data(id, fields, current_firestore_path(), details)
+	
 	building.update_rooms_time(int(Time.get_unix_time_from_system()))
-	
-	Globals.save_data(id, fields, building.id)
 
 # Used by children to update time
 func update_waypoints_time(new_time: int) -> void:
@@ -65,7 +74,8 @@ func update_waypoints_time(new_time: int) -> void:
 	var base_map: BaseMap = building.get_parent().get_parent()
 	
 	Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]['waypoints_updated_time'] = waypoints_updated_time
-	Globals.save_data(id, ['waypoints_updated_time'], building.id)
+	var structure_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]
+	await Globals.save_data(id, ['waypoints_updated_time'], current_firestore_path(), structure_data)
 	
 	building.update_rooms_time(waypoints_updated_time)
 
@@ -94,4 +104,15 @@ func delete_itself() -> void:
 func get_offline_data_waypoints() -> Dictionary:
 	var building: Building = get_parent().get_parent()
 	var base_map: BaseMap = building.get_parent().get_parent()
-	return Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]['Waypoints']
+	var structure_dictionary: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]
+	if not structure_dictionary.has('Waypoints'):
+		structure_dictionary['Waypoints'] = {}
+	return structure_dictionary['Waypoints']
+
+# Used by Waypoint children to get path of parent
+func get_firestore_path() -> String:
+	return current_firestore_path() + "/" + id
+
+func current_firestore_path() -> String:
+	var building: Building = get_parent().get_parent()
+	return building.get_firestore_path() + "/Rooms"
