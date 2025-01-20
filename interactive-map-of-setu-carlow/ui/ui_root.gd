@@ -364,7 +364,7 @@ func _on_confirm_button_pressed() -> void:
 	if selected_structure is not BaseMap:
 		selected_structure.delete_itself()
 		delete_confirmation_panel.visible = false
-		selected_structure = null
+		_select_structure(null)
 
 # Open up choosing window
 func _on_add_button_pressed() -> void:

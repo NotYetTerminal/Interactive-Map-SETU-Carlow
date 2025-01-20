@@ -63,7 +63,10 @@ func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
 	var building: Building = get_parent().get_parent()
 	var base_map: BaseMap = building.get_parent().get_parent()
+	
 	Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]['waypoints_updated_time'] = waypoints_updated_time
+	Globals.save_data(id, ['waypoints_updated_time'], building.id)
+	
 	building.update_rooms_time(waypoints_updated_time)
 
 # Set global position, and update children

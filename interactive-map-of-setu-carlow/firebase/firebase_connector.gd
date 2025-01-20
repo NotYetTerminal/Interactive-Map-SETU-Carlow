@@ -191,6 +191,9 @@ func save_map_data(id: String, fields: Array[String], parent_id: String) -> void
 	
 	var base_map_collection : FirestoreCollection = Firebase.Firestore.collection('Base_Map')
 	var base_map_document: FirestoreDocument = await base_map_collection.get_doc(base_map_id)
+	if base_map_document == null:
+		print("Retry")
+		base_map_document = await base_map_collection.get_doc(base_map_id)
 	
 	var buildings_updated_time: int = Globals.offline_data[base_map_id]['buildings_updated_time']
 	var waypoints_updated_time: int = Globals.offline_data[base_map_id]['waypoints_updated_time']
@@ -229,10 +232,10 @@ func save_map_data(id: String, fields: Array[String], parent_id: String) -> void
 		if updated_data:
 			# Update Waypoints time
 			structure_updated_time = Globals.offline_data[base_map_id]['waypoints_updated_time']
-			update_structure_time(base_map_document, 'waypoints_updated_time', 'Base_Map', structure_updated_time)
+			await update_structure_time(base_map_document, 'waypoints_updated_time', 'Base_Map', structure_updated_time)
 			return
 	# Compare Buildings last updated time
-	if base_map_document.document['buildings_updated_time']['integerValue'] != str(buildings_updated_time) and (parent_id == "" or parent_id == base_map_id):
+	if base_map_document.document['buildings_updated_time']['integerValue'] != str(buildings_updated_time):
 		#TODO delete for loop
 		for building_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION):
 			var rooms_updated_time: int = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time']
@@ -248,7 +251,7 @@ func save_map_data(id: String, fields: Array[String], parent_id: String) -> void
 				
 				# Update Buildings time
 				structure_updated_time = Globals.offline_data[base_map_id]['buildings_updated_time']
-				update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map/', structure_updated_time)
+				await update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map', structure_updated_time)
 				return
 			# Save Waypoints data
 			if building_document.document['waypoints_updated_time']['integerValue'] != str(waypoints_updated_time) and (parent_id == "" or parent_id == building_document.doc_name):
@@ -276,14 +279,14 @@ func save_map_data(id: String, fields: Array[String], parent_id: String) -> void
 				if updated_data:
 					# Update Waypoints time
 					structure_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['waypoints_updated_time']
-					update_structure_time(building_document, 'waypoints_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
+					await update_structure_time(building_document, 'waypoints_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
 					
 					# Update Buildings time
 					structure_updated_time = Globals.offline_data[base_map_id]['buildings_updated_time']
-					update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map/', structure_updated_time)
+					await update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map', structure_updated_time)
 					return
 			# Save Rooms data
-			if building_document.document['rooms_updated_time']['integerValue'] != str(rooms_updated_time) and (parent_id == "" or parent_id == building_document.doc_name):
+			if building_document.document['rooms_updated_time']['integerValue'] != str(rooms_updated_time):
 				#TODO delete for loop
 				for room_document: FirestoreDocument in await Firebase.Firestore.list('Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION):
 					waypoints_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name]['waypoints_updated_time']
@@ -298,11 +301,11 @@ func save_map_data(id: String, fields: Array[String], parent_id: String) -> void
 						
 						# Update Rooms time
 						structure_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time']
-						update_structure_time(building_document, 'rooms_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
+						await update_structure_time(building_document, 'rooms_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
 						
 						# Update Buildings time
 						structure_updated_time = Globals.offline_data[base_map_id]['buildings_updated_time']
-						update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map/', structure_updated_time)
+						await update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map', structure_updated_time)
 						return
 					# Save Waypoints data
 					elif room_document.document['waypoints_updated_time']['integerValue'] != str(waypoints_updated_time) and (parent_id == "" or parent_id == room_document.doc_name):
@@ -330,15 +333,15 @@ func save_map_data(id: String, fields: Array[String], parent_id: String) -> void
 						if updated_data:
 							# Update Waypoints time
 							structure_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name][ROOMS_COLLECTION][room_document.doc_name]['waypoints_updated_time']
-							update_structure_time(room_document, 'waypoints_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION, structure_updated_time)
+							await update_structure_time(room_document, 'waypoints_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION + '/' + building_document.doc_name + '/' + ROOMS_COLLECTION, structure_updated_time)
 							
 							# Update Rooms time
 							structure_updated_time = Globals.offline_data[base_map_id][BUILDINGS_COLLECTION][building_document.doc_name]['rooms_updated_time']
-							update_structure_time(building_document, 'rooms_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
+							await update_structure_time(building_document, 'rooms_updated_time', 'Base_Map/' + base_map_id + '/' + BUILDINGS_COLLECTION, structure_updated_time)
 							
 							# Update Buildings time
 							structure_updated_time = Globals.offline_data[base_map_id]['buildings_updated_time']
-							update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map/', structure_updated_time)
+							await update_structure_time(base_map_document, 'buildings_updated_time', 'Base_Map', structure_updated_time)
 							return
 
 # Update the structure updated time for the specific document

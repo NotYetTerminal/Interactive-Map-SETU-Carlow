@@ -44,10 +44,12 @@ func update_details(details: Dictionary) -> void:
 func update_buildings_time(new_time: int) -> void:
 	buildings_updated_time = new_time
 	Globals.offline_data[id]['buildings_updated_time'] = buildings_updated_time
+	Globals.save_data(id, ['buildings_updated_time'], "")
 
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
 	Globals.offline_data[id]['waypoints_updated_time'] = waypoints_updated_time
+	Globals.save_data(id, ['waypoints_updated_time'], "")
 
 # Used by Waypoint children to get data
 func get_offline_data_waypoints() -> Dictionary:
