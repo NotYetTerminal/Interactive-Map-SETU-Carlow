@@ -94,9 +94,16 @@ grow_vertical = 2
 layout_mode = 2
 text = "Base Map"
 
-[node name="IDLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="IDVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+layout_mode = 2
+
+[node name="IDLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/IDVBoxContainer"]
 layout_mode = 2
 text = "ID: "
+
+[node name="IDLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/IDVBoxContainer"]
+layout_mode = 2
+editable = false
 
 [node name="LongitudeVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 layout_mode = 2

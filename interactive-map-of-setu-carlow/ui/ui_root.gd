@@ -17,7 +17,7 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 # Information Elements
 @onready var text_edit_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer
 @onready var structure_type_label: Label = $InformationPanel/TextEditVBoxContainer/StructureTypeLabel
-@onready var id_label: Label = $InformationPanel/TextEditVBoxContainer/IDLabel
+@onready var id_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/IDVBoxContainer/IDLineEdit
 @onready var longitude_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LongitudeVBoxContainer/LongitudeLineEdit
 @onready var latitude_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LatitudeVBoxContainer/LatitudeLineEdit
 
@@ -85,7 +85,7 @@ func change_text_edits() -> void:
 			for inner_scene: Control in scene.get_children():
 				if inner_scene is TextEdit:
 					(inner_scene as TextEdit).editable = selected_structure != null and Globals.edit_mode
-				elif inner_scene is LineEdit:
+				elif inner_scene is LineEdit and inner_scene != id_line_edit:
 					(inner_scene as LineEdit).editable = selected_structure != null and Globals.edit_mode
 				elif inner_scene is SpinBox:
 					(inner_scene as SpinBox).editable = selected_structure != null and Globals.edit_mode
@@ -100,11 +100,11 @@ func _select_structure(structure: Structure) -> void:
 	
 	# Set common values
 	if selected_structure != null:
-		id_label.text = 'ID: ' + selected_structure.id
+		id_line_edit.text = selected_structure.id
 		longitude_line_edit.text = str(selected_structure.longitude)
 		latitude_line_edit.text = str(selected_structure.latitude)
 	else:
-		id_label.text = 'ID: '
+		id_line_edit.text = ""
 		longitude_line_edit.text = ""
 		latitude_line_edit.text = ""
 	

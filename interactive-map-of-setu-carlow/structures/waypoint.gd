@@ -24,6 +24,7 @@ var from_waypoint: Waypoint
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
+	var previously_empty: bool = id == ""
 	id = id_in
 	
 	# When the structure is created no data is passed to it
@@ -49,6 +50,9 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	parent_type = details["parent_type"]
 	
 	waypoint_connections_ids = waypoint_connections_array
+	
+	if not previously_empty && changed_fields.has("waypoint_connections_ids"):
+		activate_links()
 	
 	set_structure_global_position()
 	return changed_fields
@@ -113,9 +117,10 @@ func remove_connection(id_to_remove: String) -> void:
 	await Globals.save_data(id, ["waypoint_connections_ids"], parent_structure.get_firestore_path() + "/Waypoints", structure_data)
 	
 	# Remove graphical link
-	var link_node: Node3D = links_dictionary[id_to_remove]
-	var _erased: bool = links_dictionary.erase(id_to_remove)
-	link_node.queue_free()
+	if links_dictionary.has(id_to_remove):
+		var link_node: Node3D = links_dictionary[id_to_remove]
+		var _erased: bool = links_dictionary.erase(id_to_remove)
+		link_node.queue_free()
 
 # Called to activate the links of this waypoint
 # May call on connections to do the same

@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dadi0hcmivqx"]
+[gd_scene load_steps=10 format=3 uid="uid://dadi0hcmivqx"]
 
 [ext_resource type="Script" path="res://structures/building.gd" id="1_0u58k"]
 [ext_resource type="PackedScene" uid="uid://dusn1bxyvlsya" path="res://map_textures/barrow_centre_node_3d.tscn" id="2_ysdoa"]
 [ext_resource type="PackedScene" uid="uid://dk2gadch8jbfq" path="res://map_textures/lrc_node_3d.tscn" id="3_cy3fr"]
 [ext_resource type="PackedScene" uid="uid://dc0fvyikedoll" path="res://map_textures/catering_services_building_node_3d.tscn" id="4_58qnn"]
+[ext_resource type="PackedScene" uid="uid://bausw5o86wtvy" path="res://map_textures/burrin_building_node_3d.tscn" id="5_n2yi7"]
+[ext_resource type="PackedScene" uid="uid://bn8qhs1o2a227" path="res://map_textures/nore_building_node_3d.tscn" id="6_386ko"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oulqv"]
 emission_enabled = true
@@ -22,8 +24,10 @@ waypoints = NodePath("Waypoints")
 rooms = NodePath("Rooms")
 map_textures_dictionary = {
 "Barrow Centre": ExtResource("2_ysdoa"),
+"Burrin Building": ExtResource("5_n2yi7"),
 "Catering Services Building": ExtResource("4_58qnn"),
-"LRC": ExtResource("3_cy3fr")
+"LRC": ExtResource("3_cy3fr"),
+"Nore Building": ExtResource("6_386ko")
 }
 
 [node name="Waypoints" type="Node" parent="."]
