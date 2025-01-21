@@ -1,18 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://blp6a3470pxte"]
+[gd_scene load_steps=5 format=3 uid="uid://blp6a3470pxte"]
 
 [ext_resource type="Script" path="res://structures/base_map.gd" id="1_0d03c"]
-[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="2_caimf"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftjfv"]
-albedo_color = Color(0, 0, 0, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rfx2j"]
 emission_enabled = true
-emission_texture = ExtResource("2_caimf")
+emission = Color(0, 1, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_1w8hw"]
-material = SubResource("StandardMaterial3D_ftjfv")
-size = Vector2(1, 1)
+material = SubResource("StandardMaterial3D_rfx2j")
+size = Vector2(0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_aqrrl"]
+size = Vector3(0.5, 0.1, 0.5)
 
 [node name="BaseMap" type="StaticBody3D" node_paths=PackedStringArray("waypoints", "buildings")]
 script = ExtResource("1_0d03c")
@@ -25,7 +24,6 @@ buildings = NodePath("Buildings")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
-visible = false
 mesh = SubResource("PlaneMesh_1w8hw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

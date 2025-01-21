@@ -59,6 +59,7 @@ func ray_cast_select(input_event: InputEventMouseButton) -> void:
 	print(ray_query.to)
 	print(raycast_result)
 	
+	#TODO change to proper projection
 	print()
 	print("Longitude: " + str((from.x / 10000) + Globals.base_longitude))
 	print("Latitude: " + str((from.z / 10000) + Globals.base_latitude))

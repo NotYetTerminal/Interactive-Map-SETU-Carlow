@@ -1,21 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://dadi0hcmivqx"]
+[gd_scene load_steps=8 format=3 uid="uid://dadi0hcmivqx"]
 
 [ext_resource type="Script" path="res://structures/building.gd" id="1_0u58k"]
-[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="2_utsm6"]
 [ext_resource type="PackedScene" uid="uid://dusn1bxyvlsya" path="res://map_textures/barrow_centre_node_3d.tscn" id="2_ysdoa"]
 [ext_resource type="PackedScene" uid="uid://dk2gadch8jbfq" path="res://map_textures/lrc_node_3d.tscn" id="3_cy3fr"]
 [ext_resource type="PackedScene" uid="uid://dc0fvyikedoll" path="res://map_textures/catering_services_building_node_3d.tscn" id="4_58qnn"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftjfv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oulqv"]
 emission_enabled = true
-emission_texture = ExtResource("2_utsm6")
+emission = Color(0, 0, 1, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_1w8hw"]
-material = SubResource("StandardMaterial3D_ftjfv")
-size = Vector2(1, 1)
+material = SubResource("StandardMaterial3D_oulqv")
+size = Vector2(0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_31smy"]
-size = Vector3(1, 0.1, 1)
+size = Vector3(0.5, 0.1, 0.5)
 
 [node name="Building" type="StaticBody3D" node_paths=PackedStringArray("waypoints", "rooms")]
 script = ExtResource("1_0u58k")
@@ -33,7 +32,6 @@ map_textures_dictionary = {
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
-visible = false
 mesh = SubResource("PlaneMesh_1w8hw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
