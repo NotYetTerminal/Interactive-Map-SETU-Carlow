@@ -30,12 +30,13 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	if details.is_empty():
 		return []
 	
+	var waypoint_connections_array: Array[String] = details["waypoint_connections_ids"]
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"] else "",
 		"latitude" if latitude != details["latitude"] else "",
 		"floor_number" if floor_number != details["floor_number"] else "",
 		"feature_type" if feature_type != details["feature_type"] else "",
-		"waypoint_connections_ids"
+		"waypoint_connections_ids" if waypoint_connections_ids.hash() != waypoint_connections_array.hash() else ""
 	]
 	
 	longitude = details["longitude"]
@@ -47,7 +48,7 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	parent_id = details["parent_id"]
 	parent_type = details["parent_type"]
 	
-	waypoint_connections_ids = details["waypoint_connections_ids"]
+	waypoint_connections_ids = waypoint_connections_array
 	
 	set_structure_global_position()
 	return changed_fields
@@ -64,7 +65,7 @@ func update_details(details: Dictionary) -> void:
 	# Update Waypoint depending on the parent
 	var parent_structure: Structure = get_parent().get_parent()
 	parent_structure.get_offline_data_waypoints()[id] = details
-	await Globals.save_data(id, fields, parent_structure.get_firestore_path() + "/Waypoints/", details)
+	await Globals.save_data(id, fields, parent_structure.get_firestore_path() + "/Waypoints", details)
 	
 	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 
@@ -109,7 +110,7 @@ func remove_connection(id_to_remove: String) -> void:
 	global_data_connections_array.erase(id_to_remove)
 	
 	# Update save data
-	await Globals.save_data(id, ["waypoint_connections_ids"], parent_structure.get_firestore_path() + "/Waypoints/", structure_data)
+	await Globals.save_data(id, ["waypoint_connections_ids"], parent_structure.get_firestore_path() + "/Waypoints", structure_data)
 	
 	# Remove graphical link
 	var link_node: Node3D = links_dictionary[id_to_remove]
