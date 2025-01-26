@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c632xxyai4jm5"]
+[gd_scene load_steps=14 format=3 uid="uid://c632xxyai4jm5"]
 
 [ext_resource type="Script" path="res://firebase/firebase_connector.gd" id="1_jrn7t"]
 [ext_resource type="PackedScene" uid="uid://dfgm3esbgp6at" path="res://managers/pathfinder.tscn" id="2_7g8wa"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bami1pjdsnbsi" path="res://structures/room.tscn" id="7_huewf"]
 [ext_resource type="PackedScene" uid="uid://mdi8cgpboqxi" path="res://structures/waypoint.tscn" id="8_ty4b8"]
 [ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/ui_root.tscn" id="11_1ljdu"]
+[ext_resource type="PackedScene" uid="uid://bw4ru2pi3ea3r" path="res://ui/user_ui_root.tscn" id="12_hgjqa"]
 
 [sub_resource type="Environment" id="Environment_knlak"]
 background_color = Color(0.537011, 0.537011, 0.537011, 1)
@@ -45,6 +46,8 @@ size = 10.0
 script = ExtResource("4_un6fr")
 
 [node name="UIRoot" parent="." instance=ExtResource("11_1ljdu")]
+
+[node name="UserUIRoot" parent="." instance=ExtResource("12_hgjqa")]
 
 [connection signal="map_data_loaded" from="FirebaseConnector" to="StructureSpawner" method="_on_firebase_connector_map_data_loaded"]
 [connection signal="all_structures_done" from="StructureSpawner" to="Pathfinder" method="_on_structure_spawner_all_structures_done"]
