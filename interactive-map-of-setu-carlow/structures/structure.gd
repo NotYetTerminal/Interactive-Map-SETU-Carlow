@@ -34,18 +34,6 @@ func set_structure_global_position() -> void:
 	
 	global_position = (this_position - global_base_position) / 10
 
-# Convert using Mercator projection
-func mercator_conversion(lon: float, lat: float) -> Vector3:
-	# Convert latitude and longitude to radians
-	var longitude_radians: float = deg_to_rad(lon)
-	var latitude_radians: float = deg_to_rad(lat)
-
-	# Calculate coordinates using the Mercator projection
-	var x_coordinate: float = longitude_radians
-	var z_coordinate: float = log(tan(PI / 4.0 + latitude_radians / 2.0))
-
-	return Vector3(x_coordinate, 0, z_coordinate) * Globals.EARTH_RADIUS
-
 # Convert using Equirectangular projection
 func equirectangular_conversion(lon: float, lat: float) -> Vector3:
 	# Convert latitude and longitude to radians
