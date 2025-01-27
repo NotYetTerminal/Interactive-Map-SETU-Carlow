@@ -87,3 +87,16 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> void
 				print("H Cost: " + str(neighbour.h_cost))
 	
 	return
+
+
+func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: Structure) -> void:
+	var from_waypoint: Waypoint
+	var to_waypoint: Waypoint
+	# Get Waypoints for pathfinding
+	if from_structure is Room: from_waypoint = (from_structure as Room).get_closest_waypoint()
+	elif from_structure is Building: from_waypoint = (from_structure as Building).get_closest_waypoint()
+	if to_structure is Room: to_waypoint = (to_structure as Room).get_closest_waypoint()
+	elif to_structure is Building: to_waypoint = (to_structure as Building).get_closest_waypoint()
+	
+	if from_waypoint != null and to_waypoint != null:
+		do_pathfinding(from_waypoint, to_waypoint)

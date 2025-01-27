@@ -59,7 +59,7 @@ func on_auth_request(result_code: Variant, _result_content: Variant) -> void:
 		# No internet continue with loading
 		map_data_loaded.emit()
 	else:
-		print("Error: " + result_code)
+		print("Error: " + str(result_code))
 		Firebase.Auth.login_anonymous()
 
 func delete_auth_file() -> void:

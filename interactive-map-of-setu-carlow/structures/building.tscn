@@ -18,10 +18,8 @@ size = Vector2(0.5, 0.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_31smy"]
 size = Vector3(0.5, 0.1, 0.5)
 
-[node name="Building" type="StaticBody3D" node_paths=PackedStringArray("waypoints", "rooms")]
+[node name="Building" type="StaticBody3D"]
 script = ExtResource("1_0u58k")
-waypoints = NodePath("Waypoints")
-rooms = NodePath("Rooms")
 map_textures_dictionary = {
 "Barrow Centre": ExtResource("2_ysdoa"),
 "Burrin Building": ExtResource("5_n2yi7"),

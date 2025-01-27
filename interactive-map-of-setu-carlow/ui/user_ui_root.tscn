@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bw4ru2pi3ea3r"]
+[gd_scene load_steps=12 format=3 uid="uid://bw4ru2pi3ea3r"]
 
 [ext_resource type="Script" path="res://ui/user_ui_root.gd" id="1_c31da"]
 [ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="1_le722"]
 [ext_resource type="Script" path="res://ui/information_popup_control.gd" id="2_bnl34"]
+[ext_resource type="Script" path="res://ui/search_elements_control.gd" id="2_dwkun"]
 [ext_resource type="Script" path="res://ui/description_scroll_container.gd" id="2_uj4s2"]
+[ext_resource type="Script" path="res://ui/navigation_button.gd" id="4_j3kvc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydxl4"]
 corner_radius_top_left = 25
@@ -36,9 +38,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_c31da")
 
-[node name="SearchControl" type="Control" parent="."]
+[node name="SearchElementsControl" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,8 +49,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+script = ExtResource("2_dwkun")
 
-[node name="SearchBarControl" type="Control" parent="SearchControl"]
+[node name="SearchBarControl" type="Control" parent="SearchElementsControl"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -57,7 +61,7 @@ offset_right = -40.0
 offset_bottom = 90.0
 grow_horizontal = 2
 
-[node name="ToSearchBarPanel" type="Panel" parent="SearchControl/SearchBarControl"]
+[node name="ToSearchBarPanel" type="Panel" parent="SearchElementsControl/SearchBarControl"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,7 +70,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ydxl4")
 
-[node name="ToSearchBarHSplitContainer" type="HSplitContainer" parent="SearchControl/SearchBarControl/ToSearchBarPanel"]
+[node name="ToSearchBarHSplitContainer" type="HSplitContainer" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -81,12 +85,12 @@ grow_vertical = 2
 split_offset = 40
 dragger_visibility = 1
 
-[node name="ToSearchBarTextureRect" type="TextureRect" parent="SearchControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
+[node name="ToSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
 layout_mode = 2
 texture = ExtResource("1_le722")
 expand_mode = 1
 
-[node name="ToSearchBarLineEdit" type="LineEdit" parent="SearchControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
+[node name="ToSearchBarLineEdit" type="LineEdit" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
 layout_mode = 2
 theme_override_colors/font_placeholder_color = Color(0.31802, 0.31802, 0.31802, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -96,7 +100,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_n81ai")
 placeholder_text = "Search for a room..."
 caret_blink = true
 
-[node name="FromSearchBarPanel" type="Panel" parent="SearchControl/SearchBarControl"]
+[node name="FromSearchBarPanel" type="Panel" parent="SearchElementsControl/SearchBarControl"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -108,7 +112,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ydxl4")
 
-[node name="FromSearchBarHSplitContainer" type="HSplitContainer" parent="SearchControl/SearchBarControl/FromSearchBarPanel"]
+[node name="FromSearchBarHSplitContainer" type="HSplitContainer" parent="SearchElementsControl/SearchBarControl/FromSearchBarPanel"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -123,12 +127,12 @@ grow_vertical = 2
 split_offset = 40
 dragger_visibility = 1
 
-[node name="FromSearchBarTextureRect" type="TextureRect" parent="SearchControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
+[node name="FromSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
 layout_mode = 2
 texture = ExtResource("1_le722")
 expand_mode = 1
 
-[node name="FromSearchBarLineEdit" type="LineEdit" parent="SearchControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
+[node name="FromSearchBarLineEdit" type="LineEdit" parent="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
 layout_mode = 2
 theme_override_colors/font_placeholder_color = Color(0.31802, 0.31802, 0.31802, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -138,7 +142,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_n81ai")
 placeholder_text = "Search for a room..."
 caret_blink = true
 
-[node name="DistanceLabel" type="Label" parent="SearchControl/SearchBarControl"]
+[node name="DistanceLabel" type="Label" parent="SearchElementsControl/SearchBarControl"]
 visible = false
 layout_mode = 1
 anchors_preset = 4
@@ -152,7 +156,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 30
 vertical_alignment = 1
 
-[node name="DistancePanel" type="Panel" parent="SearchControl/SearchBarControl/DistanceLabel"]
+[node name="DistancePanel" type="Panel" parent="SearchElementsControl/SearchBarControl/DistanceLabel"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -164,8 +168,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ot7it")
 
-[node name="NavigationButton" type="Button" parent="SearchControl/SearchBarControl"]
-visible = false
+[node name="NavigationButton" type="Button" parent="SearchElementsControl/SearchBarControl"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -177,7 +180,8 @@ offset_top = 115.0
 offset_bottom = 165.0
 grow_horizontal = 0
 grow_vertical = 2
-text = "Stop Navigation"
+text = "Start Navigation"
+script = ExtResource("4_j3kvc")
 
 [node name="ScreenElementsControl" type="Control" parent="."]
 layout_mode = 1
@@ -221,6 +225,7 @@ offset_top = 140.0
 offset_right = 51.0
 offset_bottom = 190.0
 theme_override_font_sizes/font_size = 30
+text = "Ground Floor"
 vertical_alignment = 1
 
 [node name="LevelIndicatorPanel" type="Panel" parent="ScreenElementsControl/LeftControl/LevelIndicatorLabel"]
@@ -264,7 +269,7 @@ offset_right = 91.0
 offset_bottom = 190.0
 text = "Zoom Out"
 
-[node name="InformationPopupControl" type="Control" parent="."]
+[node name="InformationPopupElementsControl" type="Control" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -274,59 +279,68 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_bnl34")
 
-[node name="InformationPopupVBoxContainer" type="VBoxContainer" parent="InformationPopupControl"]
+[node name="InformationPopupControl" type="Control" parent="InformationPopupElementsControl"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -140.5
-offset_top = -145.5
-offset_right = 140.5
-offset_bottom = 145.5
+offset_left = -150.0
+offset_top = -200.0
+offset_right = 150.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameLabel" type="Label" parent="InformationPopupControl/InformationPopupVBoxContainer"]
+[node name="InformationPopupVBoxContainer" type="VBoxContainer" parent="InformationPopupElementsControl/InformationPopupControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationPopupVBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
 text = "Barrow"
 
-[node name="InformationPopupPanel" type="Panel" parent="InformationPopupControl/InformationPopupVBoxContainer/NameLabel"]
+[node name="InformationPopupPanel" type="Panel" parent="InformationPopupElementsControl/InformationPopupControl/InformationPopupVBoxContainer/NameLabel"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -10.0
+offset_top = -10.0
 offset_right = 10.0
-offset_bottom = 255.0
+offset_bottom = 305.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_61s1f")
 
-[node name="LecturersLabel" type="Label" parent="InformationPopupControl/InformationPopupVBoxContainer"]
+[node name="LecturersLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationPopupVBoxContainer"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Lecturers: "
 autowrap_mode = 3
 
-[node name="BuildingLetterLabel" type="Label" parent="InformationPopupControl/InformationPopupVBoxContainer"]
+[node name="BuildingLetterLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationPopupVBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Building Letter: "
 
-[node name="DescriptionScrollContainer" type="ScrollContainer" parent="InformationPopupControl/InformationPopupVBoxContainer"]
+[node name="DescriptionScrollContainer" type="ScrollContainer" parent="InformationPopupElementsControl/InformationPopupControl/InformationPopupVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 0
 mouse_force_pass_scroll_events = false
 script = ExtResource("2_uj4s2")
 
-[node name="DescriptionLabel" type="Label" parent="InformationPopupControl/InformationPopupVBoxContainer/DescriptionScrollContainer"]
+[node name="DescriptionLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationPopupVBoxContainer/DescriptionScrollContainer"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -334,10 +348,48 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "This is a long piece of text fnjvhuufuerhuvnjdfvfndsfiowjsf;jv jsdfvmdfvdfvdfvbhbhhbfvjnf fudid hgh fhfuhe fh udd hf dfh fduf udfb dhd fh dfhbdf  jkfd dfkhh kfd fh df hf hkdfh klfdbhkfdbkvf bhkfdbfv b vfb bkkfvjkvfnnjvjkfjkkj dkbv fbhk fvfd ew  we de sf sd feyiweu hlew uifhlueflewfhwuehfl eufhwehfwlhwefhsfsjsdkhfj s"
 autowrap_mode = 3
 
-[connection signal="text_changed" from="SearchControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
-[connection signal="text_changed" from="SearchControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="." method="_on_from_search_bar_line_edit_text_changed"]
-[connection signal="button_down" from="SearchControl/SearchBarControl/NavigationButton" to="." method="_on_navigation_button_button_down"]
+[node name="FromButton" type="Button" parent="InformationPopupElementsControl/InformationPopupControl"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.5
+offset_top = -1.0
+offset_right = -25.5
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "From"
+
+[node name="ToButton" type="Button" parent="InformationPopupElementsControl/InformationPopupControl"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 25.5
+offset_top = -1.0
+offset_right = 74.5
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "To"
+
+[connection signal="_set_from_structure" from="." to="SearchElementsControl" method="_on_user_ui_root__set_from_structure"]
+[connection signal="_set_to_structure" from="." to="SearchElementsControl" method="_on_user_ui_root__set_to_structure"]
+[connection signal="_show_building_information" from="." to="InformationPopupElementsControl" method="show_building_information"]
+[connection signal="_show_room_information" from="." to="InformationPopupElementsControl" method="show_room_information"]
+[connection signal="cancel_navigation" from="." to="SearchElementsControl/SearchBarControl/NavigationButton" method="_on_user_ui_root_cancel_navigation"]
+[connection signal="start_navigation" from="." to="SearchElementsControl/SearchBarControl/NavigationButton" method="_on_user_ui_root_start_navigation"]
+[connection signal="text_changed" from="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
+[connection signal="text_changed" from="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="." method="_on_from_search_bar_line_edit_text_changed"]
+[connection signal="button_down" from="SearchElementsControl/SearchBarControl/NavigationButton" to="." method="_on_navigation_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl/LeftControl/LevelUpButton" to="." method="_on_level_up_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl/LeftControl/LevelDownButton" to="." method="_on_level_down_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomInButton" to="." method="_on_zoom_in_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomOutButton" to="." method="_on_zoom_out_button_button_down"]
+[connection signal="button_down" from="InformationPopupElementsControl/InformationPopupControl/FromButton" to="." method="_on_from_button_button_down"]
+[connection signal="button_down" from="InformationPopupElementsControl/InformationPopupControl/ToButton" to="." method="_on_to_button_button_down"]

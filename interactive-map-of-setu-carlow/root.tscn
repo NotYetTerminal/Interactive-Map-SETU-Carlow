@@ -46,6 +46,7 @@ size = 10.0
 script = ExtResource("4_un6fr")
 
 [node name="UIRoot" parent="." instance=ExtResource("11_1ljdu")]
+visible = false
 
 [node name="UserUIRoot" parent="." instance=ExtResource("12_hgjqa")]
 
@@ -53,5 +54,9 @@ script = ExtResource("4_un6fr")
 [connection signal="all_structures_done" from="StructureSpawner" to="Pathfinder" method="_on_structure_spawner_all_structures_done"]
 [connection signal="select_spawned_structure" from="StructureSpawner" to="UIRoot" method="_on_structure_spawner_select_spawned_structure"]
 [connection signal="select_structure" from="Camera3D" to="UIRoot" method="_on_camera_3d_select_structure"]
+[connection signal="select_structure" from="Camera3D" to="UserUIRoot" method="_on_camera_3d_select_structure"]
 [connection signal="edit_mode_toggled" from="UIRoot" to="Pathfinder" method="_on_ui_root_edit_mode_toggled"]
 [connection signal="spawn_specific_structure" from="UIRoot" to="StructureSpawner" method="_on_ui_root_spawn_specific_structure"]
+[connection signal="start_navigation" from="UserUIRoot" to="Pathfinder" method="_on_user_ui_root_start_navigation"]
+[connection signal="zoom_in_button" from="UserUIRoot" to="Camera3D" method="_on_user_ui_root_zoom_in_button"]
+[connection signal="zoom_out_button" from="UserUIRoot" to="Camera3D" method="_on_user_ui_root_zoom_out_button"]

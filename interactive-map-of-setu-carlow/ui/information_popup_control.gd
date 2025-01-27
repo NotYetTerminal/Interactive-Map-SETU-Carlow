@@ -1,11 +1,11 @@
 extends Control
 
-@onready var name_label: Label = $InformationPopupVBoxContainer/NameLabel
-@onready var lecturers_label: Label = $InformationPopupVBoxContainer/LecturersLabel
-@onready var building_letter_label: Label = $InformationPopupVBoxContainer/BuildingLetterLabel
-@onready var description_label: Label = $InformationPopupVBoxContainer/DescriptionScrollContainer/DescriptionLabel
+@onready var name_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/NameLabel
+@onready var lecturers_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/LecturersLabel
+@onready var building_letter_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/BuildingLetterLabel
+@onready var description_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/DescriptionScrollContainer/DescriptionLabel
 
-func show_building_information(room_name: String, lecturers: String, description: String) -> void:
+func show_room_information(room_name: String, lecturers: String, description: String) -> void:
 	name_label.text = room_name
 	lecturers_label.text = "Lecturers: " + lecturers
 	lecturers_label.visible = true
@@ -13,7 +13,7 @@ func show_building_information(room_name: String, lecturers: String, description
 	description_label.text = description
 	visible = true
 
-func show_room_information(building_name: String, building_letter: String, description: String) -> void:
+func show_building_information(building_name: String, building_letter: String, description: String) -> void:
 	name_label.text = building_name
 	lecturers_label.visible = false
 	building_letter_label.text = "Building Letter: " + building_letter

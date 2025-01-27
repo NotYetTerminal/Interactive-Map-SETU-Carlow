@@ -10,7 +10,7 @@ var parent_id: String
 
 var waypoints_updated_time: int
 
-@export var waypoints: Node
+@onready var waypoints_node: Node = $Waypoints
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
@@ -82,13 +82,13 @@ func update_waypoints_time(new_time: int) -> void:
 # Set global position, and update children
 func set_structure_global_position() -> void:
 	super.set_structure_global_position()
-	for waypoint: Waypoint in $Waypoints.get_children():
+	for waypoint: Waypoint in waypoints_node.get_children():
 		waypoint.set_structure_global_position()
 
 # Delete the structure and data related to it
 func delete_itself() -> void:
 	# Delete all Waypoints in the Rooms
-	for waypoint: Waypoint in waypoints.get_children():
+	for waypoint: Waypoint in waypoints_node.get_children():
 		await waypoint.delete_itself()
 	
 	var building: Building = get_parent().get_parent()
@@ -113,6 +113,18 @@ func get_offline_data_waypoints() -> Dictionary:
 func get_firestore_path() -> String:
 	return current_firestore_path() + "/" + id
 
+
 func current_firestore_path() -> String:
 	var building: Building = get_parent().get_parent()
 	return building.get_firestore_path() + "/Rooms"
+
+# Used by Pathfinder to get Waypoint in the Room
+func get_closest_waypoint() -> Waypoint:
+	var closest_distance: float = 10000
+	var closest_waypoint: Waypoint
+	for waypoint: Waypoint in waypoints_node.get_children():
+		var distance: float = position.distance_to(waypoint.position)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_waypoint = waypoint
+	return closest_waypoint

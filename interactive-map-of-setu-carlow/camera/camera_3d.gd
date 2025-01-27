@@ -8,7 +8,8 @@ var screen_ratio: float
 
 var min_zoom: float = 3
 var max_zoom: float = 15
-var zoom_amount: float = 0.2
+var mouse_zoom_amount: float = 0.2
+var button_zoom_amount: float = 1
 var zoom_level: float = 10
 
 var move_speed: float = 0.01
@@ -28,11 +29,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				moving_camera = false
 		# Zooming with the mouse
 		elif input_event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			zoom_level = max(zoom_level - zoom_amount, min_zoom)
-			size = zoom_level
+			zoom_in(mouse_zoom_amount)
 		elif input_event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			zoom_level = min(zoom_level + zoom_amount, max_zoom)
-			size = zoom_level
+			zoom_out(mouse_zoom_amount)
 		# Selecing
 		elif input_event.button_index == MOUSE_BUTTON_LEFT:
 			if input_event.is_pressed():
@@ -66,6 +65,27 @@ func ray_cast_select(input_event: InputEventMouseButton) -> void:
 	print()
 	
 	if raycast_result.has("collider") and raycast_result["collider"] is Structure:
-		select_structure.emit(raycast_result["collider"])
+		var structure: Structure = raycast_result["collider"]
+		# Position the selected Structure in the middle
+		position = Vector3(structure.position.x, -10, structure.position.z + 2)
+		select_structure.emit(structure)
 	else:
 		select_structure.emit(null)
+
+# Used by mouse and zoom buttons
+func zoom_in(zoom_amount: float) -> void:
+	zoom_level = max(zoom_level - zoom_amount, min_zoom)
+	size = zoom_level
+
+# Used by mouse and zoom buttons
+func zoom_out(zoom_amount: float) -> void:
+	zoom_level = min(zoom_level + zoom_amount, max_zoom)
+	size = zoom_level
+
+
+func _on_user_ui_root_zoom_in_button() -> void:
+	zoom_in(button_zoom_amount)
+
+
+func _on_user_ui_root_zoom_out_button() -> void:
+	zoom_out(button_zoom_amount)

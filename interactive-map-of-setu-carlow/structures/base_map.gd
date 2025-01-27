@@ -1,8 +1,8 @@
 extends Structure
 class_name BaseMap
 
-@export var waypoints: Node
-@export var buildings: Node
+@onready var waypoints_node: Node = $Waypoints
+@onready var buildings_node: Node = $Buildings
 
 var waypoints_updated_time: int
 var buildings_updated_time: int
@@ -70,7 +70,7 @@ func current_firestore_path() -> String:
 # Set global position, and update children
 func set_structure_global_position() -> void:
 	super.set_structure_global_position()
-	for waypoint: Waypoint in $Waypoints.get_children():
+	for waypoint: Waypoint in waypoints_node.get_children():
 		waypoint.set_structure_global_position()
-	for building: Building in $Buildings.get_children():
+	for building: Building in buildings_node.get_children():
 		building.set_structure_global_position()

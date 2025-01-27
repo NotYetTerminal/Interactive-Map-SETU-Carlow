@@ -5,8 +5,8 @@ var structure_name: String
 var description: String
 var building_letter: String
 
-@export var waypoints: Node
-@export var rooms: Node
+@onready var waypoints_node: Node = $Waypoints
+@onready var rooms_node: Node = $Rooms
 
 var waypoints_updated_time: int
 var rooms_updated_time: int
@@ -94,18 +94,18 @@ func update_waypoints_time(new_time: int) -> void:
 # Set global position, and update children
 func set_structure_global_position() -> void:
 	super.set_structure_global_position()
-	for waypoint: Waypoint in $Waypoints.get_children():
+	for waypoint: Waypoint in waypoints_node.get_children():
 		waypoint.set_structure_global_position()
-	for room: Room in $Rooms.get_children():
+	for room: Room in rooms_node.get_children():
 		room.set_structure_global_position()
 
 # Delete the structure and data related to it
 func delete_itself() -> void:
 	# Delete all Rooms in the Building
-	for room: Room in rooms.get_children():
+	for room: Room in rooms_node.get_children():
 		await room.delete_itself()
 	# Delete all Waypoints in the Building
-	for waypoint: Waypoint in waypoints.get_children():
+	for waypoint: Waypoint in waypoints_node.get_children():
 		await waypoint.delete_itself()
 	
 	var base_map: BaseMap = get_parent().get_parent()
@@ -128,6 +128,7 @@ func get_offline_data_waypoints() -> Dictionary:
 func get_firestore_path() -> String:
 	return current_firestore_path() + "/" + id
 
+
 func current_firestore_path() -> String:
 	var base_map: BaseMap = get_parent().get_parent()
 	return base_map.get_firestore_path() + "/Buildings"
@@ -141,3 +142,15 @@ func add_map_texture() -> void:
 	else:
 		print("Not found key: " + structure_name)
 		print(map_textures_dictionary)
+
+# Used by Pathfinder to get Waypoint in the Building
+func get_closest_waypoint() -> Waypoint:
+	var closest_distance: float = 10000
+	var closest_waypoint: Waypoint
+	for waypoint: Waypoint in waypoints_node.get_children():
+		if waypoint.floor_number == 1:
+			var distance: float = position.distance_to(waypoint.position)
+			if distance < closest_distance:
+				closest_distance = distance
+				closest_waypoint = waypoint
+	return closest_waypoint
