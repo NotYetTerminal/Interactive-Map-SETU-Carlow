@@ -164,8 +164,12 @@ func list(path : String = "", page_size : int = 0, page_token : String = "", ord
 	task.data = [path, page_size, page_token, order_by]
 	task._url = url
 	_pooled_request(task)
-	
-	return await _handle_task_finished(task)
+
+	var result: Variant = await _handle_task_finished(task)
+	if result == null:
+		return []
+	else:
+		return result
 
 
 func _set_config(config_json : Dictionary) -> void:
