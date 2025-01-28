@@ -2,16 +2,18 @@
 
 [ext_resource type="Script" path="res://structures/room.gd" id="1_u5udv"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfr5q"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mvnjv"]
+albedo_color = Color(0, 0, 0, 1)
 emission_enabled = true
-emission = Color(1, 0, 0, 1)
+emission = Color(0.873666, 0.0821534, 0, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_1w8hw"]
-material = SubResource("StandardMaterial3D_mfr5q")
-size = Vector2(0.5, 0.5)
+[sub_resource type="SphereMesh" id="SphereMesh_r28ql"]
+material = SubResource("StandardMaterial3D_mvnjv")
+radius = 0.2
+height = 0.5
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fb3v1"]
-size = Vector3(0.5, 0.1, 0.5)
+[sub_resource type="SphereShape3D" id="SphereShape3D_0wt0h"]
+radius = 0.2
 
 [node name="Room" type="StaticBody3D"]
 script = ExtResource("1_u5udv")
@@ -20,7 +22,7 @@ script = ExtResource("1_u5udv")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
-mesh = SubResource("PlaneMesh_1w8hw")
+mesh = SubResource("SphereMesh_r28ql")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_fb3v1")
+shape = SubResource("SphereShape3D_0wt0h")

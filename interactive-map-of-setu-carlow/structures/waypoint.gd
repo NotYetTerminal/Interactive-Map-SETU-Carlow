@@ -150,7 +150,7 @@ func change_colour(new_colour: Color) -> void:
 	var material: StandardMaterial3D = StandardMaterial3D.new()
 	material.emission_enabled = true
 	material.emission = new_colour
-	var mesh_instance: MeshInstance3D = $CollisionShape3D/MeshInstance3D
+	var mesh_instance: MeshInstance3D = $MeshInstance3D
 	mesh_instance.set_surface_override_material(0, material)
 
 # Change the colour of the Link between Waypoints

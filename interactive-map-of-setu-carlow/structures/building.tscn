@@ -7,16 +7,19 @@
 [ext_resource type="PackedScene" uid="uid://bausw5o86wtvy" path="res://map_textures/burrin_building_node_3d.tscn" id="5_n2yi7"]
 [ext_resource type="PackedScene" uid="uid://bn8qhs1o2a227" path="res://map_textures/nore_building_node_3d.tscn" id="6_386ko"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oulqv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mvu2m"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
 emission_enabled = true
-emission = Color(0, 0, 1, 1)
+emission = Color(0.376953, 0.667924, 1, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_1w8hw"]
-material = SubResource("StandardMaterial3D_oulqv")
-size = Vector2(0.5, 0.5)
+[sub_resource type="SphereMesh" id="SphereMesh_non5c"]
+material = SubResource("StandardMaterial3D_mvu2m")
+radius = 0.2
+height = 0.5
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_31smy"]
-size = Vector3(0.5, 0.1, 0.5)
+[sub_resource type="SphereShape3D" id="SphereShape3D_7lapv"]
+radius = 0.2
 
 [node name="Building" type="StaticBody3D"]
 script = ExtResource("1_0u58k")
@@ -34,7 +37,7 @@ map_textures_dictionary = {
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
-mesh = SubResource("PlaneMesh_1w8hw")
+mesh = SubResource("SphereMesh_non5c")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_31smy")
+shape = SubResource("SphereShape3D_7lapv")
