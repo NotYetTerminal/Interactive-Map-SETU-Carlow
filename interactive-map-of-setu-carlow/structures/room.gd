@@ -128,3 +128,7 @@ func get_closest_waypoint() -> Waypoint:
 			closest_distance = distance
 			closest_waypoint = waypoint
 	return closest_waypoint
+
+
+func update_visibility_by_floor_number(checking_floor_number: int) -> void:
+	visible = floor_number == checking_floor_number

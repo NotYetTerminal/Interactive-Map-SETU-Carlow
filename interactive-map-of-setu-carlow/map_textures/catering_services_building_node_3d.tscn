@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dc0fvyikedoll"]
+[gd_scene load_steps=5 format=3 uid="uid://dc0fvyikedoll"]
 
+[ext_resource type="Script" path="res://map_textures/building_texture_node.gd" id="1_m61wn"]
 [ext_resource type="Texture2D" uid="uid://bukb8nkeh5ehk" path="res://map_images/map-239.png" id="1_onxvs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6mmc"]
@@ -12,6 +13,7 @@ size = Vector2(10, 11)
 
 [node name="CateringServicesBuildingNode3D" type="Node3D"]
 transform = Transform3D(-0.279988, -4.22771e-08, -0.813146, 1.29856e-07, -0.86, 6.45493e-14, -0.813146, -1.22782e-07, 0.279988, 0, 0, 0)
+script = ExtResource("1_m61wn")
 
 [node name="Level1MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, -4.50166e-22, -3.54789e-08, 0, 1, -1.26883e-14, 3.54789e-08, 1.26883e-14, 1, -0.64, -1, -4.27)

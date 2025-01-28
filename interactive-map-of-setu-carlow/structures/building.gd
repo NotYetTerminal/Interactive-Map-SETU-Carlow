@@ -14,6 +14,8 @@ var rooms_updated_time: int
 # Contains textures for buildings { structure_name: String: texture_scene: PackedScene }
 @export var map_textures_dictionary: Dictionary
 
+var building_texture_node: Node3D
+
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in
@@ -137,7 +139,7 @@ func current_firestore_path() -> String:
 func add_map_texture() -> void:
 	if map_textures_dictionary.has(structure_name):
 		var building_texture_scene: PackedScene = map_textures_dictionary[structure_name]
-		var building_texture_node: Node3D = building_texture_scene.instantiate()
+		building_texture_node = building_texture_scene.instantiate()
 		add_child(building_texture_node)
 	else:
 		print("Not found key: " + structure_name)
@@ -154,3 +156,13 @@ func get_closest_waypoint() -> Waypoint:
 				closest_distance = distance
 				closest_waypoint = waypoint
 	return closest_waypoint
+
+
+func update_visibility_by_floor_number(checking_floor_number: int) -> void:
+	for waypoint: Waypoint in waypoints_node.get_children():
+		waypoint.update_visibility_by_floor_number(checking_floor_number)
+	for room: Room in rooms_node.get_children():
+		room.update_visibility_by_floor_number(checking_floor_number)
+	print(building_texture_node)
+	if building_texture_node != null:
+		(building_texture_node as BuildingTextureNode).update_visibility_by_floor_number(checking_floor_number)

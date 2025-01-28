@@ -1,7 +1,7 @@
 extends Control
 
 # Signals for outside nodes
-signal update_level_number(level_number: int)
+signal update_floor_number(floor_number: int)
 signal start_navigation(from_structure: Structure, to_structure: Structure)
 signal cancel_navigation
 signal zoom_in_button
@@ -13,11 +13,12 @@ signal _show_building_information(building_name: String, building_letter: String
 signal _set_from_structure(from_structure: Structure)
 signal _set_to_structure(to_structure: Structure)
 
-@onready var level_indicator_label: Label = $ScreenElementsControl/LeftControl/LevelIndicatorLabel
+@onready var floor_indicator_label: Label = $ScreenElementsControl/LeftControl/FloorIndicatorLabel
+@onready var information_popup_elements_control: Control = $InformationPopupElementsControl
 
-# Used by level indicator label
-var level_name_array: Array[String] = ["Ground Floor", "First Floor", "Second Floor"]
-var level_number: int = 1
+# Used by floor indicator label
+var floor_name_array: Array[String] = ["Ground Floor", "First Floor", "Second Floor"]
+var floor_number: int = 1
 
 # For pathfinding
 var current_selected_structure: Structure
@@ -34,20 +35,20 @@ func _on_from_search_bar_line_edit_text_changed(_new_text: String) -> void:
 	from_structure = null
 
 
-func _on_level_up_button_button_down() -> void:
-	level_number = min(level_number + 1, 3)
-	update_level_label()
-	update_level_number.emit(level_number)
+func _on_floor_up_button_button_down() -> void:
+	floor_number = min(floor_number + 1, 3)
+	update_floor_label()
+	update_floor_number.emit(floor_number)
 
 
-func _on_level_down_button_button_down() -> void:
-	level_number = max(level_number - 1, 1)
-	update_level_label()
-	update_level_number.emit(level_number)
+func _on_floor_down_button_button_down() -> void:
+	floor_number = max(floor_number - 1, 1)
+	update_floor_label()
+	update_floor_number.emit(floor_number)
 
-# Update level indicator label
-func update_level_label() -> void:
-	level_indicator_label.text = level_name_array[level_number - 1]
+# Update floor indicator label
+func update_floor_label() -> void:
+	floor_indicator_label.text = floor_name_array[floor_number - 1]
 
 
 func _on_navigation_button_button_down() -> void:
@@ -94,4 +95,8 @@ func _on_to_button_button_down() -> void:
 
 
 func _on_admin_check_button_edit_mode_toggled() -> void:
+	if not Globals.edit_mode:
+		currently_navigating = false
+		cancel_navigation.emit()
 	visible = not Globals.edit_mode
+	information_popup_elements_control.visible = false

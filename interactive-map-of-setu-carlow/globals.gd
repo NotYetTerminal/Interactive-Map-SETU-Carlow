@@ -8,6 +8,7 @@ var base_longitude: float
 var base_latitude: float
 
 var pathfinder: Pathfinder
+var base_map: BaseMap
 
 # Offline data used to store map data
 var offline_data: Dictionary

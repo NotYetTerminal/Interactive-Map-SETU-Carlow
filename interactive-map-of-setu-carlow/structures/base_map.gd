@@ -3,9 +3,14 @@ class_name BaseMap
 
 @onready var waypoints_node: Node = $Waypoints
 @onready var buildings_node: Node = $Buildings
+@onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
 var waypoints_updated_time: int
 var buildings_updated_time: int
+
+func _ready() -> void:
+	Globals.base_map = self
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
@@ -74,3 +79,15 @@ func set_structure_global_position() -> void:
 		waypoint.set_structure_global_position()
 	for building: Building in buildings_node.get_children():
 		building.set_structure_global_position()
+
+
+func enable_admin() -> void:
+	mesh_instance_3d.visible = Globals.edit_mode
+	collision_shape_3d.disabled = not Globals.edit_mode
+
+
+func update_visibility_by_floor_number(checking_floor_number: int) -> void:
+	for waypoint: Waypoint in waypoints_node.get_children():
+		waypoint.update_visibility_by_floor_number(checking_floor_number)
+	for building: Building in buildings_node.get_children():
+		building.update_visibility_by_floor_number(checking_floor_number)

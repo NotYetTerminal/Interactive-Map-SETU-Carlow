@@ -27,6 +27,10 @@ func get_offline_data_waypoints() -> Dictionary:
 func get_firestore_path() -> String:
 	return ""
 
+# Used by floor buttons to change visibility of Structures
+func update_visibility_by_floor_number(_checking_floor_number: int) -> void:
+	pass
+
 # Set the position of the structue based on the GPS coordinates
 func set_structure_global_position() -> void:
 	var this_position: Vector3 = equirectangular_conversion(longitude, latitude)

@@ -13,13 +13,15 @@ emission = Color(0.827451, 0.827451, 0.827451, 1)
 material = SubResource("StandardMaterial3D_f2x5v")
 
 [node name="Waypoint" type="StaticBody3D"]
+visible = false
 script = ExtResource("1_nxo60")
 link_node_3d_scene = ExtResource("2_25spw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 shape = SubResource("SphereShape3D_ffppo")
+disabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("SphereMesh_bd2ug")
-skeleton = NodePath("../..")

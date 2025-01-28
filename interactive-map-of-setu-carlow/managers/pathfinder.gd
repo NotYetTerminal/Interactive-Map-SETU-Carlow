@@ -28,6 +28,10 @@ func _on_structure_spawner_all_structures_done() -> void:
 	for waypoint: Waypoint in _all_waypoints.values():
 		waypoint.activate_links()
 
+
+func _on_user_ui_root_cancel_navigation() -> void:
+	reset()
+
 # Resets all of the Waypoints values
 func reset() -> void:
 	if final_waypoint != null:
@@ -100,3 +104,7 @@ func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: 
 	
 	if from_waypoint != null and to_waypoint != null:
 		do_pathfinding(from_waypoint, to_waypoint)
+
+
+func _on_user_ui_root_update_floor_number(floor_number: int) -> void:
+	Globals.base_map.update_visibility_by_floor_number(floor_number)

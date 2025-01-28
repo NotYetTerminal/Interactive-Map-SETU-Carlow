@@ -86,6 +86,7 @@ split_offset = 40
 dragger_visibility = 1
 
 [node name="ToSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("1_le722")
 expand_mode = 1
@@ -128,6 +129,7 @@ split_offset = 40
 dragger_visibility = 1
 
 [node name="FromSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("1_le722")
 expand_mode = 1
@@ -203,14 +205,14 @@ offset_right = 640.0
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="LevelUpButton" type="Button" parent="ScreenElementsControl/LeftControl"]
+[node name="FloorUpButton" type="Button" parent="ScreenElementsControl/LeftControl"]
 layout_mode = 0
 offset_left = 40.0
 offset_right = 115.0
 offset_bottom = 50.0
 text = "Level Up"
 
-[node name="LevelDownButton" type="Button" parent="ScreenElementsControl/LeftControl"]
+[node name="FloorDownButton" type="Button" parent="ScreenElementsControl/LeftControl"]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 70.0
@@ -218,7 +220,7 @@ offset_right = 138.0
 offset_bottom = 120.0
 text = "Level Down"
 
-[node name="LevelIndicatorLabel" type="Label" parent="ScreenElementsControl/LeftControl"]
+[node name="FloorIndicatorLabel" type="Label" parent="ScreenElementsControl/LeftControl"]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 140.0
@@ -228,7 +230,7 @@ theme_override_font_sizes/font_size = 30
 text = "Ground Floor"
 vertical_alignment = 1
 
-[node name="LevelIndicatorPanel" type="Panel" parent="ScreenElementsControl/LeftControl/LevelIndicatorLabel"]
+[node name="FloorIndicatorPanel" type="Panel" parent="ScreenElementsControl/LeftControl/FloorIndicatorLabel"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -387,8 +389,8 @@ text = "To"
 [connection signal="text_changed" from="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="." method="_on_from_search_bar_line_edit_text_changed"]
 [connection signal="button_down" from="SearchElementsControl/SearchBarControl/NavigationButton" to="." method="_on_navigation_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/LeftControl/LevelUpButton" to="." method="_on_level_up_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/LeftControl/LevelDownButton" to="." method="_on_level_down_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl/LeftControl/FloorUpButton" to="." method="_on_floor_up_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl/LeftControl/FloorDownButton" to="." method="_on_floor_down_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomInButton" to="." method="_on_zoom_in_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomOutButton" to="." method="_on_zoom_out_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/InformationPopupControl/FromButton" to="." method="_on_from_button_button_down"]

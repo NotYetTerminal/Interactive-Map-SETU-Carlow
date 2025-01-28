@@ -2,6 +2,7 @@ extends Node3D
 class_name Link
 
 var target_waypoint: Waypoint
+var current_colour: Color
 
 func _process(_delta: float) -> void:
 	if target_waypoint != null:
@@ -10,6 +11,7 @@ func _process(_delta: float) -> void:
 
 # Change colour of Link from parent Waypoint
 func change_colour(new_colour: Color) -> void:
+	current_colour = new_colour
 	var material: StandardMaterial3D = StandardMaterial3D.new()
 	material.emission_enabled = true
 	material.emission = new_colour

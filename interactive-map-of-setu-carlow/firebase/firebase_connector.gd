@@ -16,7 +16,7 @@ const BUILDINGS_COLLECTION: String = 'Buildings'
 const ROOMS_COLLECTION: String = 'Rooms'
 const WAYPOINTS_COLLECTION: String = 'Waypoints'
 
-var auth_file_loaded: bool
+var data_queried: bool = false
 
 func _ready() -> void:
 	# Connect signals to methods
@@ -29,23 +29,25 @@ func _ready() -> void:
 	Globals.firebaseConnector = self
 	Globals.load_offline_data()
 	
-	delete_auth_file()
-	
 	# If auth file is saved, then use that
-	auth_file_loaded =  Firebase.Auth.check_auth_file()
+	var _success: bool = Firebase.Auth.check_auth_file()
 
 # Run on successful sign up
 func _on_FirebaseAuth_signup_succeeded(auth: Dictionary) -> void:
 	# Save auth for future use to stop clogging up connections to Firebase
 	print("Auth saved")
-	var _success: bool =  Firebase.Auth.save_auth(auth)
-	query_data()
+	var _success: bool = Firebase.Auth.save_auth(auth)
+	if not data_queried:
+		data_queried = true
+		query_data()
 
 # Run on successful login
 func _on_FirebaseAuth_login_succeeded(_auth: Dictionary) -> void:
 	print("Logged in")
 	admin_logged_in.emit()
-	#query_data()
+	if not data_queried:
+		data_queried = true
+		query_data()
 
 # code either float or String
 func _on_FirebaseAuth_signup_failed(code: Variant, message: String) -> void:

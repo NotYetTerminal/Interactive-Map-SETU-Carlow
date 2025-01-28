@@ -11,6 +11,8 @@ var waypoint_connections_ids: Array[String] = []
 
 @export var link_node_3d_scene: PackedScene
 
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+
 # Contains a link for each connection { waypoint_id: String, link: Node3D }
 var links_dictionary: Dictionary = {}
 
@@ -59,9 +61,18 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 
 # Makes waypoints visible on editing
 func check_toggle() -> void:
-	#$MeshInstance3D.visible = Globals.edit_mode
-	#$CollisionShape3D.disabled = not Globals.edit_mode
-	pass
+	visible = Globals.edit_mode
+	collision_shape_3d.disabled = not Globals.edit_mode
+	for link: Link in links_dictionary.values():
+		link.visible = Globals.edit_mode
+
+
+func update_visibility_by_floor_number(checking_floor_number: int) -> void:
+	var should_be_visible: bool = floor_number == checking_floor_number and Globals.edit_mode
+	visible = should_be_visible
+	collision_shape_3d.disabled = not should_be_visible
+	for link: Link in links_dictionary.values():
+		link.visible = should_be_visible
 
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
@@ -147,6 +158,10 @@ func change_link_colour(waypoint_id: String, new_colour: Color) -> void:
 	if links_dictionary.has(waypoint_id):
 		var link: Link = links_dictionary[waypoint_id]
 		link.change_colour(new_colour)
+		if new_colour == Color.LIGHT_GREEN:
+			link.visible = true
+		else:
+			link.visible = false
 	else:
 		print("Link not found!")
 
@@ -158,6 +173,7 @@ func finish_pathfinding(to_waypoint: Waypoint = null) -> void:
 	# This will run for everyone except the target
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_GREEN)
+	visible = true
 
 # Reset pathfinding variables and colour
 func reset(to_waypoint: Waypoint = null) -> void:
@@ -166,6 +182,8 @@ func reset(to_waypoint: Waypoint = null) -> void:
 	# This will run for everyone except the target
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_SALMON)
+	
+	visible = false
 	
 	# Reset values
 	g_cost = 0
