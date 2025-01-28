@@ -1,6 +1,5 @@
 extends Control
 
-signal edit_mode_toggled
 signal spawn_specific_structure(parent: Structure, structure_type: Structures)
 
 # Used for distinguishing different structure types
@@ -58,17 +57,13 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var input_message_panel: Panel = $InputMessagePanel
 @onready var input_message_label: Label = $InputMessagePanel/Panel/VBoxContainer/InputMessageLabel
 
+@onready var login_panel: Panel = $LoginPanel
+@onready var email_line_edit: LineEdit = $LoginPanel/EmailLineEdit
+@onready var password_line_edit: LineEdit = $LoginPanel/PasswordLineEdit
+
 var selected_structure: Structure
 var starting_waypoint: Waypoint
 var end_waypoint: Waypoint
-
-# TODO add proper authentication
-# Edit mode toggled
-func _on_check_button_toggled(toggled_on: bool) -> void:
-	Globals.edit_mode = toggled_on
-	edit_mode_toggled.emit()
-	change_text_edits()
-	check_save_and_delete_buttons()
 
 # Enable or disable buttons
 func check_save_and_delete_buttons() -> void:
@@ -406,3 +401,17 @@ func _on_structure_spawner_select_spawned_structure(structure: Structure) -> voi
 
 func _on_close_button_pressed() -> void:
 	input_message_panel.visible = false
+
+# Activate Admin
+func _on_admin_check_button_edit_mode_toggled() -> void:
+	visible = Globals.edit_mode
+	change_text_edits()
+	check_save_and_delete_buttons()
+
+
+func _on_login_button_button_down() -> void:
+	Globals.firebaseConnector.login_with_credentials(email_line_edit.text, password_line_edit.text)
+
+
+func _on_firebase_connector_admin_logged_in() -> void:
+	login_panel.visible = false

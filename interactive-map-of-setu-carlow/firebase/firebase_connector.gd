@@ -1,6 +1,9 @@
 extends Node
 class_name FirebaseConnector
 
+signal map_data_loaded
+signal admin_logged_in
+
 # Used for distinguishing different collection types
 enum Structures { Base_Map, BuildingStruct, RoomStruct, WaypointStruct }
 const Base_Map: int = 0
@@ -12,8 +15,6 @@ const BASE_MAP_COLLECTION: String = 'Base_Map'
 const BUILDINGS_COLLECTION: String = 'Buildings'
 const ROOMS_COLLECTION: String = 'Rooms'
 const WAYPOINTS_COLLECTION: String = 'Waypoints'
-
-signal map_data_loaded
 
 var auth_file_loaded: bool
 
@@ -28,6 +29,8 @@ func _ready() -> void:
 	Globals.firebaseConnector = self
 	Globals.load_offline_data()
 	
+	delete_auth_file()
+	
 	# If auth file is saved, then use that
 	auth_file_loaded =  Firebase.Auth.check_auth_file()
 
@@ -39,12 +42,10 @@ func _on_FirebaseAuth_signup_succeeded(auth: Dictionary) -> void:
 	query_data()
 
 # Run on successful login
-func _on_FirebaseAuth_login_succeeded(auth: Dictionary) -> void:
+func _on_FirebaseAuth_login_succeeded(_auth: Dictionary) -> void:
 	print("Logged in")
-	if not auth_file_loaded:
-		print("Auth saved 2")
-		var _success: bool =  Firebase.Auth.save_auth(auth)
-	query_data()
+	admin_logged_in.emit()
+	#query_data()
 
 # code either float or String
 func _on_FirebaseAuth_signup_failed(code: Variant, message: String) -> void:
@@ -74,16 +75,20 @@ func _on_FirebaseAuth_auth_request(result_code: Variant, _result_content: Varian
 		# No Auth file
 		elif result_code == 33:
 			print("Logging in")
-			#Firebase.Auth.login_with_email_and_password("testing@setu.ie", "testing")
 			Firebase.Auth.login_anonymous()
 	elif typeof(result_code) == TYPE_STRING and result_code == "Connection error":
 		pass
 	else:
 		print("Error: " + str(result_code))
 
+
 func delete_auth_file() -> void:
 	print("Deleted auth file")
 	Firebase.Auth.remove_auth()
+
+
+func login_with_credentials(email: String, password: String) -> void:
+	Firebase.Auth.login_with_email_and_password(email, password)
 
 # Query the map data down from Firebase to sync with local saved data.
 func query_data() -> void:

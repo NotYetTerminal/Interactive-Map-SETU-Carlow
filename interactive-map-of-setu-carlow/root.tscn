@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c632xxyai4jm5"]
+[gd_scene load_steps=15 format=3 uid="uid://c632xxyai4jm5"]
 
 [ext_resource type="Script" path="res://firebase/firebase_connector.gd" id="1_jrn7t"]
 [ext_resource type="PackedScene" uid="uid://dfgm3esbgp6at" path="res://managers/pathfinder.tscn" id="2_7g8wa"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://mdi8cgpboqxi" path="res://structures/waypoint.tscn" id="8_ty4b8"]
 [ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/ui_root.tscn" id="11_1ljdu"]
 [ext_resource type="PackedScene" uid="uid://bw4ru2pi3ea3r" path="res://ui/user_ui_root.tscn" id="12_hgjqa"]
+[ext_resource type="Script" path="res://ui/admin_check_button.gd" id="13_uu365"]
 
 [sub_resource type="Environment" id="Environment_knlak"]
 background_color = Color(0.537011, 0.537011, 0.537011, 1)
@@ -50,13 +51,31 @@ visible = false
 
 [node name="UserUIRoot" parent="." instance=ExtResource("12_hgjqa")]
 
+[node name="Panel" type="Panel" parent="."]
+offset_left = 40.0
+offset_right = 170.0
+offset_bottom = 30.0
+
+[node name="AdminCheckButton" type="CheckButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Edit Mode"
+script = ExtResource("13_uu365")
+
+[connection signal="admin_logged_in" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_admin_logged_in"]
 [connection signal="map_data_loaded" from="FirebaseConnector" to="StructureSpawner" method="_on_firebase_connector_map_data_loaded"]
 [connection signal="all_structures_done" from="StructureSpawner" to="Pathfinder" method="_on_structure_spawner_all_structures_done"]
 [connection signal="select_spawned_structure" from="StructureSpawner" to="UIRoot" method="_on_structure_spawner_select_spawned_structure"]
 [connection signal="select_structure" from="Camera3D" to="UIRoot" method="_on_camera_3d_select_structure"]
 [connection signal="select_structure" from="Camera3D" to="UserUIRoot" method="_on_camera_3d_select_structure"]
-[connection signal="edit_mode_toggled" from="UIRoot" to="Pathfinder" method="_on_ui_root_edit_mode_toggled"]
 [connection signal="spawn_specific_structure" from="UIRoot" to="StructureSpawner" method="_on_ui_root_spawn_specific_structure"]
 [connection signal="start_navigation" from="UserUIRoot" to="Pathfinder" method="_on_user_ui_root_start_navigation"]
 [connection signal="zoom_in_button" from="UserUIRoot" to="Camera3D" method="_on_user_ui_root_zoom_in_button"]
 [connection signal="zoom_out_button" from="UserUIRoot" to="Camera3D" method="_on_user_ui_root_zoom_out_button"]
+[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="Pathfinder" method="_on_admin_check_button_edit_mode_toggled"]
+[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="UIRoot" method="_on_admin_check_button_edit_mode_toggled"]
+[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="UserUIRoot" method="_on_admin_check_button_edit_mode_toggled"]

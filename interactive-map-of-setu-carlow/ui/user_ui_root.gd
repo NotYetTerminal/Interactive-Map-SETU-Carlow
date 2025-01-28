@@ -91,3 +91,7 @@ func _on_to_button_button_down() -> void:
 	if current_selected_structure != null:
 		to_structure = current_selected_structure
 		_set_to_structure.emit(to_structure)
+
+
+func _on_admin_check_button_edit_mode_toggled() -> void:
+	visible = not Globals.edit_mode
