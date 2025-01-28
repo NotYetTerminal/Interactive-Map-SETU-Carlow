@@ -13,54 +13,73 @@ const BUILDINGS_COLLECTION: String = 'Buildings'
 const ROOMS_COLLECTION: String = 'Rooms'
 const WAYPOINTS_COLLECTION: String = 'Waypoints'
 
-signal map_data_loaded()
+signal map_data_loaded
+
+var auth_file_loaded: bool
 
 func _ready() -> void:
 	# Connect signals to methods
-	var _error: int = Firebase.Auth.login_succeeded.connect(_on_FirebaseAuth_login_succeeded)
-	_error = Firebase.Auth.signup_succeeded.connect(_on_FirebaseAuth_signup_succeeded)
-	_error = Firebase.Auth.login_failed.connect(on_login_failed)
-	_error = Firebase.Auth.auth_request.connect(on_auth_request)
+	var _error: int = Firebase.Auth.signup_succeeded.connect(_on_FirebaseAuth_signup_succeeded)
+	_error = Firebase.Auth.login_succeeded.connect(_on_FirebaseAuth_login_succeeded)
+	_error = Firebase.Auth.signup_failed.connect(_on_FirebaseAuth_signup_failed)
+	_error = Firebase.Auth.login_failed.connect(_on_FirebaseAuth_login_failed)
+	_error = Firebase.Auth.auth_request.connect(_on_FirebaseAuth_auth_request)
 
 	Globals.firebaseConnector = self
 	Globals.load_offline_data()
 	
 	# If auth file is saved, then use that
-	var _success: bool =  Firebase.Auth.check_auth_file()
+	auth_file_loaded =  Firebase.Auth.check_auth_file()
 
 # Run on successful sign up
 func _on_FirebaseAuth_signup_succeeded(auth: Dictionary) -> void:
 	# Save auth for future use to stop clogging up connections to Firebase
-	print("Auth saved.")
+	print("Auth saved")
 	var _success: bool =  Firebase.Auth.save_auth(auth)
+	query_data()
 
-# Run on successful login with
-func _on_FirebaseAuth_login_succeeded(_auth: Dictionary) -> void:
+# Run on successful login
+func _on_FirebaseAuth_login_succeeded(auth: Dictionary) -> void:
 	print("Logged in")
+	if not auth_file_loaded:
+		print("Auth saved 2")
+		var _success: bool =  Firebase.Auth.save_auth(auth)
+	query_data()
 
+# code either float or String
+func _on_FirebaseAuth_signup_failed(code: Variant, message: String) -> void:
+	print("Error 2: " + str(code))
+	print("Message: " + message)
+
+# code either float or String
 # Login unavailable, either authentication messed up or no internet.
-func on_login_failed(error_code: String, message: String) -> void:
-	print("Error code: " + error_code)
-	if error_code == "Connection error":
-		# Handle no internet connection
-		print("Message: " + message)
+func _on_FirebaseAuth_login_failed(code: Variant, message: String) -> void:
+	if typeof(code) == TYPE_STRING and code == "Connection error":
+		# No internet connection, use offline data available
+		print("No internet")
+		map_data_loaded.emit()
+	elif typeof(code) == TYPE_FLOAT and code == 400:
+		print("Incorrect login credentials")
 	else:
-		# Handle authentication error
+		print("Error code: " + str(code))
 		print("Message: " + message)
 
 # result_code either int or String
 # result_content either String or something else
-func on_auth_request(result_code: Variant, _result_content: Variant) -> void:
-	if typeof(result_code) == TYPE_INT and result_code == 1:
-		# Saved data has been authenticated
-		print("OK Auth Request.")
-		query_data()
+func _on_FirebaseAuth_auth_request(result_code: Variant, _result_content: Variant) -> void:
+	if typeof(result_code) == TYPE_INT:
+		if result_code == 1:
+			print("OK Auth Request")
+			pass
+		# No Auth file
+		elif result_code == 33:
+			print("Logging in")
+			#Firebase.Auth.login_with_email_and_password("testing@setu.ie", "testing")
+			Firebase.Auth.login_anonymous()
 	elif typeof(result_code) == TYPE_STRING and result_code == "Connection error":
-		# No internet continue with loading
-		map_data_loaded.emit()
+		pass
 	else:
 		print("Error: " + str(result_code))
-		Firebase.Auth.login_anonymous()
 
 func delete_auth_file() -> void:
 	print("Deleted auth file")
@@ -68,7 +87,6 @@ func delete_auth_file() -> void:
 
 # Query the map data down from Firebase to sync with local saved data.
 func query_data() -> void:
-	print("Start query data.")
 	await query_structure_data('Base_Map', Structures.Base_Map, FirestoreDocument.new(), Globals.offline_data)
 	Globals.save_offline_data()
 	map_data_loaded.emit()

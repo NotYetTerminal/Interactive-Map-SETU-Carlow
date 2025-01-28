@@ -23,7 +23,7 @@ signal select_spawned_structure(structure: Structure)
 
 # Create and render structures after map data is loaded
 func _on_firebase_connector_map_data_loaded() -> void:
-	print("YAY")
+	print("Starting spawn")
 	# Spawn BaseMap
 	spawn_base_map(Globals.offline_data)
 	all_structures_done.emit()
