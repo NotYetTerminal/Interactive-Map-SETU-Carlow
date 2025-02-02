@@ -2,16 +2,19 @@
 
 [ext_resource type="Script" path="res://structures/base_map.gd" id="1_0d03c"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rfx2j"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qp2nu"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
 emission_enabled = true
-emission = Color(0, 1, 0, 1)
+emission = Color(0.25353, 0.979349, 3.85046e-07, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_1w8hw"]
-material = SubResource("StandardMaterial3D_rfx2j")
-size = Vector2(0.5, 0.5)
+[sub_resource type="SphereMesh" id="SphereMesh_w8ae4"]
+material = SubResource("StandardMaterial3D_qp2nu")
+radius = 0.2
+height = 0.5
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_aqrrl"]
-size = Vector3(0.5, 0.1, 0.5)
+[sub_resource type="SphereShape3D" id="SphereShape3D_sdyqv"]
+radius = 0.2
 
 [node name="BaseMap" type="StaticBody3D"]
 script = ExtResource("1_0d03c")
@@ -22,9 +25,8 @@ script = ExtResource("1_0d03c")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
-visible = false
-mesh = SubResource("PlaneMesh_1w8hw")
+mesh = SubResource("SphereMesh_w8ae4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_aqrrl")
+shape = SubResource("SphereShape3D_sdyqv")
 disabled = true
