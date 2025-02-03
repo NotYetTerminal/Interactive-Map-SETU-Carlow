@@ -109,7 +109,7 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 	
 	return new_structure
 
-func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Structures) -> void:
+func _on_admin_ui_root_spawn_specific_structure(parent: Structure, structure_type: Structures) -> void:
 	var structure_id: String
 	var default_data: Dictionary = {
 		'longitude': parent.longitude + 0.0001,
@@ -140,10 +140,10 @@ func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Str
 				default_data['floor_number'] = (parent as Room).floor_number
 			else:
 				default_data['floor_number'] = 1
-			default_data['feature_type'] = ''
+			var empty_array: Array[String] = []
+			default_data['features'] = empty_array
 			default_data['parent_id'] = parent.id
 			default_data['parent_type'] = type_string(typeof(parent))
-			var empty_array: Array[String] = []
 			default_data['waypoint_connections_ids'] = empty_array
 	
 	structure_id += str(int(Time.get_unix_time_from_system()))

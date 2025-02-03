@@ -1,11 +1,8 @@
 extends Control
 
 # Signals for outside nodes
-signal update_floor_number(floor_number: int)
 signal start_navigation(from_structure: Structure, to_structure: Structure)
 signal cancel_navigation
-signal zoom_in_button
-signal zoom_out_button
 
 # Signals for internal nodes
 signal _show_room_information(room_name: String, lecturers: String, description: String)
@@ -13,12 +10,8 @@ signal _show_building_information(building_name: String, building_letter: String
 signal _set_from_structure(from_structure: Structure)
 signal _set_to_structure(to_structure: Structure)
 
-@onready var floor_indicator_label: Label = $ScreenElementsControl/LeftControl/FloorIndicatorLabel
 @onready var information_popup_elements_control: Control = $InformationPopupElementsControl
 
-# Used by floor indicator label
-var floor_name_array: Array[String] = ["Ground Floor", "First Floor", "Second Floor"]
-var floor_number: int = 1
 
 # For pathfinding
 var current_selected_structure: Structure
@@ -35,22 +28,6 @@ func _on_from_search_bar_line_edit_text_changed(_new_text: String) -> void:
 	from_structure = null
 
 
-func _on_floor_up_button_button_down() -> void:
-	floor_number = min(floor_number + 1, 3)
-	update_floor_label()
-	update_floor_number.emit(floor_number)
-
-
-func _on_floor_down_button_button_down() -> void:
-	floor_number = max(floor_number - 1, 1)
-	update_floor_label()
-	update_floor_number.emit(floor_number)
-
-# Update floor indicator label
-func update_floor_label() -> void:
-	floor_indicator_label.text = floor_name_array[floor_number - 1]
-
-
 func _on_navigation_button_button_down() -> void:
 	if currently_navigating:
 		currently_navigating = false
@@ -58,14 +35,6 @@ func _on_navigation_button_button_down() -> void:
 	elif from_structure != null and to_structure != null:
 		currently_navigating = true
 		start_navigation.emit(from_structure, to_structure)
-
-
-func _on_zoom_in_button_button_down() -> void:
-	zoom_in_button.emit()
-
-
-func _on_zoom_out_button_button_down() -> void:
-	zoom_out_button.emit()
 
 
 func _on_camera_3d_select_structure(selected_structure: Structure) -> void:

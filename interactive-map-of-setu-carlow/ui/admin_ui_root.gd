@@ -30,8 +30,8 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var lecturers_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer/LecturersLineEdit
 @onready var floor_number_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer
 @onready var floor_number_spin_box: SpinBox = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer/FloorNumberSpinBox
-@onready var feature_type_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer
-@onready var feature_type_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer/FeatureTypeLineEdit
+@onready var features_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer
+@onready var features_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer/FeaturesTextEdit
 @onready var parent_id_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer
 @onready var parent_id_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer/ParentIDLineEdit
 @onready var parent_type_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer
@@ -108,7 +108,7 @@ func _select_structure(structure: Structure) -> void:
 	building_letter_v_box_container.visible = false
 	lecturers_v_box_container.visible = false
 	floor_number_v_box_container.visible = false
-	feature_type_v_box_container.visible = false
+	features_v_box_container.visible = false
 	parent_id_v_box_container.visible = false
 	parent_type_v_box_container.visible = false
 	waypoint_connections_ids_v_box_container.visible = false
@@ -186,8 +186,8 @@ func show_room_details(select_struct: Room) -> void:
 func show_waypoint_details(select_struct: Waypoint) -> void:
 	floor_number_spin_box.value = select_struct.floor_number
 	floor_number_v_box_container.visible = true
-	feature_type_line_edit.text = select_struct.feature_type
-	feature_type_v_box_container.visible = true
+	features_text_edit.text = str(select_struct.features)
+	features_v_box_container.visible = true
 	parent_id_line_edit.text = select_struct.parent_id
 	#parent_id_v_box_container.visible = true
 	parent_type_line_edit.text = select_struct.parent_type
@@ -250,20 +250,25 @@ func _on_save_button_pressed() -> void:
 		
 		details['waypoints_updated_time'] = (selected_structure as Room).waypoints_updated_time
 	elif selected_structure is Waypoint:
+		var features_text_array: Variant = str_to_var(features_text_edit.text)
 		var waypoint_connection_text_array: Variant = str_to_var(waypoint_connections_ids_text_edit.text)
-		if feature_type_line_edit.text == "":
-			show_input_message("Feature Type must not be empty.")
+		if typeof(features_text_array) != TYPE_ARRAY:
+			show_input_message('Incorrect Features formatting. Make sure to have ["feature1","feature2"]')
 			return
 		elif typeof(waypoint_connection_text_array) != TYPE_ARRAY:
 			show_input_message('Incorrect Waypoint Connections IDs formatting. Make sure to have ["id1","id2"]')
 			return
+		
+		var features_array: Array[String] = []
+		for feature: Variant in features_text_array:
+			features_array.append(str(feature))
 		
 		var connection_array: Array[String] = []
 		for waypoint_id: Variant in waypoint_connection_text_array:
 			connection_array.append(str(waypoint_id))
 		
 		details['floor_number'] = int(floor_number_spin_box.value)
-		details['feature_type'] = feature_type_line_edit.text
+		details['features'] = features_array
 		details['parent_id'] = (selected_structure as Waypoint).parent_id
 		details['parent_type'] = (selected_structure as Waypoint).parent_type
 		details['waypoint_connections_ids'] = connection_array

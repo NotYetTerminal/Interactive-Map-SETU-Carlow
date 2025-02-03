@@ -85,9 +85,9 @@ func zoom_out(zoom_amount: float) -> void:
 	size = zoom_level
 
 
-func _on_user_ui_root_zoom_in_button() -> void:
+func _on_screen_elements_control_zoom_in_button() -> void:
 	zoom_in(button_zoom_amount)
 
 
-func _on_user_ui_root_zoom_out_button() -> void:
+func _on_screen_elements_control_zoom_out_button() -> void:
 	zoom_out(button_zoom_amount)

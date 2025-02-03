@@ -185,92 +185,6 @@ grow_vertical = 2
 text = "Start Navigation"
 script = ExtResource("4_j3kvc")
 
-[node name="ScreenElementsControl" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -230.0
-offset_bottom = -40.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 1
-
-[node name="LeftControl" type="Control" parent="ScreenElementsControl"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 640.0
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="FloorUpButton" type="Button" parent="ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 40.0
-offset_right = 115.0
-offset_bottom = 50.0
-text = "Level Up"
-
-[node name="FloorDownButton" type="Button" parent="ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 70.0
-offset_right = 138.0
-offset_bottom = 120.0
-text = "Level Down"
-
-[node name="FloorIndicatorLabel" type="Label" parent="ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 140.0
-offset_right = 51.0
-offset_bottom = 190.0
-theme_override_font_sizes/font_size = 30
-text = "Ground Floor"
-vertical_alignment = 1
-
-[node name="FloorIndicatorPanel" type="Panel" parent="ScreenElementsControl/LeftControl/FloorIndicatorLabel"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_right = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ot7it")
-
-[node name="RightControl" type="Control" parent="ScreenElementsControl"]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -640.0
-grow_horizontal = 0
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="ZoomInButton" type="Button" parent="ScreenElementsControl/RightControl"]
-layout_direction = 3
-layout_mode = 2
-offset_left = 40.0
-offset_top = 70.0
-offset_right = 93.0
-offset_bottom = 120.0
-text = "Zoom In"
-
-[node name="ZoomOutButton" type="Button" parent="ScreenElementsControl/RightControl"]
-layout_direction = 3
-layout_mode = 2
-offset_left = 40.0
-offset_top = 140.0
-offset_right = 91.0
-offset_bottom = 190.0
-text = "Zoom Out"
-
 [node name="InformationPopupElementsControl" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -389,9 +303,5 @@ text = "To"
 [connection signal="text_changed" from="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="." method="_on_from_search_bar_line_edit_text_changed"]
 [connection signal="button_down" from="SearchElementsControl/SearchBarControl/NavigationButton" to="." method="_on_navigation_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/LeftControl/FloorUpButton" to="." method="_on_floor_up_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/LeftControl/FloorDownButton" to="." method="_on_floor_down_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomInButton" to="." method="_on_zoom_in_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomOutButton" to="." method="_on_zoom_out_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/InformationPopupControl/FromButton" to="." method="_on_from_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/InformationPopupControl/ToButton" to="." method="_on_to_button_button_down"]

@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://c8wl51gue5ps3"]
 
-[ext_resource type="Script" path="res://ui/ui_root.gd" id="1_sfv4s"]
+[ext_resource type="Script" path="res://ui/admin_ui_root.gd" id="1_sfv4s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6j0da"]
 bg_color = Color(0, 0, 0, 0.4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cgbs0"]
 
-[node name="UIRoot" type="Control"]
+[node name="AdminUIRoot" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -189,17 +189,19 @@ max_value = 3.0
 value = 1.0
 editable = false
 
-[node name="FeatureTypeVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="FeaturesVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="FeatureTypeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer"]
+[node name="FeaturesLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer"]
 layout_mode = 2
-text = "Feature Type: "
+text = "Features: "
 
-[node name="FeatureTypeLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/FeatureTypeVBoxContainer"]
+[node name="FeaturesTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 editable = false
+wrap_mode = 1
 
 [node name="ParentIDVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false

@@ -106,5 +106,5 @@ func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: 
 		do_pathfinding(from_waypoint, to_waypoint)
 
 
-func _on_user_ui_root_update_floor_number(floor_number: int) -> void:
+func _on_screen_elements_control_update_floor_number(floor_number: int) -> void:
 	Globals.base_map.update_visibility_by_floor_number(floor_number)

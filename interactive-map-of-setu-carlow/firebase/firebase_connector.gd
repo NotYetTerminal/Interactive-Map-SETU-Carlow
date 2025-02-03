@@ -29,6 +29,8 @@ func _ready() -> void:
 	Globals.firebaseConnector = self
 	Globals.load_offline_data()
 	
+	#delete_auth_file()
+	
 	# If auth file is saved, then use that
 	var _success: bool = Firebase.Auth.check_auth_file()
 
@@ -195,7 +197,13 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 				
 			Structures.WaypointStruct:
 				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
-				structure_document.document['feature_type'] = structure_document.document['feature_type']['stringValue']
+				
+				var features_array: Array[String] = []
+				var features_array_dictionary: Dictionary = structure_document.document['features']['arrayValue']
+				if features_array_dictionary.has('values'):
+					for features_dictionary: Dictionary in structure_document.document['features']['arrayValue']['values']:
+						features_array.append(features_dictionary.values()[0])
+				structure_document.document['features'] = features_array
 				
 				structure_document.document['parent_id'] = structure_document.document['parent_id']['stringValue']
 				structure_document.document['parent_type'] = structure_document.document['parent_type']['stringValue']

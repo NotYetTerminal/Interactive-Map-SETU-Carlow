@@ -2,7 +2,7 @@ extends Structure
 class_name Waypoint
 
 var floor_number: int
-var feature_type: String
+var features: Array[String] = []
 
 var parent_id: String
 var parent_type: String
@@ -33,12 +33,13 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	if details.is_empty():
 		return []
 	
+	var features_array: Array[String] = details["features"]
 	var waypoint_connections_array: Array[String] = details["waypoint_connections_ids"]
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"] else "",
 		"latitude" if latitude != details["latitude"] else "",
 		"floor_number" if floor_number != details["floor_number"] else "",
-		"feature_type" if feature_type != details["feature_type"] else "",
+		"features" if features.hash() != features_array.hash() else "",
 		"waypoint_connections_ids" if waypoint_connections_ids.hash() != waypoint_connections_array.hash() else ""
 	]
 	
@@ -46,7 +47,7 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	latitude = details["latitude"]
 	
 	floor_number = details["floor_number"]
-	feature_type = details["feature_type"]
+	features = features_array
 	
 	parent_id = details["parent_id"]
 	parent_type = details["parent_type"]
