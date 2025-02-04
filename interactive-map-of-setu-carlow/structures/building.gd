@@ -5,8 +5,8 @@ var structure_name: String
 var description: String
 var building_letter: String
 
-@onready var waypoints_node: Node = $Waypoints
-@onready var rooms_node: Node = $Rooms
+@onready var waypoints_node: Node3D = $Waypoints
+@onready var rooms_node: Node3D = $Rooms
 
 var waypoints_updated_time: int
 var rooms_updated_time: int
@@ -163,6 +163,6 @@ func update_visibility_by_floor_number(checking_floor_number: int) -> void:
 		waypoint.update_visibility_by_floor_number(checking_floor_number)
 	for room: Room in rooms_node.get_children():
 		room.update_visibility_by_floor_number(checking_floor_number)
-	print(building_texture_node)
+	# Change Building texture
 	if building_texture_node != null:
 		(building_texture_node as BuildingTextureNode).update_visibility_by_floor_number(checking_floor_number)

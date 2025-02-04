@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8wl51gue5ps3"]
+[gd_scene load_steps=5 format=3 uid="uid://c8wl51gue5ps3"]
 
 [ext_resource type="Script" path="res://ui/admin_ui_root.gd" id="1_sfv4s"]
+[ext_resource type="PackedScene" uid="uid://drcokpawtdag" path="res://ui/attribute_editor_control.tscn" id="2_t38xn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6j0da"]
 bg_color = Color(0, 0, 0, 0.4)
@@ -192,16 +193,18 @@ editable = false
 [node name="FeaturesVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="FeaturesLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer"]
 layout_mode = 2
 text = "Features: "
 
-[node name="FeaturesTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
+[node name="FeaturesAttributeEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer"]
 layout_mode = 2
-editable = false
-wrap_mode = 1
+size_flags_vertical = 3
+
+[node name="AttributeEditorControl" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer/FeaturesAttributeEditorsVBoxContainer" instance=ExtResource("2_t38xn")]
+layout_mode = 2
 
 [node name="ParentIDVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
@@ -230,16 +233,19 @@ editable = false
 [node name="WaypointConnectionsIDsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="WaypointConnectionsIDsLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer"]
 layout_mode = 2
 text = "Waypoint Connections IDs: "
 
-[node name="WaypointConnectionsIDsTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
+[node name="WaypointConnectionsIDsAttributeEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer"]
 layout_mode = 2
-editable = false
-wrap_mode = 1
+size_flags_vertical = 3
+
+[node name="AttributeEditorControl" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer/WaypointConnectionsIDsAttributeEditorsVBoxContainer" instance=ExtResource("2_t38xn")]
+layout_mode = 2
+line_edit_active = false
 
 [node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false

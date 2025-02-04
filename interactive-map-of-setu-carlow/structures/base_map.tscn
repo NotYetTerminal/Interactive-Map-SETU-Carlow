@@ -19,9 +19,9 @@ radius = 0.2
 [node name="BaseMap" type="StaticBody3D"]
 script = ExtResource("1_0d03c")
 
-[node name="Waypoints" type="Node" parent="."]
+[node name="Waypoints" type="Node3D" parent="."]
 
-[node name="Buildings" type="Node" parent="."]
+[node name="Buildings" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)

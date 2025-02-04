@@ -96,7 +96,7 @@ func login_with_credentials(email: String, password: String) -> void:
 
 # Query the map data down from Firebase to sync with local saved data.
 func query_data() -> void:
-	await query_structure_data('Base_Map', Structures.Base_Map, FirestoreDocument.new(), Globals.offline_data)
+	await query_structure_data(BASE_MAP_COLLECTION, Structures.Base_Map, FirestoreDocument.new(), Globals.offline_data)
 	Globals.save_offline_data()
 	map_data_loaded.emit()
 

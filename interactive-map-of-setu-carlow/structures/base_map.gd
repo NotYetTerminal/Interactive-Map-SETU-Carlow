@@ -1,8 +1,8 @@
 extends Structure
 class_name BaseMap
 
-@onready var waypoints_node: Node = $Waypoints
-@onready var buildings_node: Node = $Buildings
+@onready var waypoints_node: Node3D = $Waypoints
+@onready var buildings_node: Node3D = $Buildings
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 

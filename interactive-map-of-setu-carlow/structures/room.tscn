@@ -19,7 +19,7 @@ radius = 0.2
 [node name="Room" type="StaticBody3D"]
 script = ExtResource("1_u5udv")
 
-[node name="Waypoints" type="Node" parent="."]
+[node name="Waypoints" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)

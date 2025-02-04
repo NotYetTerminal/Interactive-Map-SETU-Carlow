@@ -31,9 +31,9 @@ map_textures_dictionary = {
 "Nore Building": ExtResource("6_386ko")
 }
 
-[node name="Waypoints" type="Node" parent="."]
+[node name="Waypoints" type="Node3D" parent="."]
 
-[node name="Rooms" type="Node" parent="."]
+[node name="Rooms" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)

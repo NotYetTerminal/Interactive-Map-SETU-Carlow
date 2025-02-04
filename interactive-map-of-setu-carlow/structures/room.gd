@@ -10,7 +10,7 @@ var parent_id: String
 
 var waypoints_updated_time: int
 
-@onready var waypoints_node: Node = $Waypoints
+@onready var waypoints_node: Node3D = $Waypoints
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
