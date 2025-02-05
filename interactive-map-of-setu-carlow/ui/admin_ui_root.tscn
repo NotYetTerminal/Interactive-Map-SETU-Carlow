@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8wl51gue5ps3"]
+[gd_scene load_steps=7 format=3 uid="uid://c8wl51gue5ps3"]
 
 [ext_resource type="Script" path="res://ui/admin_ui_root.gd" id="1_sfv4s"]
+[ext_resource type="Script" path="res://ui/features_editors_v_box_container.gd" id="2_56hsk"]
 [ext_resource type="PackedScene" uid="uid://drcokpawtdag" path="res://ui/attribute_editor_control.tscn" id="2_t38xn"]
+[ext_resource type="Script" path="res://ui/waypoint_connections_ids_editors_v_box_container.gd" id="2_wns07"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6j0da"]
 bg_color = Color(0, 0, 0, 0.4)
@@ -199,12 +201,11 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "Features: "
 
-[node name="FeaturesAttributeEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer"]
+[node name="FeaturesEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="AttributeEditorControl" parent="InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer/FeaturesAttributeEditorsVBoxContainer" instance=ExtResource("2_t38xn")]
-layout_mode = 2
+script = ExtResource("2_56hsk")
+attribute_editor_scene = ExtResource("2_t38xn")
 
 [node name="ParentIDVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
@@ -239,13 +240,11 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "Waypoint Connections IDs: "
 
-[node name="WaypointConnectionsIDsAttributeEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer"]
+[node name="WaypointConnectionsIDsEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="AttributeEditorControl" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer/WaypointConnectionsIDsAttributeEditorsVBoxContainer" instance=ExtResource("2_t38xn")]
-layout_mode = 2
-line_edit_active = false
+script = ExtResource("2_wns07")
+attribute_editor_scene = ExtResource("2_t38xn")
 
 [node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
@@ -494,6 +493,8 @@ text = "Login"
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/TargetButton" to="." method="_on_target_button_pressed"]
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/PathfindingButton" to="." method="_on_pathfinding_button_pressed"]
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="add_connection_waypoint_id" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer/WaypointConnectionsIDsEditorsVBoxContainer" to="." method="_on_waypoint_connections_i_ds_editors_v_box_container_add_connection_waypoint_id"]
+[connection signal="delete_connection_waypoint_id" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer/WaypointConnectionsIDsEditorsVBoxContainer" to="." method="_on_waypoint_connections_i_ds_editors_v_box_container_delete_connection_waypoint_id"]
 [connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/AddButton" to="." method="_on_add_button_pressed"]

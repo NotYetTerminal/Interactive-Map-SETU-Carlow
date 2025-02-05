@@ -31,14 +31,13 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var floor_number_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer
 @onready var floor_number_spin_box: SpinBox = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer/FloorNumberSpinBox
 @onready var features_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer
-@onready var features_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer/FeaturesTextEdit
+@onready var features_editors_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FeaturesVBoxContainer/FeaturesEditorsVBoxContainer
 @onready var parent_id_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer
 @onready var parent_id_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer/ParentIDLineEdit
 @onready var parent_type_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer
 @onready var parent_type_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer/ParentTypeLineEdit
 @onready var waypoint_connections_ids_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer
-@onready var waypoint_connections_ids_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer/WaypointConnectionsIDsTextEdit
-
+@onready var waypoint_connections_ids_editors_v_box_container: WaypointConnectionsIDsEditorsVBoxContainer = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsIDsVBoxContainer/WaypointConnectionsIDsEditorsVBoxContainer
 @onready var waypoints_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/WaypointsUpdatedTimeLabel
 @onready var buildings_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/BuildingsUpdatedTimeLabel
 @onready var rooms_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/RoomsUpdatedTimeLabel
@@ -186,13 +185,14 @@ func show_room_details(select_struct: Room) -> void:
 func show_waypoint_details(select_struct: Waypoint) -> void:
 	floor_number_spin_box.value = select_struct.floor_number
 	floor_number_v_box_container.visible = true
-	features_text_edit.text = str(select_struct.features)
+	features_editors_v_box_container.save_features(select_struct.waypoint_connections_ids, select_struct.features)
 	features_v_box_container.visible = true
 	parent_id_line_edit.text = select_struct.parent_id
 	#parent_id_v_box_container.visible = true
 	parent_type_line_edit.text = select_struct.parent_type
 	#parent_type_v_box_container.visible = true
-	waypoint_connections_ids_text_edit.text = str(select_struct.waypoint_connections_ids)
+	var all_waypoint_ids: Array[String] = Globals.pathfinder.get_all_waypoints_by_distance(select_struct.id)
+	waypoint_connections_ids_editors_v_box_container.save_waypoints_ids(select_struct.waypoint_connections_ids, all_waypoint_ids)
 	waypoint_connections_ids_v_box_container.visible = true
 
 # Save variables on Save button press
@@ -250,28 +250,11 @@ func _on_save_button_pressed() -> void:
 		
 		details['waypoints_updated_time'] = (selected_structure as Room).waypoints_updated_time
 	elif selected_structure is Waypoint:
-		var features_text_array: Variant = str_to_var(features_text_edit.text)
-		var waypoint_connection_text_array: Variant = str_to_var(waypoint_connections_ids_text_edit.text)
-		if typeof(features_text_array) != TYPE_ARRAY:
-			show_input_message('Incorrect Features formatting. Make sure to have ["feature1","feature2"]')
-			return
-		elif typeof(waypoint_connection_text_array) != TYPE_ARRAY:
-			show_input_message('Incorrect Waypoint Connections IDs formatting. Make sure to have ["id1","id2"]')
-			return
-		
-		var features_array: Array[String] = []
-		for feature: Variant in features_text_array:
-			features_array.append(str(feature))
-		
-		var connection_array: Array[String] = []
-		for waypoint_id: Variant in waypoint_connection_text_array:
-			connection_array.append(str(waypoint_id))
-		
 		details['floor_number'] = int(floor_number_spin_box.value)
-		details['features'] = features_array
+		details['features'] = features_editors_v_box_container.features_array
 		details['parent_id'] = (selected_structure as Waypoint).parent_id
 		details['parent_type'] = (selected_structure as Waypoint).parent_type
-		details['waypoint_connections_ids'] = connection_array
+		details['waypoint_connections_ids'] = waypoint_connections_ids_editors_v_box_container.connected_waypoints_ids_array
 	
 	selected_structure.update_details(details)
 
@@ -420,3 +403,11 @@ func _on_login_button_button_down() -> void:
 
 func _on_firebase_connector_admin_logged_in() -> void:
 	login_panel.visible = false
+
+
+func _on_waypoint_connections_i_ds_editors_v_box_container_add_connection_waypoint_id(waypoint_id: String) -> void:
+	features_editors_v_box_container.add_waypoint(waypoint_id)
+
+
+func _on_waypoint_connections_i_ds_editors_v_box_container_delete_connection_waypoint_id(waypoint_id: String) -> void:
+	features_editors_v_box_container.delete_waypoint(waypoint_id)

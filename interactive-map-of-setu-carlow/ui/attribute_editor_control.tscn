@@ -23,21 +23,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-placeholder_text = "New feature..."
-
 [node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-selected = 0
-item_count = 1
-popup/item_0/text = "New connection..."
-popup/item_0/disabled = true
 
 [node name="EditorButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
