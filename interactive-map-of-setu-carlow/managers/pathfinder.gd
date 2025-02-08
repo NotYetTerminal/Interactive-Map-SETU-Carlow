@@ -65,7 +65,7 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> void
 		remaining_waypoints_list.erase(current)
 		checked_waypoints_list.append(current)
 		
-		for neighbour_id: String in current.waypoint_connections_ids:
+		for neighbour_id: String in current.waypoint_connections.keys():
 			var neighbour: Waypoint = get_waypoint(neighbour_id)
 			if neighbour in checked_waypoints_list:
 				continue
@@ -108,3 +108,33 @@ func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: 
 
 func _on_screen_elements_control_update_floor_number(floor_number: int) -> void:
 	Globals.base_map.update_visibility_by_floor_number(floor_number)
+
+func get_all_waypoints_by_distance(from_waypoint_id: String) -> Array[String]:
+	# Create a Dictionary of waypoints and distances
+	var all_waypoints: Dictionary = {}
+	for waypoint_id: String in _all_waypoints.keys():
+		var waypoint: Waypoint = _all_waypoints[waypoint_id]
+		var from_waypoint: Waypoint = _all_waypoints[from_waypoint_id]
+		all_waypoints[waypoint_id] = from_waypoint.position.distance_to(waypoint.position)
+	
+	# Sort the Waypoints by distance
+	var sorted_waypoints: Array[String] = []
+	var smallest_waypoint_id: String = ''
+	var smallest_distance: float = 1000000000
+	var all_waypoints_keys: Array = all_waypoints.keys()
+	while true:
+		for waypoint_id: String in all_waypoints_keys:
+			var waypoint_distance: float = all_waypoints[waypoint_id]
+			if waypoint_distance < smallest_distance:
+				smallest_distance = waypoint_distance
+				smallest_waypoint_id = waypoint_id
+		
+		sorted_waypoints.append(smallest_waypoint_id)
+		smallest_distance = 1000000000
+		var _result: bool = all_waypoints.erase(smallest_waypoint_id)
+		if all_waypoints.is_empty():
+			break
+		all_waypoints_keys = all_waypoints.keys()
+	
+	sorted_waypoints.erase(from_waypoint_id)
+	return sorted_waypoints

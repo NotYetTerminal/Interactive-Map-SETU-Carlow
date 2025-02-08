@@ -198,22 +198,17 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 			Structures.WaypointStruct:
 				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
 				
-				var features_array: Array[String] = []
-				var features_array_dictionary: Dictionary = structure_document.document['features']['arrayValue']
-				if features_array_dictionary.has('values'):
-					for features_dictionary: Dictionary in structure_document.document['features']['arrayValue']['values']:
-						features_array.append(features_dictionary.values()[0])
-				structure_document.document['features'] = features_array
-				
 				structure_document.document['parent_id'] = structure_document.document['parent_id']['stringValue']
 				structure_document.document['parent_type'] = structure_document.document['parent_type']['stringValue']
 				
-				var waypoint_connections_ids_array: Array[String] = []
-				var connection_array_dictionary: Dictionary = structure_document.document['waypoint_connections_ids']['arrayValue']
-				if connection_array_dictionary.has('values'):
-					for connection_id_dictionary: Dictionary in structure_document.document['waypoint_connections_ids']['arrayValue']['values']:
-						waypoint_connections_ids_array.append(connection_id_dictionary.values()[0])
-				structure_document.document['waypoint_connections_ids'] = waypoint_connections_ids_array
+				var waypoint_connections_dictionary: Dictionary = {}
+				if structure_document.document.has('waypoint_connections'):
+					var connection_dictionary: Dictionary = structure_document.document['waypoint_connections']['mapValue']
+					if connection_dictionary.has('fields'):
+						connection_dictionary = connection_dictionary['fields']
+						for waypoint_id: String in connection_dictionary.keys():
+							waypoint_connections_dictionary[waypoint_id] = connection_dictionary[waypoint_id]['stringValue']
+				structure_document.document['waypoint_connections'] = waypoint_connections_dictionary
 
 # Save the map data into the cloud
 func save_map_data(id: String, fields: Array[String], parent_collection_path: String, global_structure_offline_data: Dictionary) -> void:

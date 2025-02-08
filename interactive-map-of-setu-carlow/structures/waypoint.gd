@@ -2,12 +2,12 @@ extends Structure
 class_name Waypoint
 
 var floor_number: int
-var features: Array[String] = []
 
 var parent_id: String
 var parent_type: String
 
-var waypoint_connections_ids: Array[String] = []
+# Dictionary to contain connections { waypoint_connection_id: String, connection_feature: String }
+var waypoint_connections: Dictionary = {}
 
 @export var link_node_3d_scene: PackedScene
 
@@ -33,28 +33,25 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	if details.is_empty():
 		return []
 	
-	var features_array: Array[String] = details["features"]
-	var waypoint_connections_array: Array[String] = details["waypoint_connections_ids"]
+	var waypoint_connections_dictionary: Dictionary = details["waypoint_connections"]
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"] else "",
 		"latitude" if latitude != details["latitude"] else "",
 		"floor_number" if floor_number != details["floor_number"] else "",
-		"features" if features.hash() != features_array.hash() else "",
-		"waypoint_connections_ids" if waypoint_connections_ids.hash() != waypoint_connections_array.hash() else ""
+		"waypoint_connections" if waypoint_connections.hash() != waypoint_connections_dictionary.hash() else ""
 	]
 	
 	longitude = details["longitude"]
 	latitude = details["latitude"]
 	
 	floor_number = details["floor_number"]
-	features = features_array
 	
 	parent_id = details["parent_id"]
 	parent_type = details["parent_type"]
 	
-	waypoint_connections_ids = waypoint_connections_array
+	waypoint_connections = waypoint_connections_dictionary
 	
-	if not previously_empty && changed_fields.has("waypoint_connections_ids"):
+	if not previously_empty && changed_fields.has("waypoint_connections"):
 		activate_links()
 	
 	set_structure_global_position()
@@ -105,7 +102,7 @@ func delete_itself() -> void:
 	parent_1.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	
 	# Delete connections with other Waypoints
-	for waypoint_id: String in waypoint_connections_ids:
+	for waypoint_id: String in waypoint_connections.keys():
 		var waypoint: Waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
 		waypoint.remove_connection(id)
 	
@@ -120,13 +117,13 @@ func remove_connection(id_to_remove: String) -> void:
 	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	
 	# Remove from connections
-	waypoint_connections_ids.erase(id_to_remove)
+	var _result: bool = waypoint_connections.erase(id_to_remove)
 	var structure_data: Dictionary = parent_structure.get_offline_data_waypoints()[id]
-	var global_data_connections_array: Array = structure_data['waypoint_connections_ids']
+	var global_data_connections_array: Array = structure_data['waypoint_connections']
 	global_data_connections_array.erase(id_to_remove)
 	
 	# Update save data
-	await Globals.save_data(id, ["waypoint_connections_ids"], parent_structure.get_firestore_path() + "/Waypoints", structure_data)
+	await Globals.save_data(id, ["waypoint_connections"], parent_structure.get_firestore_path() + "/Waypoints", structure_data)
 	
 	# Remove graphical link
 	if links_dictionary.has(id_to_remove):
@@ -137,13 +134,13 @@ func remove_connection(id_to_remove: String) -> void:
 # Called to activate the links of this waypoint
 # May call on connections to do the same
 func activate_links() -> void:
-	for waypoint_id: String in waypoint_connections_ids:
+	for waypoint_id: String in waypoint_connections.keys():
 		var target_waypoint: Waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
 		# Create new link for connection
 		if waypoint_id not in links_dictionary:
 			var new_link: Link = link_node_3d_scene.instantiate()
-			new_link.target_waypoint = target_waypoint
 			add_child(new_link)
+			new_link.target_waypoint = target_waypoint
 			links_dictionary[waypoint_id] = new_link
 
 # Change the colour of the Waypoint
@@ -193,7 +190,7 @@ func reset(to_waypoint: Waypoint = null) -> void:
 	from_waypoint = null
 	
 	# Run for each waypoint with a connection
-	for waypoint_id : String in waypoint_connections_ids:
+	for waypoint_id : String in waypoint_connections.keys():
 		var waypoint: Waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
 		# Only run if values changed or final waypoint
 		if waypoint.from_waypoint != null or waypoint == temp_from_waypoint:

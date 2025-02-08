@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://drcokpawtdag"]
+
+[ext_resource type="Script" path="res://ui/waypoint_connection_editor_control.gd" id="1_rdmwk"]
+[ext_resource type="Script" path="res://ui/editor_button.gd" id="2_wblgo"]
+[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="3_tqvjk"]
+[ext_resource type="Texture2D" uid="uid://2selq12fp4q0" path="res://addons/godot-firebase/icon.svg" id="4_vbf6t"]
+
+[node name="WaypointConnectionEditorControl" type="Control"]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_rdmwk")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="WaypointOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="FeatureOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="EditorButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("3_tqvjk")
+script = ExtResource("2_wblgo")
+new_texture = ExtResource("3_tqvjk")
+delete_texture = ExtResource("4_vbf6t")
+
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/VBoxContainer/FeatureOptionButton" to="." method="_on_feature_option_button_item_selected"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/EditorButton" to="." method="_on_editor_button_button_down"]
