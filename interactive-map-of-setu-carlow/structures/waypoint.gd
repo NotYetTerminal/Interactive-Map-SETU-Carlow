@@ -49,7 +49,7 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	parent_id = details["parent_id"]
 	parent_type = details["parent_type"]
 	
-	waypoint_connections = waypoint_connections_dictionary
+	waypoint_connections = waypoint_connections_dictionary.duplicate()
 	
 	if not previously_empty && changed_fields.has("waypoint_connections"):
 		activate_links()

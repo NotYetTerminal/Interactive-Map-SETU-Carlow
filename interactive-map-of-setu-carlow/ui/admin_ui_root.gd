@@ -399,13 +399,13 @@ func _on_firebase_connector_admin_logged_in() -> void:
 	login_panel.visible = false
 
 
-func _on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id(waypoint_id: String) -> void:
-	pass # Replace with function body.
+func _on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id(_waypoint_id: String) -> void:
+	_on_save_button_pressed()
 
 
-func _on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id(waypoint_id: String) -> void:
-	pass # Replace with function body.
+func _on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id(_waypoint_id: String) -> void:
+	_on_save_button_pressed()
 
 
-func _on_waypoint_connections_editors_v_box_container_update_connection_feature(waypoint_id: String, feature: String) -> void:
-	pass # Replace with function body.
+func _on_waypoint_connections_editors_v_box_container_update_connection_feature(_waypoint_id: String, _feature: String) -> void:
+	_on_save_button_pressed()

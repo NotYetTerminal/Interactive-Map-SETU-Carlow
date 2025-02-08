@@ -37,6 +37,7 @@ func _create_attribute_editors() -> void:
 		
 		var selected_feature: String = connected_waypoints_dictionary[waypoint_id]
 		waypoint_connection_editor_control.set_waypoint_editor_as_read_only(waypoint_id, selected_feature)
+		_error = waypoint_connection_editor_control.connect("add_connection", add_waypoint_id)
 		_error = waypoint_connection_editor_control.connect("delete_connection", delete_waypoint_id)
 		_error = waypoint_connection_editor_control.connect("change_feature", change_connection_feature)
 		
@@ -45,16 +46,21 @@ func _create_attribute_editors() -> void:
 	new_waypoint_connection_editor_child = waypoint_connection_editor_scene.instantiate()
 	add_child(new_waypoint_connection_editor_child)
 	_error = new_waypoint_connection_editor_child.connect("add_connection", add_waypoint_id)
+	_error = new_waypoint_connection_editor_child.connect("delete_connection", delete_waypoint_id)
+	_error = new_waypoint_connection_editor_child.connect("change_feature", change_connection_feature)
 	new_waypoint_connection_editor_child.set_waypoint_editor_as_editable(connected_waypoints_dictionary, all_waypoints_ids_array)
 
 
 func add_waypoint_id(waypoint_id: String) -> void:
-	connected_waypoints_dictionary[waypoint_id] = 'none'
+	connected_waypoints_dictionary[waypoint_id] = 'None'
 	# Change old editor into read only
 	var selected_feature: String = connected_waypoints_dictionary[waypoint_id]
 	new_waypoint_connection_editor_child.set_waypoint_editor_as_read_only(waypoint_id, selected_feature)
 	# Make new one
 	new_waypoint_connection_editor_child = waypoint_connection_editor_scene.instantiate()
+	var _error: int = new_waypoint_connection_editor_child.connect("add_connection", add_waypoint_id)
+	_error = new_waypoint_connection_editor_child.connect("delete_connection", delete_waypoint_id)
+	_error = new_waypoint_connection_editor_child.connect("change_feature", change_connection_feature)
 	add_child(new_waypoint_connection_editor_child)
 	new_waypoint_connection_editor_child.set_waypoint_editor_as_editable(connected_waypoints_dictionary, all_waypoints_ids_array)
 	

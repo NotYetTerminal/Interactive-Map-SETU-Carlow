@@ -29,7 +29,7 @@ func _ready() -> void:
 	Globals.firebaseConnector = self
 	Globals.load_offline_data()
 	
-	#delete_auth_file()
+	delete_auth_file()
 	
 	# If auth file is saved, then use that
 	var _success: bool = Firebase.Auth.check_auth_file()
@@ -202,12 +202,11 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 				structure_document.document['parent_type'] = structure_document.document['parent_type']['stringValue']
 				
 				var waypoint_connections_dictionary: Dictionary = {}
-				if structure_document.document.has('waypoint_connections'):
-					var connection_dictionary: Dictionary = structure_document.document['waypoint_connections']['mapValue']
-					if connection_dictionary.has('fields'):
-						connection_dictionary = connection_dictionary['fields']
-						for waypoint_id: String in connection_dictionary.keys():
-							waypoint_connections_dictionary[waypoint_id] = connection_dictionary[waypoint_id]['stringValue']
+				var connection_dictionary: Dictionary = structure_document.document['waypoint_connections']['mapValue']
+				if connection_dictionary.has('fields'):
+					connection_dictionary = connection_dictionary['fields']
+					for waypoint_id: String in connection_dictionary.keys():
+						waypoint_connections_dictionary[waypoint_id] = connection_dictionary[waypoint_id]['stringValue']
 				structure_document.document['waypoint_connections'] = waypoint_connections_dictionary
 
 # Save the map data into the cloud

@@ -233,10 +233,6 @@ size_flags_vertical = 3
 script = ExtResource("2_wns07")
 waypoint_connection_editor_scene = ExtResource("2_t38xn")
 
-[node name="WaypointConnectionEditorControl" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" instance=ExtResource("2_t38xn")]
-visible = false
-layout_mode = 2
-
 [node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
