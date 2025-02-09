@@ -9,3 +9,4 @@ Flaticons used:
 <a href="https://www.flaticon.com/free-icons/bottom-right" title="bottom right icons">Bottom right icons created by Pixa_icons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/zoom-out" title="zoom out icons">Zoom out icons created by Ayub Irawan - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/zoom-out" title="zoom out icons">Zoom out icons created by alkhalifi design - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/stairs" title="stairs icons">Stairs icons created by Freepik - Flaticon</a>

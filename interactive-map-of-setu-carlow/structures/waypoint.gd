@@ -12,6 +12,7 @@ var waypoint_connections: Dictionary = {}
 @export var link_node_3d_scene: PackedScene
 
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+@onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 
 # Contains a link for each connection { waypoint_id: String, link: Node3D }
 var links_dictionary: Dictionary = {}
@@ -60,20 +61,16 @@ func save_details(id_in: String, details: Dictionary, call_others: bool = true) 
 	set_structure_global_position()
 	return changed_fields
 
-# Makes waypoints visible on editing
-func check_toggle() -> void:
-	visible = Globals.edit_mode
-	collision_shape_3d.disabled = not Globals.edit_mode
-	for link: Link in links_dictionary.values():
-		link.visible = Globals.edit_mode
-
 
 func update_visibility_by_floor_number(checking_floor_number: int) -> void:
+	if id == "Waypoint_1739120326":
+		print("hi")
 	var should_be_visible: bool = floor_number == checking_floor_number and Globals.edit_mode
-	visible = should_be_visible
+	mesh_instance_3d.visible = should_be_visible
 	collision_shape_3d.disabled = not should_be_visible
 	for link: Link in links_dictionary.values():
-		link.visible = should_be_visible
+		link.set_link_holder_visibility(should_be_visible)
+		link.set_texture_visibility(floor_number == checking_floor_number)
 
 # Update the details when editing
 func update_details(details: Dictionary, call_others: bool = true) -> void:
@@ -137,6 +134,8 @@ func remove_connection(id_to_remove: String) -> void:
 # Called to activate the links of this waypoint
 # May call on connections to do the same
 func update_links(call_others: bool) -> void:
+	if id == "1GCqWe7dPmAsPSPwXcIG":
+		print("hi")
 	var link: Link
 	var target_waypoint: Waypoint
 	var feature: String
@@ -147,12 +146,16 @@ func update_links(call_others: bool) -> void:
 			link = link_node_3d_scene.instantiate()
 			add_child(link)
 			links_dictionary[waypoint_id] = link
-			# For the other Waypoint add the current id
-			feature = waypoint_connections[waypoint_id]
-			if call_others:
-				target_waypoint.add_waypoint(id, feature)
-			link.target_waypoint = target_waypoint
-			link.visible = Globals.edit_mode
+		else:
+			link = links_dictionary[waypoint_id]
+		
+		# For the other Waypoint add the current id
+		feature = waypoint_connections[waypoint_id]
+		if call_others:
+			target_waypoint.add_waypoint(id, feature)
+		# TODO Maybe don't have both link textures showing
+		link.set_target_waypoint_and_feature(target_waypoint, feature)
+		link.set_link_holder_visibility(Globals.edit_mode)
 	
 	# Deleting links
 	var remove_links_waypoint_ids: Array[String] = []
@@ -172,9 +175,9 @@ func update_links(call_others: bool) -> void:
 
 
 func add_waypoint(waypoint_id: String, feature: String) -> void:
-	if not waypoint_connections.has(waypoint_id):
-		var details: Dictionary = _collect_details()
-		var waypoint_connections_dictionary: Dictionary = details['waypoint_connections']
+	var details: Dictionary = _collect_details()
+	var waypoint_connections_dictionary: Dictionary = details['waypoint_connections']
+	if not waypoint_connections.has(waypoint_id) or waypoint_connections_dictionary[waypoint_id] != feature:
 		waypoint_connections_dictionary[waypoint_id] = feature
 		update_details(details, false)
 
@@ -215,9 +218,9 @@ func change_link_colour(waypoint_id: String, new_colour: Color) -> void:
 		var link: Link = links_dictionary[waypoint_id]
 		link.change_colour(new_colour)
 		if new_colour == Color.LIGHT_GREEN:
-			link.visible = true
+			link.set_link_holder_visibility(true)
 		else:
-			link.visible = false
+			link.set_link_holder_visibility(false)
 	else:
 		print("Link not found!")
 
@@ -231,7 +234,7 @@ func finish_pathfinding(to_waypoint: Waypoint = null) -> float:
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_GREEN)
 		distance += calculate_distance_to_waypoint(to_waypoint)
-	visible = true
+	mesh_instance_3d.visible = true
 	return distance
 
 
@@ -257,7 +260,7 @@ func reset(to_waypoint: Waypoint = null) -> void:
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_SALMON)
 	
-	visible = false
+	mesh_instance_3d.visible = false
 	
 	# Reset values
 	g_cost = 0

@@ -1,6 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bul6vw37l1nww"]
+[gd_scene load_steps=11 format=3 uid="uid://bul6vw37l1nww"]
 
 [ext_resource type="Script" path="res://structures/link_node_3d.gd" id="1_dxmlh"]
+[ext_resource type="Texture2D" uid="uid://ciyq48h1gl2n1" path="res://icons/stop-sign.png" id="2_7u4xk"]
+[ext_resource type="Script" path="res://structures/feature_sprite_3d.gd" id="3_f8xy2"]
+[ext_resource type="Texture2D" uid="uid://dfilpwbyif4a" path="res://icons/upstairs.png" id="4_okwx8"]
+[ext_resource type="Texture2D" uid="uid://0jwrb8wnfn0n" path="res://icons/downstairs.png" id="5_4157d"]
+[ext_resource type="Texture2D" uid="uid://d246lfdrntiid" path="res://icons/stairs.png" id="6_uykew"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_il17l"]
 emission_enabled = true
@@ -10,11 +15,41 @@ emission = Color(1, 0.627, 0.478, 1)
 material = SubResource("StandardMaterial3D_il17l")
 size = Vector3(0.1, 0.1, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kg0cu"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5dvka"]
+material = SubResource("StandardMaterial3D_kg0cu")
+top_radius = 3.5
+bottom_radius = 3.5
+height = 0.1
+
 [node name="LinkNode3D" type="Node3D"]
-visible = false
 script = ExtResource("1_dxmlh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="LinkHolderNode3D" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LinkHolderNode3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 mesh = SubResource("BoxMesh_6i5er")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
+
+[node name="FeatureSprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.1, 0)
+axis = 1
+script = ExtResource("3_f8xy2")
+feature_images_dictionary = {
+"Closed": ExtResource("2_7u4xk"),
+"Downstairs": ExtResource("5_4157d"),
+"Stairs": ExtResource("6_uykew"),
+"Upstairs": ExtResource("4_okwx8")
+}
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FeatureSprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+visible = false
+mesh = SubResource("CylinderMesh_5dvka")

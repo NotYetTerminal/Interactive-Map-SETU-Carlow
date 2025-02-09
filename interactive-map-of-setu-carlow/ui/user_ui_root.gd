@@ -1,7 +1,7 @@
 extends Control
 
 # Signals for outside nodes
-signal start_navigation(from_structure: Structure, to_structure: Structure)
+signal start_navigation(from_structure: Structure, to_structure: Structure, allow_stairs: bool)
 signal cancel_navigation
 
 # Signals for internal nodes
@@ -12,6 +12,7 @@ signal _set_to_structure(to_structure: Structure)
 
 @onready var distance_label: Label = $SearchElementsControl/SearchBarControl/DistanceLabel
 @onready var information_popup_elements_control: Control = $InformationPopupElementsControl
+@onready var stairs_check_button: CheckButton = $SearchElementsControl/SearchBarControl/NavigationButton/StairsCheckButton
 
 # For pathfinding
 var current_selected_structure: Structure
@@ -29,13 +30,14 @@ func _on_from_search_bar_line_edit_text_changed(_new_text: String) -> void:
 
 
 func _on_navigation_button_button_down() -> void:
+	# TODO add stairs UI
 	if currently_navigating:
 		currently_navigating = false
 		cancel_navigation.emit()
 		distance_label.visible = false
 	elif from_structure != null and to_structure != null:
 		currently_navigating = true
-		start_navigation.emit(from_structure, to_structure)
+		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)
 
 
 func _on_camera_3d_select_structure(selected_structure: Structure) -> void:

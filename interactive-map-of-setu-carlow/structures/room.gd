@@ -11,6 +11,7 @@ var parent_id: String
 var waypoints_updated_time: int
 
 @onready var waypoints_node: Node3D = $Waypoints
+@onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
@@ -131,4 +132,6 @@ func get_closest_waypoint() -> Waypoint:
 
 
 func update_visibility_by_floor_number(checking_floor_number: int) -> void:
-	visible = floor_number == checking_floor_number
+	mesh_instance_3d.visible = floor_number == checking_floor_number
+	for waypoint: Waypoint in waypoints_node.get_children():
+		waypoint.update_visibility_by_floor_number(checking_floor_number)

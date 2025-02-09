@@ -186,6 +186,14 @@ grow_vertical = 2
 text = "Start Navigation"
 script = ExtResource("4_j3kvc")
 
+[node name="StairsCheckButton" type="CheckButton" parent="SearchElementsControl/SearchBarControl/NavigationButton"]
+layout_mode = 0
+offset_left = -150.0
+offset_right = -22.0
+offset_bottom = 50.0
+button_pressed = true
+text = "Use stairs:"
+
 [node name="InformationPopupElementsControl" type="Control" parent="."]
 visible = false
 layout_mode = 1

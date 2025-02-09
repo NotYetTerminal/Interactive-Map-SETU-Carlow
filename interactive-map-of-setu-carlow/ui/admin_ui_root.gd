@@ -252,9 +252,11 @@ func _on_save_button_pressed() -> void:
 	
 	selected_structure.update_details(details)
 
+
 func show_input_message(message: String) -> void:
 	input_message_label.text = message
 	input_message_panel.visible = true
+
 
 func _on_start_button_pressed() -> void:
 	if selected_structure == null:
@@ -268,6 +270,7 @@ func _on_start_button_pressed() -> void:
 	starting_waypoint.change_colour(Color.ROYAL_BLUE)
 	
 	check_pathfinding_button()
+
 
 func _on_target_button_pressed() -> void:
 	if selected_structure == null:
@@ -307,7 +310,8 @@ func check_pathfinding_button() -> void:
 
 
 func _on_pathfinding_button_pressed() -> void:
-	var _distance: float = Globals.pathfinder.do_pathfinding(starting_waypoint, end_waypoint)
+	#var _distance: float = Globals.pathfinder.do_pathfinding(starting_waypoint, end_waypoint)
+	pass
 
 
 func _on_reset_button_pressed() -> void:

@@ -21,15 +21,11 @@ func get_waypoint(waypoint_id: String) -> Waypoint:
 func remove_waypoint(waypoint_id: String) -> void:
 	var _erased: bool = _all_waypoints.erase(waypoint_id)
 
-# Changes edit mode for waypoints
-func _on_admin_check_button_edit_mode_toggled() -> void:
-	for waypoint: Waypoint in _all_waypoints.values():
-		waypoint.check_toggle()
-
 # Tells the waypoints to create connections
 func _on_structure_spawner_all_structures_done() -> void:
 	for waypoint: Waypoint in _all_waypoints.values():
 		waypoint.update_links(false)
+	Globals.base_map.update_visibility_by_floor_number(1)
 
 
 func _on_user_ui_root_cancel_navigation() -> void:
@@ -41,7 +37,7 @@ func reset() -> void:
 		final_waypoint.reset()
 
 # Creates path between 2 waypoints
-func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> float:
+func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint, allow_stairs: bool) -> float:
 	print("Thinking")
 	# Make sure everything is reset
 	reset()
@@ -68,6 +64,9 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> floa
 		checked_waypoints_list.append(current)
 		
 		for neighbour_id: String in current.waypoint_connections.keys():
+			if current.waypoint_connections[neighbour_id] == "Closed" or (not allow_stairs and current.waypoint_connections[neighbour_id] == "Stairs"):
+				continue
+			
 			var neighbour: Waypoint = get_waypoint(neighbour_id)
 			if checked_waypoints_list.has(neighbour):
 				continue
@@ -95,7 +94,7 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> floa
 	return 0
 
 
-func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: Structure) -> void:
+func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: Structure, allow_stairs: bool) -> void:
 	var from_waypoint: Waypoint
 	var to_waypoint: Waypoint
 	# Get Waypoints for pathfinding
@@ -105,7 +104,7 @@ func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: 
 	elif to_structure is Building: to_waypoint = (to_structure as Building).get_closest_waypoint()
 	
 	if from_waypoint != null and to_waypoint != null:
-		pathfinding_distance.emit(do_pathfinding(from_waypoint, to_waypoint))
+		pathfinding_distance.emit(do_pathfinding(from_waypoint, to_waypoint, allow_stairs))
 
 
 func _on_screen_elements_control_update_floor_number(floor_number: int) -> void:

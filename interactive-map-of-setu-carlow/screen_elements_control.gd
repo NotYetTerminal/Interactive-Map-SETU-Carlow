@@ -34,3 +34,7 @@ func _on_zoom_in_button_button_down() -> void:
 
 func _on_zoom_out_button_button_down() -> void:
 	zoom_out_button.emit()
+
+
+func _on_admin_check_button_edit_mode_toggled() -> void:
+	Globals.base_map.update_visibility_by_floor_number(floor_number)
