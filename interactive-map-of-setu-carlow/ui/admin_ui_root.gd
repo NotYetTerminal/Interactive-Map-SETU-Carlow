@@ -307,7 +307,7 @@ func check_pathfinding_button() -> void:
 
 
 func _on_pathfinding_button_pressed() -> void:
-	Globals.pathfinder.do_pathfinding(starting_waypoint, end_waypoint)
+	var _distance: float = Globals.pathfinder.do_pathfinding(starting_waypoint, end_waypoint)
 
 
 func _on_reset_button_pressed() -> void:

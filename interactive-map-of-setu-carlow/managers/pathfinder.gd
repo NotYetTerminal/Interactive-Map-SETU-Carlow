@@ -1,6 +1,9 @@
 extends Node
 class_name Pathfinder
 
+# Signal to UI for distance
+signal pathfinding_distance(distance: float)
+
 # Contains { waypoint_id: String: Waypoint: Waypoint }
 var _all_waypoints: Dictionary = {}
 
@@ -38,7 +41,7 @@ func reset() -> void:
 		final_waypoint.reset()
 
 # Creates path between 2 waypoints
-func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> void:
+func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> float:
 	print("Thinking")
 	# Make sure everything is reset
 	reset()
@@ -58,9 +61,8 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> void
 		
 		print("\nChecking " + current.id)
 		if current == end_waypoint:
-			current.finish_pathfinding()
 			final_waypoint = current
-			return
+			return current.finish_pathfinding()
 		
 		remaining_waypoints_list.erase(current)
 		checked_waypoints_list.append(current)
@@ -90,7 +92,7 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> void
 				print("G Cost: " + str(neighbour.g_cost))
 				print("H Cost: " + str(neighbour.h_cost))
 	
-	return
+	return 0
 
 
 func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: Structure) -> void:
@@ -103,7 +105,7 @@ func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: 
 	elif to_structure is Building: to_waypoint = (to_structure as Building).get_closest_waypoint()
 	
 	if from_waypoint != null and to_waypoint != null:
-		do_pathfinding(from_waypoint, to_waypoint)
+		pathfinding_distance.emit(do_pathfinding(from_waypoint, to_waypoint))
 
 
 func _on_screen_elements_control_update_floor_number(floor_number: int) -> void:

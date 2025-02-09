@@ -10,8 +10,8 @@ signal _show_building_information(building_name: String, building_letter: String
 signal _set_from_structure(from_structure: Structure)
 signal _set_to_structure(to_structure: Structure)
 
+@onready var distance_label: Label = $SearchElementsControl/SearchBarControl/DistanceLabel
 @onready var information_popup_elements_control: Control = $InformationPopupElementsControl
-
 
 # For pathfinding
 var current_selected_structure: Structure
@@ -32,6 +32,7 @@ func _on_navigation_button_button_down() -> void:
 	if currently_navigating:
 		currently_navigating = false
 		cancel_navigation.emit()
+		distance_label.visible = false
 	elif from_structure != null and to_structure != null:
 		currently_navigating = true
 		start_navigation.emit(from_structure, to_structure)
@@ -69,3 +70,8 @@ func _on_admin_check_button_edit_mode_toggled() -> void:
 		cancel_navigation.emit()
 	visible = not Globals.edit_mode
 	information_popup_elements_control.visible = false
+
+
+func _on_pathfinder_pathfinding_distance(distance: float) -> void:
+	distance_label.text = "Distance: " + str(round(distance))
+	distance_label.visible = true

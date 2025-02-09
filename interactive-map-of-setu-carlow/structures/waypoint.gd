@@ -222,14 +222,17 @@ func change_link_colour(waypoint_id: String, new_colour: Color) -> void:
 		print("Link not found!")
 
 # Change the colour of Link and signal to next Waypoint
-func finish_pathfinding(to_waypoint: Waypoint = null) -> void:
+func finish_pathfinding(to_waypoint: Waypoint = null) -> float:
+	var distance: float = 0
 	if from_waypoint != null:
 		change_link_colour(from_waypoint.id, Color.LIGHT_GREEN)
-		from_waypoint.finish_pathfinding(self)
+		distance += from_waypoint.finish_pathfinding(self)
 	# This will run for everyone except the target
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_GREEN)
+		distance += position.distance_to(to_waypoint.position)
 	visible = true
+	return distance
 
 # Reset pathfinding variables and colour
 func reset(to_waypoint: Waypoint = null) -> void:
