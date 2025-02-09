@@ -26,7 +26,7 @@ func _on_admin_check_button_edit_mode_toggled() -> void:
 # Tells the waypoints to create connections
 func _on_structure_spawner_all_structures_done() -> void:
 	for waypoint: Waypoint in _all_waypoints.values():
-		waypoint.activate_links()
+		waypoint.update_links(false)
 
 
 func _on_user_ui_root_cancel_navigation() -> void:
@@ -67,7 +67,7 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint) -> void
 		
 		for neighbour_id: String in current.waypoint_connections.keys():
 			var neighbour: Waypoint = get_waypoint(neighbour_id)
-			if neighbour in checked_waypoints_list:
+			if checked_waypoints_list.has(neighbour):
 				continue
 			
 			print("Neighour: " + neighbour.id)
@@ -109,6 +109,7 @@ func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: 
 func _on_screen_elements_control_update_floor_number(floor_number: int) -> void:
 	Globals.base_map.update_visibility_by_floor_number(floor_number)
 
+# TODO Sorting is incorrect
 func get_all_waypoints_by_distance(from_waypoint_id: String) -> Array[String]:
 	# Create a Dictionary of waypoints and distances
 	var all_waypoints: Dictionary = {}

@@ -67,6 +67,7 @@ func ray_cast_select(input_event: InputEventMouseButton) -> void:
 	if raycast_result.has("collider") and raycast_result["collider"] is Structure:
 		var structure: Structure = raycast_result["collider"]
 		# Position the selected Structure in the middle
+		# TODO position is incorrect for some waypoints
 		position = Vector3(structure.position.x, -10, structure.position.z + 2)
 		zoom_level = 9
 		size = zoom_level

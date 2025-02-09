@@ -1,0 +1,11 @@
+Flaticons used:
+<a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by kliwir art - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/delete" title="delete icons">Delete icons created by Pixel perfect - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/stair" title="stair icons">Stair icons created by Arkinasi - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/downstairs" title="downstairs icons">Downstairs icons created by Arkinasi - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/stop-sign" title="stop sign icons">Stop sign icons created by Andrean Prabowo - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/search" title="search icons">Search icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/up-right-arrow" title="up-right-arrow icons">Up-right-arrow icons created by Pixa_icons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/bottom-right" title="bottom right icons">Bottom right icons created by Pixa_icons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/zoom-out" title="zoom out icons">Zoom out icons created by Ayub Irawan - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/zoom-out" title="zoom out icons">Zoom out icons created by alkhalifi design - Flaticon</a>

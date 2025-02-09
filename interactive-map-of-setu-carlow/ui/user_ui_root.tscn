@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://bw4ru2pi3ea3r"]
+[gd_scene load_steps=14 format=3 uid="uid://bw4ru2pi3ea3r"]
 
 [ext_resource type="Script" path="res://ui/user_ui_root.gd" id="1_c31da"]
-[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="1_le722"]
 [ext_resource type="Script" path="res://ui/information_popup_control.gd" id="2_bnl34"]
 [ext_resource type="Script" path="res://ui/search_elements_control.gd" id="2_dwkun"]
 [ext_resource type="Script" path="res://ui/description_scroll_container.gd" id="2_uj4s2"]
+[ext_resource type="Texture2D" uid="uid://ba1ork08nwogt" path="res://icons/magnifier.png" id="3_vv1pv"]
 [ext_resource type="Script" path="res://ui/navigation_button.gd" id="4_j3kvc"]
+[ext_resource type="Texture2D" uid="uid://bmrf63eyt74wg" path="res://icons/right-up.png" id="7_dwrjb"]
+[ext_resource type="Texture2D" uid="uid://b6va5qrbs1yqq" path="res://icons/right-down.png" id="8_72rlj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydxl4"]
 corner_radius_top_left = 25
@@ -86,9 +88,8 @@ split_offset = 40
 dragger_visibility = 1
 
 [node name="ToSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
-visible = false
 layout_mode = 2
-texture = ExtResource("1_le722")
+texture = ExtResource("3_vv1pv")
 expand_mode = 1
 
 [node name="ToSearchBarLineEdit" type="LineEdit" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
@@ -129,9 +130,8 @@ split_offset = 40
 dragger_visibility = 1
 
 [node name="FromSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
-visible = false
 layout_mode = 2
-texture = ExtResource("1_le722")
+texture = ExtResource("3_vv1pv")
 expand_mode = 1
 
 [node name="FromSearchBarLineEdit" type="LineEdit" parent="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
@@ -273,11 +273,13 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -74.5
 offset_top = -1.0
-offset_right = -25.5
-offset_bottom = 30.0
+offset_right = -24.5
+offset_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "From"
+icon = ExtResource("7_dwrjb")
+icon_alignment = 1
+expand_icon = true
 
 [node name="ToButton" type="Button" parent="InformationPopupElementsControl/InformationPopupControl"]
 layout_mode = 1
@@ -288,11 +290,13 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = 25.5
 offset_top = -1.0
-offset_right = 74.5
-offset_bottom = 30.0
+offset_right = 75.5
+offset_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "To"
+icon = ExtResource("8_72rlj")
+icon_alignment = 1
+expand_icon = true
 
 [connection signal="_set_from_structure" from="." to="SearchElementsControl" method="_on_user_ui_root__set_from_structure"]
 [connection signal="_set_to_structure" from="." to="SearchElementsControl" method="_on_user_ui_root__set_to_structure"]

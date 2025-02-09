@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://ui/waypoint_connection_editor_control.gd" id="1_rdmwk"]
 [ext_resource type="Script" path="res://ui/editor_button.gd" id="2_wblgo"]
-[ext_resource type="Texture2D" uid="uid://ymuuc1vrwqmv" path="res://icon.svg" id="3_tqvjk"]
-[ext_resource type="Texture2D" uid="uid://2selq12fp4q0" path="res://addons/godot-firebase/icon.svg" id="4_vbf6t"]
+[ext_resource type="Texture2D" uid="uid://d18ca3suql11x" path="res://icons/plus.png" id="3_jxdcb"]
+[ext_resource type="Texture2D" uid="uid://cu0y0vj7eiv4y" path="res://icons/remove.png" id="4_q6k50"]
 
 [node name="WaypointConnectionEditorControl" type="Control"]
 custom_minimum_size = Vector2(500, 100)
@@ -48,12 +48,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 
 [node name="EditorButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4
-icon = ExtResource("3_tqvjk")
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("2_wblgo")
-new_texture = ExtResource("3_tqvjk")
-delete_texture = ExtResource("4_vbf6t")
+new_texture = ExtResource("3_jxdcb")
+delete_texture = ExtResource("4_q6k50")
 
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/VBoxContainer/FeatureOptionButton" to="." method="_on_feature_option_button_item_selected"]
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/EditorButton" to="." method="_on_editor_button_button_down"]

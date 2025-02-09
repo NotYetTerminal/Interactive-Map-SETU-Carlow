@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c632xxyai4jm5"]
+[gd_scene load_steps=21 format=3 uid="uid://c632xxyai4jm5"]
 
 [ext_resource type="Script" path="res://firebase/firebase_connector.gd" id="1_jrn7t"]
 [ext_resource type="PackedScene" uid="uid://dfgm3esbgp6at" path="res://managers/pathfinder.tscn" id="2_7g8wa"]
@@ -14,6 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://bw4ru2pi3ea3r" path="res://ui/user_ui_root.tscn" id="12_hgjqa"]
 [ext_resource type="Script" path="res://ui/admin_check_button.gd" id="13_uu365"]
 [ext_resource type="Script" path="res://screen_elements_control.gd" id="14_i8k1n"]
+[ext_resource type="Texture2D" uid="uid://dfilpwbyif4a" path="res://icons/upstairs.png" id="15_86da5"]
+[ext_resource type="Texture2D" uid="uid://0jwrb8wnfn0n" path="res://icons/downstairs.png" id="16_tbdqg"]
+[ext_resource type="Texture2D" uid="uid://in33sn6nx120" path="res://icons/zoom-in.png" id="17_2jmql"]
+[ext_resource type="Texture2D" uid="uid://bubittg71eh3u" path="res://icons/zoom-out.png" id="18_adk5n"]
 
 [sub_resource type="Environment" id="Environment_knlak"]
 background_color = Color(0.537011, 0.537011, 0.537011, 1)
@@ -109,17 +113,21 @@ mouse_filter = 1
 [node name="FloorUpButton" type="Button" parent="UIRoot/ScreenElementsControl/LeftControl"]
 layout_mode = 0
 offset_left = 40.0
-offset_right = 115.0
+offset_right = 90.0
 offset_bottom = 50.0
-text = "Level Up"
+icon = ExtResource("15_86da5")
+icon_alignment = 1
+expand_icon = true
 
 [node name="FloorDownButton" type="Button" parent="UIRoot/ScreenElementsControl/LeftControl"]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 70.0
-offset_right = 138.0
+offset_right = 90.0
 offset_bottom = 120.0
-text = "Level Down"
+icon = ExtResource("16_tbdqg")
+icon_alignment = 1
+expand_icon = true
 
 [node name="FloorIndicatorLabel" type="Label" parent="UIRoot/ScreenElementsControl/LeftControl"]
 layout_mode = 0
@@ -157,20 +165,24 @@ mouse_filter = 1
 [node name="ZoomInButton" type="Button" parent="UIRoot/ScreenElementsControl/RightControl"]
 layout_direction = 3
 layout_mode = 2
-offset_left = 40.0
+offset_left = 43.0
 offset_top = 70.0
 offset_right = 93.0
 offset_bottom = 120.0
-text = "Zoom In"
+icon = ExtResource("17_2jmql")
+icon_alignment = 1
+expand_icon = true
 
 [node name="ZoomOutButton" type="Button" parent="UIRoot/ScreenElementsControl/RightControl"]
 layout_direction = 3
 layout_mode = 2
-offset_left = 40.0
+offset_left = 41.0
 offset_top = 140.0
 offset_right = 91.0
 offset_bottom = 190.0
-text = "Zoom Out"
+icon = ExtResource("18_adk5n")
+icon_alignment = 1
+expand_icon = true
 
 [connection signal="admin_logged_in" from="FirebaseConnector" to="UIRoot/AdminUIRoot" method="_on_firebase_connector_admin_logged_in"]
 [connection signal="map_data_loaded" from="FirebaseConnector" to="StructureSpawner" method="_on_firebase_connector_map_data_loaded"]

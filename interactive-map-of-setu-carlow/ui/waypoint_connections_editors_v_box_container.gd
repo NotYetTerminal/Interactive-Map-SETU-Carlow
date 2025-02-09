@@ -15,7 +15,9 @@ var new_waypoint_connection_editor_child: WaypointConnectionEditorControl
 
 
 func save_waypoints_ids(connected_waypoints: Dictionary, all_waypoints_ids: Array[String]) -> void:
-	connected_waypoints_dictionary = connected_waypoints
+	connected_waypoints_dictionary.clear()
+	for waypoint_id: String in connected_waypoints.keys():
+		connected_waypoints_dictionary[waypoint_id] = connected_waypoints[waypoint_id]
 	all_waypoints_ids_array = all_waypoints_ids
 	_create_attribute_editors()
 
@@ -56,6 +58,7 @@ func add_waypoint_id(waypoint_id: String) -> void:
 	# Change old editor into read only
 	var selected_feature: String = connected_waypoints_dictionary[waypoint_id]
 	new_waypoint_connection_editor_child.set_waypoint_editor_as_read_only(waypoint_id, selected_feature)
+	waypoint_connection_editor_children.append(new_waypoint_connection_editor_child)
 	# Make new one
 	new_waypoint_connection_editor_child = waypoint_connection_editor_scene.instantiate()
 	var _error: int = new_waypoint_connection_editor_child.connect("add_connection", add_waypoint_id)

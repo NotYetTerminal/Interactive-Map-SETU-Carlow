@@ -219,7 +219,6 @@ layout_mode = 2
 editable = false
 
 [node name="WaypointConnectionsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 

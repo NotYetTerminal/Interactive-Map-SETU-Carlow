@@ -25,7 +25,8 @@ var h_cost: float
 var from_waypoint: Waypoint
 
 # Save details from map_data
-func save_details(id_in: String, details: Dictionary) -> Array[String]:
+func save_details(id_in: String, details: Dictionary, call_others: bool = true) -> Array[String]:
+	# Do not run update_links first time as not all Waypoints are spawned yet
 	var previously_empty: bool = id == ""
 	id = id_in
 	
@@ -49,10 +50,12 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	parent_id = details["parent_id"]
 	parent_type = details["parent_type"]
 	
-	waypoint_connections = waypoint_connections_dictionary.duplicate()
+	waypoint_connections.clear()
+	for waypoint_id: String in waypoint_connections_dictionary.keys():
+		waypoint_connections[waypoint_id] = waypoint_connections_dictionary[waypoint_id]
 	
-	if not previously_empty && changed_fields.has("waypoint_connections"):
-		activate_links()
+	if not previously_empty and changed_fields.has("waypoint_connections"):
+		update_links(call_others)
 	
 	set_structure_global_position()
 	return changed_fields
@@ -73,8 +76,8 @@ func update_visibility_by_floor_number(checking_floor_number: int) -> void:
 		link.visible = should_be_visible
 
 # Update the details when editing
-func update_details(details: Dictionary) -> void:
-	var fields: Array[String] = save_details(id, details)
+func update_details(details: Dictionary, call_others: bool = true) -> void:
+	var fields: Array[String] = save_details(id, details, call_others)
 	# Update Waypoint depending on the parent
 	var parent_structure: Structure = get_parent().get_parent()
 	parent_structure.get_offline_data_waypoints()[id] = details
@@ -133,15 +136,70 @@ func remove_connection(id_to_remove: String) -> void:
 
 # Called to activate the links of this waypoint
 # May call on connections to do the same
-func activate_links() -> void:
+func update_links(call_others: bool) -> void:
+	var link: Link
+	var target_waypoint: Waypoint
+	var feature: String
+	# Adding new links
 	for waypoint_id: String in waypoint_connections.keys():
-		var target_waypoint: Waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
-		# Create new link for connection
-		if waypoint_id not in links_dictionary:
-			var new_link: Link = link_node_3d_scene.instantiate()
-			add_child(new_link)
-			new_link.target_waypoint = target_waypoint
-			links_dictionary[waypoint_id] = new_link
+		target_waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
+		if not links_dictionary.has(waypoint_id):
+			link = link_node_3d_scene.instantiate()
+			add_child(link)
+			links_dictionary[waypoint_id] = link
+			# For the other Waypoint add the current id
+			feature = waypoint_connections[waypoint_id]
+			if call_others:
+				target_waypoint.add_waypoint(id, feature)
+			link.target_waypoint = target_waypoint
+			link.visible = Globals.edit_mode
+	
+	# Deleting links
+	var remove_links_waypoint_ids: Array[String] = []
+	for waypoint_id: String in links_dictionary.keys():
+		target_waypoint = Globals.pathfinder.get_waypoint(waypoint_id)
+		if not waypoint_connections.has(waypoint_id):
+			remove_links_waypoint_ids.append(waypoint_id)
+			# For the other Waypoint delete the current id
+			if call_others:
+				target_waypoint.delete_waypoint(id)
+	
+	var _result: bool
+	for waypoint_id: String in remove_links_waypoint_ids:
+		link = links_dictionary[waypoint_id]
+		link.queue_free()
+		_result = links_dictionary.erase(waypoint_id)
+
+
+func add_waypoint(waypoint_id: String, feature: String) -> void:
+	if not waypoint_connections.has(waypoint_id):
+		var details: Dictionary = _collect_details()
+		var waypoint_connections_dictionary: Dictionary = details['waypoint_connections']
+		waypoint_connections_dictionary[waypoint_id] = feature
+		update_details(details, false)
+
+
+func delete_waypoint(waypoint_id: String) -> void:
+	if waypoint_connections.has(waypoint_id):
+		var details: Dictionary = _collect_details()
+		var waypoint_connections_dictionary: Dictionary = details['waypoint_connections']
+		var _result: bool = waypoint_connections_dictionary.erase(waypoint_id)
+		update_details(details, false)
+
+
+func _collect_details() -> Dictionary:
+	var waypoint_connections_dictionary: Dictionary = {}
+	for waypoint_id: String in waypoint_connections.keys():
+		waypoint_connections_dictionary[waypoint_id] = waypoint_connections[waypoint_id]
+	return {
+		'id': id,
+		'longitude': longitude,
+		'latitude': latitude,
+		'floor_number': floor_number,
+		'parent_id': parent_id,
+		'parent_type': parent_type,
+		'waypoint_connections': waypoint_connections_dictionary
+	}
 
 # Change the colour of the Waypoint
 func change_colour(new_colour: Color) -> void:
