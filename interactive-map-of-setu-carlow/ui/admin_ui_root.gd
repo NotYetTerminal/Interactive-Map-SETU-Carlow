@@ -173,7 +173,7 @@ func show_room_details(select_struct: Room) -> void:
 	floor_number_spin_box.value = select_struct.floor_number
 	floor_number_v_box_container.visible = true
 	parent_id_line_edit.text = select_struct.parent_id
-	#TODO for now have Parent ID and Type disabled
+	# TODO for now have Parent ID and Type disabled
 	#parent_id_v_box_container.visible = true
 	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
 	waypoints_updated_time_label.visible = true

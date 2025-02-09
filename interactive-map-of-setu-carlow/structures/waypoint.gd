@@ -230,9 +230,24 @@ func finish_pathfinding(to_waypoint: Waypoint = null) -> float:
 	# This will run for everyone except the target
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_GREEN)
-		distance += position.distance_to(to_waypoint.position)
+		distance += calculate_distance_to_waypoint(to_waypoint)
 	visible = true
 	return distance
+
+
+func calculate_distance_to_waypoint(to_waypoint: Waypoint) -> float:
+	# Convert to radians
+	var end_lon_radian: float = deg_to_rad(to_waypoint.longitude)
+	var end_lat_radian: float = deg_to_rad(to_waypoint.latitude)
+	var start_lon_radian: float = deg_to_rad(longitude)
+	var start_lat_radian: float = deg_to_rad(latitude)
+	
+	# Calculate distance using Pythagoras’ theorem and equi­rectangular projec­tion
+	var x_distance: float = (end_lon_radian - start_lon_radian) * cos((start_lat_radian + start_lat_radian) / 2)
+	var y_distance: float = end_lat_radian - start_lat_radian
+	var distance: float = sqrt(x_distance*x_distance + y_distance*y_distance) * Globals.EARTH_RADIUS
+	# Round distance to 2 decimal places
+	return round(distance * 100) / 100
 
 # Reset pathfinding variables and colour
 func reset(to_waypoint: Waypoint = null) -> void:

@@ -118,7 +118,7 @@ func get_all_waypoints_by_distance(from_waypoint_id: String) -> Array[String]:
 	for waypoint_id: String in _all_waypoints.keys():
 		var waypoint: Waypoint = _all_waypoints[waypoint_id]
 		var from_waypoint: Waypoint = _all_waypoints[from_waypoint_id]
-		all_waypoints[waypoint_id] = from_waypoint.position.distance_to(waypoint.position)
+		all_waypoints[waypoint_id] = from_waypoint.global_position.distance_to(waypoint.global_position)
 	
 	# Sort the Waypoints by distance
 	var sorted_waypoints: Array[String] = []

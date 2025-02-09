@@ -54,21 +54,13 @@ func ray_cast_select(input_event: InputEventMouseButton) -> void:
 	ray_query.to = to
 	var raycast_result: Dictionary = space.intersect_ray(ray_query)
 	
-	print(ray_query.from)
-	print(ray_query.to)
+	print()
 	print(raycast_result)
-	
-	#TODO change to proper projection
-	print()
-	print("Longitude: " + str((from.x / 10000) + Globals.base_longitude))
-	print("Latitude: " + str((from.z / 10000) + Globals.base_latitude))
-	print()
 	
 	if raycast_result.has("collider") and raycast_result["collider"] is Structure:
 		var structure: Structure = raycast_result["collider"]
 		# Position the selected Structure in the middle
-		# TODO position is incorrect for some waypoints
-		position = Vector3(structure.position.x, -10, structure.position.z + 2)
+		position = Vector3(structure.global_position.x, -10, structure.global_position.z + 1)
 		zoom_level = 9
 		size = zoom_level
 		select_structure.emit(structure)

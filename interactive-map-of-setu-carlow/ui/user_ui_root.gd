@@ -73,5 +73,5 @@ func _on_admin_check_button_edit_mode_toggled() -> void:
 
 
 func _on_pathfinder_pathfinding_distance(distance: float) -> void:
-	distance_label.text = "Distance: " + str(round(distance))
+	distance_label.text = "Distance: " + str(round(distance)) + " meters"
 	distance_label.visible = true
