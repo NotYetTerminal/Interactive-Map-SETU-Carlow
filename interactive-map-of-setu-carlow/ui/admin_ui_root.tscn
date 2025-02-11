@@ -73,18 +73,14 @@ layout_mode = 2
 text = "Reset Path"
 
 [node name="InformationPanel" type="Panel" parent="."]
-custom_minimum_size = Vector2(500, 800)
+custom_minimum_size = Vector2(500, 700)
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 60.0
-offset_top = -300.0
-offset_right = 360.0
-offset_bottom = 300.0
-grow_vertical = 2
+offset_left = 40.0
+offset_top = 50.0
+offset_right = 540.0
+offset_bottom = 650.0
 
-[node name="TextEditVBoxContainer" type="VBoxContainer" parent="InformationPanel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="InformationPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,165 +92,165 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="StructureTypeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="TextEditVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StructureTypeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 text = "Base Map"
 
-[node name="IDVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="IDVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 
-[node name="IDLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/IDVBoxContainer"]
+[node name="IDLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/IDVBoxContainer"]
 layout_mode = 2
 text = "ID: "
 
-[node name="IDLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/IDVBoxContainer"]
+[node name="IDLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/IDVBoxContainer"]
 layout_mode = 2
 editable = false
 
-[node name="LongitudeVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="LongitudeVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 
-[node name="LongitudeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/LongitudeVBoxContainer"]
+[node name="LongitudeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LongitudeVBoxContainer"]
 layout_mode = 2
 text = "Longitude: "
 
-[node name="LongitudeLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/LongitudeVBoxContainer"]
+[node name="LongitudeLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LongitudeVBoxContainer"]
 layout_mode = 2
 editable = false
 
-[node name="LatitudeVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="LatitudeVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 
-[node name="LatitudeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/LatitudeVBoxContainer"]
+[node name="LatitudeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LatitudeVBoxContainer"]
 layout_mode = 2
 text = "Latitude: "
 
-[node name="LatitudeLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/LatitudeVBoxContainer"]
+[node name="LatitudeLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LatitudeVBoxContainer"]
 layout_mode = 2
 editable = false
 
-[node name="NameVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="NameVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/NameVBoxContainer"]
+[node name="NameLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/NameVBoxContainer"]
 layout_mode = 2
 text = "Name: "
 
-[node name="NameLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/NameVBoxContainer"]
+[node name="NameLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/NameVBoxContainer"]
 layout_mode = 2
 editable = false
 
-[node name="DescriptionVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="DescriptionVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="DescriptionLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/DescriptionVBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer"]
 layout_mode = 2
 text = "Description: "
 
-[node name="DescriptionTextEdit" type="TextEdit" parent="InformationPanel/TextEditVBoxContainer/DescriptionVBoxContainer"]
+[node name="DescriptionTextEdit" type="TextEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 editable = false
 wrap_mode = 1
 
-[node name="BuildingLetterVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="BuildingLetterVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="BuildingLetterLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer"]
+[node name="BuildingLetterLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterVBoxContainer"]
 layout_mode = 2
 text = "Building Letter: "
 
-[node name="BuildingLetterLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer"]
+[node name="BuildingLetterLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterVBoxContainer"]
 layout_mode = 2
 editable = false
 
-[node name="LecturersVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="LecturersVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="LecturersLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer"]
+[node name="LecturersLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer"]
 layout_mode = 2
 text = "Lecturers: "
 
-[node name="LecturersLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer"]
+[node name="LecturersLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer"]
 layout_mode = 2
 editable = false
 
-[node name="FloorNumberVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="FloorNumberVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="FloorNumberLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer"]
+[node name="FloorNumberLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberVBoxContainer"]
 layout_mode = 2
 text = "Floor Number: "
 
-[node name="FloorNumberSpinBox" type="SpinBox" parent="InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer"]
+[node name="FloorNumberSpinBox" type="SpinBox" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberVBoxContainer"]
 layout_mode = 2
 min_value = 1.0
 max_value = 3.0
 value = 1.0
 editable = false
 
-[node name="ParentVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="ParentVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="ParentLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/ParentVBoxContainer"]
+[node name="ParentLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentVBoxContainer"]
 layout_mode = 2
 text = "Parent:"
 
-[node name="ParenLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/ParentVBoxContainer"]
+[node name="ParenLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentVBoxContainer"]
 layout_mode = 2
 editable = false
 
-[node name="WaypointConnectionsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="WaypointConnectionsVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="WaypointConnectionsLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer"]
+[node name="WaypointConnectionsLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer"]
 layout_mode = 2
 text = "Waypoint Connections IDs: "
 
-[node name="ScrollContainer" type="ScrollContainer" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer"]
+[node name="WaypointConnectionsEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="WaypointConnectionsEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_vertical = 3
 script = ExtResource("2_wns07")
 waypoint_connection_editor_scene = ExtResource("2_t38xn")
 
-[node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 text = "Waypoints Updated Time: "
 
-[node name="BuildingsUpdatedTimeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="BuildingsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 text = "Buildings Updated Time: "
 
-[node name="RoomsUpdatedTimeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="RoomsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 text = "Rooms Updated Time: "
 
-[node name="SaveButton" type="Button" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="SaveButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "Save"
 
-[node name="DeleteButton" type="Button" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="DeleteButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "Delete"
 
-[node name="AddButton" type="Button" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="AddButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "Add New Structure"
@@ -476,12 +472,12 @@ text = "Login"
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/TargetButton" to="." method="_on_target_button_pressed"]
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/PathfindingButton" to="." method="_on_pathfinding_button_pressed"]
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="add_connection_waypoint_id" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id"]
-[connection signal="delete_connection_waypoint_id" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id"]
-[connection signal="update_connection_feature" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_update_connection_feature"]
-[connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
-[connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="add_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id"]
+[connection signal="delete_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id"]
+[connection signal="update_connection_feature" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_update_connection_feature"]
+[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
 [connection signal="pressed" from="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer/DeleteButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer/DeleteCancelButton" to="." method="_on_delete_cancel_button_pressed"]
 [connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/BuildingButton" to="." method="_on_building_button_pressed"]

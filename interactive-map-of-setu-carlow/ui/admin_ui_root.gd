@@ -14,33 +14,33 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var pathfinding_button: Button = $PathfindingPanel/VBoxContainer/PathfindingButton
 
 # Information Elements
-@onready var text_edit_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer
-@onready var structure_type_label: Label = $InformationPanel/TextEditVBoxContainer/StructureTypeLabel
-@onready var id_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/IDVBoxContainer/IDLineEdit
-@onready var longitude_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LongitudeVBoxContainer/LongitudeLineEdit
-@onready var latitude_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LatitudeVBoxContainer/LatitudeLineEdit
+@onready var text_edit_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer
+@onready var structure_type_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/StructureTypeLabel
+@onready var id_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/IDVBoxContainer/IDLineEdit
+@onready var longitude_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LongitudeVBoxContainer/LongitudeLineEdit
+@onready var latitude_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LatitudeVBoxContainer/LatitudeLineEdit
 
-@onready var name_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/NameVBoxContainer
-@onready var name_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/NameVBoxContainer/NameLineEdit
-@onready var description_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/DescriptionVBoxContainer
-@onready var description_text_edit: TextEdit = $InformationPanel/TextEditVBoxContainer/DescriptionVBoxContainer/DescriptionTextEdit
-@onready var building_letter_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer
-@onready var building_letter_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/BuildingLetterVBoxContainer/BuildingLetterLineEdit
-@onready var lecturers_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer
-@onready var lecturers_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer/LecturersLineEdit
-@onready var floor_number_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer
-@onready var floor_number_spin_box: SpinBox = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer/FloorNumberSpinBox
-@onready var parent_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentVBoxContainer
-@onready var parent_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentVBoxContainer/ParenLineEdit
-@onready var waypoint_connections_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer
-@onready var waypoint_connections_editors_v_box_container: WaypointConnectionsEditorsVBoxContainer = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer/WaypointConnectionsEditorsVBoxContainer
-@onready var waypoints_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/WaypointsUpdatedTimeLabel
-@onready var buildings_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/BuildingsUpdatedTimeLabel
-@onready var rooms_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/RoomsUpdatedTimeLabel
+@onready var name_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameVBoxContainer
+@onready var name_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameVBoxContainer/NameLineEdit
+@onready var description_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer
+@onready var description_text_edit: TextEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/DescriptionTextEdit
+@onready var building_letter_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterVBoxContainer
+@onready var building_letter_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterVBoxContainer/BuildingLetterLineEdit
+@onready var lecturers_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer
+@onready var lecturers_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer/LecturersLineEdit
+@onready var floor_number_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberVBoxContainer
+@onready var floor_number_spin_box: SpinBox = $InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberVBoxContainer/FloorNumberSpinBox
+@onready var parent_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentVBoxContainer
+@onready var parent_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentVBoxContainer/ParenLineEdit
+@onready var waypoint_connections_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer
+@onready var waypoint_connections_editors_v_box_container: WaypointConnectionsEditorsVBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer
+@onready var waypoints_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointsUpdatedTimeLabel
+@onready var buildings_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingsUpdatedTimeLabel
+@onready var rooms_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/RoomsUpdatedTimeLabel
 
-@onready var save_button: Button = $InformationPanel/TextEditVBoxContainer/SaveButton
-@onready var delete_button: Button = $InformationPanel/TextEditVBoxContainer/DeleteButton
-@onready var add_button: Button = $InformationPanel/TextEditVBoxContainer/AddButton
+@onready var save_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/SaveButton
+@onready var delete_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DeleteButton
+@onready var add_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/AddButton
 
 # Window panels
 @onready var delete_confirmation_panel: Panel = $DeletionConfirmationPanel
