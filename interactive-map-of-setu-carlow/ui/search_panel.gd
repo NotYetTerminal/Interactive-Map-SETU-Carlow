@@ -31,7 +31,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 	
 	var structure_array: Array[Structure]
 	# Longer text search
-	if searching_text.length() >= 3:
+	if searching_text.length() > 2:
 		# Search through Rooms first as they might also come up if the parent Building name is searched
 		for room: Room in room_array:
 			if room.structure_name == searching_text:
@@ -39,7 +39,11 @@ func general_search(searching_text: String) -> Array[Structure]:
 			elif room.structure_name.containsn(searching_text):
 				name_match_array.append(room)
 			elif room.description.containsn(searching_text):
-				structure_array = description_match_dictionary[room.description.countn(searching_text)]
+				var text_count: int = room.description.countn(searching_text)
+				if not description_match_dictionary.has(text_count):
+					var new_array: Array[Structure] = []
+					description_match_dictionary[text_count] = new_array
+				structure_array = description_match_dictionary[text_count]
 				structure_array.append(room)
 			elif room.lectures.containsn(searching_text):
 				lecturers_match_array.append(searching_text)
@@ -54,19 +58,23 @@ func general_search(searching_text: String) -> Array[Structure]:
 			elif building.structure_name.containsn(searching_text):
 				name_match_array.append(building)
 			elif building.description.containsn(searching_text):
-				structure_array = description_match_dictionary[building.description.countn(searching_text)]
+				var text_count: int = building.description.countn(searching_text)
+				if not description_match_dictionary.has(text_count):
+					var new_array: Array[Structure] = []
+					description_match_dictionary[text_count] = new_array
+				structure_array = description_match_dictionary[text_count]
 				structure_array.append(building)
 	# Short search - only look at Building letters
 	elif searching_text.length() == 1:
 		var location_match_array: Array[Structure] = []
 		# Search through Buildings first so it is on top
 		for building: Building in building_array:
-			if building.building_letter == searching_text:
+			if building.building_letter.capitalize() == searching_text.capitalize():
 				location_match_array.append(building)
 				break
 		
 		for room: Room in room_array:
-			if room.get_parent_structure().building_letter == searching_text:
+			if room.get_parent_structure().building_letter.capitalize() == searching_text.capitalize():
 				location_match_array.append(room)
 		
 		return location_match_array
