@@ -10,7 +10,13 @@ signal _show_building_information(building_name: String, building_letter: String
 signal _set_from_structure(from_structure: Structure)
 signal _set_to_structure(to_structure: Structure)
 
+# Used by SearchPanel
+@onready var building_manager: BuildingManager = $"../../BuildingManager"
+@onready var room_manager: RoomManager = $"../../RoomManager"
+
+@onready var search_panel: SearchPanel = $SearchElementsControl/SearchPanel
 @onready var distance_label: Label = $SearchElementsControl/SearchBarControl/DistanceLabel
+@onready var navigation_button: Button = $SearchElementsControl/SearchBarControl/NavigationButton
 @onready var information_popup_elements_control: Control = $InformationPopupElementsControl
 @onready var stairs_check_button: CheckButton = $SearchElementsControl/SearchBarControl/NavigationButton/StairsCheckButton
 
@@ -21,16 +27,37 @@ var to_structure: Structure
 var currently_navigating: bool = false
 
 
-func _on_to_search_bar_line_edit_text_changed(_new_text: String) -> void:
-	to_structure = null
+func _ready() -> void:
+	search_panel.set_managers(building_manager, room_manager)
 
 
-func _on_from_search_bar_line_edit_text_changed(_new_text: String) -> void:
-	from_structure = null
+func _on_to_search_bar_line_edit_text_changed(new_text: String) -> void:
+	if new_text == "":
+		hide_search_panel()
+	else:
+		show_search_panel()
+
+
+func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
+	if new_text == "":
+		hide_search_panel()
+	else:
+		show_search_panel()
+
+
+func show_search_panel() -> void:
+	distance_label.visible = false
+	navigation_button.visible = false
+	search_panel.visible = true
+
+
+func hide_search_panel() -> void:
+	distance_label.visible = currently_navigating
+	navigation_button.visible = true
+	search_panel.visible = false
 
 
 func _on_navigation_button_button_down() -> void:
-	# TODO add stairs UI
 	if currently_navigating:
 		currently_navigating = false
 		cancel_navigation.emit()
@@ -77,3 +104,15 @@ func _on_admin_check_button_edit_mode_toggled() -> void:
 func _on_pathfinder_pathfinding_distance(distance: float) -> void:
 	distance_label.text = "Distance: " + str(round(distance)) + " meters"
 	distance_label.visible = true
+
+
+func _on_search_panel_set_from_search_structure(structure: Structure) -> void:
+	from_structure = structure
+	hide_search_panel()
+	_set_from_structure.emit(from_structure)
+
+
+func _on_search_panel_set_to_search_structure(structure: Structure) -> void:
+	to_structure = structure
+	hide_search_panel()
+	_set_to_structure.emit(to_structure)

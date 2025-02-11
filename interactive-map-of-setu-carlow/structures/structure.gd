@@ -5,6 +5,7 @@ var id: String
 
 var longitude: float
 var latitude: float
+var structure_name: String
 
 func save_details(_id_in: String, _details: Dictionary) -> Array[String]:
 	return []
@@ -22,6 +23,10 @@ func delete_itself() -> void:
 # Used by Waypoint children to get data
 func get_offline_data_waypoints() -> Dictionary:
 	return {}
+
+
+func get_parent_structure() -> Structure:
+	return null
 
 # Used by Waypoint children to get path of parent
 func get_firestore_path() -> String:

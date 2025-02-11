@@ -30,12 +30,10 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var lecturers_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/LecturersVBoxContainer/LecturersLineEdit
 @onready var floor_number_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer
 @onready var floor_number_spin_box: SpinBox = $InformationPanel/TextEditVBoxContainer/FloorNumberVBoxContainer/FloorNumberSpinBox
-@onready var parent_id_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer
-@onready var parent_id_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer/ParentIDLineEdit
-@onready var parent_type_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer
-@onready var parent_type_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer/ParentTypeLineEdit
+@onready var parent_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/ParentVBoxContainer
+@onready var parent_line_edit: LineEdit = $InformationPanel/TextEditVBoxContainer/ParentVBoxContainer/ParenLineEdit
 @onready var waypoint_connections_v_box_container: VBoxContainer = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer
-@onready var waypoint_connections_editors_v_box_container: WaypointConnectionsEditorsVBoxContainer = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer
+@onready var waypoint_connections_editors_v_box_container: WaypointConnectionsEditorsVBoxContainer = $InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer/WaypointConnectionsEditorsVBoxContainer
 @onready var waypoints_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/WaypointsUpdatedTimeLabel
 @onready var buildings_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/BuildingsUpdatedTimeLabel
 @onready var rooms_updated_time_label: Label = $InformationPanel/TextEditVBoxContainer/RoomsUpdatedTimeLabel
@@ -105,8 +103,7 @@ func _select_structure(structure: Structure) -> void:
 	building_letter_v_box_container.visible = false
 	lecturers_v_box_container.visible = false
 	floor_number_v_box_container.visible = false
-	parent_id_v_box_container.visible = false
-	parent_type_v_box_container.visible = false
+	parent_v_box_container.visible = false
 	waypoint_connections_v_box_container.visible = false
 	
 	waypoints_updated_time_label.visible = false
@@ -172,9 +169,8 @@ func show_room_details(select_struct: Room) -> void:
 	lecturers_v_box_container.visible = true
 	floor_number_spin_box.value = select_struct.floor_number
 	floor_number_v_box_container.visible = true
-	parent_id_line_edit.text = select_struct.parent_id
-	# TODO for now have Parent ID and Type disabled
-	#parent_id_v_box_container.visible = true
+	parent_line_edit.text = select_struct.get_parent_structure().structure_name
+	parent_v_box_container.visible = true
 	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
 	waypoints_updated_time_label.visible = true
 
@@ -182,10 +178,8 @@ func show_room_details(select_struct: Room) -> void:
 func show_waypoint_details(select_struct: Waypoint) -> void:
 	floor_number_spin_box.value = select_struct.floor_number
 	floor_number_v_box_container.visible = true
-	parent_id_line_edit.text = select_struct.parent_id
-	#parent_id_v_box_container.visible = true
-	parent_type_line_edit.text = select_struct.parent_type
-	#parent_type_v_box_container.visible = true
+	parent_line_edit.text = select_struct.get_parent_structure().structure_name
+	parent_v_box_container.visible = true
 	var all_waypoint_ids: Array[String] = Globals.pathfinder.get_all_waypoints_by_distance(select_struct.id)
 	waypoint_connections_editors_v_box_container.save_waypoints_ids(select_struct.waypoint_connections, all_waypoint_ids)
 	waypoint_connections_v_box_container.visible = true
@@ -241,13 +235,10 @@ func _on_save_button_pressed() -> void:
 		details['description'] = description_text_edit.text
 		details['lecturers'] = lecturers_line_edit.text
 		details['floor_number'] = int(floor_number_spin_box.value)
-		details['parent_id'] = (selected_structure as Room).parent_id
 		
 		details['waypoints_updated_time'] = (selected_structure as Room).waypoints_updated_time
 	elif selected_structure is Waypoint:
 		details['floor_number'] = int(floor_number_spin_box.value)
-		details['parent_id'] = (selected_structure as Waypoint).parent_id
-		details['parent_type'] = (selected_structure as Waypoint).parent_type
 		details['waypoint_connections'] = waypoint_connections_editors_v_box_container.connected_waypoints_dictionary
 	
 	selected_structure.update_details(details)

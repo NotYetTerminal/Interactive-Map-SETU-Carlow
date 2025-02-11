@@ -189,17 +189,12 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 				structure_document.document['name'] = structure_document.document['name']['stringValue']
 				structure_document.document['description'] = structure_document.document['description']['stringValue']
 				structure_document.document['lecturers'] = structure_document.document['lecturers']['stringValue']
-				
 				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
-				structure_document.document['parent_id'] = structure_document.document['parent_id']['stringValue']
 				
 				structure_document.document['waypoints_updated_time'] = str(structure_document.document['waypoints_updated_time']['integerValue']).to_int()
 				
 			Structures.WaypointStruct:
 				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
-				
-				structure_document.document['parent_id'] = structure_document.document['parent_id']['stringValue']
-				structure_document.document['parent_type'] = structure_document.document['parent_type']['stringValue']
 				
 				var waypoint_connections_dictionary: Dictionary = {}
 				var connection_dictionary: Dictionary = structure_document.document['waypoint_connections']['mapValue']

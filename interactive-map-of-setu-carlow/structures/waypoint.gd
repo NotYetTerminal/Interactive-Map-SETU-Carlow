@@ -3,9 +3,6 @@ class_name Waypoint
 
 var floor_number: int
 
-var parent_id: String
-var parent_type: String
-
 # Dictionary to contain connections { waypoint_connection_id: String, connection_feature: String }
 var waypoint_connections: Dictionary = {}
 
@@ -48,9 +45,6 @@ func save_details(id_in: String, details: Dictionary, call_others: bool = true) 
 	
 	floor_number = details["floor_number"]
 	
-	parent_id = details["parent_id"]
-	parent_type = details["parent_type"]
-	
 	waypoint_connections.clear()
 	for waypoint_id: String in waypoint_connections_dictionary.keys():
 		waypoint_connections[waypoint_id] = waypoint_connections_dictionary[waypoint_id]
@@ -62,9 +56,11 @@ func save_details(id_in: String, details: Dictionary, call_others: bool = true) 
 	return changed_fields
 
 
+func get_parent_structure() -> Structure:
+	return get_parent().get_parent()
+
+
 func update_visibility_by_floor_number(checking_floor_number: int) -> void:
-	if id == "Waypoint_1739120326":
-		print("hi")
 	var should_be_visible: bool = floor_number == checking_floor_number and Globals.edit_mode
 	mesh_instance_3d.visible = should_be_visible
 	collision_shape_3d.disabled = not should_be_visible
@@ -76,7 +72,7 @@ func update_visibility_by_floor_number(checking_floor_number: int) -> void:
 func update_details(details: Dictionary, call_others: bool = true) -> void:
 	var fields: Array[String] = save_details(id, details, call_others)
 	# Update Waypoint depending on the parent
-	var parent_structure: Structure = get_parent().get_parent()
+	var parent_structure: Structure = get_parent_structure()
 	parent_structure.get_offline_data_waypoints()[id] = details
 	await Globals.save_data(id, fields, parent_structure.get_firestore_path() + "/Waypoints", details)
 	
@@ -86,15 +82,15 @@ func update_details(details: Dictionary, call_others: bool = true) -> void:
 func delete_itself() -> void:
 	var collection_path: String
 	
-	var parent_1: Structure = get_parent().get_parent()
+	var parent_1: Structure = get_parent_structure()
 	if parent_1 is BaseMap:
 		collection_path = parent_1.id + '/Waypoints'
 	elif parent_1 is Building:
-		var parent_2: BaseMap = parent_1.get_parent().get_parent()
+		var parent_2: BaseMap = parent_1.get_parent_structure()
 		collection_path = parent_2.id + '/Buildings/' + parent_1.id + '/Waypoints'
 	elif parent_1 is Room:
-		var parent_2: Building = parent_1.get_parent().get_parent()
-		var parent_3: BaseMap = parent_2.get_parent().get_parent()
+		var parent_2: Building = parent_1.get_parent_structure()
+		var parent_3: BaseMap = parent_2.get_parent_structure()
 		collection_path = parent_3.id + '/Buildings/' + parent_2.id + '/Rooms/' + parent_1.id + '/Waypoints'
 	
 	var waypoints_dictionary: Dictionary = parent_1.get_offline_data_waypoints()
@@ -113,7 +109,7 @@ func delete_itself() -> void:
 # Removes the id passed in from the connections
 func remove_connection(id_to_remove: String) -> void:
 	# Update parent structure Waypoints time
-	var parent_structure: Structure = get_parent().get_parent()
+	var parent_structure: Structure = get_parent_structure()
 	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 	
 	# Remove from connections
@@ -134,8 +130,6 @@ func remove_connection(id_to_remove: String) -> void:
 # Called to activate the links of this waypoint
 # May call on connections to do the same
 func update_links(call_others: bool) -> void:
-	if id == "1GCqWe7dPmAsPSPwXcIG":
-		print("hi")
 	var link: Link
 	var target_waypoint: Waypoint
 	var feature: String
@@ -199,8 +193,6 @@ func _collect_details() -> Dictionary:
 		'longitude': longitude,
 		'latitude': latitude,
 		'floor_number': floor_number,
-		'parent_id': parent_id,
-		'parent_type': parent_type,
 		'waypoint_connections': waypoint_connections_dictionary
 	}
 

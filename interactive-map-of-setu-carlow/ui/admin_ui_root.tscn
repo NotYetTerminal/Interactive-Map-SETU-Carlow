@@ -89,6 +89,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -194,31 +198,20 @@ max_value = 3.0
 value = 1.0
 editable = false
 
-[node name="ParentIDVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+[node name="ParentVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="ParentIDLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer"]
+[node name="ParentLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/ParentVBoxContainer"]
 layout_mode = 2
-text = "Parent ID: "
+text = "Parent:"
 
-[node name="ParentIDLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/ParentIDVBoxContainer"]
-layout_mode = 2
-editable = false
-
-[node name="ParentTypeVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="ParentTypeLabel" type="Label" parent="InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer"]
-layout_mode = 2
-text = "Parent Type: "
-
-[node name="ParentTypeLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/ParentTypeVBoxContainer"]
+[node name="ParenLineEdit" type="LineEdit" parent="InformationPanel/TextEditVBoxContainer/ParentVBoxContainer"]
 layout_mode = 2
 editable = false
 
 [node name="WaypointConnectionsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -226,7 +219,11 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "Waypoint Connections IDs: "
 
-[node name="WaypointConnectionsEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="WaypointConnectionsEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("2_wns07")
@@ -479,9 +476,9 @@ text = "Login"
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/TargetButton" to="." method="_on_target_button_pressed"]
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/PathfindingButton" to="." method="_on_pathfinding_button_pressed"]
 [connection signal="pressed" from="PathfindingPanel/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="add_connection_waypoint_id" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id"]
-[connection signal="delete_connection_waypoint_id" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id"]
-[connection signal="update_connection_feature" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_update_connection_feature"]
+[connection signal="add_connection_waypoint_id" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id"]
+[connection signal="delete_connection_waypoint_id" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id"]
+[connection signal="update_connection_feature" from="InformationPanel/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/ScrollContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_update_connection_feature"]
 [connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="pressed" from="InformationPanel/TextEditVBoxContainer/AddButton" to="." method="_on_add_button_pressed"]

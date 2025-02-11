@@ -1,11 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://bw4ru2pi3ea3r"]
+[gd_scene load_steps=15 format=3 uid="uid://bw4ru2pi3ea3r"]
 
 [ext_resource type="Script" path="res://ui/user_ui_root.gd" id="1_c31da"]
 [ext_resource type="Script" path="res://ui/information_popup_control.gd" id="2_bnl34"]
 [ext_resource type="Script" path="res://ui/search_elements_control.gd" id="2_dwkun"]
 [ext_resource type="Script" path="res://ui/description_scroll_container.gd" id="2_uj4s2"]
-[ext_resource type="Texture2D" uid="uid://ba1ork08nwogt" path="res://icons/magnifier.png" id="3_vv1pv"]
+[ext_resource type="Script" path="res://ui/search_panel.gd" id="3_m06ik"]
 [ext_resource type="Script" path="res://ui/navigation_button.gd" id="4_j3kvc"]
+[ext_resource type="PackedScene" uid="uid://c7ngcwe2n7hh" path="res://ui/search_item_h_box_container.tscn" id="4_x715j"]
 [ext_resource type="Texture2D" uid="uid://bmrf63eyt74wg" path="res://icons/right-up.png" id="7_dwrjb"]
 [ext_resource type="Texture2D" uid="uid://b6va5qrbs1yqq" path="res://icons/right-down.png" id="8_72rlj"]
 
@@ -53,6 +54,31 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("2_dwkun")
 
+[node name="SearchPanel" type="Panel" parent="SearchElementsControl"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_m06ik")
+search_item_h_box_container_scene = ExtResource("4_x715j")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SearchElementsControl/SearchPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 50.0
+offset_top = 200.0
+offset_right = -50.0
+offset_bottom = 670.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SearchElementsControl/SearchPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="SearchBarControl" type="Control" parent="SearchElementsControl"]
 layout_mode = 1
 anchors_preset = 10
@@ -63,53 +89,11 @@ offset_right = -40.0
 offset_bottom = 90.0
 grow_horizontal = 2
 
-[node name="ToSearchBarPanel" type="Panel" parent="SearchElementsControl/SearchBarControl"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ydxl4")
-
-[node name="ToSearchBarHSplitContainer" type="HSplitContainer" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 10.0
-offset_top = -20.0
-offset_right = -10.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-split_offset = 40
-dragger_visibility = 1
-
-[node name="ToSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
-layout_mode = 2
-texture = ExtResource("3_vv1pv")
-expand_mode = 1
-
-[node name="ToSearchBarLineEdit" type="LineEdit" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
-layout_mode = 2
-theme_override_colors/font_placeholder_color = Color(0.31802, 0.31802, 0.31802, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 23
-theme_override_styles/focus = SubResource("StyleBoxEmpty_u0pg2")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_n81ai")
-placeholder_text = "Search for a room..."
-caret_blink = true
-
 [node name="FromSearchBarPanel" type="Panel" parent="SearchElementsControl/SearchBarControl"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 70.0
-offset_bottom = 70.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ydxl4")
@@ -131,7 +115,7 @@ dragger_visibility = 1
 
 [node name="FromSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
 layout_mode = 2
-texture = ExtResource("3_vv1pv")
+texture = ExtResource("7_dwrjb")
 expand_mode = 1
 
 [node name="FromSearchBarLineEdit" type="LineEdit" parent="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer"]
@@ -141,7 +125,48 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 23
 theme_override_styles/focus = SubResource("StyleBoxEmpty_u0pg2")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_n81ai")
-placeholder_text = "Search for a room..."
+placeholder_text = "Go from..."
+caret_blink = true
+
+[node name="ToSearchBarPanel" type="Panel" parent="SearchElementsControl/SearchBarControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 70.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ydxl4")
+
+[node name="ToSearchBarHSplitContainer" type="HSplitContainer" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -20.0
+offset_right = -10.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 40
+dragger_visibility = 1
+
+[node name="ToSearchBarTextureRect" type="TextureRect" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
+layout_mode = 2
+texture = ExtResource("8_72rlj")
+expand_mode = 1
+
+[node name="ToSearchBarLineEdit" type="LineEdit" parent="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer"]
+layout_mode = 2
+theme_override_colors/font_placeholder_color = Color(0.31802, 0.31802, 0.31802, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 23
+theme_override_styles/focus = SubResource("StyleBoxEmpty_u0pg2")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_n81ai")
+placeholder_text = "Go to..."
 caret_blink = true
 
 [node name="DistanceLabel" type="Label" parent="SearchElementsControl/SearchBarControl"]
@@ -178,7 +203,7 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -131.0
+offset_left = -134.0
 offset_top = 115.0
 offset_bottom = 165.0
 grow_horizontal = 0
@@ -313,8 +338,12 @@ expand_icon = true
 [connection signal="_show_room_information" from="." to="InformationPopupElementsControl" method="show_room_information"]
 [connection signal="cancel_navigation" from="." to="SearchElementsControl/SearchBarControl/NavigationButton" method="_on_user_ui_root_cancel_navigation"]
 [connection signal="start_navigation" from="." to="SearchElementsControl/SearchBarControl/NavigationButton" method="_on_user_ui_root_start_navigation"]
-[connection signal="text_changed" from="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
+[connection signal="set_from_search_structure" from="SearchElementsControl/SearchPanel" to="." method="_on_search_panel_set_from_search_structure"]
+[connection signal="set_to_search_structure" from="SearchElementsControl/SearchPanel" to="." method="_on_search_panel_set_to_search_structure"]
 [connection signal="text_changed" from="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="." method="_on_from_search_bar_line_edit_text_changed"]
+[connection signal="text_changed" from="SearchElementsControl/SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="SearchElementsControl/SearchPanel" method="_on_from_search_bar_line_edit_text_changed"]
+[connection signal="text_changed" from="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
+[connection signal="text_changed" from="SearchElementsControl/SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="SearchElementsControl/SearchPanel" method="_on_to_search_bar_line_edit_text_changed"]
 [connection signal="button_down" from="SearchElementsControl/SearchBarControl/NavigationButton" to="." method="_on_navigation_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/InformationPopupControl/FromButton" to="." method="_on_from_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/InformationPopupControl/ToButton" to="." method="_on_to_button_button_down"]

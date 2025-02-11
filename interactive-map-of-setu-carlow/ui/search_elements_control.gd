@@ -12,11 +12,6 @@ func _on_user_ui_root__set_to_structure(to_structure: Structure) -> void:
 		to_search_bar_line_edit.text = (to_structure as Building).structure_name
 	else:
 		to_search_bar_line_edit.text = ""
-	
-	if to_search_bar_line_edit.text != "":
-		from_search_bar_panel.visible = true
-	else:
-		from_search_bar_panel.visible = false
 
 
 func _on_user_ui_root__set_from_structure(from_structure: Structure) -> void:
@@ -26,8 +21,3 @@ func _on_user_ui_root__set_from_structure(from_structure: Structure) -> void:
 		from_search_bar_line_edit.text = (from_structure as Building).structure_name
 	else:
 		from_search_bar_line_edit.text = ""
-	
-	if from_search_bar_line_edit.text != "":
-		from_search_bar_panel.visible = true
-	else:
-		from_search_bar_panel.visible = false

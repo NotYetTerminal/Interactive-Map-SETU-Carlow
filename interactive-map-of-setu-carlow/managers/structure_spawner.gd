@@ -135,7 +135,6 @@ func _on_admin_ui_root_spawn_specific_structure(parent: Structure, structure_typ
 			default_data['description'] = ''
 			default_data['lecturers'] = ''
 			default_data['floor_number'] = 1
-			default_data['parent_id'] = parent.id
 			
 			default_data['waypoints_updated_time'] = 0
 		Structures.WaypointStruct:
@@ -144,8 +143,6 @@ func _on_admin_ui_root_spawn_specific_structure(parent: Structure, structure_typ
 				default_data['floor_number'] = (parent as Room).floor_number
 			else:
 				default_data['floor_number'] = 1
-			default_data['parent_id'] = parent.id
-			default_data['parent_type'] = type_string(typeof(parent))
 			default_data['waypoint_connections'] = {}
 	
 	structure_id += str(int(Time.get_unix_time_from_system()))

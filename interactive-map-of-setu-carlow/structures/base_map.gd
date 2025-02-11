@@ -9,8 +9,10 @@ class_name BaseMap
 var waypoints_updated_time: int
 var buildings_updated_time: int
 
+
 func _ready() -> void:
 	Globals.base_map = self
+	structure_name = "Base Map"
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:

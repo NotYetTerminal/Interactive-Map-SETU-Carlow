@@ -1,7 +1,6 @@
 extends Structure
 class_name Building
 
-var structure_name: String
 var description: String
 var building_letter: String
 
@@ -51,7 +50,7 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 # Update the details when editing
 func update_details(details: Dictionary) -> void:
 	var fields: Array[String] = save_details(id, details)
-	var base_map: BaseMap = get_parent().get_parent()
+	var base_map: BaseMap = get_parent_structure()
 	
 	var buildings_dictionary: Dictionary = Globals.offline_data[base_map.id]
 	if not buildings_dictionary.has('Buildings'):
@@ -75,7 +74,7 @@ func update_details(details: Dictionary) -> void:
 # Used by children to update time
 func update_rooms_time(new_time: int) -> void:
 	rooms_updated_time = new_time
-	var base_map: BaseMap = get_parent().get_parent()
+	var base_map: BaseMap = get_parent_structure()
 	
 	Globals.offline_data[base_map.id]['Buildings'][id]['rooms_updated_time'] = rooms_updated_time
 	var structure_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][id]
@@ -85,7 +84,7 @@ func update_rooms_time(new_time: int) -> void:
 
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
-	var base_map: BaseMap = get_parent().get_parent()
+	var base_map: BaseMap = get_parent_structure()
 	
 	Globals.offline_data[base_map.id]['Buildings'][id]['waypoints_updated_time'] = waypoints_updated_time
 	var structure_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][id]
@@ -110,7 +109,7 @@ func delete_itself() -> void:
 	for waypoint: Waypoint in waypoints_node.get_children():
 		await waypoint.delete_itself()
 	
-	var base_map: BaseMap = get_parent().get_parent()
+	var base_map: BaseMap = get_parent_structure()
 	var buildings_dictionary: Dictionary = Globals.offline_data[base_map.id]['Buildings']
 	var _erased: bool = buildings_dictionary.erase(id)
 	base_map.update_buildings_time(int(Time.get_unix_time_from_system()))
@@ -120,11 +119,16 @@ func delete_itself() -> void:
 
 # Used by Waypoint children to get data
 func get_offline_data_waypoints() -> Dictionary:
-	var base_map: BaseMap = get_parent().get_parent()
+	var base_map: BaseMap = get_parent_structure()
 	var structure_dictionary: Dictionary = Globals.offline_data[base_map.id]['Buildings'][id]
 	if not structure_dictionary.has('Waypoints'):
 		structure_dictionary['Waypoints'] = {}
 	return structure_dictionary['Waypoints']
+
+
+func get_parent_structure() -> BaseMap:
+	return get_parent().get_parent()
+
 
 # Used by Waypoint children to get path of parent
 func get_firestore_path() -> String:
@@ -132,7 +136,7 @@ func get_firestore_path() -> String:
 
 
 func current_firestore_path() -> String:
-	var base_map: BaseMap = get_parent().get_parent()
+	var base_map: BaseMap = get_parent_structure()
 	return base_map.get_firestore_path() + "/Buildings"
 
 # Adds in the texture for the building
