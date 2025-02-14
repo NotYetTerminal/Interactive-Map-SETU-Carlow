@@ -153,4 +153,6 @@ func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Str
 	structure_id += str(int(Time.get_unix_time_from_system()))
 	
 	var structure: Structure = spawn_structure(structure_id, default_data, parent, structure_type)
+	var floor_number: int = default_data['floor_number']
+	structure.update_visibility_by_floor_number(floor_number)
 	select_spawned_structure.emit(structure)

@@ -20,7 +20,7 @@ mouse_filter = 1
 script = ExtResource("1_sfv4s")
 
 [node name="InformationPanel" type="Panel" parent="."]
-custom_minimum_size = Vector2(500, 700)
+custom_minimum_size = Vector2(500, 750)
 layout_mode = 1
 offset_left = 40.0
 offset_top = 50.0
