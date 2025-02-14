@@ -1,17 +1,10 @@
 extends Control
+class_name AdminUIRoot
 
 signal spawn_specific_structure(parent: Structure, structure_type: Structures)
 
 # Used for distinguishing different structure types
 enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
-
-# Pathfinding Elements
-@onready var start_waypoint_label: Label = $PathfindingPanel/VBoxContainer/StartWaypointLabel
-@onready var start_button: Button = $PathfindingPanel/VBoxContainer/StartButton
-@onready var end_waypoint_label: Label = $PathfindingPanel/VBoxContainer/EndWaypointLabel
-@onready var target_button: Button = $PathfindingPanel/VBoxContainer/TargetButton
-@onready var distance_label: Label = $PathfindingPanel/VBoxContainer/DistanceLabel
-@onready var pathfinding_button: Button = $PathfindingPanel/VBoxContainer/PathfindingButton
 
 # Information Elements
 @onready var text_edit_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer
@@ -81,7 +74,7 @@ func change_text_edits() -> void:
 					(inner_scene as SpinBox).editable = selected_structure != null and Globals.edit_mode
 
 # Called when a structure is selected
-func _select_structure(structure: Structure) -> void:
+func select_structure(structure: Structure) -> void:
 	# Change last selection colour back
 	if selected_structure != null && selected_structure is Waypoint && selected_structure != starting_waypoint && selected_structure != end_waypoint:
 		(selected_structure as Waypoint).change_colour(Color.LIGHT_GRAY)
@@ -110,10 +103,6 @@ func _select_structure(structure: Structure) -> void:
 	buildings_updated_time_label.visible = false
 	rooms_updated_time_label.visible = false
 	
-	# TODO for now only use Waypoints for pathfinding
-	start_button.disabled = true
-	target_button.disabled = true
-	
 	change_text_edits()
 	check_save_and_delete_buttons()
 	
@@ -132,12 +121,6 @@ func _select_structure(structure: Structure) -> void:
 			(selected_structure as Waypoint).change_colour(Color.BLACK)
 		structure_type_label.text = 'Waypoint'
 		show_waypoint_details(selected_structure as Waypoint)
-		start_button.disabled = false
-		target_button.disabled = false
-
-# Called from the camera
-func _on_camera_3d_select_structure(structure: Structure) -> void:
-	_select_structure(structure)
 
 # Show elements for BaseMap
 func show_base_map_details(select_struct: BaseMap) -> void:
@@ -248,80 +231,6 @@ func show_input_message(message: String) -> void:
 	input_message_label.text = message
 	input_message_panel.visible = true
 
-
-func _on_start_button_pressed() -> void:
-	if selected_structure == null:
-		return
-	# If previously selected change back colour
-	if starting_waypoint != null:
-		starting_waypoint.change_colour(Color.LIGHT_GRAY)
-	
-	starting_waypoint = selected_structure
-	start_waypoint_label.text = "Start: " + starting_waypoint.id
-	starting_waypoint.change_colour(Color.ROYAL_BLUE)
-	
-	check_pathfinding_button()
-
-
-func _on_target_button_pressed() -> void:
-	if selected_structure == null:
-		return
-	# If previously selected change back colour
-	if end_waypoint != null:
-		end_waypoint.change_colour(Color.LIGHT_GRAY)
-	
-	end_waypoint = selected_structure
-	end_waypoint_label.text = "End: " + end_waypoint.id
-	end_waypoint.change_colour(Color.INDIAN_RED)
-	
-	check_pathfinding_button()
-
-# Enable once both targets are set
-func check_pathfinding_button() -> void:
-	var both_waypoints_set: bool = starting_waypoint != null and end_waypoint != null
-	pathfinding_button.disabled = not both_waypoints_set
-	var distance_calculated: String
-	if both_waypoints_set:
-		# Convert to radians
-		var end_lon_radian: float = deg_to_rad(end_waypoint.longitude)
-		var end_lat_radian: float = deg_to_rad(end_waypoint.latitude)
-		var start_lon_radian: float = deg_to_rad(starting_waypoint.longitude)
-		var start_lat_radian: float = deg_to_rad(starting_waypoint.latitude)
-		
-		# Calculate distance using Pythagoras’ theorem and equi­rectangular projec­tion
-		var x_distance: float = (end_lon_radian - start_lon_radian) * cos((start_lat_radian + start_lat_radian) / 2)
-		var y_distance: float = end_lat_radian - start_lat_radian
-		var distance: float = sqrt(x_distance*x_distance + y_distance*y_distance) * Globals.EARTH_RADIUS
-		# Round distance to 2 decimal places
-		distance = round(distance * 100) / 100
-		distance_calculated = str(distance) + " meters"
-	else:
-		distance_calculated = ""
-	distance_label.text = "Distance: " + distance_calculated
-
-
-func _on_pathfinding_button_pressed() -> void:
-	#var _distance: float = Globals.pathfinder.do_pathfinding(starting_waypoint, end_waypoint)
-	pass
-
-
-func _on_reset_button_pressed() -> void:
-	# Reset start and end Waypoints labels
-	if starting_waypoint != null:
-		starting_waypoint.change_colour(Color.LIGHT_GRAY)
-	starting_waypoint = null
-	start_waypoint_label.text = "Start: "
-	
-	if end_waypoint != null:
-		end_waypoint.change_colour(Color.LIGHT_GRAY)
-	end_waypoint = null
-	end_waypoint_label.text = "End: "
-	
-	check_pathfinding_button()
-	
-	# Reset all Waypoints used in last pathfinding
-	Globals.pathfinder.reset()
-
 # Used to delete a structure
 func _on_delete_button_pressed() -> void:
 	if selected_structure is not BaseMap:
@@ -336,7 +245,7 @@ func _on_confirm_button_pressed() -> void:
 	if selected_structure is not BaseMap:
 		selected_structure.delete_itself()
 		delete_confirmation_panel.visible = false
-		_select_structure(null)
+		select_structure(null)
 
 # Open up choosing window
 func _on_add_button_pressed() -> void:
@@ -372,10 +281,6 @@ func _on_add_structure_cancel_button_pressed() -> void:
 	add_structure_panel.visible = false
 
 
-func _on_structure_spawner_select_spawned_structure(structure: Structure) -> void:
-	_select_structure(structure)
-
-
 func _on_close_button_pressed() -> void:
 	input_message_panel.visible = false
 
@@ -390,7 +295,7 @@ func _on_login_button_button_down() -> void:
 	Globals.firebaseConnector.login_with_credentials(email_line_edit.text, password_line_edit.text)
 
 
-func _on_firebase_connector_admin_logged_in() -> void:
+func admin_logged_in() -> void:
 	login_panel.visible = false
 
 

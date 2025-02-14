@@ -7,11 +7,15 @@ var longitude: float
 var latitude: float
 var structure_name: String
 
+
 func save_details(_id_in: String, _details: Dictionary) -> Array[String]:
 	return []
 
+
 func update_details(_details: Dictionary) -> void:
 	pass
+
+
 
 func update_waypoints_time(_new_time: int) -> void:
 	pass

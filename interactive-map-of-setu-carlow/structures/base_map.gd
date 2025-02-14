@@ -54,6 +54,7 @@ func update_buildings_time(new_time: int) -> void:
 	var structure_data: Dictionary = Globals.offline_data[id]
 	await Globals.save_data(id, ['buildings_updated_time'], current_firestore_path(), structure_data)
 
+
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
 	Globals.offline_data[id]['waypoints_updated_time'] = waypoints_updated_time
@@ -70,6 +71,7 @@ func get_offline_data_waypoints() -> Dictionary:
 # Used by Waypoint children to get path of parent
 func get_firestore_path() -> String:
 	return current_firestore_path() + "/" + id
+
 
 func current_firestore_path() -> String:
 	return "Base_Map"

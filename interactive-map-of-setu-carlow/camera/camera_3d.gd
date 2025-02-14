@@ -14,9 +14,11 @@ var zoom_level: float = 10
 
 var move_speed: float = 0.01
 
+
 func _ready() -> void:
 	var screen_size: Vector2 = get_viewport().get_visible_rect().size
 	screen_ratio = screen_size.y / screen_size.x
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -78,9 +80,9 @@ func zoom_out(zoom_amount: float) -> void:
 	size = zoom_level
 
 
-func _on_screen_elements_control_zoom_in_button() -> void:
+func _on_ui_root_zoom_in_button() -> void:
 	zoom_in(button_zoom_amount)
 
 
-func _on_screen_elements_control_zoom_out_button() -> void:
+func _on_ui_root_zoom_out_button() -> void:
 	zoom_out(button_zoom_amount)

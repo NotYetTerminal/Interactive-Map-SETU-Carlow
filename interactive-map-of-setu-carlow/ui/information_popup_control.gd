@@ -5,6 +5,7 @@ extends Control
 @onready var building_letter_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/BuildingLetterLabel
 @onready var description_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/DescriptionScrollContainer/DescriptionLabel
 
+
 func show_room_information(room_name: String, lecturers: String, description: String) -> void:
 	name_label.text = room_name
 	lecturers_label.text = "Lecturers: " + lecturers
@@ -13,6 +14,7 @@ func show_room_information(room_name: String, lecturers: String, description: St
 	description_label.text = description
 	visible = true
 
+
 func show_building_information(building_name: String, building_letter: String, description: String) -> void:
 	name_label.text = building_name
 	lecturers_label.visible = false
@@ -20,6 +22,7 @@ func show_building_information(building_name: String, building_letter: String, d
 	building_letter_label.visible = true
 	description_label.text = description
 	visible = true
+
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

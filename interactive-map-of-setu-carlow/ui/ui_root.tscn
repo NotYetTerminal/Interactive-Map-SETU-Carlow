@@ -1,0 +1,157 @@
+[gd_scene load_steps=11 format=3 uid="uid://qd00gyyuopt6"]
+
+[ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/admin_ui_root.tscn" id="1_51cd5"]
+[ext_resource type="Script" path="res://ui/ui_root.gd" id="1_h3dkj"]
+[ext_resource type="PackedScene" uid="uid://bw4ru2pi3ea3r" path="res://ui/user_ui_root.tscn" id="2_xlc3q"]
+[ext_resource type="Script" path="res://ui/admin_check_button.gd" id="3_c4mcg"]
+[ext_resource type="Script" path="res://ui/screen_elements_control.gd" id="4_8a60i"]
+[ext_resource type="Texture2D" uid="uid://dfilpwbyif4a" path="res://icons/upstairs.png" id="5_kk3ex"]
+[ext_resource type="Texture2D" uid="uid://0jwrb8wnfn0n" path="res://icons/downstairs.png" id="6_wgvx6"]
+[ext_resource type="Texture2D" uid="uid://in33sn6nx120" path="res://icons/zoom-in.png" id="7_5a6dn"]
+[ext_resource type="Texture2D" uid="uid://bubittg71eh3u" path="res://icons/zoom-out.png" id="8_1cbwd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apxja"]
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="UIRoot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_h3dkj")
+
+[node name="AdminUIRoot" parent="." instance=ExtResource("1_51cd5")]
+visible = false
+layout_mode = 1
+
+[node name="UserUIRoot" parent="." instance=ExtResource("2_xlc3q")]
+layout_mode = 1
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_right = 170.0
+offset_bottom = 30.0
+
+[node name="AdminCheckButton" type="CheckButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Edit Mode"
+script = ExtResource("3_c4mcg")
+
+[node name="ScreenElementsControl" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -230.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+script = ExtResource("4_8a60i")
+
+[node name="LeftControl" type="Control" parent="ScreenElementsControl"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 640.0
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="FloorUpButton" type="Button" parent="ScreenElementsControl/LeftControl"]
+layout_mode = 0
+offset_left = 40.0
+offset_right = 90.0
+offset_bottom = 50.0
+icon = ExtResource("5_kk3ex")
+icon_alignment = 1
+expand_icon = true
+
+[node name="FloorDownButton" type="Button" parent="ScreenElementsControl/LeftControl"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 70.0
+offset_right = 90.0
+offset_bottom = 120.0
+icon = ExtResource("6_wgvx6")
+icon_alignment = 1
+expand_icon = true
+
+[node name="FloorIndicatorLabel" type="Label" parent="ScreenElementsControl/LeftControl"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 140.0
+offset_right = 51.0
+offset_bottom = 190.0
+theme_override_font_sizes/font_size = 30
+text = "Ground Floor"
+vertical_alignment = 1
+
+[node name="FloorIndicatorPanel" type="Panel" parent="ScreenElementsControl/LeftControl/FloorIndicatorLabel"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_right = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_apxja")
+
+[node name="RightControl" type="Control" parent="ScreenElementsControl"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -640.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ZoomInButton" type="Button" parent="ScreenElementsControl/RightControl"]
+layout_direction = 3
+layout_mode = 2
+offset_left = 43.0
+offset_top = 70.0
+offset_right = 93.0
+offset_bottom = 120.0
+icon = ExtResource("7_5a6dn")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ZoomOutButton" type="Button" parent="ScreenElementsControl/RightControl"]
+layout_direction = 3
+layout_mode = 2
+offset_left = 41.0
+offset_top = 140.0
+offset_right = 91.0
+offset_bottom = 190.0
+icon = ExtResource("8_1cbwd")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="spawn_specific_structure" from="AdminUIRoot" to="." method="_on_admin_ui_root_spawn_specific_structure"]
+[connection signal="cancel_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_cancel_navigation"]
+[connection signal="start_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_start_navigation"]
+[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="AdminUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
+[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="UserUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
+[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="ScreenElementsControl" method="_on_admin_check_button_edit_mode_toggled"]
+[connection signal="update_floor_number" from="ScreenElementsControl" to="." method="_on_screen_elements_control_update_floor_number"]
+[connection signal="button_down" from="ScreenElementsControl/LeftControl/FloorUpButton" to="ScreenElementsControl" method="_on_floor_up_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl/LeftControl/FloorDownButton" to="ScreenElementsControl" method="_on_floor_down_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomInButton" to="." method="_on_zoom_in_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomOutButton" to="." method="_on_zoom_out_button_button_down"]

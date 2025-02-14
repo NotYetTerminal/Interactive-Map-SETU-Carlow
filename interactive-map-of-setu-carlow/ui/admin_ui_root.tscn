@@ -19,59 +19,6 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_sfv4s")
 
-[node name="PathfindingPanel" type="Panel" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -350.0
-offset_top = 50.0
-offset_right = -50.0
-offset_bottom = 310.0
-grow_horizontal = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PathfindingPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_right = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="StartWaypointLabel" type="Label" parent="PathfindingPanel/VBoxContainer"]
-layout_mode = 2
-text = "Start: "
-
-[node name="StartButton" type="Button" parent="PathfindingPanel/VBoxContainer"]
-layout_mode = 2
-disabled = true
-text = "Select as Start"
-
-[node name="EndWaypointLabel" type="Label" parent="PathfindingPanel/VBoxContainer"]
-layout_mode = 2
-text = "End: "
-
-[node name="TargetButton" type="Button" parent="PathfindingPanel/VBoxContainer"]
-layout_mode = 2
-disabled = true
-text = "Select as Target"
-
-[node name="DistanceLabel" type="Label" parent="PathfindingPanel/VBoxContainer"]
-layout_mode = 2
-text = "Distance: "
-
-[node name="PathfindingButton" type="Button" parent="PathfindingPanel/VBoxContainer"]
-layout_mode = 2
-disabled = true
-text = "Calculate Path"
-
-[node name="ResetButton" type="Button" parent="PathfindingPanel/VBoxContainer"]
-layout_mode = 2
-text = "Reset Path"
-
 [node name="InformationPanel" type="Panel" parent="."]
 custom_minimum_size = Vector2(500, 700)
 layout_mode = 1
@@ -468,10 +415,6 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Login"
 
-[connection signal="pressed" from="PathfindingPanel/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="PathfindingPanel/VBoxContainer/TargetButton" to="." method="_on_target_button_pressed"]
-[connection signal="pressed" from="PathfindingPanel/VBoxContainer/PathfindingButton" to="." method="_on_pathfinding_button_pressed"]
-[connection signal="pressed" from="PathfindingPanel/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="add_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id"]
 [connection signal="delete_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id"]
 [connection signal="update_connection_feature" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_update_connection_feature"]

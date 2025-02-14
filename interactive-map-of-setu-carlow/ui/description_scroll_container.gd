@@ -1,5 +1,6 @@
 extends ScrollContainer
 
+
 func _ready() -> void:
 	# Set the scroll bar to Black
 	var v_scroll_bar: VScrollBar = get_v_scroll_bar()

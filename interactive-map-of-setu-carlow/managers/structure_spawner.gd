@@ -28,6 +28,7 @@ func _on_firebase_connector_map_data_loaded() -> void:
 	spawn_base_map(Globals.offline_data)
 	all_structures_done.emit()
 
+
 func spawn_base_map(map_data: Dictionary) -> void:
 	var base_map_id: String = map_data.keys()[0]
 	var base_map_data: Dictionary = map_data[base_map_id]
@@ -53,6 +54,7 @@ func spawn_base_map(map_data: Dictionary) -> void:
 			var structure_data: Dictionary = base_map_data["Buildings"][building_id]
 			spawn_building(building_id, structure_data, new_base_map)
 
+
 func spawn_building(building_id: String, building_data: Dictionary, parent: Structure) -> void:
 	# Spawn this building
 	var parent_building: Structure = spawn_structure(building_id, building_data, parent, Structures.BuildingStruct)
@@ -69,6 +71,7 @@ func spawn_building(building_id: String, building_data: Dictionary, parent: Stru
 			var structure_data: Dictionary = building_data["Rooms"][room_id]
 			spawn_room(room_id, structure_data, parent_building)
 
+
 func spawn_room(room_id: String, room_data: Dictionary, parent: Structure) -> void:
 	# Spawn this room
 	var parent_room: Structure = spawn_structure(room_id, room_data, parent, Structures.RoomStruct)
@@ -78,6 +81,7 @@ func spawn_room(room_id: String, room_data: Dictionary, parent: Structure) -> vo
 		for waypoint_id: String in room_data["Waypoints"]:
 			var structure_data: Dictionary = room_data["Waypoints"][waypoint_id]
 			var _structure: Structure = spawn_structure(waypoint_id, structure_data, parent_room, Structures.WaypointStruct)
+
 
 func spawn_structure(structure_id: String, structure_data: Dictionary, parent: Structure, structure_type: Structures) -> Structure:
 	# Create new scene
@@ -113,7 +117,8 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 	
 	return new_structure
 
-func _on_admin_ui_root_spawn_specific_structure(parent: Structure, structure_type: Structures) -> void:
+
+func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Structures) -> void:
 	var structure_id: String
 	var default_data: Dictionary = {
 		'longitude': parent.longitude + 0.0001,

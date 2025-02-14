@@ -24,14 +24,14 @@ func general_search(searching_text: String) -> Array[Structure]:
 	var building_array: Array = building_manager.get_all_buildings()
 	var room_array: Array = room_manager.get_all_rooms()
 	
-	var name_match_array: Array[Structure] = []
-	var lecturers_match_array: Array[Structure] = []
-	# Stores the amount of times text occured and a list of Structures { count: int, Structures: Array[Structure] }
-	var description_match_dictionary: Dictionary = {}
-	
-	var structure_array: Array[Structure]
 	# Longer text search
 	if searching_text.length() > 2:
+		var name_match_array: Array[Structure] = []
+		var lecturers_match_array: Array[Structure] = []
+		# Stores the amount of times text occured and a list of Structures { count: int, Structures: Array[Structure] }
+		var description_match_dictionary: Dictionary = {}
+		var structure_array: Array[Structure]
+		
 		# Search through Rooms first as they might also come up if the parent Building name is searched
 		for room: Room in room_array:
 			if room.structure_name == searching_text:
@@ -64,6 +64,18 @@ func general_search(searching_text: String) -> Array[Structure]:
 					description_match_dictionary[text_count] = new_array
 				structure_array = description_match_dictionary[text_count]
 				structure_array.append(building)
+		
+		var result_array: Array[Structure] = []
+		result_array.append_array(name_match_array)
+		result_array.append_array(lecturers_match_array)
+		var counter_array: Array = description_match_dictionary.keys()
+		counter_array.sort()
+		counter_array.reverse()
+		for counter: int in counter_array:
+			structure_array = description_match_dictionary[counter]
+			result_array.append_array(structure_array)
+		
+		return result_array
 	# Short search - only look at Building letters
 	elif searching_text.length() == 1:
 		var location_match_array: Array[Structure] = []
@@ -79,17 +91,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 		
 		return location_match_array
 	
-	var result_array: Array[Structure] = []
-	result_array.append_array(name_match_array)
-	result_array.append_array(lecturers_match_array)
-	var counter_array: Array = description_match_dictionary.keys()
-	counter_array.sort()
-	counter_array.reverse()
-	for counter: int in counter_array:
-		structure_array = description_match_dictionary[counter]
-		result_array.append_array(structure_array)
-	
-	return result_array
+	return []
 
 
 func set_up_search_items(search_text: String) -> void:

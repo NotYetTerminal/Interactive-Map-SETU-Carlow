@@ -1,32 +1,19 @@
-[gd_scene load_steps=21 format=3 uid="uid://c632xxyai4jm5"]
+[gd_scene load_steps=13 format=3 uid="uid://c632xxyai4jm5"]
 
 [ext_resource type="Script" path="res://firebase/firebase_connector.gd" id="1_jrn7t"]
-[ext_resource type="PackedScene" uid="uid://dfgm3esbgp6at" path="res://managers/pathfinder.tscn" id="2_7g8wa"]
-[ext_resource type="PackedScene" uid="uid://dn4ulc1pa8gp4" path="res://managers/building_manager.tscn" id="3_e6yjw"]
 [ext_resource type="Script" path="res://managers/structure_spawner.gd" id="4_66h5g"]
-[ext_resource type="PackedScene" uid="uid://bkv1gokjtmxot" path="res://managers/room_manager.tscn" id="4_ngkd3"]
 [ext_resource type="Script" path="res://camera/camera_3d.gd" id="4_un6fr"]
 [ext_resource type="PackedScene" uid="uid://blp6a3470pxte" path="res://structures/base_map.tscn" id="5_gplak"]
 [ext_resource type="PackedScene" uid="uid://dadi0hcmivqx" path="res://structures/building.tscn" id="6_4a3gn"]
+[ext_resource type="Script" path="res://managers/pathfinder.gd" id="7_du3pr"]
 [ext_resource type="PackedScene" uid="uid://bami1pjdsnbsi" path="res://structures/room.tscn" id="7_huewf"]
 [ext_resource type="PackedScene" uid="uid://mdi8cgpboqxi" path="res://structures/waypoint.tscn" id="8_ty4b8"]
-[ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/admin_ui_root.tscn" id="11_1ljdu"]
-[ext_resource type="PackedScene" uid="uid://bw4ru2pi3ea3r" path="res://ui/user_ui_root.tscn" id="12_hgjqa"]
-[ext_resource type="Script" path="res://ui/admin_check_button.gd" id="13_uu365"]
-[ext_resource type="Script" path="res://screen_elements_control.gd" id="14_i8k1n"]
-[ext_resource type="Texture2D" uid="uid://dfilpwbyif4a" path="res://icons/upstairs.png" id="15_86da5"]
-[ext_resource type="Texture2D" uid="uid://0jwrb8wnfn0n" path="res://icons/downstairs.png" id="16_tbdqg"]
-[ext_resource type="Texture2D" uid="uid://in33sn6nx120" path="res://icons/zoom-in.png" id="17_2jmql"]
-[ext_resource type="Texture2D" uid="uid://bubittg71eh3u" path="res://icons/zoom-out.png" id="18_adk5n"]
+[ext_resource type="Script" path="res://managers/building_manager.gd" id="8_vacqx"]
+[ext_resource type="Script" path="res://managers/room_manager.gd" id="9_gu2ku"]
+[ext_resource type="PackedScene" uid="uid://qd00gyyuopt6" path="res://ui/ui_root.tscn" id="11_hwpgg"]
 
 [sub_resource type="Environment" id="Environment_knlak"]
 background_color = Color(0.537011, 0.537011, 0.537011, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apxja"]
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
 
 [node name="Root" type="Node"]
 
@@ -43,11 +30,14 @@ pathfinder = NodePath("../Pathfinder")
 building_manager = NodePath("../BuildingManager")
 room_manager = NodePath("../RoomManager")
 
-[node name="Pathfinder" parent="." instance=ExtResource("2_7g8wa")]
+[node name="Pathfinder" type="Node" parent="."]
+script = ExtResource("7_du3pr")
 
-[node name="BuildingManager" parent="." instance=ExtResource("3_e6yjw")]
+[node name="BuildingManager" type="Node" parent="."]
+script = ExtResource("8_vacqx")
 
-[node name="RoomManager" parent="." instance=ExtResource("4_ngkd3")]
+[node name="RoomManager" type="Node" parent="."]
+script = ExtResource("9_gu2ku")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -10, 0)
@@ -57,150 +47,17 @@ current = true
 size = 10.0
 script = ExtResource("4_un6fr")
 
-[node name="UIRoot" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
+[node name="UIRoot" parent="." instance=ExtResource("11_hwpgg")]
 
-[node name="AdminUIRoot" parent="UIRoot" instance=ExtResource("11_1ljdu")]
-visible = false
-layout_mode = 1
-
-[node name="UserUIRoot" parent="UIRoot" instance=ExtResource("12_hgjqa")]
-layout_mode = 1
-
-[node name="Panel" type="Panel" parent="UIRoot"]
-layout_mode = 0
-offset_left = 40.0
-offset_right = 170.0
-offset_bottom = 30.0
-
-[node name="AdminCheckButton" type="CheckButton" parent="UIRoot/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Edit Mode"
-script = ExtResource("13_uu365")
-
-[node name="ScreenElementsControl" type="Control" parent="UIRoot"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -230.0
-offset_bottom = -40.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 1
-script = ExtResource("14_i8k1n")
-
-[node name="LeftControl" type="Control" parent="UIRoot/ScreenElementsControl"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 640.0
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="FloorUpButton" type="Button" parent="UIRoot/ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 40.0
-offset_right = 90.0
-offset_bottom = 50.0
-icon = ExtResource("15_86da5")
-icon_alignment = 1
-expand_icon = true
-
-[node name="FloorDownButton" type="Button" parent="UIRoot/ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 70.0
-offset_right = 90.0
-offset_bottom = 120.0
-icon = ExtResource("16_tbdqg")
-icon_alignment = 1
-expand_icon = true
-
-[node name="FloorIndicatorLabel" type="Label" parent="UIRoot/ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 140.0
-offset_right = 51.0
-offset_bottom = 190.0
-theme_override_font_sizes/font_size = 30
-text = "Ground Floor"
-vertical_alignment = 1
-
-[node name="FloorIndicatorPanel" type="Panel" parent="UIRoot/ScreenElementsControl/LeftControl/FloorIndicatorLabel"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_right = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_apxja")
-
-[node name="RightControl" type="Control" parent="UIRoot/ScreenElementsControl"]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -640.0
-grow_horizontal = 0
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="ZoomInButton" type="Button" parent="UIRoot/ScreenElementsControl/RightControl"]
-layout_direction = 3
-layout_mode = 2
-offset_left = 43.0
-offset_top = 70.0
-offset_right = 93.0
-offset_bottom = 120.0
-icon = ExtResource("17_2jmql")
-icon_alignment = 1
-expand_icon = true
-
-[node name="ZoomOutButton" type="Button" parent="UIRoot/ScreenElementsControl/RightControl"]
-layout_direction = 3
-layout_mode = 2
-offset_left = 41.0
-offset_top = 140.0
-offset_right = 91.0
-offset_bottom = 190.0
-icon = ExtResource("18_adk5n")
-icon_alignment = 1
-expand_icon = true
-
-[connection signal="admin_logged_in" from="FirebaseConnector" to="UIRoot/AdminUIRoot" method="_on_firebase_connector_admin_logged_in"]
+[connection signal="admin_logged_in" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_admin_logged_in"]
 [connection signal="map_data_loaded" from="FirebaseConnector" to="StructureSpawner" method="_on_firebase_connector_map_data_loaded"]
 [connection signal="all_structures_done" from="StructureSpawner" to="Pathfinder" method="_on_structure_spawner_all_structures_done"]
-[connection signal="select_spawned_structure" from="StructureSpawner" to="UIRoot/AdminUIRoot" method="_on_structure_spawner_select_spawned_structure"]
-[connection signal="pathfinding_distance" from="Pathfinder" to="UIRoot/UserUIRoot" method="_on_pathfinder_pathfinding_distance"]
-[connection signal="select_structure" from="Camera3D" to="UIRoot/AdminUIRoot" method="_on_camera_3d_select_structure"]
-[connection signal="select_structure" from="Camera3D" to="UIRoot/UserUIRoot" method="_on_camera_3d_select_structure"]
-[connection signal="spawn_specific_structure" from="UIRoot/AdminUIRoot" to="StructureSpawner" method="_on_admin_ui_root_spawn_specific_structure"]
-[connection signal="cancel_navigation" from="UIRoot/UserUIRoot" to="Pathfinder" method="_on_user_ui_root_cancel_navigation"]
-[connection signal="start_navigation" from="UIRoot/UserUIRoot" to="Pathfinder" method="_on_user_ui_root_start_navigation"]
-[connection signal="edit_mode_toggled" from="UIRoot/Panel/AdminCheckButton" to="UIRoot/AdminUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
-[connection signal="edit_mode_toggled" from="UIRoot/Panel/AdminCheckButton" to="UIRoot/UserUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
-[connection signal="edit_mode_toggled" from="UIRoot/Panel/AdminCheckButton" to="UIRoot/ScreenElementsControl" method="_on_admin_check_button_edit_mode_toggled"]
-[connection signal="update_floor_number" from="UIRoot/ScreenElementsControl" to="Pathfinder" method="_on_screen_elements_control_update_floor_number"]
-[connection signal="zoom_in_button" from="UIRoot/ScreenElementsControl" to="Camera3D" method="_on_screen_elements_control_zoom_in_button"]
-[connection signal="zoom_out_button" from="UIRoot/ScreenElementsControl" to="Camera3D" method="_on_screen_elements_control_zoom_out_button"]
-[connection signal="button_down" from="UIRoot/ScreenElementsControl/LeftControl/FloorUpButton" to="UIRoot/ScreenElementsControl" method="_on_floor_up_button_button_down"]
-[connection signal="button_down" from="UIRoot/ScreenElementsControl/LeftControl/FloorDownButton" to="UIRoot/ScreenElementsControl" method="_on_floor_down_button_button_down"]
-[connection signal="button_down" from="UIRoot/ScreenElementsControl/RightControl/ZoomInButton" to="UIRoot/ScreenElementsControl" method="_on_zoom_in_button_button_down"]
-[connection signal="button_down" from="UIRoot/ScreenElementsControl/RightControl/ZoomOutButton" to="UIRoot/ScreenElementsControl" method="_on_zoom_out_button_button_down"]
+[connection signal="select_spawned_structure" from="StructureSpawner" to="UIRoot" method="_on_structure_spawner_select_spawned_structure"]
+[connection signal="pathfinding_distance" from="Pathfinder" to="UIRoot" method="_on_pathfinder_pathfinding_distance"]
+[connection signal="select_structure" from="Camera3D" to="UIRoot" method="_on_camera_3d_select_structure"]
+[connection signal="cancel_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_cancel_navigation"]
+[connection signal="spawn_specific_structure" from="UIRoot" to="StructureSpawner" method="_on_ui_root_spawn_specific_structure"]
+[connection signal="start_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_start_navigation"]
+[connection signal="update_floor_number" from="UIRoot" to="Pathfinder" method="_on_ui_root_update_floor_number"]
+[connection signal="zoom_in_button" from="UIRoot" to="Camera3D" method="_on_ui_root_zoom_in_button"]
+[connection signal="zoom_out_button" from="UIRoot" to="Camera3D" method="_on_ui_root_zoom_out_button"]

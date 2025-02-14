@@ -1,4 +1,5 @@
 extends Control
+class_name UserUIRoot
 
 # Signals for outside nodes
 signal start_navigation(from_structure: Structure, to_structure: Structure, allow_stairs: bool)
@@ -67,11 +68,7 @@ func _on_navigation_button_button_down() -> void:
 		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)
 
 
-func _on_camera_3d_select_structure(selected_structure: Structure) -> void:
-	_select_structure(selected_structure)
-
-
-func _select_structure(selected_structure: Structure) -> void:
+func select_structure(selected_structure: Structure) -> void:
 	current_selected_structure = selected_structure
 	if selected_structure is Room:
 		var room_structure: Room = selected_structure as Room
@@ -101,7 +98,7 @@ func _on_admin_check_button_edit_mode_toggled() -> void:
 	information_popup_elements_control.visible = false
 
 
-func _on_pathfinder_pathfinding_distance(distance: float) -> void:
+func pathfinding_distance(distance: float) -> void:
 	distance_label.text = "Distance: " + str(round(distance)) + " meters"
 	distance_label.visible = true
 

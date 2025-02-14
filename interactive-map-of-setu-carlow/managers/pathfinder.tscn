@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfgm3esbgp6at"]
-
-[ext_resource type="Script" path="res://managers/pathfinder.gd" id="1_1d0ma"]
-
-[node name="Pathfinder" type="Node"]
-script = ExtResource("1_1d0ma")

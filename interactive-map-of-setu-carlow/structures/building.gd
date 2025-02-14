@@ -82,6 +82,7 @@ func update_rooms_time(new_time: int) -> void:
 	
 	base_map.update_buildings_time(rooms_updated_time)
 
+
 func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
 	var base_map: BaseMap = get_parent_structure()

@@ -18,6 +18,7 @@ const WAYPOINTS_COLLECTION: String = 'Waypoints'
 
 var data_queried: bool = false
 
+
 func _ready() -> void:
 	# Connect signals to methods
 	var _error: int = Firebase.Auth.signup_succeeded.connect(_on_FirebaseAuth_signup_succeeded)
