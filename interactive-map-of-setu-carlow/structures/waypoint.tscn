@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://mdi8cgpboqxi"]
 
-[ext_resource type="Script" path="res://structures/waypoint.gd" id="1_nxo60"]
+[ext_resource type="Script" uid="uid://bxc5kfajrf6s6" path="res://structures/waypoint.gd" id="1_nxo60"]
 [ext_resource type="PackedScene" uid="uid://bul6vw37l1nww" path="res://structures/link_node_3d.tscn" id="2_25spw"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ffppo"]

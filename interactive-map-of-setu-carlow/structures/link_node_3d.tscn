@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://bul6vw37l1nww"]
 
-[ext_resource type="Script" path="res://structures/link_node_3d.gd" id="1_dxmlh"]
+[ext_resource type="Script" uid="uid://c3wva0wuuwaly" path="res://structures/link_node_3d.gd" id="1_dxmlh"]
 [ext_resource type="Texture2D" uid="uid://ciyq48h1gl2n1" path="res://icons/stop-sign.png" id="2_7u4xk"]
-[ext_resource type="Script" path="res://structures/feature_sprite_3d.gd" id="3_f8xy2"]
+[ext_resource type="Script" uid="uid://crdav7n24p4wc" path="res://structures/feature_sprite_3d.gd" id="3_f8xy2"]
 [ext_resource type="Texture2D" uid="uid://dfilpwbyif4a" path="res://icons/upstairs.png" id="4_okwx8"]
 [ext_resource type="Texture2D" uid="uid://0jwrb8wnfn0n" path="res://icons/downstairs.png" id="5_4157d"]
 [ext_resource type="Texture2D" uid="uid://d246lfdrntiid" path="res://icons/stairs.png" id="6_uykew"]

@@ -33,7 +33,7 @@ func set_waypoint_editor_as_read_only(waypoint_id: String, selected_feature: Str
 	_set_delete_button()
 
 
-func set_waypoint_editor_as_editable(connected_waypoints_dictionary: Dictionary, all_waypoints_ids_array: Array[String]) -> void:
+func set_waypoint_editor_as_editable(connected_waypoints_dictionary: Dictionary[String, String], all_waypoints_ids_array: Array[String]) -> void:
 	waypoint_option_button.clear()
 	waypoint_option_button.add_item("New Connection...")
 	waypoint_option_button.set_item_disabled(0, true)

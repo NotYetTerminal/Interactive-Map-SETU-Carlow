@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://qd00gyyuopt6"]
 
 [ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/admin_ui_root.tscn" id="1_51cd5"]
-[ext_resource type="Script" path="res://ui/ui_root.gd" id="1_h3dkj"]
+[ext_resource type="Script" uid="uid://bsvvj3gxdj0a6" path="res://ui/ui_root.gd" id="1_h3dkj"]
 [ext_resource type="PackedScene" uid="uid://bw4ru2pi3ea3r" path="res://ui/user_ui_root.tscn" id="2_xlc3q"]
-[ext_resource type="Script" path="res://ui/admin_check_button.gd" id="3_c4mcg"]
-[ext_resource type="Script" path="res://ui/screen_elements_control.gd" id="4_8a60i"]
+[ext_resource type="Script" uid="uid://bfdv626331mli" path="res://ui/admin_check_button.gd" id="3_c4mcg"]
+[ext_resource type="Script" uid="uid://gujsjh6tjyfg" path="res://ui/screen_elements_control.gd" id="4_8a60i"]
 [ext_resource type="Texture2D" uid="uid://dfilpwbyif4a" path="res://icons/upstairs.png" id="5_kk3ex"]
 [ext_resource type="Texture2D" uid="uid://0jwrb8wnfn0n" path="res://icons/downstairs.png" id="6_wgvx6"]
 [ext_resource type="Texture2D" uid="uid://in33sn6nx120" path="res://icons/zoom-in.png" id="7_5a6dn"]

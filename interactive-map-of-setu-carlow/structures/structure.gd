@@ -16,7 +16,6 @@ func update_details(_details: Dictionary) -> void:
 	pass
 
 
-
 func update_waypoints_time(_new_time: int) -> void:
 	pass
 

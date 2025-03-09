@@ -1,8 +1,8 @@
 extends Node
 class_name BuildingManager
 
-# Contains { building_id: String: building: Building }
-var _all_buildings: Dictionary = {}
+# Contains { building_id: String, building: Building }
+var _all_buildings: Dictionary[String, Building] = {}
 
 
 func add_new_building(new_building: Building) -> void:

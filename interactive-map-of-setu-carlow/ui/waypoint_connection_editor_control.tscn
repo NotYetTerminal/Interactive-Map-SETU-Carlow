@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://drcokpawtdag"]
 
-[ext_resource type="Script" path="res://ui/waypoint_connection_editor_control.gd" id="1_rdmwk"]
-[ext_resource type="Script" path="res://ui/editor_button.gd" id="2_wblgo"]
+[ext_resource type="Script" uid="uid://cbm7lmqvmpra8" path="res://ui/waypoint_connection_editor_control.gd" id="1_rdmwk"]
+[ext_resource type="Script" uid="uid://c32tau2b6keun" path="res://ui/editor_button.gd" id="2_wblgo"]
 [ext_resource type="Texture2D" uid="uid://d18ca3suql11x" path="res://icons/plus.png" id="3_jxdcb"]
 [ext_resource type="Texture2D" uid="uid://cu0y0vj7eiv4y" path="res://icons/remove.png" id="4_q6k50"]
 

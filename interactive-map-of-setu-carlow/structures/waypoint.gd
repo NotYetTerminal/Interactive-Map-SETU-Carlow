@@ -4,7 +4,7 @@ class_name Waypoint
 var floor_number: int
 
 # Dictionary to contain connections { waypoint_connection_id: String, connection_feature: String }
-var waypoint_connections: Dictionary = {}
+var waypoint_connections: Dictionary[String, String] = {}
 
 @export var link_node_3d_scene: PackedScene
 
@@ -12,7 +12,7 @@ var waypoint_connections: Dictionary = {}
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 
 # Contains a link for each connection { waypoint_id: String, link: Node3D }
-var links_dictionary: Dictionary = {}
+var links_dictionary: Dictionary[String, Node3D] = {}
 
 # Pathfinding variables
 var f_cost: float:
@@ -32,7 +32,7 @@ func save_details(id_in: String, details: Dictionary, call_others: bool = true) 
 	if details.is_empty():
 		return []
 	
-	var waypoint_connections_dictionary: Dictionary = details["waypoint_connections"]
+	var waypoint_connections_dictionary: Dictionary[String, String] = details["waypoint_connections"]
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"] else "",
 		"latitude" if latitude != details["latitude"] else "",
@@ -170,7 +170,7 @@ func update_links(call_others: bool) -> void:
 
 func add_waypoint(waypoint_id: String, feature: String) -> void:
 	var details: Dictionary = _collect_details()
-	var waypoint_connections_dictionary: Dictionary = details['waypoint_connections']
+	var waypoint_connections_dictionary: Dictionary[String, String] = details['waypoint_connections']
 	if not waypoint_connections.has(waypoint_id) or waypoint_connections_dictionary[waypoint_id] != feature:
 		waypoint_connections_dictionary[waypoint_id] = feature
 		update_details(details, false)
@@ -179,13 +179,13 @@ func add_waypoint(waypoint_id: String, feature: String) -> void:
 func delete_waypoint(waypoint_id: String) -> void:
 	if waypoint_connections.has(waypoint_id):
 		var details: Dictionary = _collect_details()
-		var waypoint_connections_dictionary: Dictionary = details['waypoint_connections']
+		var waypoint_connections_dictionary: Dictionary[String, String] = details['waypoint_connections']
 		var _result: bool = waypoint_connections_dictionary.erase(waypoint_id)
 		update_details(details, false)
 
 
-func _collect_details() -> Dictionary:
-	var waypoint_connections_dictionary: Dictionary = {}
+func _collect_details() -> Dictionary[String, Variant]:
+	var waypoint_connections_dictionary: Dictionary[String, String] = {}
 	for waypoint_id: String in waypoint_connections.keys():
 		waypoint_connections_dictionary[waypoint_id] = waypoint_connections[waypoint_id]
 	return {

@@ -10,8 +10,8 @@ var building_letter: String
 var waypoints_updated_time: int
 var rooms_updated_time: int
 
-# Contains textures for buildings { structure_name: String: texture_scene: PackedScene }
-@export var map_textures_dictionary: Dictionary
+# Contains textures for buildings { structure_name: String, texture_scene: PackedScene }
+@export var map_textures_dictionary: Dictionary[String, PackedScene]
 
 var building_texture_node: Node3D
 

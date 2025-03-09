@@ -1,7 +1,7 @@
 extends Sprite3D
 class_name FeatureSprite3D
 
-@export var feature_images_dictionary: Dictionary
+@export var feature_images_dictionary: Dictionary[String, CompressedTexture2D]
 @onready var cylinder_backround_mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 
 

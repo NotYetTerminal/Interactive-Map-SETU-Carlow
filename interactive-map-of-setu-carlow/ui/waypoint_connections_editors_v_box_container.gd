@@ -7,14 +7,14 @@ signal update_connection_feature(waypoint_id: String, feature: String)
 
 @export var waypoint_connection_editor_scene: PackedScene
 
-var connected_waypoints_dictionary: Dictionary
+var connected_waypoints_dictionary: Dictionary[String, String]
 var all_waypoints_ids_array: Array[String]
 
 var waypoint_connection_editor_children: Array[WaypointConnectionEditorControl]
 var new_waypoint_connection_editor_child: WaypointConnectionEditorControl
 
 
-func save_waypoints_ids(connected_waypoints: Dictionary, all_waypoints_ids: Array[String]) -> void:
+func save_waypoints_ids(connected_waypoints: Dictionary[String, String], all_waypoints_ids: Array[String]) -> void:
 	connected_waypoints_dictionary.clear()
 	for waypoint_id: String in connected_waypoints.keys():
 		connected_waypoints_dictionary[waypoint_id] = connected_waypoints[waypoint_id]

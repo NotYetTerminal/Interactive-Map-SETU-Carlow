@@ -37,7 +37,7 @@ func save_offline_data() -> void:
 	var file: FileAccess = FileAccess.open("user://offline_data.txt", FileAccess.WRITE)
 	if file != null:
 		print("Saved")
-		file.store_var(offline_data)
+		var _error: bool = file.store_var(offline_data)
 
 # Delete the structure according to id
 func delete_structure(path: String, id: String) -> void:

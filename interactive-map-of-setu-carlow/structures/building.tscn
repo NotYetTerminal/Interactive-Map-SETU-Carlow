@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dadi0hcmivqx"]
 
-[ext_resource type="Script" path="res://structures/building.gd" id="1_0u58k"]
+[ext_resource type="Script" uid="uid://cgn3e5ij7winf" path="res://structures/building.gd" id="1_0u58k"]
 [ext_resource type="PackedScene" uid="uid://dusn1bxyvlsya" path="res://map_textures/barrow_centre_node_3d.tscn" id="2_ysdoa"]
 [ext_resource type="PackedScene" uid="uid://dk2gadch8jbfq" path="res://map_textures/lrc_node_3d.tscn" id="3_cy3fr"]
 [ext_resource type="PackedScene" uid="uid://dc0fvyikedoll" path="res://map_textures/catering_services_building_node_3d.tscn" id="4_58qnn"]

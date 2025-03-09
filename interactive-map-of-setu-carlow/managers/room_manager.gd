@@ -1,8 +1,8 @@
 extends Node
 class_name RoomManager
 
-# Contains { room_id: String: room: Room }
-var _all_rooms: Dictionary = {}
+# Contains { room_id: String, room: Room }
+var _all_rooms: Dictionary[String, Room] = {}
 
 
 func add_new_room(new_room: Room) -> void:

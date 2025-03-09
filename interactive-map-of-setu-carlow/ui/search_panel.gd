@@ -29,7 +29,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 		var name_match_array: Array[Structure] = []
 		var lecturers_match_array: Array[Structure] = []
 		# Stores the amount of times text occured and a list of Structures { count: int, Structures: Array[Structure] }
-		var description_match_dictionary: Dictionary = {}
+		var description_match_dictionary: Dictionary[int, Array] = {}
 		var structure_array: Array[Structure]
 		
 		# Search through Rooms first as they might also come up if the parent Building name is searched

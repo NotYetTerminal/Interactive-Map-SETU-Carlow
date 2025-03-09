@@ -4,8 +4,8 @@ class_name Pathfinder
 # Signal to UI for distance
 signal pathfinding_distance(distance: float)
 
-# Contains { waypoint_id: String: Waypoint: Waypoint }
-var _all_waypoints: Dictionary = {}
+# Contains { waypoint_id: String, Waypoint: Waypoint }
+var _all_waypoints: Dictionary[String, Waypoint] = {}
 
 var final_waypoint: Waypoint
 
@@ -117,7 +117,7 @@ func _on_ui_root_update_floor_number(floor_number: int) -> void:
 
 func get_all_waypoints_by_distance(from_waypoint_id: String) -> Array[String]:
 	# Create a Dictionary of waypoints and distances
-	var all_waypoints: Dictionary = {}
+	var all_waypoints: Dictionary[String, float] = {}
 	for waypoint_id: String in _all_waypoints.keys():
 		var waypoint: Waypoint = _all_waypoints[waypoint_id]
 		var from_waypoint: Waypoint = _all_waypoints[from_waypoint_id]

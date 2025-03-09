@@ -197,7 +197,7 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 			Structures.WaypointStruct:
 				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
 				
-				var waypoint_connections_dictionary: Dictionary = {}
+				var waypoint_connections_dictionary: Dictionary[String, String] = {}
 				var connection_dictionary: Dictionary = structure_document.document['waypoint_connections']['mapValue']
 				if connection_dictionary.has('fields'):
 					connection_dictionary = connection_dictionary['fields']

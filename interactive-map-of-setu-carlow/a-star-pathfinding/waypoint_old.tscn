@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ca3jxbsskiaei"]
 
-[ext_resource type="Script" path="res://a-star-pathfinding/waypoint_old.gd" id="1_dapji"]
+[ext_resource type="Script" uid="uid://b670cidv7c7wx" path="res://a-star-pathfinding/waypoint_old.gd" id="1_dapji"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_kajay"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dk2gadch8jbfq"]
 
 [ext_resource type="Texture2D" uid="uid://7m3cej7q12s1" path="res://map_images/map-223.png" id="1_mccv5"]
-[ext_resource type="Script" path="res://map_textures/building_texture_node.gd" id="1_ndf4p"]
+[ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_ndf4p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6mmc"]
 emission_enabled = true
