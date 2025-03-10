@@ -14,6 +14,9 @@ var zoom_level: float = 10
 
 var move_speed: float = 0.01
 
+var touch_points: Dictionary[int, Vector2] = {}
+var start_distance: float = 0
+
 
 func _ready() -> void:
 	var screen_size: Vector2 = get_viewport().get_visible_rect().size
@@ -43,12 +46,48 @@ func _unhandled_input(event: InputEvent) -> void:
 		var input_event: InputEventMouseMotion = event as InputEventMouseMotion
 		# Divide move amount by zoom level to correct movement
 		position += Vector3(-input_event.relative.x * move_speed, 0, input_event.relative.y * move_speed) / (20 - zoom_level) * 10
+	# Touch screen controls
+	elif event is InputEventScreenTouch:
+		var input_event: InputEventScreenTouch = event as InputEventScreenTouch
+		if input_event.pressed:
+			touch_points[input_event.index] = input_event.position
+		else:
+			var _exists: bool = touch_points.erase(input_event.index)
+		
+		if touch_points.size() == 1:
+			start_distance = 0
+			ray_cast_select(input_event)
+		elif touch_points.size() == 2:
+			var touch_point_positions: Array[Vector2] = touch_points.values()
+			start_distance = touch_point_positions[0].distance_to(touch_point_positions[1])
+		
+	elif event is InputEventScreenDrag:
+		var input_event: InputEventScreenDrag = event as InputEventScreenDrag
+		touch_points[input_event.index] = input_event.position
+		if touch_points.size() == 1:
+			# Divide move amount by zoom level to correct movement
+			position += Vector3(-input_event.screen_relative.x * move_speed, 0, input_event.screen_relative.y * move_speed) / (20 - zoom_level) * 10
+		elif touch_points.size() == 2:
+			var touch_point_positions: Array[Vector2] = touch_points.values()
+			var current_distance: float =  touch_point_positions[0].distance_to(touch_point_positions[1])
+			var zoom_factor: float = 1 - (start_distance / current_distance)
+			if zoom_factor < 0:
+				zoom_out(-(mouse_zoom_amount * zoom_factor))
+			elif zoom_factor > 0:
+				zoom_in(mouse_zoom_amount * zoom_factor)
 
 # Ray cast to select an object on the map
-func ray_cast_select(input_event: InputEventMouseButton) -> void:
+func ray_cast_select(event: InputEvent) -> void:
+	var input_position: Vector2
+	if event is InputEventMouseButton:
+		input_position = (event as InputEventMouseButton).position
+	elif event is InputEventScreenTouch:
+		input_position = (event as InputEventScreenTouch).position
+	else:
+		return
 	var ray_length: float = 50
-	var from: Vector3 = project_ray_origin(input_event.position)
-	var to: Vector3 = from + project_ray_normal(input_event.position) * ray_length
+	var from: Vector3 = project_ray_origin(input_position)
+	var to: Vector3 = from + project_ray_normal(input_position) * ray_length
 	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	
 	var ray_query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()

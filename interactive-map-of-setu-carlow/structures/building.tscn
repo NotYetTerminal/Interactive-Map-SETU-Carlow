@@ -23,13 +23,13 @@ radius = 0.2
 
 [node name="Building" type="StaticBody3D"]
 script = ExtResource("1_0u58k")
-map_textures_dictionary = {
+map_textures_dictionary = Dictionary[String, PackedScene]({
 "Barrow Centre": ExtResource("2_ysdoa"),
 "Burrin Building": ExtResource("5_n2yi7"),
 "Catering Services Building": ExtResource("4_58qnn"),
 "LRC": ExtResource("3_cy3fr"),
 "Nore Building": ExtResource("6_386ko")
-}
+})
 
 [node name="Waypoints" type="Node3D" parent="."]
 
