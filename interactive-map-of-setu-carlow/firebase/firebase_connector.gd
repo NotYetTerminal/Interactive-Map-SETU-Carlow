@@ -111,7 +111,6 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 	var child_structure_type: Structures
 	
 	# Run for each document in collection
-	print("First")
 	for structure_document: FirestoreDocument in await Firebase.Firestore.list(collection_path):
 		clean_structure_document_data(structure_document, structure_type)
 		var sub_collection_path: String = collection_path + "/" + structure_document.doc_name + '/'
@@ -148,7 +147,6 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 		if new_collection || waypoints_updated:
 			structure_document.document[WAYPOINTS_COLLECTION] = {}
 			# Run for each Waypoint document in collection
-			print("Second")
 			for waypoint_document: FirestoreDocument in await Firebase.Firestore.list(sub_collection_path + WAYPOINTS_COLLECTION):
 				clean_structure_document_data(waypoint_document, Structures.WaypointStruct)
 				# Save to Parent Structure -> Waypoints collection -> Waypoint document id
@@ -209,7 +207,6 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 func save_map_data(id: String, fields: Array[String], parent_collection_path: String, global_structure_offline_data: Dictionary) -> void:
 	var parent_collection: FirestoreCollection = Firebase.Firestore.collection(parent_collection_path)
 	
-	print("Third")
 	var firestore_documents_list: Array = await Firebase.Firestore.list(parent_collection_path)
 	var single_firestore_document_list: Array = firestore_documents_list.filter(func(x: FirestoreDocument) -> bool: return x.doc_name == id)
 	

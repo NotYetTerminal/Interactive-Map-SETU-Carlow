@@ -222,7 +222,10 @@ func _on_save_button_pressed() -> void:
 		details['waypoints_updated_time'] = (selected_structure as Room).waypoints_updated_time
 	elif selected_structure is Waypoint:
 		details['floor_number'] = int(floor_number_spin_box.value)
-		details['waypoint_connections'] = waypoint_connections_editors_v_box_container.connected_waypoints_dictionary
+		var waypoint_dictionary: Dictionary[String, String] = {}
+		for waypoint_id: String in waypoint_connections_editors_v_box_container.connected_waypoints_dictionary.keys():
+			waypoint_dictionary[waypoint_id] = waypoint_connections_editors_v_box_container.connected_waypoints_dictionary[waypoint_id]
+		details['waypoint_connections'] = waypoint_dictionary
 	
 	selected_structure.update_details(details)
 
