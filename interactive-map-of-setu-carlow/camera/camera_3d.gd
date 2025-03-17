@@ -66,7 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		touch_points[input_event.index] = input_event.position
 		if touch_points.size() == 1:
 			# Divide move amount by zoom level to correct movement
-			position += Vector3(-input_event.screen_relative.x * move_speed, 0, input_event.screen_relative.y * move_speed) / (20 - zoom_level) * 10
+			position += Vector3(-input_event.screen_relative.x * move_speed, 0, input_event.screen_relative.y * move_speed) / (20 - zoom_level) * 5
 		elif touch_points.size() == 2:
 			var touch_point_positions: Array[Vector2] = touch_points.values()
 			var current_distance: float =  touch_point_positions[0].distance_to(touch_point_positions[1])
@@ -101,7 +101,7 @@ func ray_cast_select(event: InputEvent) -> void:
 	if raycast_result.has("collider") and raycast_result["collider"] is Structure:
 		var structure: Structure = raycast_result["collider"]
 		# Position the selected Structure in the middle
-		position = Vector3(structure.global_position.x, -10, structure.global_position.z + 1)
+		position = Vector3(structure.global_position.x, -10, structure.global_position.z + 3)
 		zoom_level = 9
 		size = zoom_level
 		select_structure.emit(structure)

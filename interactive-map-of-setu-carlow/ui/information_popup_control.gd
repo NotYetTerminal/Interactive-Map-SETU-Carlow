@@ -1,9 +1,9 @@
 extends Control
 
-@onready var name_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/NameLabel
-@onready var lecturers_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/LecturersLabel
-@onready var building_letter_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/BuildingLetterLabel
-@onready var description_label: Label = $InformationPopupControl/InformationPopupVBoxContainer/DescriptionScrollContainer/DescriptionLabel
+@onready var name_label: Label = $InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer/NameLabel
+@onready var lecturers_label: Label = $InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer/LecturersLabel
+@onready var building_letter_label: Label = $InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer/BuildingLetterLabel
+@onready var description_label: Label = $InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer/DescriptionLabel
 
 
 func show_room_information(room_name: String, lecturers: String, description: String) -> void:

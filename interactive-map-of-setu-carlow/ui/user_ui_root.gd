@@ -15,11 +15,11 @@ signal _set_to_structure(to_structure: Structure)
 @onready var building_manager: BuildingManager = $"../../BuildingManager"
 @onready var room_manager: RoomManager = $"../../RoomManager"
 
-@onready var search_panel: SearchPanel = $SearchElementsControl/SearchPanel
-@onready var distance_label: Label = $SearchElementsControl/SearchBarControl/DistanceLabel
-@onready var navigation_button: Button = $SearchElementsControl/SearchBarControl/NavigationButton
+@onready var search_panel: SearchPanel = $SearchPanel
+@onready var distance_label: Label = $SearchElementsControl/DistanceLabel
+@onready var navigation_button: Button = $SearchElementsControl/NavigationButton
 @onready var information_popup_elements_control: Control = $InformationPopupElementsControl
-@onready var stairs_check_button: CheckButton = $SearchElementsControl/SearchBarControl/NavigationButton/StairsCheckButton
+@onready var stairs_check_button: CheckButton = $SearchElementsControl/NavigationButton/StairsCheckButton
 
 # For pathfinding
 var current_selected_structure: Structure

@@ -1,8 +1,8 @@
 extends Control
 
-@onready var to_search_bar_line_edit: LineEdit = $SearchBarControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit
-@onready var from_search_bar_line_edit: LineEdit = $SearchBarControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit
-@onready var from_search_bar_panel: Panel = $SearchBarControl/FromSearchBarPanel
+@onready var to_search_bar_line_edit: LineEdit = $ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit
+@onready var from_search_bar_line_edit: LineEdit = $FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit
+@onready var from_search_bar_panel: Panel = $FromSearchBarPanel
 
 
 func _on_user_ui_root__set_to_structure(to_structure: Structure) -> void:

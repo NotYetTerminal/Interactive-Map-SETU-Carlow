@@ -33,73 +33,38 @@ layout_mode = 1
 [node name="UserUIRoot" parent="." instance=ExtResource("2_xlc3q")]
 layout_mode = 1
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 40.0
-offset_right = 170.0
-offset_bottom = 30.0
-
-[node name="AdminCheckButton" type="CheckButton" parent="Panel"]
+[node name="ScreenElementsControl2" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Edit Mode"
-script = ExtResource("3_c4mcg")
-
-[node name="ScreenElementsControl" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -230.0
-offset_bottom = -40.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 1
+anchor_left = 0.02
+anchor_top = 0.7
+anchor_right = 0.98
+anchor_bottom = 0.98
+size_flags_vertical = 3
+mouse_filter = 2
 script = ExtResource("4_8a60i")
 
-[node name="LeftControl" type="Control" parent="ScreenElementsControl"]
+[node name="LeftControl" type="Control" parent="ScreenElementsControl2"]
 layout_mode = 1
-anchors_preset = 9
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_right = 640.0
-grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 
-[node name="FloorUpButton" type="Button" parent="ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 40.0
-offset_right = 90.0
-offset_bottom = 50.0
-icon = ExtResource("5_kk3ex")
-icon_alignment = 1
-expand_icon = true
+[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="ScreenElementsControl2/LeftControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_right = 1.0
+anchor_bottom = 0.25
+mouse_filter = 2
+alignment_horizontal = 0
 
-[node name="FloorDownButton" type="Button" parent="ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 70.0
-offset_right = 90.0
-offset_bottom = 120.0
-icon = ExtResource("6_wgvx6")
-icon_alignment = 1
-expand_icon = true
-
-[node name="FloorIndicatorLabel" type="Label" parent="ScreenElementsControl/LeftControl"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 140.0
-offset_right = 51.0
-offset_bottom = 190.0
-theme_override_font_sizes/font_size = 30
+[node name="FloorIndicatorLabel" type="Label" parent="ScreenElementsControl2/LeftControl/AspectRatioContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
 text = "Ground Floor"
 vertical_alignment = 1
 
-[node name="FloorIndicatorPanel" type="Panel" parent="ScreenElementsControl/LeftControl/FloorIndicatorLabel"]
+[node name="FloorIndicatorPanel" type="Panel" parent="ScreenElementsControl2/LeftControl/AspectRatioContainer3/FloorIndicatorLabel"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -111,47 +76,100 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_apxja")
 
-[node name="RightControl" type="Control" parent="ScreenElementsControl"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="ScreenElementsControl2/LeftControl"]
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
+anchors_preset = -1
+anchor_top = 0.375
+anchor_right = 1.0
+anchor_bottom = 0.625
+mouse_filter = 2
+alignment_horizontal = 0
+
+[node name="FloorUpButton" type="Button" parent="ScreenElementsControl2/LeftControl/AspectRatioContainer"]
+layout_mode = 2
+icon = ExtResource("5_kk3ex")
+icon_alignment = 1
+expand_icon = true
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="ScreenElementsControl2/LeftControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.75
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -640.0
-grow_horizontal = 0
-grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
+alignment_horizontal = 0
 
-[node name="ZoomInButton" type="Button" parent="ScreenElementsControl/RightControl"]
-layout_direction = 3
+[node name="FloorDownButton" type="Button" parent="ScreenElementsControl2/LeftControl/AspectRatioContainer2"]
 layout_mode = 2
-offset_left = 43.0
-offset_top = 70.0
-offset_right = 93.0
-offset_bottom = 120.0
+icon = ExtResource("6_wgvx6")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RightControl" type="Control" parent="ScreenElementsControl2"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="ScreenElementsControl2/RightControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.375
+anchor_right = 1.0
+anchor_bottom = 0.625
+mouse_filter = 2
+alignment_horizontal = 2
+
+[node name="ZoomInButton" type="Button" parent="ScreenElementsControl2/RightControl/AspectRatioContainer"]
+layout_mode = 2
 icon = ExtResource("7_5a6dn")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ZoomOutButton" type="Button" parent="ScreenElementsControl/RightControl"]
-layout_direction = 3
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="ScreenElementsControl2/RightControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+alignment_horizontal = 2
+
+[node name="ZoomOutButton" type="Button" parent="ScreenElementsControl2/RightControl/AspectRatioContainer2"]
 layout_mode = 2
-offset_left = 41.0
-offset_top = 140.0
-offset_right = 91.0
-offset_bottom = 190.0
 icon = ExtResource("8_1cbwd")
 icon_alignment = 1
 expand_icon = true
 
+[node name="Panel" type="Panel" parent="ScreenElementsControl2/RightControl"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_right = 1.0
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AdminCheckButton" type="CheckButton" parent="ScreenElementsControl2/RightControl/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Edit Mode"
+script = ExtResource("3_c4mcg")
+
 [connection signal="spawn_specific_structure" from="AdminUIRoot" to="." method="_on_admin_ui_root_spawn_specific_structure"]
 [connection signal="cancel_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_cancel_navigation"]
 [connection signal="start_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_start_navigation"]
-[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="AdminUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
-[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="UserUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
-[connection signal="edit_mode_toggled" from="Panel/AdminCheckButton" to="ScreenElementsControl" method="_on_admin_check_button_edit_mode_toggled"]
-[connection signal="update_floor_number" from="ScreenElementsControl" to="." method="_on_screen_elements_control_update_floor_number"]
-[connection signal="button_down" from="ScreenElementsControl/LeftControl/FloorUpButton" to="ScreenElementsControl" method="_on_floor_up_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/LeftControl/FloorDownButton" to="ScreenElementsControl" method="_on_floor_down_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomInButton" to="." method="_on_zoom_in_button_button_down"]
-[connection signal="button_down" from="ScreenElementsControl/RightControl/ZoomOutButton" to="." method="_on_zoom_out_button_button_down"]
+[connection signal="update_floor_number" from="ScreenElementsControl2" to="." method="_on_screen_elements_control_update_floor_number"]
+[connection signal="button_down" from="ScreenElementsControl2/LeftControl/AspectRatioContainer/FloorUpButton" to="ScreenElementsControl2" method="_on_floor_up_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl2/LeftControl/AspectRatioContainer2/FloorDownButton" to="ScreenElementsControl2" method="_on_floor_down_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl2/RightControl/AspectRatioContainer/ZoomInButton" to="." method="_on_zoom_in_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl2/RightControl/AspectRatioContainer2/ZoomOutButton" to="." method="_on_zoom_out_button_button_down"]
+[connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="AdminUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
+[connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="UserUIRoot" method="_on_admin_check_button_edit_mode_toggled"]

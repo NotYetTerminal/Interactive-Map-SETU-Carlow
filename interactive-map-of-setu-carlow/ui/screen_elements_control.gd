@@ -3,7 +3,7 @@ extends Control
 # Signals for outside nodes
 signal update_floor_number(floor_number: int)
 
-@onready var floor_indicator_label: Label = $LeftControl/FloorIndicatorLabel
+@onready var floor_indicator_label: Label = $LeftControl/AspectRatioContainer3/FloorIndicatorLabel
 
 # Used by floor indicator label
 var floor_name_array: Array[String] = ["Ground Floor", "First Floor", "Second Floor"]
