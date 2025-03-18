@@ -35,8 +35,8 @@ func get_parent_structure() -> Structure:
 func get_firestore_path() -> String:
 	return ""
 
-# Used by floor buttons to change visibility of Structures
-func update_visibility_by_floor_number(_checking_floor_number: int) -> void:
+# Used to update the visibility of Structures
+func update_visibility() -> void:
 	pass
 
 # Set the position of the structue based on the GPS coordinates

@@ -3,7 +3,6 @@ extends Control
 signal spawn_specific_structure(parent: Structure, structure_type: int)
 signal cancel_navigation()
 signal start_navigation(from_structure: Structure, to_structure: Structure, allow_stairs: bool)
-signal update_floor_number(floor_number: int)
 signal zoom_in_button()
 signal zoom_out_button()
 
@@ -23,8 +22,8 @@ func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: 
 	start_navigation.emit(from_structure, to_structure, allow_stairs)
 
 
-func _on_screen_elements_control_update_floor_number(floor_number: int) -> void:
-	update_floor_number.emit(floor_number)
+func _on_screen_elements_control_update_floor_number() -> void:
+	update_visibility()
 
 
 func _on_zoom_in_button_button_down() -> void:
@@ -50,3 +49,11 @@ func _on_pathfinder_pathfinding_distance(distance: float) -> void:
 func _on_camera_3d_select_structure(selected_structure: Structure) -> void:
 	admin_ui_root.select_structure(selected_structure)
 	user_ui_root.select_structure(selected_structure)
+
+
+func _on_admin_check_button_edit_mode_toggled() -> void:
+	update_visibility()
+
+
+func update_visibility() -> void:
+	Globals.base_map.update_visibility()

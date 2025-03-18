@@ -32,7 +32,7 @@ func save_details(id_in: String, details: Dictionary, call_others: bool = true) 
 	if details.is_empty():
 		return []
 	
-	var waypoint_connections_dictionary: Dictionary[String, String] = details["waypoint_connections"]
+	var waypoint_connections_dictionary: Dictionary = details["waypoint_connections"]
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"] else "",
 		"latitude" if latitude != details["latitude"] else "",
@@ -60,13 +60,13 @@ func get_parent_structure() -> Structure:
 	return get_parent().get_parent()
 
 
-func update_visibility_by_floor_number(checking_floor_number: int) -> void:
-	var should_be_visible: bool = floor_number == checking_floor_number and Globals.edit_mode
+func update_visibility() -> void:
+	var should_be_visible: bool = floor_number == Globals.current_floor and Globals.edit_mode
 	mesh_instance_3d.visible = should_be_visible
 	collision_shape_3d.disabled = not should_be_visible
 	for link: Link in links_dictionary.values():
 		link.set_link_holder_visibility(should_be_visible)
-		link.set_texture_visibility(floor_number == checking_floor_number)
+		link.set_texture_visibility(floor_number == Globals.current_floor)
 
 # Update the details when editing
 func update_details(details: Dictionary, call_others: bool = true) -> void:
@@ -170,7 +170,7 @@ func update_links(call_others: bool) -> void:
 
 func add_waypoint(waypoint_id: String, feature: String) -> void:
 	var details: Dictionary = _collect_details()
-	var waypoint_connections_dictionary: Dictionary[String, String] = details['waypoint_connections']
+	var waypoint_connections_dictionary: Dictionary = details['waypoint_connections']
 	if not waypoint_connections.has(waypoint_id) or waypoint_connections_dictionary[waypoint_id] != feature:
 		waypoint_connections_dictionary[waypoint_id] = feature
 		update_details(details, false)
@@ -179,7 +179,7 @@ func add_waypoint(waypoint_id: String, feature: String) -> void:
 func delete_waypoint(waypoint_id: String) -> void:
 	if waypoint_connections.has(waypoint_id):
 		var details: Dictionary = _collect_details()
-		var waypoint_connections_dictionary: Dictionary[String, String] = details['waypoint_connections']
+		var waypoint_connections_dictionary: Dictionary = details['waypoint_connections']
 		var _result: bool = waypoint_connections_dictionary.erase(waypoint_id)
 		update_details(details, false)
 

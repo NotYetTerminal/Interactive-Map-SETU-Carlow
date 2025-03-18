@@ -131,7 +131,7 @@ func get_closest_waypoint() -> Waypoint:
 	return closest_waypoint
 
 
-func update_visibility_by_floor_number(checking_floor_number: int) -> void:
-	mesh_instance_3d.visible = floor_number == checking_floor_number
+func update_visibility() -> void:
+	mesh_instance_3d.visible = floor_number == Globals.current_floor
 	for waypoint: Waypoint in waypoints_node.get_children():
-		waypoint.update_visibility_by_floor_number(checking_floor_number)
+		waypoint.update_visibility()

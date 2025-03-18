@@ -10,7 +10,7 @@ var current_colour: Color
 
 
 func set_link_holder_visibility(seen: bool) -> void:
-	link_holder_node_3d.visible = seen
+	link_holder_node_3d.visible = seen || current_colour == Color.GREEN
 
 
 func set_texture_visibility(seen: bool) -> void:

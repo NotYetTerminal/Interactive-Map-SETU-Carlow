@@ -144,14 +144,13 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="Panel" type="Panel" parent="ScreenElementsControl2/RightControl"]
-visible = false
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.8
 anchor_right = 1.0
 anchor_bottom = 0.15
-grow_horizontal = 2
-grow_vertical = 2
+grow_horizontal = 0
 
 [node name="AdminCheckButton" type="CheckButton" parent="ScreenElementsControl2/RightControl/Panel"]
 layout_mode = 1
@@ -171,5 +170,6 @@ script = ExtResource("3_c4mcg")
 [connection signal="button_down" from="ScreenElementsControl2/LeftControl/AspectRatioContainer2/FloorDownButton" to="ScreenElementsControl2" method="_on_floor_down_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl2/RightControl/AspectRatioContainer/ZoomInButton" to="." method="_on_zoom_in_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl2/RightControl/AspectRatioContainer2/ZoomOutButton" to="." method="_on_zoom_out_button_button_down"]
+[connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="." method="_on_admin_check_button_edit_mode_toggled"]
 [connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="AdminUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
 [connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="UserUIRoot" method="_on_admin_check_button_edit_mode_toggled"]

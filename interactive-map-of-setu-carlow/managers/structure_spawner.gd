@@ -95,14 +95,12 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 			new_structure = room_scene.instantiate()
 			# Add to Rooms holder
 			parent.get_child(1).add_child(new_structure)
-			var floor_number: int = structure_data['floor_number']
-			new_structure.update_visibility_by_floor_number(floor_number)
+			new_structure.update_visibility()
 		Structures.WaypointStruct:
 			new_structure = waypoint_scene.instantiate()
 			# Add to Waypoints holder
 			parent.get_child(0).add_child(new_structure)
-			var floor_number: int = structure_data['floor_number']
-			new_structure.update_visibility_by_floor_number(floor_number)
+			new_structure.update_visibility()
 	
 	var _fields: Array[String] = new_structure.save_details(structure_id, structure_data)
 	
@@ -153,6 +151,5 @@ func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Str
 	structure_id += str(int(Time.get_unix_time_from_system()))
 	
 	var structure: Structure = spawn_structure(structure_id, default_data, parent, structure_type)
-	var floor_number: int = default_data['floor_number']
-	structure.update_visibility_by_floor_number(floor_number)
+	structure.update_visibility()
 	select_spawned_structure.emit(structure)

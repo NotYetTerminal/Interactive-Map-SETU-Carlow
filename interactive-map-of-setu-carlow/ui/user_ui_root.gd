@@ -94,6 +94,7 @@ func _on_admin_check_button_edit_mode_toggled() -> void:
 	if not Globals.edit_mode:
 		currently_navigating = false
 		cancel_navigation.emit()
+		distance_label.visible = false
 	visible = not Globals.edit_mode
 	information_popup_elements_control.visible = false
 

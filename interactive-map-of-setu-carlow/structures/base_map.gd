@@ -90,8 +90,8 @@ func enable_admin() -> void:
 	collision_shape_3d.disabled = not Globals.edit_mode
 
 
-func update_visibility_by_floor_number(checking_floor_number: int) -> void:
+func update_visibility() -> void:
 	for waypoint: Waypoint in waypoints_node.get_children():
-		waypoint.update_visibility_by_floor_number(checking_floor_number)
+		waypoint.update_visibility()
 	for building: Building in buildings_node.get_children():
-		building.update_visibility_by_floor_number(checking_floor_number)
+		building.update_visibility()

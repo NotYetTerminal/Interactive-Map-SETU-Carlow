@@ -163,11 +163,11 @@ func get_closest_waypoint() -> Waypoint:
 	return closest_waypoint
 
 
-func update_visibility_by_floor_number(checking_floor_number: int) -> void:
+func update_visibility() -> void:
 	for waypoint: Waypoint in waypoints_node.get_children():
-		waypoint.update_visibility_by_floor_number(checking_floor_number)
+		waypoint.update_visibility()
 	for room: Room in rooms_node.get_children():
-		room.update_visibility_by_floor_number(checking_floor_number)
+		room.update_visibility()
 	# Change Building texture
 	if building_texture_node != null:
-		(building_texture_node as BuildingTextureNode).update_visibility_by_floor_number(checking_floor_number)
+		(building_texture_node as BuildingTextureNode).update_visibility()

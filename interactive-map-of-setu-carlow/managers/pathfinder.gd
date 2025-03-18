@@ -29,7 +29,7 @@ func remove_waypoint(waypoint_id: String) -> void:
 func _on_structure_spawner_all_structures_done() -> void:
 	for waypoint: Waypoint in _all_waypoints.values():
 		waypoint.update_links(false)
-	Globals.base_map.update_visibility_by_floor_number(1)
+	Globals.base_map.update_visibility()
 
 
 func _on_ui_root_cancel_navigation() -> void:
@@ -109,10 +109,6 @@ func _on_ui_root_start_navigation(from_structure: Structure, to_structure: Struc
 	
 	if from_waypoint != null and to_waypoint != null:
 		pathfinding_distance.emit(do_pathfinding(from_waypoint, to_waypoint, allow_stairs))
-
-
-func _on_ui_root_update_floor_number(floor_number: int) -> void:
-	Globals.base_map.update_visibility_by_floor_number(floor_number)
 
 
 func get_all_waypoints_by_distance(from_waypoint_id: String) -> Array[String]:
