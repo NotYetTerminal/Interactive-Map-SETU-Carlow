@@ -15,7 +15,10 @@ func set_details(struct: Structure, structure_name: String, location_text: Strin
 	structure = struct
 	name_label.text = structure_name
 	location_label.text = location_text
-	extra_information_label.text = extra_information
+	if extra_information.to_lower() == "none":
+		extra_information_label.text = ""
+	else:
+		extra_information_label.text = extra_information
 
 
 func _on_from_button_button_down() -> void:

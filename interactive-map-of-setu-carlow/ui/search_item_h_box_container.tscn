@@ -14,13 +14,15 @@ layout_mode = 2
 
 [node name="NameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 50
 
 [node name="LocationLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 35
 
 [node name="ExtraInformationLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 35
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
