@@ -10,6 +10,7 @@ var waypoints_updated_time: int
 
 @onready var waypoints_node: Node3D = $Waypoints
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
@@ -133,5 +134,6 @@ func get_closest_waypoint() -> Waypoint:
 
 func update_visibility() -> void:
 	mesh_instance_3d.visible = floor_number == Globals.current_floor
+	collision_shape_3d.disabled = floor_number != Globals.current_floor
 	for waypoint: Waypoint in waypoints_node.get_children():
 		waypoint.update_visibility()
