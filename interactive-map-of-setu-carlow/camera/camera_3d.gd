@@ -7,7 +7,7 @@ var moving_camera: bool = false
 var screen_ratio: float
 
 var min_zoom: float = 3
-var max_zoom: float = 15
+var max_zoom: float = 45
 var mouse_zoom_amount: float = 0.2
 var button_zoom_amount: float = 1
 var zoom_level: float = 10
@@ -45,7 +45,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion && moving_camera:
 		var input_event: InputEventMouseMotion = event as InputEventMouseMotion
 		# Divide move amount by zoom level to correct movement
-		position += Vector3(-input_event.relative.x * move_speed, 0, input_event.relative.y * move_speed) / (20 - zoom_level) * 10
+		position += Vector3(-input_event.relative.x * move_speed, 0, input_event.relative.y * move_speed) / (50 - zoom_level) * 10
 	# Touch screen controls
 	elif event is InputEventScreenTouch:
 		var input_event: InputEventScreenTouch = event as InputEventScreenTouch
@@ -66,7 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		touch_points[input_event.index] = input_event.position
 		if touch_points.size() == 1:
 			# Divide move amount by zoom level to correct movement
-			position += Vector3(-input_event.screen_relative.x * move_speed, 0, input_event.screen_relative.y * move_speed) / (20 - zoom_level) * 5
+			position += Vector3(-input_event.screen_relative.x * move_speed, 0, input_event.screen_relative.y * move_speed) / (50 - zoom_level) * 5
 		elif touch_points.size() == 2:
 			var touch_point_positions: Array[Vector2] = touch_points.values()
 			var current_distance: float =  touch_point_positions[0].distance_to(touch_point_positions[1])
