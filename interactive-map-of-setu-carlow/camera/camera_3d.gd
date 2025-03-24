@@ -8,7 +8,7 @@ var screen_ratio: float
 
 var min_zoom: float = 3
 var max_zoom: float = 45
-var mouse_zoom_amount: float = 0.2
+var mouse_zoom_amount: float = 8
 var button_zoom_amount: float = 1
 var zoom_level: float = 10
 
@@ -16,6 +16,10 @@ var move_speed: float = 0.01
 
 var touch_points: Dictionary[int, Vector2] = {}
 var start_distance: float = 0
+
+var rotation_speed: float = PI / 180
+var rotating: int = 0
+var start_angle: float = 0
 
 
 func _ready() -> void:
@@ -45,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion && moving_camera:
 		var input_event: InputEventMouseMotion = event as InputEventMouseMotion
 		# Divide move amount by zoom level to correct movement
-		position += Vector3(-input_event.relative.x * move_speed, 0, input_event.relative.y * move_speed) / (50 - zoom_level) * 10
+		translate(Vector3(-input_event.relative.x * move_speed, input_event.relative.y * move_speed, 0) * (zoom_level / 10))
 	# Touch screen controls
 	elif event is InputEventScreenTouch:
 		var input_event: InputEventScreenTouch = event as InputEventScreenTouch
@@ -57,16 +61,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		if touch_points.size() == 1:
 			start_distance = 0
 			ray_cast_select(input_event)
+			start_angle = 0
 		elif touch_points.size() == 2:
 			var touch_point_positions: Array[Vector2] = touch_points.values()
 			start_distance = touch_point_positions[0].distance_to(touch_point_positions[1])
+			start_angle = (touch_point_positions[0] - touch_point_positions[1]).angle()
 		
 	elif event is InputEventScreenDrag:
 		var input_event: InputEventScreenDrag = event as InputEventScreenDrag
 		touch_points[input_event.index] = input_event.position
 		if touch_points.size() == 1:
 			# Divide move amount by zoom level to correct movement
-			position += Vector3(-input_event.screen_relative.x * move_speed, 0, input_event.screen_relative.y * move_speed) / (50 - zoom_level) * 5
+			translate(Vector3(-input_event.relative.x * move_speed, input_event.relative.y * move_speed, 0) * (zoom_level / 20))
 		elif touch_points.size() == 2:
 			var touch_point_positions: Array[Vector2] = touch_points.values()
 			var current_distance: float =  touch_point_positions[0].distance_to(touch_point_positions[1])
@@ -75,6 +81,31 @@ func _unhandled_input(event: InputEvent) -> void:
 				zoom_out(-(mouse_zoom_amount * zoom_factor))
 			elif zoom_factor > 0:
 				zoom_in(mouse_zoom_amount * zoom_factor)
+			start_distance = current_distance
+			
+			var current_angle: float = (touch_point_positions[0] - touch_point_positions[1]).angle()
+			var final_angle: float = current_angle - start_angle
+			if final_angle < -PI/300:
+				rotation.y += rotation_speed
+			elif final_angle > PI/300:
+				rotation.y -= rotation_speed
+			start_angle = current_angle
+	
+	elif event is InputEventKey:
+		var input_event: InputEventKey = event as InputEventKey
+		if input_event.pressed:
+			if input_event.keycode == KEY_Q:
+				rotating = -1
+			elif input_event.keycode == KEY_E:
+				rotating = 1
+		else:
+			if input_event.keycode == KEY_Q or input_event.keycode == KEY_E:
+				rotating = 0
+
+
+func _physics_process(_delta: float) -> void:
+	if rotating != 0:
+		rotation.y += rotation_speed * rotating
 
 # Ray cast to select an object on the map
 func ray_cast_select(event: InputEvent) -> void:
@@ -101,7 +132,7 @@ func ray_cast_select(event: InputEvent) -> void:
 	if raycast_result.has("collider") and raycast_result["collider"] is Structure:
 		var structure: Structure = raycast_result["collider"]
 		# Position the selected Structure in the middle
-		position = Vector3(structure.global_position.x, -10, structure.global_position.z + 3)
+		position = Vector3(structure.global_position.x + (3 * sin(rotation.y)), -10, structure.global_position.z + (3 * cos(rotation.y)))
 		zoom_level = 9
 		size = zoom_level
 		select_structure.emit(structure)
