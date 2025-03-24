@@ -30,7 +30,7 @@ func _ready() -> void:
 	Globals.firebaseConnector = self
 	Globals.load_offline_data()
 	
-	delete_auth_file()
+	#delete_auth_file()
 	
 	# If auth file is saved, then use that
 	var _success: bool = Firebase.Auth.check_auth_file()
@@ -45,9 +45,10 @@ func _on_FirebaseAuth_signup_succeeded(auth: Dictionary) -> void:
 		query_data()
 
 # Run on successful login
-func _on_FirebaseAuth_login_succeeded(_auth: Dictionary) -> void:
+func _on_FirebaseAuth_login_succeeded(auth: Dictionary) -> void:
 	print("Logged in")
-	admin_logged_in.emit()
+	if auth.has("kind") and auth["kind"] == "identitytoolkit#VerifyPasswordResponse":
+		admin_logged_in.emit()
 	if not data_queried:
 		data_queried = true
 		query_data()
@@ -93,6 +94,7 @@ func delete_auth_file() -> void:
 
 
 func login_with_credentials(email: String, password: String) -> void:
+	print("Logging in with: ", email, " ", password)
 	Firebase.Auth.login_with_email_and_password(email, password)
 
 # Query the map data down from Firebase to sync with local saved data.

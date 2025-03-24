@@ -40,7 +40,9 @@ skeleton = NodePath("../../..")
 
 [node name="FeatureSprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.1, 0)
+flip_v = true
 axis = 1
+billboard = 2
 script = ExtResource("3_f8xy2")
 feature_images_dictionary = Dictionary[String, CompressedTexture2D]({
 "Closed": ExtResource("2_7u4xk"),

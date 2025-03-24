@@ -8,7 +8,8 @@ var screen_ratio: float
 
 var min_zoom: float = 3
 var max_zoom: float = 45
-var mouse_zoom_amount: float = 8
+var mouse_zoom_amount: float = 0.2
+var touch_zoom_amount: float = 8
 var button_zoom_amount: float = 1
 var zoom_level: float = 10
 
@@ -78,9 +79,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			var current_distance: float =  touch_point_positions[0].distance_to(touch_point_positions[1])
 			var zoom_factor: float = 1 - (start_distance / current_distance)
 			if zoom_factor < 0:
-				zoom_out(-(mouse_zoom_amount * zoom_factor))
+				zoom_out(-(touch_zoom_amount * zoom_factor))
 			elif zoom_factor > 0:
-				zoom_in(mouse_zoom_amount * zoom_factor)
+				zoom_in(touch_zoom_amount * zoom_factor)
 			start_distance = current_distance
 			
 			var current_angle: float = (touch_point_positions[0] - touch_point_positions[1]).angle()

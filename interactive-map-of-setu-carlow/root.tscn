@@ -13,7 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://qd00gyyuopt6" path="res://ui/ui_root.tscn" id="11_hwpgg"]
 
 [sub_resource type="Environment" id="Environment_knlak"]
-background_color = Color(0.537011, 0.537011, 0.537011, 1)
+background_mode = 1
+background_color = Color(1, 1, 1, 1)
+ambient_light_source = 1
 
 [node name="Root" type="Node"]
 
