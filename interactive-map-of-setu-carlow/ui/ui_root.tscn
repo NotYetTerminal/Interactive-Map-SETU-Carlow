@@ -26,13 +26,6 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_h3dkj")
 
-[node name="AdminUIRoot" parent="." instance=ExtResource("1_51cd5")]
-visible = false
-layout_mode = 1
-
-[node name="UserUIRoot" parent="." instance=ExtResource("2_xlc3q")]
-layout_mode = 1
-
 [node name="ScreenElementsControl2" type="Control" parent="."]
 layout_mode = 1
 anchor_left = 0.02
@@ -162,9 +155,13 @@ grow_vertical = 2
 text = "Edit Mode"
 script = ExtResource("3_c4mcg")
 
-[connection signal="spawn_specific_structure" from="AdminUIRoot" to="." method="_on_admin_ui_root_spawn_specific_structure"]
-[connection signal="cancel_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_cancel_navigation"]
-[connection signal="start_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_start_navigation"]
+[node name="AdminUIRoot" parent="." instance=ExtResource("1_51cd5")]
+visible = false
+layout_mode = 1
+
+[node name="UserUIRoot" parent="." instance=ExtResource("2_xlc3q")]
+layout_mode = 1
+
 [connection signal="update_floor_number" from="ScreenElementsControl2" to="." method="_on_screen_elements_control_update_floor_number"]
 [connection signal="button_down" from="ScreenElementsControl2/LeftControl/AspectRatioContainer/FloorUpButton" to="ScreenElementsControl2" method="_on_floor_up_button_button_down"]
 [connection signal="button_down" from="ScreenElementsControl2/LeftControl/AspectRatioContainer2/FloorDownButton" to="ScreenElementsControl2" method="_on_floor_down_button_button_down"]
@@ -173,3 +170,7 @@ script = ExtResource("3_c4mcg")
 [connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="." method="_on_admin_check_button_edit_mode_toggled"]
 [connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="AdminUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
 [connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="UserUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
+[connection signal="cancel_login" from="AdminUIRoot" to="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" method="_on_admin_ui_root_cancel_login"]
+[connection signal="spawn_specific_structure" from="AdminUIRoot" to="." method="_on_admin_ui_root_spawn_specific_structure"]
+[connection signal="cancel_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_cancel_navigation"]
+[connection signal="start_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_start_navigation"]

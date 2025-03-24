@@ -2,6 +2,7 @@ extends Control
 class_name AdminUIRoot
 
 signal spawn_specific_structure(parent: Structure, structure_type: Structures)
+signal cancel_login()
 
 # Used for distinguishing different structure types
 enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
@@ -312,3 +313,7 @@ func _on_waypoint_connections_editors_v_box_container_delete_connection_waypoint
 
 func _on_waypoint_connections_editors_v_box_container_update_connection_feature(_waypoint_id: String, _feature: String) -> void:
 	_on_save_button_pressed()
+
+
+func _on_cancel_button_button_down() -> void:
+	cancel_login.emit()

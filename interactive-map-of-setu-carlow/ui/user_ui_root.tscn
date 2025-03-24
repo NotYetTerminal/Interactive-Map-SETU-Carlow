@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bw4ru2pi3ea3r"]
+[gd_scene load_steps=16 format=3 uid="uid://bw4ru2pi3ea3r"]
 
 [ext_resource type="Script" uid="uid://xoghmb5exj06" path="res://ui/user_ui_root.gd" id="1_c31da"]
 [ext_resource type="Script" uid="uid://b564ymo1jwdhu" path="res://ui/information_popup_control.gd" id="2_bnl34"]
@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://c7ngcwe2n7hh" path="res://ui/search_item_h_box_container.tscn" id="4_x715j"]
 [ext_resource type="Texture2D" uid="uid://bmrf63eyt74wg" path="res://icons/right-up.png" id="7_dwrjb"]
 [ext_resource type="Texture2D" uid="uid://b6va5qrbs1yqq" path="res://icons/right-down.png" id="8_72rlj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnrph"]
+bg_color = Color(0.733333, 0.733333, 0.733333, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydxl4"]
 corner_radius_top_left = 25
@@ -41,7 +44,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource("1_c31da")
 
 [node name="SearchPanel" type="Panel" parent="."]
@@ -52,6 +55,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fnrph")
 script = ExtResource("3_m06ik")
 search_item_h_box_container_scene = ExtResource("4_x715j")
 
