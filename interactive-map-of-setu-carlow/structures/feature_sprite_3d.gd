@@ -18,6 +18,9 @@ func set_feature_image(feature: String) -> void:
 
 
 func change_texture_colour(new_colour: Color) -> void:
-	var cylinder_mesh: CylinderMesh = cylinder_backround_mesh_instance_3d.mesh
-	var cylinder_material: StandardMaterial3D = cylinder_mesh.material
-	cylinder_material.emission = new_colour
+	var material: StandardMaterial3D = StandardMaterial3D.new()
+	material.albedo_color = Color.BLACK
+	material.metallic_specular = 0
+	material.emission_enabled = true
+	material.emission = new_colour
+	cylinder_backround_mesh_instance_3d.set_surface_override_material(0, material)
