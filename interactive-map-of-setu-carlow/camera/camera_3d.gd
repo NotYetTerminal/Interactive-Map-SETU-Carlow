@@ -96,9 +96,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		var input_event: InputEventKey = event as InputEventKey
 		if input_event.pressed:
 			if input_event.keycode == KEY_Q:
-				rotating = -1
-			elif input_event.keycode == KEY_E:
 				rotating = 1
+			elif input_event.keycode == KEY_E:
+				rotating = -1
 		else:
 			if input_event.keycode == KEY_Q or input_event.keycode == KEY_E:
 				rotating = 0

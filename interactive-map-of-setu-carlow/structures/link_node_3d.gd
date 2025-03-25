@@ -10,7 +10,7 @@ var current_colour: Color
 
 
 func set_link_holder_visibility(seen: bool) -> void:
-	link_holder_node_3d.visible = seen || current_colour == Color.GREEN
+	link_holder_node_3d.visible = seen
 
 
 func set_texture_visibility(seen: bool) -> void:
@@ -41,3 +41,8 @@ func change_colour(new_colour: Color) -> void:
 	material.emission_enabled = true
 	material.emission = new_colour
 	mesh_instance_3d.set_surface_override_material(0, material)
+	
+	if new_colour == Color.LIGHT_GREEN:
+		feature_sprite_3d.change_texture_colour(Color.YELLOW)
+	else:
+		feature_sprite_3d.change_texture_colour(Color.WHITE)

@@ -1,7 +1,8 @@
 extends Structure
 class_name Waypoint
 
-var floor_number: int
+var floor_number: int = 0
+var finished_pathfinding: bool = false
 
 # Dictionary to contain connections { waypoint_connection_id: String, connection_feature: String }
 var waypoint_connections: Dictionary[String, String] = {}
@@ -61,12 +62,21 @@ func get_parent_structure() -> Structure:
 
 
 func update_visibility() -> void:
-	var should_be_visible: bool = floor_number == Globals.current_floor and Globals.edit_mode
-	mesh_instance_3d.visible = should_be_visible
-	collision_shape_3d.disabled = not should_be_visible
-	for link: Link in links_dictionary.values():
-		link.set_link_holder_visibility(should_be_visible)
-		link.set_texture_visibility(floor_number == Globals.current_floor)
+	var should_be_visible: bool
+	if Globals.edit_mode:
+		should_be_visible = floor_number == Globals.current_floor
+		mesh_instance_3d.visible = should_be_visible
+		collision_shape_3d.disabled = not should_be_visible
+		for link: Link in links_dictionary.values():
+			link.set_link_holder_visibility(should_be_visible and Globals.edit_mode)
+			link.set_texture_visibility(should_be_visible)
+	else:
+		should_be_visible = floor_number == Globals.current_floor and finished_pathfinding
+		mesh_instance_3d.visible = should_be_visible
+		collision_shape_3d.disabled = true
+		for link: Link in links_dictionary.values():
+			link.set_link_holder_visibility(should_be_visible and link.current_colour == Color.LIGHT_GREEN)
+			link.set_texture_visibility(floor_number == Globals.current_floor)
 
 # Update the details when editing
 func update_details(details: Dictionary, call_others: bool = true) -> void:
@@ -226,7 +236,8 @@ func finish_pathfinding(to_waypoint: Waypoint = null) -> float:
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_GREEN)
 		distance += calculate_distance_to_waypoint(to_waypoint)
-	mesh_instance_3d.visible = true
+	finished_pathfinding = true
+	update_visibility()
 	return distance
 
 
@@ -252,7 +263,8 @@ func reset(to_waypoint: Waypoint = null) -> void:
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_SALMON)
 	
-	mesh_instance_3d.visible = false
+	finished_pathfinding = false
+	update_visibility()
 	
 	# Reset values
 	g_cost = 0
