@@ -132,10 +132,12 @@ func ray_cast_select(event: InputEvent) -> void:
 	
 	if raycast_result.has("collider") and raycast_result["collider"] is Structure:
 		var structure: Structure = raycast_result["collider"]
-		# Position the selected Structure in the middle
-		position = Vector3(structure.global_position.x + (3 * sin(rotation.y)), -10, structure.global_position.z + (3 * cos(rotation.y)))
-		zoom_level = 9
-		size = zoom_level
+		# Disable snapping when editing
+		if not Globals.edit_mode:
+			# Position the selected Structure in the middle
+			position = Vector3(structure.global_position.x + (3 * sin(rotation.y)), -10, structure.global_position.z + (3 * cos(rotation.y)))
+			zoom_level = 9
+			size = zoom_level
 		select_structure.emit(structure)
 	else:
 		select_structure.emit(null)

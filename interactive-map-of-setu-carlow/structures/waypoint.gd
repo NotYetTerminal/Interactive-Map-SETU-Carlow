@@ -115,8 +115,8 @@ func remove_connection(id_to_remove: String) -> void:
 	# Remove from connections
 	var _result: bool = waypoint_connections.erase(id_to_remove)
 	var structure_data: Dictionary = parent_structure.get_offline_data_waypoints()[id]
-	var global_data_connections_array: Array = structure_data['waypoint_connections']
-	global_data_connections_array.erase(id_to_remove)
+	var global_data_connections_array: Dictionary[String, String] = structure_data['waypoint_connections']
+	_result = global_data_connections_array.erase(id_to_remove)
 	
 	# Update save data
 	await Globals.save_data(id, ["waypoint_connections"], parent_structure.get_firestore_path() + "/Waypoints", structure_data)

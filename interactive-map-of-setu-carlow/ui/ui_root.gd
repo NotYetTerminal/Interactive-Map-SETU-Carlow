@@ -47,8 +47,10 @@ func _on_pathfinder_pathfinding_distance(distance: float) -> void:
 
 
 func _on_camera_3d_select_structure(selected_structure: Structure) -> void:
-	admin_ui_root.select_structure(selected_structure)
-	user_ui_root.select_structure(selected_structure)
+	if Globals.edit_mode:
+		admin_ui_root.select_structure(selected_structure)
+	else:
+		user_ui_root.select_structure(selected_structure)
 
 
 func _on_admin_check_button_edit_mode_toggled() -> void:

@@ -10,28 +10,29 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 # Information Elements
 @onready var text_edit_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer
 @onready var structure_type_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/StructureTypeLabel
-@onready var id_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/IDVBoxContainer/IDLineEdit
-@onready var longitude_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LongitudeVBoxContainer/LongitudeLineEdit
-@onready var latitude_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LatitudeVBoxContainer/LatitudeLineEdit
+@onready var id_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/IDHBoxContainer/IDLineEdit
+@onready var longitude_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/LongitudeVBoxContainer/LongitudeLineEdit
+@onready var latitude_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/LatitudeVBoxContainer/LatitudeLineEdit
 
-@onready var name_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameVBoxContainer
-@onready var name_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameVBoxContainer/NameLineEdit
+@onready var name_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer
+@onready var name_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer/NameLineEdit
 @onready var description_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer
 @onready var description_text_edit: TextEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/DescriptionTextEdit
-@onready var building_letter_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterVBoxContainer
-@onready var building_letter_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterVBoxContainer/BuildingLetterLineEdit
+@onready var building_letter_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterHBoxContainer
+@onready var building_letter_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterHBoxContainer/BuildingLetterLineEdit
 @onready var lecturers_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer
 @onready var lecturers_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer/LecturersLineEdit
-@onready var floor_number_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberVBoxContainer
-@onready var floor_number_spin_box: SpinBox = $InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberVBoxContainer/FloorNumberSpinBox
-@onready var parent_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentVBoxContainer
-@onready var parent_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentVBoxContainer/ParenLineEdit
-@onready var waypoint_connections_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer
-@onready var waypoint_connections_editors_v_box_container: WaypointConnectionsEditorsVBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer
+@onready var floor_number_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberHBoxContainer
+@onready var floor_number_spin_box: SpinBox = $InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberHBoxContainer/FloorNumberSpinBox
+@onready var parent_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentHBoxContainer
+@onready var parent_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentHBoxContainer/ParenLineEdit
+@onready var waypoint_connections_scroll_container: ScrollContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer
+@onready var waypoint_connections_editors_v_box_container: WaypointConnectionsEditorsVBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer
 @onready var waypoints_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointsUpdatedTimeLabel
 @onready var buildings_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingsUpdatedTimeLabel
 @onready var rooms_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/RoomsUpdatedTimeLabel
 
+@onready var button_pusher_control: Control = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonPusherControl
 @onready var save_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/SaveButton
 @onready var delete_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DeleteButton
 @onready var add_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/AddButton
@@ -65,14 +66,20 @@ func check_save_and_delete_buttons() -> void:
 # Change the editable status of all Text Edits
 func change_text_edits() -> void:
 	for scene: Control in text_edit_v_box_container.get_children():
-		if scene is VBoxContainer:
+		if scene is VBoxContainer or scene is HBoxContainer:
 			for inner_scene: Control in scene.get_children():
 				if inner_scene is TextEdit:
 					(inner_scene as TextEdit).editable = selected_structure != null and Globals.edit_mode
-				elif inner_scene is LineEdit and inner_scene != id_line_edit:
+				elif inner_scene is LineEdit and inner_scene != id_line_edit and inner_scene != parent_line_edit:
 					(inner_scene as LineEdit).editable = selected_structure != null and Globals.edit_mode
 				elif inner_scene is SpinBox:
 					(inner_scene as SpinBox).editable = selected_structure != null and Globals.edit_mode
+				# For the LocationHBoxContainer
+				elif inner_scene is VBoxContainer:
+					for inner_scene2: Control in inner_scene.get_children():
+						if inner_scene2 is LineEdit:
+							(inner_scene2 as LineEdit).editable = selected_structure != null and Globals.edit_mode
+				
 
 # Called when a structure is selected
 func select_structure(structure: Structure) -> void:
@@ -92,13 +99,13 @@ func select_structure(structure: Structure) -> void:
 		longitude_line_edit.text = ""
 		latitude_line_edit.text = ""
 	
-	name_v_box_container.visible = false
+	name_h_box_container.visible = false
 	description_v_box_container.visible = false
-	building_letter_v_box_container.visible = false
+	building_letter_h_box_container.visible = false
 	lecturers_v_box_container.visible = false
-	floor_number_v_box_container.visible = false
-	parent_v_box_container.visible = false
-	waypoint_connections_v_box_container.visible = false
+	floor_number_h_box_container.visible = false
+	parent_h_box_container.visible = false
+	waypoint_connections_scroll_container.visible = false
 	
 	waypoints_updated_time_label.visible = false
 	buildings_updated_time_label.visible = false
@@ -129,44 +136,48 @@ func show_base_map_details(select_struct: BaseMap) -> void:
 	waypoints_updated_time_label.visible = true
 	buildings_updated_time_label.text = 'Buildings Updated Time: ' + str(select_struct.buildings_updated_time)
 	buildings_updated_time_label.visible = true
+	button_pusher_control.visible = true
 
 # Show elements for Buildings
 func show_building_details(select_struct: Building) -> void:
 	name_line_edit.text = select_struct.structure_name
-	name_v_box_container.visible = true
+	name_h_box_container.visible = true
 	description_text_edit.text = select_struct.description
 	description_v_box_container.visible = true
 	building_letter_line_edit.text = select_struct.building_letter
-	building_letter_v_box_container.visible = true
+	building_letter_h_box_container.visible = true
 	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
 	waypoints_updated_time_label.visible = true
 	rooms_updated_time_label.text = 'Rooms Updated Time: ' + str(select_struct.rooms_updated_time)
 	rooms_updated_time_label.visible = true
+	button_pusher_control.visible = true
 
 # Show elements for Rooms
 func show_room_details(select_struct: Room) -> void:
 	name_line_edit.text = select_struct.structure_name
-	name_v_box_container.visible = true
+	name_h_box_container.visible = true
 	description_text_edit.text = select_struct.description
 	description_v_box_container.visible = true
 	lecturers_line_edit.text = select_struct.lectures
 	lecturers_v_box_container.visible = true
 	floor_number_spin_box.value = select_struct.floor_number
-	floor_number_v_box_container.visible = true
+	floor_number_h_box_container.visible = true
 	parent_line_edit.text = select_struct.get_parent_structure().structure_name
-	parent_v_box_container.visible = true
+	parent_h_box_container.visible = true
 	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
 	waypoints_updated_time_label.visible = true
+	button_pusher_control.visible = true
 
 # Show elements for Waypoints
 func show_waypoint_details(select_struct: Waypoint) -> void:
 	floor_number_spin_box.value = select_struct.floor_number
-	floor_number_v_box_container.visible = true
+	floor_number_h_box_container.visible = true
 	parent_line_edit.text = select_struct.get_parent_structure().structure_name
-	parent_v_box_container.visible = true
+	parent_h_box_container.visible = true
 	var all_waypoint_ids: Array[String] = Globals.pathfinder.get_all_waypoints_by_distance(select_struct.id)
 	waypoint_connections_editors_v_box_container.save_waypoints_ids(select_struct.waypoint_connections, all_waypoint_ids)
-	waypoint_connections_v_box_container.visible = true
+	waypoint_connections_scroll_container.visible = true
+	button_pusher_control.visible = false
 
 # Save variables on Save button press
 func _on_save_button_pressed() -> void:
