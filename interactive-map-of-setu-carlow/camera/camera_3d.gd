@@ -22,6 +22,10 @@ var rotation_speed: float = PI / 180
 var rotating: int = 0
 var start_angle: float = 0
 
+var camera_x_positive_limit: float = 10
+var camera_x_negative_limit: float = -10
+var camera_z_positive_limit: float = 20
+var camera_z_negative_limit: float = -10
 
 func _ready() -> void:
 	var screen_size: Vector2 = get_viewport().get_visible_rect().size
@@ -51,6 +55,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		var input_event: InputEventMouseMotion = event as InputEventMouseMotion
 		# Divide move amount by zoom level to correct movement
 		translate(Vector3(-input_event.relative.x * move_speed, input_event.relative.y * move_speed, 0) * (zoom_level / 10))
+		position.x = min(max(position.x, camera_x_negative_limit), camera_x_positive_limit)
+		position.z = min(max(position.z, camera_z_negative_limit), camera_z_positive_limit)
 	# Touch screen controls
 	elif event is InputEventScreenTouch:
 		var input_event: InputEventScreenTouch = event as InputEventScreenTouch
@@ -74,6 +80,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if touch_points.size() == 1:
 			# Divide move amount by zoom level to correct movement
 			translate(Vector3(-input_event.relative.x * move_speed, input_event.relative.y * move_speed, 0) * (zoom_level / 20))
+			position.x = min(max(position.x, camera_x_negative_limit), camera_x_positive_limit)
+			position.z = min(max(position.z, camera_z_negative_limit), camera_z_positive_limit)
 		elif touch_points.size() == 2:
 			var touch_point_positions: Array[Vector2] = touch_points.values()
 			var current_distance: float =  touch_point_positions[0].distance_to(touch_point_positions[1])
