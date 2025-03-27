@@ -23,9 +23,14 @@ var current_floor: int = 1
 
 # Load offline data
 func load_offline_data() -> void:
-	var file: FileAccess = FileAccess.open("user://offline_data.txt", FileAccess.READ)
+	var file: FileAccess = FileAccess.open("user://offline_data", FileAccess.READ)
 	if file != null:
 		print("Loaded")
+		offline_data = file.get_var()
+	else:
+		# The first time the application runs use the data included in the build export
+		file = FileAccess.open("offline_data_cached", FileAccess.READ)
+		print("Loaded cache")
 		offline_data = file.get_var()
 
 # Save data for both local and cloud
@@ -36,7 +41,7 @@ func save_data(id: String, fields: Array[String], parent_collection_path: String
 
 # Save offline data
 func save_offline_data() -> void:
-	var file: FileAccess = FileAccess.open("user://offline_data.txt", FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open("user://offline_data", FileAccess.WRITE)
 	if file != null:
 		print("Saved")
 		var _error: bool = file.store_var(offline_data)
