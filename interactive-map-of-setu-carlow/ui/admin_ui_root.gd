@@ -107,6 +107,7 @@ func select_structure(structure: Structure) -> void:
 	parent_h_box_container.visible = false
 	waypoint_connections_scroll_container.visible = false
 	
+	button_pusher_control.visible = true
 	waypoints_updated_time_label.visible = false
 	buildings_updated_time_label.visible = false
 	rooms_updated_time_label.visible = false
@@ -132,9 +133,9 @@ func select_structure(structure: Structure) -> void:
 
 # Show elements for BaseMap
 func show_base_map_details(select_struct: BaseMap) -> void:
-	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
+	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + Time.get_datetime_string_from_unix_time(select_struct.waypoints_updated_time, true)
 	waypoints_updated_time_label.visible = true
-	buildings_updated_time_label.text = 'Buildings Updated Time: ' + str(select_struct.buildings_updated_time)
+	buildings_updated_time_label.text = 'Buildings Updated Time: ' + Time.get_datetime_string_from_unix_time(select_struct.buildings_updated_time, true)
 	buildings_updated_time_label.visible = true
 	button_pusher_control.visible = true
 
@@ -146,9 +147,9 @@ func show_building_details(select_struct: Building) -> void:
 	description_v_box_container.visible = true
 	building_letter_line_edit.text = select_struct.building_letter
 	building_letter_h_box_container.visible = true
-	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
+	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + Time.get_datetime_string_from_unix_time(select_struct.waypoints_updated_time, true)
 	waypoints_updated_time_label.visible = true
-	rooms_updated_time_label.text = 'Rooms Updated Time: ' + str(select_struct.rooms_updated_time)
+	rooms_updated_time_label.text = 'Rooms Updated Time: ' + Time.get_datetime_string_from_unix_time(select_struct.rooms_updated_time, true)
 	rooms_updated_time_label.visible = true
 	button_pusher_control.visible = true
 
@@ -164,7 +165,7 @@ func show_room_details(select_struct: Room) -> void:
 	floor_number_h_box_container.visible = true
 	parent_line_edit.text = select_struct.get_parent_structure().structure_name
 	parent_h_box_container.visible = true
-	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + str(select_struct.waypoints_updated_time)
+	waypoints_updated_time_label.text = 'Waypoints Updated Time: ' + Time.get_datetime_string_from_unix_time(select_struct.waypoints_updated_time, true)
 	waypoints_updated_time_label.visible = true
 	button_pusher_control.visible = true
 

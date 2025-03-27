@@ -213,7 +213,6 @@ text = "Rooms Updated Time: "
 autowrap_mode = 2
 
 [node name="ButtonPusherControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
