@@ -56,6 +56,12 @@ var selected_structure: Structure
 var starting_waypoint: Waypoint
 var end_waypoint: Waypoint
 
+
+func _input(event: InputEvent) -> void:
+	if selected_structure != null and selected_structure.mouse_editing and event is InputEventMouseMotion:
+		longitude_line_edit.text = str(selected_structure.longitude)
+		latitude_line_edit.text = str(selected_structure.latitude)
+
 # Enable or disable buttons
 func check_save_and_delete_buttons() -> void:
 	save_button.disabled = selected_structure == null or not Globals.edit_mode

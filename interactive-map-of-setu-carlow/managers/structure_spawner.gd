@@ -152,4 +152,5 @@ func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Str
 	
 	var structure: Structure = spawn_structure(structure_id, default_data, parent, structure_type)
 	structure.update_visibility()
+	structure.mouse_editing = true
 	select_spawned_structure.emit(structure)
