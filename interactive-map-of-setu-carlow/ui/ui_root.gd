@@ -63,3 +63,7 @@ func update_visibility() -> void:
 
 func _on_pathfinder_map_fully_updated() -> void:
 	loading_panel.visible = false
+
+
+func _on_firebase_connector_incorrect_login() -> void:
+	admin_ui_root.show_input_message("Incorrect login details.")

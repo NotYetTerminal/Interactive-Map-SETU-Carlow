@@ -3,6 +3,7 @@ class_name FirebaseConnector
 
 signal map_data_loaded
 signal admin_logged_in
+signal incorrect_login
 
 # Used for distinguishing different collection types
 enum Structures { Base_Map, BuildingStruct, RoomStruct, WaypointStruct }
@@ -67,6 +68,7 @@ func _on_FirebaseAuth_login_failed(code: Variant, message: String) -> void:
 		map_data_loaded.emit()
 	elif typeof(code) == TYPE_FLOAT and code == 400:
 		print("Incorrect login credentials")
+		incorrect_login.emit()
 	else:
 		print("Error code: " + str(code))
 		print("Message: " + message)
@@ -94,7 +96,7 @@ func delete_auth_file() -> void:
 
 
 func login_with_credentials(email: String, password: String) -> void:
-	print("Logging in with: ", email, " ", password)
+	print("Logging in with email and password")
 	Firebase.Auth.login_with_email_and_password(email, password)
 
 # Query the map data down from Firebase to sync with local saved data.

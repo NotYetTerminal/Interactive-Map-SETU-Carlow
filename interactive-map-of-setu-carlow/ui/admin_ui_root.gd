@@ -46,6 +46,7 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 
 @onready var input_message_panel: Panel = $InputMessagePanel
 @onready var input_message_label: Label = $InputMessagePanel/Panel/VBoxContainer/InputMessageLabel
+@onready var input_message_close_button: Button = $InputMessagePanel/Panel/VBoxContainer/CloseButton
 
 @onready var login_panel: Panel = $LoginPanel
 @onready var email_line_edit: LineEdit = $LoginPanel/EmailLineEdit
@@ -240,12 +241,22 @@ func _on_save_button_pressed() -> void:
 			waypoint_dictionary[waypoint_id] = waypoint_connections_editors_v_box_container.connected_waypoints_dictionary[waypoint_id]
 		details['waypoint_connections'] = waypoint_dictionary
 	
-	selected_structure.update_details(details)
+	show_saving_message("Saving")
+	@warning_ignore("redundant_await")
+	await selected_structure.update_details(details)
+	show_input_message("Finished saving")
+	input_message_close_button.disabled = false
 
 
 func show_input_message(message: String) -> void:
 	input_message_label.text = message
 	input_message_panel.visible = true
+
+
+func show_saving_message(message: String) -> void:
+	show_input_message(message)
+	input_message_close_button.disabled = true
+
 
 # Used to delete a structure
 func _on_delete_button_pressed() -> void:

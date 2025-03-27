@@ -52,6 +52,7 @@ script = ExtResource("4_un6fr")
 [node name="UIRoot" parent="." instance=ExtResource("11_hwpgg")]
 
 [connection signal="admin_logged_in" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_admin_logged_in"]
+[connection signal="incorrect_login" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_incorrect_login"]
 [connection signal="map_data_loaded" from="FirebaseConnector" to="StructureSpawner" method="_on_firebase_connector_map_data_loaded"]
 [connection signal="all_structures_done" from="StructureSpawner" to="Pathfinder" method="_on_structure_spawner_all_structures_done"]
 [connection signal="select_spawned_structure" from="StructureSpawner" to="UIRoot" method="_on_structure_spawner_select_spawned_structure"]

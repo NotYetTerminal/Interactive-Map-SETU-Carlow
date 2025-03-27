@@ -338,57 +338,6 @@ text = "Add Waypoint"
 layout_mode = 2
 text = "Cancel"
 
-[node name="InputMessagePanel" type="Panel" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_6j0da")
-
-[node name="Panel" type="Panel" parent="InputMessagePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -135.0
-offset_top = -60.0
-offset_right = 135.0
-offset_bottom = 60.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cgbs0")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="InputMessagePanel/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -60.0
-offset_right = 125.0
-offset_bottom = 60.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="InputMessageLabel" type="Label" parent="InputMessagePanel/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
-layout_mode = 2
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="CloseButton" type="Button" parent="InputMessagePanel/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Close"
-
 [node name="LoginPanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -460,6 +409,57 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Cancel"
 
+[node name="InputMessagePanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6j0da")
+
+[node name="Panel" type="Panel" parent="InputMessagePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = -60.0
+offset_right = 135.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cgbs0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InputMessagePanel/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -60.0
+offset_right = 125.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="InputMessageLabel" type="Label" parent="InputMessagePanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="InputMessagePanel/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
 [connection signal="add_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id"]
 [connection signal="delete_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id"]
 [connection signal="update_connection_feature" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_update_connection_feature"]
@@ -472,6 +472,6 @@ text = "Cancel"
 [connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/RoomButton" to="." method="_on_room_button_pressed"]
 [connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/WaypointButton" to="." method="_on_waypoint_button_pressed"]
 [connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/AddStructureCancelButton" to="." method="_on_add_structure_cancel_button_pressed"]
-[connection signal="pressed" from="InputMessagePanel/Panel/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="button_down" from="LoginPanel/LoginButton" to="." method="_on_login_button_button_down"]
 [connection signal="button_down" from="LoginPanel/CancelButton" to="." method="_on_cancel_button_button_down"]
+[connection signal="pressed" from="InputMessagePanel/Panel/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
