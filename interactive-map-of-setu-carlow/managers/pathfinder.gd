@@ -3,6 +3,8 @@ class_name Pathfinder
 
 # Signal to UI for distance
 signal pathfinding_distance(distance: float)
+# Turns off the loading panel
+signal map_fully_updated()
 
 # Contains { waypoint_id: String, Waypoint: Waypoint }
 var _all_waypoints: Dictionary[String, Waypoint] = {}
@@ -30,6 +32,7 @@ func _on_structure_spawner_all_structures_done() -> void:
 	for waypoint: Waypoint in _all_waypoints.values():
 		waypoint.update_links(false)
 	Globals.base_map.update_visibility()
+	map_fully_updated.emit()
 
 
 func _on_ui_root_cancel_navigation() -> void:

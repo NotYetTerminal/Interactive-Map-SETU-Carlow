@@ -8,7 +8,7 @@ signal zoom_out_button()
 
 @onready var admin_ui_root: AdminUIRoot = $AdminUIRoot
 @onready var user_ui_root: UserUIRoot = $UserUIRoot
-
+@onready var loading_panel: Panel = $LoadingPanel
 
 func _on_admin_ui_root_spawn_specific_structure(parent: Structure, structure_type: int) -> void:
 	spawn_specific_structure.emit(parent, structure_type)
@@ -59,3 +59,7 @@ func _on_admin_check_button_edit_mode_toggled() -> void:
 
 func update_visibility() -> void:
 	Globals.base_map.update_visibility()
+
+
+func _on_pathfinder_map_fully_updated() -> void:
+	loading_panel.visible = false

@@ -55,6 +55,7 @@ script = ExtResource("4_un6fr")
 [connection signal="map_data_loaded" from="FirebaseConnector" to="StructureSpawner" method="_on_firebase_connector_map_data_loaded"]
 [connection signal="all_structures_done" from="StructureSpawner" to="Pathfinder" method="_on_structure_spawner_all_structures_done"]
 [connection signal="select_spawned_structure" from="StructureSpawner" to="UIRoot" method="_on_structure_spawner_select_spawned_structure"]
+[connection signal="map_fully_updated" from="Pathfinder" to="UIRoot" method="_on_pathfinder_map_fully_updated"]
 [connection signal="pathfinding_distance" from="Pathfinder" to="UIRoot" method="_on_pathfinder_pathfinding_distance"]
 [connection signal="select_structure" from="Camera3D" to="UIRoot" method="_on_camera_3d_select_structure"]
 [connection signal="cancel_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_cancel_navigation"]

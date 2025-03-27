@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://qd00gyyuopt6"]
+[gd_scene load_steps=12 format=3 uid="uid://qd00gyyuopt6"]
 
 [ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/admin_ui_root.tscn" id="1_51cd5"]
 [ext_resource type="Script" uid="uid://bsvvj3gxdj0a6" path="res://ui/ui_root.gd" id="1_h3dkj"]
@@ -15,6 +15,9 @@ corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bkvho"]
+bg_color = Color(0.733333, 0.733333, 0.733333, 1)
 
 [node name="UIRoot" type="Control"]
 layout_mode = 3
@@ -161,6 +164,32 @@ layout_mode = 1
 
 [node name="UserUIRoot" parent="." instance=ExtResource("2_xlc3q")]
 layout_mode = 1
+
+[node name="LoadingPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bkvho")
+
+[node name="Label" type="Label" parent="LoadingPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Loading map data"
 
 [connection signal="update_floor_number" from="ScreenElementsControl2" to="." method="_on_screen_elements_control_update_floor_number"]
 [connection signal="button_down" from="ScreenElementsControl2/LeftControl/AspectRatioContainer/FloorUpButton" to="ScreenElementsControl2" method="_on_floor_up_button_button_down"]
