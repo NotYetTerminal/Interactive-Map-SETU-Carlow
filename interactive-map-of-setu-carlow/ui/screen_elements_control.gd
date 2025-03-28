@@ -4,10 +4,17 @@ extends Control
 signal update_floor_number()
 
 @onready var floor_indicator_label: Label = $LeftControl/AspectRatioContainer3/FloorIndicatorLabel
+@onready var edit_mode_panel: Panel = $RightControl/Panel
 
 # Used by floor indicator label
 var floor_name_array: Array[String] = ["Ground Floor", "First Floor", "Second Floor"]
 var floor_number: int = 1
+
+# Make the edit mode button hidden for mobile
+func _ready() -> void:
+	var os_name: String = OS.get_name()
+	if os_name == "Android" or (os_name == "Web" and OS.has_feature("web_android")):
+		edit_mode_panel.visible = false
 
 
 func _on_floor_up_button_button_down() -> void:
