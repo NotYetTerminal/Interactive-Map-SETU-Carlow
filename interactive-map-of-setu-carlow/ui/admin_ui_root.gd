@@ -13,6 +13,7 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var id_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/IDHBoxContainer/IDLineEdit
 @onready var longitude_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/LongitudeVBoxContainer/LongitudeLineEdit
 @onready var latitude_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/LatitudeVBoxContainer/LatitudeLineEdit
+@onready var move_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/MoveButton
 
 @onready var name_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer
 @onready var name_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer/NameLineEdit
@@ -64,11 +65,12 @@ func _input(event: InputEvent) -> void:
 
 # Enable or disable buttons
 func check_save_and_delete_buttons() -> void:
-	save_button.disabled = selected_structure == null or not Globals.edit_mode
+	save_button.disabled = selected_structure == null or not Globals.edit_mode or (selected_structure != null and selected_structure.mouse_editing)
 	# Delete button not used for Base Map
-	delete_button.disabled = selected_structure == null or selected_structure is BaseMap or not Globals.edit_mode
+	delete_button.disabled = selected_structure == null or selected_structure is BaseMap or not Globals.edit_mode or (selected_structure != null and selected_structure.mouse_editing)
 	# Add button not used for Waypoints
-	add_button.disabled = selected_structure == null or selected_structure is Waypoint or not Globals.edit_mode
+	add_button.disabled = selected_structure == null or selected_structure is Waypoint or not Globals.edit_mode or (selected_structure != null and selected_structure.mouse_editing)
+	move_button.disabled = selected_structure == null or not Globals.edit_mode or (selected_structure != null and selected_structure.mouse_editing)
 
 # Change the editable status of all Text Edits
 func change_text_edits() -> void:
@@ -352,3 +354,10 @@ func _on_waypoint_connections_editors_v_box_container_update_connection_feature(
 
 func _on_cancel_button_button_down() -> void:
 	cancel_login.emit()
+
+
+func _on_move_button_button_down() -> void:
+	print("MOVE")
+	if selected_structure != null:
+		selected_structure.mouse_editing = true
+		check_save_and_delete_buttons()

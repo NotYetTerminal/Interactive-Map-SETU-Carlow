@@ -93,6 +93,11 @@ text = "Latitude: "
 layout_mode = 2
 editable = false
 
+[node name="MoveButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Move"
+
 [node name="NameHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
@@ -460,6 +465,7 @@ autowrap_mode = 3
 layout_mode = 2
 text = "Close"
 
+[connection signal="button_down" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/MoveButton" to="." method="_on_move_button_button_down"]
 [connection signal="add_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id"]
 [connection signal="delete_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id"]
 [connection signal="update_connection_feature" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_update_connection_feature"]
