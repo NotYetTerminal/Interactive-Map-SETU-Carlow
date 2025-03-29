@@ -49,6 +49,8 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint, allow_s
 	# Make sure everything is reset
 	reset()
 	
+	var end_structure: Structure = end_waypoint.get_parent_structure()
+	
 	var remaining_waypoints_list: Array[Waypoint] = [starting_waypoint]
 	var checked_waypoints_list: Array[Waypoint] = []
 	
@@ -63,9 +65,9 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint, allow_s
 				current = waypoint
 		
 		print("\nChecking " + current.id)
-		if current == end_waypoint:
+		if current.get_parent_structure() == end_structure:
 			final_waypoint = current
-			return current.finish_pathfinding()
+			return current.finish_pathfinding(null, starting_waypoint.get_parent_structure())
 		
 		remaining_waypoints_list.erase(current)
 		checked_waypoints_list.append(current)
@@ -83,7 +85,8 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint, allow_s
 			var new_waypoint: bool = neighbour not in remaining_waypoints_list
 			var new_distance_to_neighbour: float = (
 				current.g_cost +
-				current.global_position.distance_to(neighbour.global_position)
+				current.global_position.distance_to(neighbour.global_position) +
+				abs(current.floor_number - neighbour.floor_number)
 			)
 			
 			if new_waypoint or new_distance_to_neighbour < neighbour.g_cost:
@@ -91,7 +94,7 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint, allow_s
 				neighbour.from_waypoint = current
 				
 				if new_waypoint:
-					neighbour.h_cost = neighbour.global_position.distance_to(end_waypoint.global_position)
+					neighbour.h_cost = neighbour.global_position.distance_to(end_waypoint.global_position) + abs(current.floor_number - neighbour.floor_number)
 					remaining_waypoints_list.append(neighbour)
 				
 				print("F Cost: " + str(neighbour.f_cost))

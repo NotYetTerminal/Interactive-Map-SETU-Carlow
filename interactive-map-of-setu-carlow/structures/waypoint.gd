@@ -227,11 +227,13 @@ func change_link_colour(waypoint_id: String, new_colour: Color) -> void:
 		print("Link not found!")
 
 # Change the colour of Link and signal to next Waypoint
-func finish_pathfinding(to_waypoint: Waypoint = null) -> float:
+func finish_pathfinding(to_waypoint: Waypoint, starting_structure: Structure) -> float:
 	var distance: float = 0
-	if from_waypoint != null:
-		change_link_colour(from_waypoint.id, Color.LIGHT_GREEN)
-		distance += from_waypoint.finish_pathfinding(self)
+	# If this waypoint is part of the starting_structure stop revealing path
+	if starting_structure != get_parent_structure():
+		if from_waypoint != null:
+			change_link_colour(from_waypoint.id, Color.LIGHT_GREEN)
+			distance += from_waypoint.finish_pathfinding(self, starting_structure)
 	# This will run for everyone except the target
 	if to_waypoint != null:
 		change_link_colour(to_waypoint.id, Color.LIGHT_GREEN)
