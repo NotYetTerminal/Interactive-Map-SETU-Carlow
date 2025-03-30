@@ -52,3 +52,37 @@ func delete_structure(path: String, id: String) -> void:
 	save_offline_data()
 	# Delete structure from cloud
 	await firebaseConnector.delete_structure(path, id)
+
+
+# OS Location Tracking
+var gps_provider
+
+
+func _ready() -> void:
+	#The rest of your startup code goes here as usual
+	var _result: int = get_tree().on_request_permissions_result.connect(permission_check)
+
+	#NOTE: OS.request_permissions() should be called from a button the user actively touches after being informed of 
+	#what the button will enable.  This is placed in _ready() only to indicate this must be called, and how to structure
+	#handling the 2 paths code can follow after calling it.
+
+	var allowed: bool = OS.request_permissions() 
+	if allowed:
+		enable_GPS()
+
+
+func permission_check(permission_name: String, was_granted: bool) -> void:
+	if permission_name == "android.permission.ACCESS_FINE_LOCATION" and was_granted == true:
+		enable_GPS()
+
+
+func enable_GPS() -> void:
+	gps_provider = Engine.get_singleton("PraxisMapperGPSPlugin")
+	print(typeof(gps_provider))
+	if gps_provider != null:
+		gps_provider.onLocationUpdates.connect(listener_function)
+		gps_provider.StartListening()
+
+
+func listener_function(location_data: Dictionary[String, Variant]) -> void:
+	print(location_data)
