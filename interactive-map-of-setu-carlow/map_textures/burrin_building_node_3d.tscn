@@ -1,20 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bausw5o86wtvy"]
+[gd_scene load_steps=3 format=3 uid="uid://bausw5o86wtvy"]
 
 [ext_resource type="Texture2D" uid="uid://bv7k1lpin0t12" path="res://map_images/map-227.png" id="1_jmlni"]
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_quuei"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6mmc"]
-emission_enabled = true
-emission_texture = ExtResource("1_jmlni")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_h1vn2"]
-material = SubResource("StandardMaterial3D_m6mmc")
-size = Vector2(10, 11)
-
 [node name="BurrinBuildingNode3D" type="Node3D"]
-transform = Transform3D(0.661863, -5.78619e-08, -0.227898, -6.11959e-08, -0.7, 0, -0.227898, 1.99234e-08, -0.661863, 0, 0, 0)
+transform = Transform3D(0.945518, -1.42769e-07, -0.325569, -1.50996e-07, -1, 1.01506e-13, -0.325569, 4.91594e-08, -0.945518, 0, 0, 0)
 script = ExtResource("1_quuei")
 
-[node name="Level1MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, -7.10543e-15, -8.9407e-08, 0, 1, 0, 8.9407e-08, 3.55271e-15, 1, -1.32591, -0.000322587, 1.93195)
-mesh = SubResource("PlaneMesh_h1vn2")
+[node name="Sprite3DLevel1" type="Sprite3D" parent="."]
+transform = Transform3D(0.4, 7.45058e-09, -7.10543e-15, 3.55271e-15, -1.74846e-08, 0.4, 7.45058e-09, -0.4, -1.74846e-08, -1.35598, 2.04747e-07, 2.14082)
+texture = ExtResource("1_jmlni")
