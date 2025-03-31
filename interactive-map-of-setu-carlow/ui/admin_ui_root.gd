@@ -356,7 +356,7 @@ func _on_cancel_button_button_down() -> void:
 	cancel_login.emit()
 
 
-func _on_move_button_button_down() -> void:
+func _on_move_button_button_up() -> void:
 	print("MOVE")
 	if selected_structure != null:
 		selected_structure.mouse_editing = true
