@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://qd00gyyuopt6"]
+[gd_scene load_steps=13 format=3 uid="uid://qd00gyyuopt6"]
 
 [ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/admin_ui_root.tscn" id="1_51cd5"]
 [ext_resource type="Script" uid="uid://bsvvj3gxdj0a6" path="res://ui/ui_root.gd" id="1_h3dkj"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://0jwrb8wnfn0n" path="res://icons/downstairs.png" id="6_wgvx6"]
 [ext_resource type="Texture2D" uid="uid://in33sn6nx120" path="res://icons/zoom-in.png" id="7_5a6dn"]
 [ext_resource type="Texture2D" uid="uid://bubittg71eh3u" path="res://icons/zoom-out.png" id="8_1cbwd"]
+[ext_resource type="Script" uid="uid://bat3oll7lrwuc" path="res://ui/controls_label.gd" id="10_h72ba"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apxja"]
 corner_radius_top_left = 25
@@ -181,15 +182,37 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -173.5
+offset_top = -87.5
+offset_right = 173.5
+offset_bottom = -32.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
 text = "Loading map data"
+
+[node name="ControlsLabel" type="Label" parent="LoadingPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -243.5
+offset_top = -28.5
+offset_right = 243.5
+offset_bottom = 148.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Use left mouse button to select
+Right mouse button to move map
+Mouse wheel to zoom
+Q and E to rotate map"
+horizontal_alignment = 1
+script = ExtResource("10_h72ba")
 
 [connection signal="update_floor_number" from="ScreenElementsControl2" to="." method="_on_screen_elements_control_update_floor_number"]
 [connection signal="button_down" from="ScreenElementsControl2/LeftControl/AspectRatioContainer/FloorUpButton" to="ScreenElementsControl2" method="_on_floor_up_button_button_down"]
