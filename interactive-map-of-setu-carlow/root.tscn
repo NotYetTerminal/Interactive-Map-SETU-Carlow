@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c632xxyai4jm5"]
+[gd_scene load_steps=18 format=3 uid="uid://c632xxyai4jm5"]
 
 [ext_resource type="Script" uid="uid://bp3iud5jniv3d" path="res://firebase/firebase_connector.gd" id="1_jrn7t"]
 [ext_resource type="Script" uid="uid://1aocp5yma75r" path="res://managers/structure_spawner.gd" id="4_66h5g"]
@@ -11,11 +11,35 @@
 [ext_resource type="Script" uid="uid://dl0ofm7ep0r42" path="res://managers/building_manager.gd" id="8_vacqx"]
 [ext_resource type="Script" uid="uid://yyjlfhs10csx" path="res://managers/room_manager.gd" id="9_gu2ku"]
 [ext_resource type="PackedScene" uid="uid://qd00gyyuopt6" path="res://ui/ui_root.tscn" id="11_hwpgg"]
+[ext_resource type="Script" uid="uid://cg6ejcdwjy6sx" path="res://managers/android_location_tracker.gd" id="12_qw60f"]
 
 [sub_resource type="Environment" id="Environment_knlak"]
 background_mode = 1
 background_color = Color(1, 1, 1, 1)
 ambient_light_source = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qw60f"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1, 0.368627, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_eji0w"]
+material = SubResource("StandardMaterial3D_qw60f")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eji0w"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.501961)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.666667, 0.666667, 0.666667, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qwhpj"]
+material = SubResource("StandardMaterial3D_eji0w")
+radius = 0.1
+height = 0.2
 
 [node name="Root" type="Node"]
 
@@ -50,6 +74,15 @@ size = 10.0
 script = ExtResource("4_un6fr")
 
 [node name="UIRoot" parent="." instance=ExtResource("11_hwpgg")]
+
+[node name="AndroidLocationTracker" type="Node3D" parent="."]
+script = ExtResource("12_qw60f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AndroidLocationTracker"]
+mesh = SubResource("SphereMesh_eji0w")
+
+[node name="AccuracyMeshInstance3D" type="MeshInstance3D" parent="AndroidLocationTracker"]
+mesh = SubResource("SphereMesh_qwhpj")
 
 [connection signal="admin_logged_in" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_admin_logged_in"]
 [connection signal="incorrect_login" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_incorrect_login"]
