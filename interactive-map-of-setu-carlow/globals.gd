@@ -55,7 +55,7 @@ func delete_structure(path: String, id: String) -> void:
 
 
 # OS Location Tracking
-var gps_provider
+var gps_provider: Object
 
 
 func _ready() -> void:
@@ -78,11 +78,13 @@ func permission_check(permission_name: String, was_granted: bool) -> void:
 
 func enable_GPS() -> void:
 	gps_provider = Engine.get_singleton("PraxisMapperGPSPlugin")
-	print(typeof(gps_provider))
 	if gps_provider != null:
+		@warning_ignore("unsafe_property_access")
+		@warning_ignore("unsafe_method_access")
 		gps_provider.onLocationUpdates.connect(listener_function)
+		@warning_ignore("unsafe_method_access")
 		gps_provider.StartListening()
 
 
-func listener_function(location_data: Dictionary[String, Variant]) -> void:
+func listener_function(location_data: Dictionary) -> void:
 	print(location_data)
