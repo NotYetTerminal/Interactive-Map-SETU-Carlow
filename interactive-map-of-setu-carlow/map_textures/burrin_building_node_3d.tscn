@@ -1,12 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bausw5o86wtvy"]
+[gd_scene load_steps=4 format=3 uid="uid://bausw5o86wtvy"]
 
 [ext_resource type="Texture2D" uid="uid://bv7k1lpin0t12" path="res://map_images/map-227.png" id="1_jmlni"]
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_quuei"]
+[ext_resource type="Texture2D" uid="uid://rrnb07k30n7e" path="res://map_images/map-228.png" id="3_ql42g"]
 
 [node name="BurrinBuildingNode3D" type="Node3D"]
-transform = Transform3D(0.945518, -1.42769e-07, -0.325569, -1.50996e-07, -1, 1.01506e-13, -0.325569, 4.91594e-08, -0.945518, 0, 0, 0)
+transform = Transform3D(0.241107, -3.64062e-08, -0.0830201, -3.85039e-08, -0.255, 2.48378e-15, -0.0830201, 1.25357e-08, -0.241107, 0, 0, 0)
 script = ExtResource("1_quuei")
 
 [node name="Sprite3DLevel1" type="Sprite3D" parent="."]
-transform = Transform3D(0.4, 7.45058e-09, -7.10543e-15, 3.55271e-15, -1.74846e-08, 0.4, 7.45058e-09, -0.4, -1.74846e-08, -1.35598, 2.04747e-07, 2.14082)
+transform = Transform3D(1, 2.98023e-08, 0, 1.42109e-14, -4.37114e-08, 1, 2.98023e-08, -1, -4.37114e-08, -3.41569, 5.15754e-07, 5.36908)
 texture = ExtResource("1_jmlni")
+
+[node name="Sprite3DLevel2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 2.98023e-08, 0, 3.01981e-14, -4.37114e-08, 1, 2.98023e-08, -1, -4.37114e-08, -4.2767, 6.45764e-07, 5.35067)
+visible = false
+texture = ExtResource("3_ql42g")

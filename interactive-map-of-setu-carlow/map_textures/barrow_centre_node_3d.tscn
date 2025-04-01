@@ -5,14 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://b5vmxgjpthvhd" path="res://map_images/map-222.png" id="2_jg3tg"]
 
 [node name="BarrowCentreNode3D" type="Node3D"]
-transform = Transform3D(0.945518, -1.42769e-07, -0.325568, -1.50996e-07, -1, 8.58573e-14, -0.325568, 4.91594e-08, -0.945518, 0, 0, 0)
+transform = Transform3D(0.222197, -3.35508e-08, -0.0765086, -3.5484e-08, -0.235, -1.88406e-14, -0.0765086, 1.15525e-08, -0.222197, 0, 0, 0)
 script = ExtResource("1_pmacs")
 
 [node name="Sprite3DLevel1" type="Sprite3D" parent="."]
-transform = Transform3D(0.4, 0, -8.88178e-16, 3.9968e-15, -1.74846e-08, 0.4, 0, -0.4, -1.74846e-08, -1.66001, 1.43576e-07, 5.13685)
+transform = Transform3D(1, 0, -3.55271e-15, 2.13163e-14, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.02798, 5.01128e-07, 12.8016)
 texture = ExtResource("1_6jcfl")
 
 [node name="Sprite3DLevel2" type="Sprite3D" parent="."]
-transform = Transform3D(0.4, -7.45058e-09, 8.88178e-15, 7.99361e-15, -1.74846e-08, 0.4, -7.45058e-09, -0.4, -1.74846e-08, -1.89537, 1.79114e-07, 5.61941)
+transform = Transform3D(1, -2.98023e-08, -3.55271e-15, 8.88178e-15, -4.37114e-08, 1, -2.98023e-08, -1, -4.37114e-08, -4.70776, 6.03772e-07, 14.0513)
 visible = false
 texture = ExtResource("2_jg3tg")
