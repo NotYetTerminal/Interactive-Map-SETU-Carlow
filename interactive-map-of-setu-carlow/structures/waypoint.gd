@@ -9,8 +9,13 @@ var waypoint_connections: Dictionary[String, String] = {}
 
 @export var link_node_3d_scene: PackedScene
 
-@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+
+
+func _process(_delta: float) -> void:
+	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
+	collision_shape_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
 
 # Contains a link for each connection { waypoint_id: String, link: Node3D }
 var links_dictionary: Dictionary[String, Node3D] = {}
@@ -81,6 +86,8 @@ func update_visibility() -> void:
 # Update the details when editing
 func update_details(details: Dictionary, call_others: bool = true) -> void:
 	var fields: Array[String] = save_details(id, details, call_others)
+	if fields.has("longitude") or fields.has("latitude"):
+		update_links(true)
 	# Update Waypoint depending on the parent
 	var parent_structure: Structure = get_parent_structure()
 	parent_structure.get_offline_data_waypoints()[id] = details
@@ -157,6 +164,7 @@ func update_links(call_others: bool) -> void:
 		feature = waypoint_connections[waypoint_id]
 		if call_others:
 			target_waypoint.add_waypoint(id, feature)
+			target_waypoint.update_links(false)
 		# TODO Maybe don't have both link textures showing
 		link.set_target_waypoint_and_feature(target_waypoint, feature)
 		link.set_link_holder_visibility(Globals.edit_mode)

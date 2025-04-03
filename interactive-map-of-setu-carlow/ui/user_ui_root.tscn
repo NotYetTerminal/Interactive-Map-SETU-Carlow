@@ -317,6 +317,7 @@ expand_icon = true
 [connection signal="_set_to_structure" from="." to="SearchElementsControl" method="_on_user_ui_root__set_to_structure"]
 [connection signal="_show_building_information" from="." to="InformationPopupElementsControl" method="show_building_information"]
 [connection signal="_show_room_information" from="." to="InformationPopupElementsControl" method="show_room_information"]
+[connection signal="cancel_navigation" from="." to="SearchElementsControl" method="_on_user_ui_root_cancel_navigation"]
 [connection signal="cancel_navigation" from="." to="SearchElementsControl/NavigationButton" method="_on_user_ui_root_cancel_navigation"]
 [connection signal="start_navigation" from="." to="SearchElementsControl/NavigationButton" method="_on_user_ui_root_start_navigation"]
 [connection signal="set_from_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_from_search_structure"]

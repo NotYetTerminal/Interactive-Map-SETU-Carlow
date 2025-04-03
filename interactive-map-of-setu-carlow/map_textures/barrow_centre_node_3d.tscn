@@ -1,34 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://dusn1bxyvlsya"]
+[gd_scene load_steps=4 format=3 uid="uid://dusn1bxyvlsya"]
 
 [ext_resource type="Texture2D" uid="uid://rntndhbqxv8m" path="res://map_images/map-221.png" id="1_6jcfl"]
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_pmacs"]
 [ext_resource type="Texture2D" uid="uid://b5vmxgjpthvhd" path="res://map_images/map-222.png" id="2_jg3tg"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jgug"]
-emission_enabled = true
-emission_texture = ExtResource("1_6jcfl")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_h1vn2"]
-material = SubResource("StandardMaterial3D_1jgug")
-size = Vector2(10, 13)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fhwhg"]
-emission_enabled = true
-emission_texture = ExtResource("2_jg3tg")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_5nrpy"]
-material = SubResource("StandardMaterial3D_fhwhg")
-size = Vector2(10, 13)
-
 [node name="BarrowCentreNode3D" type="Node3D"]
-transform = Transform3D(0.567311, -4.95959e-08, -0.195341, -5.24537e-08, -0.6, 0, -0.195341, 1.70772e-08, -0.567311, 0, 0, 0)
+transform = Transform3D(0.222197, -3.35508e-08, -0.0765086, -3.5484e-08, -0.235, -1.88406e-14, -0.0765086, 1.15525e-08, -0.222197, 0, 0, 0)
 script = ExtResource("1_pmacs")
 
-[node name="Level1MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.67882, -0.000321914, 4.88955)
-mesh = SubResource("PlaneMesh_h1vn2")
+[node name="Sprite3DLevel1" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, -3.55271e-15, 2.13163e-14, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.02798, 5.01128e-07, 12.8016)
+texture = ExtResource("1_6jcfl")
 
-[node name="Level2MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.91, -1.944, 0, 5.35)
+[node name="Sprite3DLevel2" type="Sprite3D" parent="."]
+transform = Transform3D(1, -2.98023e-08, -3.55271e-15, 8.88178e-15, -4.37114e-08, 1, -2.98023e-08, -1, -4.37114e-08, -4.70776, 6.03772e-07, 14.0513)
 visible = false
-mesh = SubResource("PlaneMesh_5nrpy")
+texture = ExtResource("2_jg3tg")

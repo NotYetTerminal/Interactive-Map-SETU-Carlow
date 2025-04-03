@@ -8,6 +8,7 @@ var latitude: float
 var structure_name: String
 
 var mouse_editing: bool = false
+var just_moved: bool = false
 
 
 func _process(_delta: float) -> void:
@@ -29,6 +30,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		var mouse_input_event: InputEventMouseButton = event as InputEventMouseButton
 		if mouse_input_event.button_index == MOUSE_BUTTON_LEFT:
 			mouse_editing = false
+			just_moved = true
+			if self is Waypoint:
+				(self as Waypoint).update_links(true)
 
 
 func save_details(_id_in: String, _details: Dictionary) -> Array[String]:

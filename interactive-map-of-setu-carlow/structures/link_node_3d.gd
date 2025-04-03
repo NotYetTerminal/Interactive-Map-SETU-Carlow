@@ -9,6 +9,10 @@ var current_colour: Color
 @onready var feature_sprite_3d: FeatureSprite3D = $FeatureSprite3D
 
 
+func _process(_delta: float) -> void:
+	mesh_instance_3d.scale.x = Globals.camera_zoom
+
+
 func set_link_holder_visibility(seen: bool) -> void:
 	link_holder_node_3d.visible = seen
 

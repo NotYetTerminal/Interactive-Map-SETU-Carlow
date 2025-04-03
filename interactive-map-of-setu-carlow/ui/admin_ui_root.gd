@@ -103,6 +103,9 @@ func select_structure(structure: Structure) -> void:
 		id_line_edit.text = selected_structure.id
 		longitude_line_edit.text = str(selected_structure.longitude)
 		latitude_line_edit.text = str(selected_structure.latitude)
+		if selected_structure.just_moved:
+			selected_structure.just_moved = false
+			_on_save_button_pressed()
 	else:
 		id_line_edit.text = ""
 		longitude_line_edit.text = ""
@@ -252,22 +255,22 @@ func _on_save_button_pressed() -> void:
 	show_input_message_mid_action("Saving")
 	@warning_ignore("redundant_await")
 	await selected_structure.update_details(details)
-	show_input_message_finished_action("Finished saving")
+	close_input_message_finished_action()
 
 
 func show_input_message(message: String) -> void:
 	input_message_label.text = message
 	input_message_panel.visible = true
+	input_message_close_button.visible = true
 
 
 func show_input_message_mid_action(message: String) -> void:
 	show_input_message(message)
-	input_message_close_button.disabled = true
+	input_message_close_button.visible = false
 
 
-func show_input_message_finished_action(message: String) -> void:
-	show_input_message(message)
-	input_message_close_button.disabled = false
+func close_input_message_finished_action() -> void:
+	input_message_panel.visible = false
 
 # Used to delete a structure
 func _on_delete_button_pressed() -> void:
@@ -285,7 +288,7 @@ func _on_confirm_button_pressed() -> void:
 		delete_confirmation_panel.visible = false
 		@warning_ignore("redundant_await")
 		await selected_structure.delete_itself()
-		show_input_message_finished_action("Finished deleting")
+		close_input_message_finished_action()
 		select_structure(null)
 
 # Open up choosing window
@@ -356,7 +359,7 @@ func _on_cancel_button_button_down() -> void:
 	cancel_login.emit()
 
 
-func _on_move_button_button_down() -> void:
+func _on_move_button_button_up() -> void:
 	print("MOVE")
 	if selected_structure != null:
 		selected_structure.mouse_editing = true

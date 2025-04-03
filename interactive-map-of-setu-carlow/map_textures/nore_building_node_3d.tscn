@@ -1,20 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://bn8qhs1o2a227"]
+[gd_scene load_steps=4 format=3 uid="uid://bn8qhs1o2a227"]
 
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_2vuvd"]
 [ext_resource type="Texture2D" uid="uid://40e48o1v4imw" path="res://map_images/map-229.png" id="1_qtp6c"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6mmc"]
-emission_enabled = true
-emission_texture = ExtResource("1_qtp6c")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_h1vn2"]
-material = SubResource("StandardMaterial3D_m6mmc")
-size = Vector2(10, 11)
+[ext_resource type="Texture2D" uid="uid://5ih5kpqlsigs" path="res://map_images/map-230.png" id="3_ts2yv"]
 
 [node name="NoreBuildingNode3D" type="Node3D"]
-transform = Transform3D(0.850967, -7.43939e-08, -0.293011, -7.86805e-08, -0.9, 0, -0.293011, 2.56159e-08, -0.850967, 0, 0, 0)
+transform = Transform3D(0.330932, -4.99693e-08, -0.113949, -5.28485e-08, -0.35, -7.894e-14, -0.113949, 1.72058e-08, -0.330932, 0, 0, 0)
 script = ExtResource("1_2vuvd")
 
-[node name="Level1MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, -7.10543e-15, -8.9407e-08, -7.10543e-15, 1, 0, 8.9407e-08, 0, 1, 1.26924, -0.00032236, -3.61497)
-mesh = SubResource("PlaneMesh_h1vn2")
+[node name="Sprite3DLevel1" type="Sprite3D" parent="."]
+transform = Transform3D(1, -5.96046e-08, -5.32907e-14, -1.95399e-14, -4.37114e-08, 1, -5.96046e-08, -1, -4.37114e-08, 3.228, -4.87414e-07, -10.0105)
+texture = ExtResource("1_qtp6c")
+
+[node name="Sprite3DLevel2" type="Sprite3D" parent="."]
+transform = Transform3D(1, -1.19209e-07, -7.63833e-14, -1.59872e-14, -4.37114e-08, 1, -1.19209e-07, -1, -4.37114e-08, 2.862, -4.32149e-07, -10.0337)
+visible = false
+texture = ExtResource("3_ts2yv")

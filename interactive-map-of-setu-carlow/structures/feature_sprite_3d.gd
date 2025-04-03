@@ -5,6 +5,10 @@ class_name FeatureSprite3D
 @onready var cylinder_backround_mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 
 
+func _process(_delta: float) -> void:
+	scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom) / 10
+
+
 func set_feature_image(feature: String) -> void:
 	if feature_images_dictionary.has(feature):
 		texture = feature_images_dictionary[feature]
