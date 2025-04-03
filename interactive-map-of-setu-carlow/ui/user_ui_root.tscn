@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://buf3tiq1t6v5h" path="res://ui/search_panel.gd" id="3_m06ik"]
 [ext_resource type="Script" uid="uid://bnhkljakpxy7k" path="res://ui/navigation_button.gd" id="4_j3kvc"]
 [ext_resource type="PackedScene" uid="uid://c7ngcwe2n7hh" path="res://ui/search_item_h_box_container.tscn" id="4_x715j"]
-[ext_resource type="Texture2D" uid="uid://bmrf63eyt74wg" path="res://icons/right-up.png" id="7_dwrjb"]
-[ext_resource type="Texture2D" uid="uid://b6va5qrbs1yqq" path="res://icons/right-down.png" id="8_72rlj"]
+[ext_resource type="Texture2D" uid="uid://c0aynm4yf4nya" path="res://icons/right-up.png" id="7_dwrjb"]
+[ext_resource type="Texture2D" uid="uid://ciif6acyem82o" path="res://icons/right-down.png" id="8_72rlj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnrph"]
 bg_color = Color(0.733333, 0.733333, 0.733333, 1)

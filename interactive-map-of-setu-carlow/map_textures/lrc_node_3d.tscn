@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dk2gadch8jbfq"]
 
-[ext_resource type="Texture2D" uid="uid://7m3cej7q12s1" path="res://map_images/map-223.png" id="1_mccv5"]
+[ext_resource type="Texture2D" uid="uid://oud1dm4jv4ir" path="res://map_images/map-223.png" id="1_mccv5"]
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_ndf4p"]
-[ext_resource type="Texture2D" uid="uid://c5tqk2kgl17ue" path="res://map_images/map-224.png" id="3_xocx0"]
-[ext_resource type="Texture2D" uid="uid://bgxxwttwqd8rv" path="res://map_images/map-225.png" id="4_lhe3m"]
+[ext_resource type="Texture2D" uid="uid://daghymie88hn6" path="res://map_images/map-224.png" id="3_xocx0"]
+[ext_resource type="Texture2D" uid="uid://8tqig6u1n210" path="res://map_images/map-225.png" id="4_lhe3m"]
 
 [node name="LRCNode3D" type="Node3D"]
 transform = Transform3D(-0.0683692, -1.03235e-08, -0.198559, 3.17091e-08, -0.21, 4.75685e-14, -0.198559, -2.99815e-08, 0.0683692, 0, 0, 0)
