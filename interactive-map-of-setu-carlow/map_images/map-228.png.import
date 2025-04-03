@@ -2,22 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rrnb07k30n7e"
-path.s3tc="res://.godot/imported/map-228.png-f1a62e360cf55c4d3500a411e2b31dad.s3tc.ctex"
-path.etc2="res://.godot/imported/map-228.png-f1a62e360cf55c4d3500a411e2b31dad.etc2.ctex"
+uid="uid://cnodd2vh6sbfk"
+path="res://.godot/imported/map-228.png-f1a62e360cf55c4d3500a411e2b31dad.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://map_images/map-228.png"
-dest_files=["res://.godot/imported/map-228.png-f1a62e360cf55c4d3500a411e2b31dad.s3tc.ctex", "res://.godot/imported/map-228.png-f1a62e360cf55c4d3500a411e2b31dad.etc2.ctex"]
+dest_files=["res://.godot/imported/map-228.png-f1a62e360cf55c4d3500a411e2b31dad.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -33,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
