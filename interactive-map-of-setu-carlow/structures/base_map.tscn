@@ -11,7 +11,7 @@ emission = Color(0.25353, 0.979349, 3.85046e-07, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_w8ae4"]
 material = SubResource("StandardMaterial3D_qp2nu")
 radius = 0.2
-height = 0.5
+height = 0.4
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sdyqv"]
 radius = 0.2

@@ -14,6 +14,11 @@ func _ready() -> void:
 	Globals.base_map = self
 	structure_name = "Base Map"
 
+
+func _process(_delta: float) -> void:
+	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
+	collision_shape_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
+
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in

@@ -10,7 +10,7 @@ var min_zoom: float = 3
 var max_zoom: float = 45
 var mouse_zoom_amount: float = 0.2
 var touch_zoom_amount: float = 8
-var button_zoom_amount: float = 1
+var button_zoom_amount: float = 2
 var zoom_level: float = 10
 
 var move_speed: float = 0.01
@@ -146,6 +146,7 @@ func ray_cast_select(event: InputEvent) -> void:
 			position = Vector3(structure.global_position.x + (3 * sin(rotation.y)), -10, structure.global_position.z + (3 * cos(rotation.y)))
 			zoom_level = 9
 			size = zoom_level
+			Globals.camera_zoom = min(zoom_level / 20, 1.5)
 		select_structure.emit(structure)
 	else:
 		select_structure.emit(null)
@@ -154,11 +155,13 @@ func ray_cast_select(event: InputEvent) -> void:
 func zoom_in(zoom_amount: float) -> void:
 	zoom_level = max(zoom_level - zoom_amount, min_zoom)
 	size = zoom_level
+	Globals.camera_zoom = min(zoom_level / 20, 1.5)
 
 # Used by mouse and zoom buttons
 func zoom_out(zoom_amount: float) -> void:
 	zoom_level = min(zoom_level + zoom_amount, max_zoom)
 	size = zoom_level
+	Globals.camera_zoom = min(zoom_level / 20, 1.5)
 
 
 func _on_ui_root_zoom_in_button() -> void:

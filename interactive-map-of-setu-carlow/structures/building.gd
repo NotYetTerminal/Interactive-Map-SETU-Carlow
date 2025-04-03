@@ -15,6 +15,12 @@ var rooms_updated_time: int
 
 var building_texture_node: Node3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+
+
+func _process(_delta: float) -> void:
+	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
+	collision_shape_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:

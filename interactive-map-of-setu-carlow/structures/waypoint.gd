@@ -9,8 +9,13 @@ var waypoint_connections: Dictionary[String, String] = {}
 
 @export var link_node_3d_scene: PackedScene
 
-@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+
+
+func _process(_delta: float) -> void:
+	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
+	collision_shape_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
 
 # Contains a link for each connection { waypoint_id: String, link: Node3D }
 var links_dictionary: Dictionary[String, Node3D] = {}
