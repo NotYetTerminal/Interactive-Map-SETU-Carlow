@@ -4,6 +4,7 @@ class_name AndroidLocationTracker
 # OS Location Tracking
 var gps_provider: Object
 
+@onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var accuracy_mesh_instance_3d: MeshInstance3D = $AccuracyMeshInstance3D
 
 
@@ -21,6 +22,10 @@ func _ready() -> void:
 		var allowed: bool = OS.request_permissions() 
 		if allowed:
 			enable_GPS()
+
+
+func _process(_delta: float) -> void:
+	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
 
 
 func permission_check(permission_name: String, was_granted: bool) -> void:

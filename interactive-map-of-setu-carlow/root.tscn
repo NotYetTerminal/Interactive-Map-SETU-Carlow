@@ -76,6 +76,7 @@ script = ExtResource("4_un6fr")
 [node name="UIRoot" parent="." instance=ExtResource("11_hwpgg")]
 
 [node name="AndroidLocationTracker" type="Node3D" parent="."]
+visible = false
 script = ExtResource("12_qw60f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AndroidLocationTracker"]
