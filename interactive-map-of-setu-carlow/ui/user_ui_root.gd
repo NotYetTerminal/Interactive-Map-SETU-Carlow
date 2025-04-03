@@ -63,6 +63,8 @@ func _on_navigation_button_button_down() -> void:
 		currently_navigating = false
 		cancel_navigation.emit()
 		distance_label.visible = false
+		from_structure = null
+		to_structure = null
 	elif from_structure != null and to_structure != null:
 		currently_navigating = true
 		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)

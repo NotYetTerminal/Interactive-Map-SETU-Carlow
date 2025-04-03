@@ -25,7 +25,7 @@ var camera_zoom: float = 0.5
 # Load offline data
 func load_offline_data() -> void:
 	var file: FileAccess = FileAccess.open("user://offline_data", FileAccess.READ)
-	if file != null:
+	if file != null and file.get_length() != 0:
 		print("Loaded")
 		offline_data = file.get_var()
 	else:
@@ -44,7 +44,7 @@ func save_data(id: String, fields: Array[String], parent_collection_path: String
 # Save offline data
 func save_offline_data() -> void:
 	var file: FileAccess = FileAccess.open("user://offline_data", FileAccess.WRITE)
-	if file != null:
+	if file != null and len(offline_data.keys()) != 0:
 		print("Saved")
 		var _error: bool = file.store_var(offline_data)
 

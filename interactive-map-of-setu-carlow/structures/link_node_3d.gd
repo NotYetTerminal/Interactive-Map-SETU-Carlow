@@ -8,13 +8,23 @@ var current_colour: Color
 @onready var mesh_instance_3d: MeshInstance3D = $LinkHolderNode3D/MeshInstance3D
 @onready var feature_sprite_3d: FeatureSprite3D = $FeatureSprite3D
 
+@onready var arrow_holder_node_3d: Node3D = $ArrowHolderNode3D
+@onready var arrow_mesh_instance_3d: MeshInstance3D = $ArrowHolderNode3D/ArrowMeshInstance3D
+@onready var arrow_mesh_instance_3d_2: MeshInstance3D = $ArrowHolderNode3D/ArrowMeshInstance3D2
+var arrow_active: bool = false
+
 
 func _process(_delta: float) -> void:
 	mesh_instance_3d.scale.x = Globals.camera_zoom
+	arrow_holder_node_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom) / 1.5
 
 
 func set_link_holder_visibility(seen: bool) -> void:
 	link_holder_node_3d.visible = seen
+
+
+func set_arrow_holder_visibility(seen: bool) -> void:
+	arrow_holder_node_3d.visible = seen
 
 
 func set_texture_visibility(seen: bool) -> void:
@@ -27,6 +37,7 @@ func set_target_waypoint_and_feature(new_target_waypoint: Waypoint, feature: Str
 		look_at(target_waypoint.global_position)
 		var half_distance_to_other: float = global_position.distance_to(target_waypoint.global_position) / 2
 		link_holder_node_3d.scale.z = half_distance_to_other
+		arrow_holder_node_3d.position.z = -half_distance_to_other
 		
 		if feature == "Stairs":
 			var parent_waypoint: Waypoint = get_parent()
@@ -45,6 +56,8 @@ func change_colour(new_colour: Color) -> void:
 	material.emission_enabled = true
 	material.emission = new_colour
 	mesh_instance_3d.set_surface_override_material(0, material)
+	arrow_mesh_instance_3d.set_surface_override_material(0, material)
+	arrow_mesh_instance_3d_2.set_surface_override_material(0, material)
 	
 	if new_colour == Color.LIGHT_GREEN:
 		feature_sprite_3d.change_texture_colour(Color.YELLOW)
