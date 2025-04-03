@@ -21,3 +21,8 @@ func _on_user_ui_root__set_from_structure(from_structure: Structure) -> void:
 		from_search_bar_line_edit.text = (from_structure as Building).structure_name
 	else:
 		from_search_bar_line_edit.text = ""
+
+
+func _on_user_ui_root_cancel_navigation() -> void:
+		from_search_bar_line_edit.text = ""
+		to_search_bar_line_edit.text = ""

@@ -10,6 +10,7 @@ signal zoom_out_button()
 @onready var user_ui_root: UserUIRoot = $UserUIRoot
 @onready var loading_panel: Panel = $LoadingPanel
 
+
 func _on_admin_ui_root_spawn_specific_structure(parent: Structure, structure_type: int) -> void:
 	spawn_specific_structure.emit(parent, structure_type)
 
