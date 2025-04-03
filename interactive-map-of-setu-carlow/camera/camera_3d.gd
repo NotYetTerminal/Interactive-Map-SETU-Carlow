@@ -155,13 +155,13 @@ func ray_cast_select(event: InputEvent) -> void:
 func zoom_in(zoom_amount: float) -> void:
 	zoom_level = max(zoom_level - zoom_amount, min_zoom)
 	size = zoom_level
-	Globals.camera_zoom = min(zoom_level / 20, 1.5)
+	Globals.camera_zoom = min(zoom_level / 15, 1.5)
 
 # Used by mouse and zoom buttons
 func zoom_out(zoom_amount: float) -> void:
 	zoom_level = min(zoom_level + zoom_amount, max_zoom)
 	size = zoom_level
-	Globals.camera_zoom = min(zoom_level / 20, 1.5)
+	Globals.camera_zoom = min(zoom_level / 15, 1.5)
 
 
 func _on_ui_root_zoom_in_button() -> void:

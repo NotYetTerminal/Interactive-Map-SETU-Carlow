@@ -233,7 +233,7 @@ anchors_preset = -1
 anchor_left = 0.15
 anchor_top = 0.27
 anchor_right = 0.85
-anchor_bottom = 0.69
+anchor_bottom = 0.65
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5o45k")
@@ -257,7 +257,7 @@ size_flags_vertical = 3
 [node name="NameLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 50
 text = "Barrow"
 
 [node name="LecturersLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer"]
@@ -288,9 +288,9 @@ layout_direction = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35
-anchor_top = 0.67
+anchor_top = 0.6
 anchor_right = 0.48
-anchor_bottom = 0.75
+anchor_bottom = 0.7
 
 [node name="FromButton" type="Button" parent="InformationPopupElementsControl/AspectRatioContainer"]
 layout_mode = 2
@@ -303,9 +303,9 @@ layout_direction = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35
-anchor_top = 0.67
+anchor_top = 0.6
 anchor_right = 0.48
-anchor_bottom = 0.75
+anchor_bottom = 0.7
 
 [node name="ToButton" type="Button" parent="InformationPopupElementsControl/AspectRatioContainer2"]
 layout_mode = 2

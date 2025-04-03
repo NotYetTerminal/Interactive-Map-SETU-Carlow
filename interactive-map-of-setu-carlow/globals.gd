@@ -20,7 +20,7 @@ var firebaseConnector: FirebaseConnector
 const EARTH_RADIUS: float = 6378137
 
 var current_floor: int = 1
-var camera_zoom: float = 0.5
+var camera_zoom: float = 0.75
 
 # Load offline data
 func load_offline_data() -> void:

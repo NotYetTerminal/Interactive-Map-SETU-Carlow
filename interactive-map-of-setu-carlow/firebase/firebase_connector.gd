@@ -158,14 +158,15 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 		else:
 			structure_document.document[WAYPOINTS_COLLECTION] = parent_structure_collection[structure_document.doc_name][WAYPOINTS_COLLECTION]
 		
-		# Run for child structure collection if updated
-		if new_collection || child_structure_updated:
-			structure_document.document[child_structure_collection_name] = {}
-			# If the collection is new then it dosen't exist in Globals data so pass null
-			var collection_to_pass: Dictionary = {} if new_collection else parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
-			await query_structure_data(sub_collection_path + child_structure_collection_name, child_structure_type, structure_document, collection_to_pass)
-		else:
-			structure_document.document[child_structure_collection_name] = parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
+		if structure_type != Structures.RoomStruct:
+			# Run for child structure collection if updated
+			if new_collection || child_structure_updated:
+				structure_document.document[child_structure_collection_name] = {}
+				# If the collection is new then it dosen't exist in Globals data so pass null
+				var collection_to_pass: Dictionary = {} if new_collection else parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
+				await query_structure_data(sub_collection_path + child_structure_collection_name, child_structure_type, structure_document, collection_to_pass)
+			else:
+				structure_document.document[child_structure_collection_name] = parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
 	
 	if structure_type == Structures.Base_Map:
 		Globals.offline_data = parent_document.document

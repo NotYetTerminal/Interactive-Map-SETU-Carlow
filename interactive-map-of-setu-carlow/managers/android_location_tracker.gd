@@ -11,7 +11,6 @@ var gps_provider: Object
 func _ready() -> void:
 	var os_name: String = OS.get_name()
 	if os_name == "Android" or (os_name == "Web" and OS.has_feature("web_android")):
-		visible = true
 		#The rest of your startup code goes here as usual
 		var _result: int = get_tree().on_request_permissions_result.connect(permission_check)
 
@@ -44,6 +43,8 @@ func enable_GPS() -> void:
 
 
 func location_listener(location_data: Dictionary) -> void:
+	if not visible:
+		visible = true
 	print(location_data)
 	longitude = location_data["longitude"]
 	latitude = location_data["latitude"]
