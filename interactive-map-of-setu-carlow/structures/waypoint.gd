@@ -12,11 +12,6 @@ var waypoint_connections: Dictionary[String, String] = {}
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
-
-func _process(_delta: float) -> void:
-	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
-	collision_shape_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
-
 # Contains a link for each connection { waypoint_id: String, link: Node3D }
 var links_dictionary: Dictionary[String, Node3D] = {}
 
@@ -292,3 +287,10 @@ func reset(to_waypoint: Waypoint = null) -> void:
 		# Only run if values changed or final waypoint
 		if waypoint.from_waypoint != null or waypoint == temp_from_waypoint:
 			waypoint.reset(self)
+
+
+func set_icon_scale(new_scale: float) -> void:
+	mesh_instance_3d.scale = Vector3(new_scale, new_scale, new_scale)
+	collision_shape_3d.scale = Vector3(new_scale, new_scale, new_scale)
+	for link: Link in links_dictionary.values():
+		link.set_icon_scale(new_scale)

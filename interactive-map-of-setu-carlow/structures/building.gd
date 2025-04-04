@@ -18,10 +18,6 @@ var building_texture_node: Node3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
 
-func _process(_delta: float) -> void:
-	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
-	collision_shape_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
-
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in
@@ -179,3 +175,8 @@ func update_visibility() -> void:
 	if building_texture_node != null:
 		var floor_available: bool = (building_texture_node as BuildingTextureNode).update_visibility()
 		mesh_instance_3d.visible = floor_available
+
+
+func set_icon_scale(new_scale: float) -> void:
+	mesh_instance_3d.scale = Vector3(new_scale, new_scale, new_scale)
+	collision_shape_3d.scale = Vector3(new_scale, new_scale, new_scale)

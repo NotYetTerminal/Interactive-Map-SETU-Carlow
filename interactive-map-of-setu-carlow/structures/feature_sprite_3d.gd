@@ -5,10 +5,6 @@ class_name FeatureSprite3D
 @onready var cylinder_backround_mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 
 
-func _process(_delta: float) -> void:
-	scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom) / 10
-
-
 func set_feature_image(feature: String) -> void:
 	if feature_images_dictionary.has(feature):
 		texture = feature_images_dictionary[feature]
@@ -28,3 +24,7 @@ func change_texture_colour(new_colour: Color) -> void:
 	material.emission_enabled = true
 	material.emission = new_colour
 	cylinder_backround_mesh_instance_3d.set_surface_override_material(0, material)
+
+
+func set_icon_scale(new_scale: float) -> void:
+	scale = Vector3(new_scale, new_scale, new_scale) / 10

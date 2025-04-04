@@ -70,7 +70,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -10
 environment = SubResource("Environment_knlak")
 projection = 1
 current = true
-size = 10.0
+size = 15.0
 script = ExtResource("4_un6fr")
 
 [node name="UIRoot" parent="." instance=ExtResource("11_hwpgg")]
@@ -92,9 +92,15 @@ mesh = SubResource("SphereMesh_qwhpj")
 [connection signal="select_spawned_structure" from="StructureSpawner" to="UIRoot" method="_on_structure_spawner_select_spawned_structure"]
 [connection signal="map_fully_updated" from="Pathfinder" to="UIRoot" method="_on_pathfinder_map_fully_updated"]
 [connection signal="pathfinding_distance" from="Pathfinder" to="UIRoot" method="_on_pathfinder_pathfinding_distance"]
+[connection signal="new_zoom_level" from="Camera3D" to="Pathfinder" method="_on_camera_3d_new_zoom_level"]
+[connection signal="new_zoom_level" from="Camera3D" to="BuildingManager" method="_on_camera_3d_new_zoom_level"]
+[connection signal="new_zoom_level" from="Camera3D" to="RoomManager" method="_on_camera_3d_new_zoom_level"]
+[connection signal="new_zoom_level" from="Camera3D" to="AndroidLocationTracker" method="_on_camera_3d_new_zoom_level"]
 [connection signal="select_structure" from="Camera3D" to="UIRoot" method="_on_camera_3d_select_structure"]
 [connection signal="cancel_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_cancel_navigation"]
+[connection signal="snap_camera_to_location" from="UIRoot" to="AndroidLocationTracker" method="_on_ui_root_snap_camera_to_location"]
 [connection signal="spawn_specific_structure" from="UIRoot" to="StructureSpawner" method="_on_ui_root_spawn_specific_structure"]
 [connection signal="start_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_start_navigation"]
 [connection signal="zoom_in_button" from="UIRoot" to="Camera3D" method="_on_ui_root_zoom_in_button"]
 [connection signal="zoom_out_button" from="UIRoot" to="Camera3D" method="_on_ui_root_zoom_out_button"]
+[connection signal="snap_camera" from="AndroidLocationTracker" to="Camera3D" method="_on_android_location_tracker_snap_camera"]

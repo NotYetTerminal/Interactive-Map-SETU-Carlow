@@ -1,6 +1,8 @@
 extends Structure
 class_name AndroidLocationTracker
 
+signal snap_camera(android_position_x: float, android_position_z: float)
+
 # OS Location Tracking
 var gps_provider: Object
 
@@ -21,10 +23,6 @@ func _ready() -> void:
 		var allowed: bool = OS.request_permissions() 
 		if allowed:
 			enable_GPS()
-
-
-func _process(_delta: float) -> void:
-	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
 
 
 func permission_check(permission_name: String, was_granted: bool) -> void:
@@ -51,3 +49,11 @@ func location_listener(location_data: Dictionary) -> void:
 	set_structure_global_position()
 	var accuracy_level: float = location_data["accuracy"]
 	accuracy_mesh_instance_3d.scale = Vector3(accuracy_level, accuracy_level, accuracy_level)
+
+
+func _on_camera_3d_new_zoom_level(zoom_level: float) -> void:
+	mesh_instance_3d.scale = Vector3(zoom_level, zoom_level, zoom_level)
+
+
+func _on_ui_root_snap_camera_to_location() -> void:
+	snap_camera.emit(position.x, position.z)

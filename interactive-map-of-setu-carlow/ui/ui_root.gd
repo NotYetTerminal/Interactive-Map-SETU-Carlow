@@ -5,6 +5,7 @@ signal cancel_navigation()
 signal start_navigation(from_structure: Structure, to_structure: Structure, allow_stairs: bool)
 signal zoom_in_button()
 signal zoom_out_button()
+signal snap_camera_to_location()
 
 @onready var admin_ui_root: AdminUIRoot = $AdminUIRoot
 @onready var user_ui_root: UserUIRoot = $UserUIRoot
@@ -68,3 +69,7 @@ func _on_pathfinder_map_fully_updated() -> void:
 
 func _on_firebase_connector_incorrect_login() -> void:
 	admin_ui_root.show_input_message("Incorrect login details.")
+
+
+func _on_location_button_button_down() -> void:
+	snap_camera_to_location.emit()

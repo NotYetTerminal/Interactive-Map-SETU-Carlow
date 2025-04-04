@@ -13,10 +13,6 @@ var waypoints_updated_time: int
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
 
-func _process(_delta: float) -> void:
-	mesh_instance_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
-	collision_shape_3d.scale = Vector3(Globals.camera_zoom, Globals.camera_zoom, Globals.camera_zoom)
-
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in
@@ -142,3 +138,8 @@ func update_visibility() -> void:
 	collision_shape_3d.disabled = floor_number != Globals.current_floor
 	for waypoint: Waypoint in waypoints_node.get_children():
 		waypoint.update_visibility()
+
+
+func set_icon_scale(new_scale: float) -> void:
+	mesh_instance_3d.scale = Vector3(new_scale, new_scale, new_scale)
+	collision_shape_3d.scale = Vector3(new_scale, new_scale, new_scale)

@@ -11,3 +11,8 @@ func add_new_room(new_room: Room) -> void:
 
 func get_all_rooms() -> Array:
 	return _all_rooms.values()
+
+
+func _on_camera_3d_new_zoom_level(zoom_level: float) -> void:
+	for room: Room in _all_rooms.values():
+		room.set_icon_scale(zoom_level)
