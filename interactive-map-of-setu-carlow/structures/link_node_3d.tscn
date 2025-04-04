@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://bul6vw37l1nww"]
 
 [ext_resource type="Script" uid="uid://c3wva0wuuwaly" path="res://structures/link_node_3d.gd" id="1_dxmlh"]
-[ext_resource type="Texture2D" uid="uid://ciyq48h1gl2n1" path="res://icons/stop-sign.png" id="2_7u4xk"]
+[ext_resource type="Texture2D" uid="uid://b6n2ny7me3kyh" path="res://icons/stop-sign.png" id="2_7u4xk"]
 [ext_resource type="Script" uid="uid://crdav7n24p4wc" path="res://structures/feature_sprite_3d.gd" id="3_f8xy2"]
-[ext_resource type="Texture2D" uid="uid://dfilpwbyif4a" path="res://icons/upstairs.png" id="4_okwx8"]
-[ext_resource type="Texture2D" uid="uid://0jwrb8wnfn0n" path="res://icons/downstairs.png" id="5_4157d"]
-[ext_resource type="Texture2D" uid="uid://d246lfdrntiid" path="res://icons/stairs.png" id="6_uykew"]
+[ext_resource type="Texture2D" uid="uid://dkr5diepn435n" path="res://icons/upstairs.png" id="4_okwx8"]
+[ext_resource type="Texture2D" uid="uid://ch4iru88hoqc5" path="res://icons/downstairs.png" id="5_4157d"]
+[ext_resource type="Texture2D" uid="uid://ck8cpj7uhk3uv" path="res://icons/stairs.png" id="6_uykew"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_il17l"]
 emission_enabled = true
@@ -55,3 +55,14 @@ feature_images_dictionary = Dictionary[String, CompressedTexture2D]({
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 visible = false
 mesh = SubResource("CylinderMesh_5dvka")
+
+[node name="ArrowHolderNode3D" type="Node3D" parent="."]
+
+[node name="ArrowMeshInstance3D" type="MeshInstance3D" parent="ArrowHolderNode3D"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.25, 0, 0.4)
+mesh = SubResource("BoxMesh_6i5er")
+skeleton = NodePath("../..")
+
+[node name="ArrowMeshInstance3D2" type="MeshInstance3D" parent="ArrowHolderNode3D"]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -0.25, 0, 0.4)
+mesh = SubResource("BoxMesh_6i5er")

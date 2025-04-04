@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dc0fvyikedoll"]
 
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_m61wn"]
-[ext_resource type="Texture2D" uid="uid://bukb8nkeh5ehk" path="res://map_images/map-239.png" id="1_onxvs"]
-[ext_resource type="Texture2D" uid="uid://rnvs1vbr28e2" path="res://map_images/map-240.png" id="3_160kj"]
+[ext_resource type="Texture2D" uid="uid://qd7wc0bist42" path="res://map_images/map-239.png" id="1_onxvs"]
+[ext_resource type="Texture2D" uid="uid://7r6cw05whidc" path="res://map_images/map-240.png" id="3_160kj"]
 
 [node name="CateringServicesBuildingNode3D" type="Node3D"]
 transform = Transform3D(-0.09767, -1.47479e-08, -0.283656, 4.52987e-08, -0.3, 1.06469e-13, -0.283656, -4.28308e-08, 0.09767, 0, 0, 0)

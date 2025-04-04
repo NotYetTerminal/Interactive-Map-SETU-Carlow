@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bausw5o86wtvy"]
 
-[ext_resource type="Texture2D" uid="uid://bv7k1lpin0t12" path="res://map_images/map-227.png" id="1_jmlni"]
+[ext_resource type="Texture2D" uid="uid://etk18ysk54t7" path="res://map_images/map-227.png" id="1_jmlni"]
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_quuei"]
-[ext_resource type="Texture2D" uid="uid://rrnb07k30n7e" path="res://map_images/map-228.png" id="3_ql42g"]
+[ext_resource type="Texture2D" uid="uid://bhjj4e6ygikul" path="res://map_images/map-228.png" id="3_ql42g"]
 
 [node name="BurrinBuildingNode3D" type="Node3D"]
 transform = Transform3D(0.241107, -3.64062e-08, -0.0830201, -3.85039e-08, -0.255, 2.48378e-15, -0.0830201, 1.25357e-08, -0.241107, 0, 0, 0)

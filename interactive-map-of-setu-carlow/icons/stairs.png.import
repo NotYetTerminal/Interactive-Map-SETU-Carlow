@@ -2,22 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d246lfdrntiid"
-path.s3tc="res://.godot/imported/stairs.png-0837ce80f28697147a62548a689f8528.s3tc.ctex"
-path.etc2="res://.godot/imported/stairs.png-0837ce80f28697147a62548a689f8528.etc2.ctex"
+uid="uid://ck8cpj7uhk3uv"
+path="res://.godot/imported/stairs.png-0837ce80f28697147a62548a689f8528.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://icons/stairs.png"
-dest_files=["res://.godot/imported/stairs.png-0837ce80f28697147a62548a689f8528.s3tc.ctex", "res://.godot/imported/stairs.png-0837ce80f28697147a62548a689f8528.etc2.ctex"]
+dest_files=["res://.godot/imported/stairs.png-0837ce80f28697147a62548a689f8528.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -33,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dusn1bxyvlsya"]
 
-[ext_resource type="Texture2D" uid="uid://rntndhbqxv8m" path="res://map_images/map-221.png" id="1_6jcfl"]
+[ext_resource type="Texture2D" uid="uid://covgmj543mj1o" path="res://map_images/map-221.png" id="1_6jcfl"]
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_pmacs"]
-[ext_resource type="Texture2D" uid="uid://b5vmxgjpthvhd" path="res://map_images/map-222.png" id="2_jg3tg"]
+[ext_resource type="Texture2D" uid="uid://bod1wb0qh08dg" path="res://map_images/map-222.png" id="2_jg3tg"]
 
 [node name="BarrowCentreNode3D" type="Node3D"]
 transform = Transform3D(0.222197, -3.35508e-08, -0.0765086, -3.5484e-08, -0.235, -1.88406e-14, -0.0765086, 1.15525e-08, -0.222197, 0, 0, 0)

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bn8qhs1o2a227"]
 
 [ext_resource type="Script" uid="uid://cdsyqtwd7krb" path="res://map_textures/building_texture_node.gd" id="1_2vuvd"]
-[ext_resource type="Texture2D" uid="uid://40e48o1v4imw" path="res://map_images/map-229.png" id="1_qtp6c"]
-[ext_resource type="Texture2D" uid="uid://5ih5kpqlsigs" path="res://map_images/map-230.png" id="3_ts2yv"]
+[ext_resource type="Texture2D" uid="uid://bsh67kd0oraqk" path="res://map_images/map-229.png" id="1_qtp6c"]
+[ext_resource type="Texture2D" uid="uid://bhbdvrjxillhb" path="res://map_images/map-230.png" id="3_ts2yv"]
 
 [node name="NoreBuildingNode3D" type="Node3D"]
 transform = Transform3D(0.330932, -4.99693e-08, -0.113949, -5.28485e-08, -0.35, -7.894e-14, -0.113949, 1.72058e-08, -0.330932, 0, 0, 0)
