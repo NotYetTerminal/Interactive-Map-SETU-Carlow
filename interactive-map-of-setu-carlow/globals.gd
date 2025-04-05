@@ -20,7 +20,6 @@ var firebaseConnector: FirebaseConnector
 const EARTH_RADIUS: float = 6378137
 
 var current_floor: int = 1
-var camera_zoom: float = 0.5
 
 # Load offline data
 func load_offline_data() -> void:
@@ -31,9 +30,10 @@ func load_offline_data() -> void:
 	else:
 		# The first time the application runs use the data included in the build export
 		file = FileAccess.open("offline_data_cached", FileAccess.READ)
-		print("Loaded cache")
-		offline_data = file.get_var()
-		save_offline_data()
+		if file != null:
+			print("Loaded cache")
+			offline_data = file.get_var()
+			save_offline_data()
 
 # Save data for both local and cloud
 func save_data(id: String, fields: Array[String], parent_collection_path: String, global_structure_offline_data: Dictionary) -> void:

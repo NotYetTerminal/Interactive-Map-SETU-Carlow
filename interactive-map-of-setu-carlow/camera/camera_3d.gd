@@ -2,6 +2,7 @@ extends Camera3D
 
 # Currently selected structure
 signal select_structure(selected_structure: Structure)
+signal new_zoom_level(zoom_level: float)
 
 var moving_camera: bool = false
 var screen_ratio: float
@@ -11,7 +12,7 @@ var max_zoom: float = 45
 var mouse_zoom_amount: float = 0.2
 var touch_zoom_amount: float = 8
 var button_zoom_amount: float = 2
-var zoom_level: float = 10
+var zoom_level: float = 15
 
 var move_speed: float = 0.01
 
@@ -146,7 +147,7 @@ func ray_cast_select(event: InputEvent) -> void:
 			position = Vector3(structure.global_position.x + (3 * sin(rotation.y)), -10, structure.global_position.z + (3 * cos(rotation.y)))
 			zoom_level = 9
 			size = zoom_level
-			Globals.camera_zoom = min(zoom_level / 20, 1.5)
+			send_zoom_level_update()
 		select_structure.emit(structure)
 	else:
 		select_structure.emit(null)
@@ -155,13 +156,19 @@ func ray_cast_select(event: InputEvent) -> void:
 func zoom_in(zoom_amount: float) -> void:
 	zoom_level = max(zoom_level - zoom_amount, min_zoom)
 	size = zoom_level
-	Globals.camera_zoom = min(zoom_level / 20, 1.5)
+	send_zoom_level_update()
 
 # Used by mouse and zoom buttons
 func zoom_out(zoom_amount: float) -> void:
 	zoom_level = min(zoom_level + zoom_amount, max_zoom)
 	size = zoom_level
-	Globals.camera_zoom = min(zoom_level / 20, 1.5)
+	send_zoom_level_update()
+
+
+func send_zoom_level_update() -> void:
+	var camera_zoom_scale: float = min(zoom_level / 15, 1.5)
+	Globals.base_map.set_icon_scale(camera_zoom_scale)
+	new_zoom_level.emit(camera_zoom_scale)
 
 
 func _on_ui_root_zoom_in_button() -> void:
@@ -170,3 +177,8 @@ func _on_ui_root_zoom_in_button() -> void:
 
 func _on_ui_root_zoom_out_button() -> void:
 	zoom_out(button_zoom_amount)
+
+
+func _on_android_location_tracker_snap_camera(android_position_x: float, android_position_z: float) -> void:
+	position.x = android_position_x
+	position.z = android_position_z

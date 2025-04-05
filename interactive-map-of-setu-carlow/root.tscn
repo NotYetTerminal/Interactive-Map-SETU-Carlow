@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c632xxyai4jm5"]
+[gd_scene load_steps=18 format=3 uid="uid://c632xxyai4jm5"]
 
 [ext_resource type="Script" uid="uid://bp3iud5jniv3d" path="res://firebase/firebase_connector.gd" id="1_jrn7t"]
 [ext_resource type="Script" uid="uid://1aocp5yma75r" path="res://managers/structure_spawner.gd" id="4_66h5g"]
@@ -11,11 +11,35 @@
 [ext_resource type="Script" uid="uid://dl0ofm7ep0r42" path="res://managers/building_manager.gd" id="8_vacqx"]
 [ext_resource type="Script" uid="uid://yyjlfhs10csx" path="res://managers/room_manager.gd" id="9_gu2ku"]
 [ext_resource type="PackedScene" uid="uid://qd00gyyuopt6" path="res://ui/ui_root.tscn" id="11_hwpgg"]
+[ext_resource type="Script" uid="uid://cg6ejcdwjy6sx" path="res://managers/android_location_tracker.gd" id="12_qw60f"]
 
 [sub_resource type="Environment" id="Environment_knlak"]
 background_mode = 1
 background_color = Color(1, 1, 1, 1)
 ambient_light_source = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qw60f"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1, 0.368627, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_eji0w"]
+material = SubResource("StandardMaterial3D_qw60f")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eji0w"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.501961)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.666667, 0.666667, 0.666667, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qwhpj"]
+material = SubResource("StandardMaterial3D_eji0w")
+radius = 0.1
+height = 0.2
 
 [node name="Root" type="Node"]
 
@@ -46,10 +70,20 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -10
 environment = SubResource("Environment_knlak")
 projection = 1
 current = true
-size = 10.0
+size = 15.0
 script = ExtResource("4_un6fr")
 
 [node name="UIRoot" parent="." instance=ExtResource("11_hwpgg")]
+
+[node name="AndroidLocationTracker" type="Node3D" parent="."]
+visible = false
+script = ExtResource("12_qw60f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AndroidLocationTracker"]
+mesh = SubResource("SphereMesh_eji0w")
+
+[node name="AccuracyMeshInstance3D" type="MeshInstance3D" parent="AndroidLocationTracker"]
+mesh = SubResource("SphereMesh_qwhpj")
 
 [connection signal="admin_logged_in" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_admin_logged_in"]
 [connection signal="incorrect_login" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_incorrect_login"]
@@ -58,9 +92,15 @@ script = ExtResource("4_un6fr")
 [connection signal="select_spawned_structure" from="StructureSpawner" to="UIRoot" method="_on_structure_spawner_select_spawned_structure"]
 [connection signal="map_fully_updated" from="Pathfinder" to="UIRoot" method="_on_pathfinder_map_fully_updated"]
 [connection signal="pathfinding_distance" from="Pathfinder" to="UIRoot" method="_on_pathfinder_pathfinding_distance"]
+[connection signal="new_zoom_level" from="Camera3D" to="Pathfinder" method="_on_camera_3d_new_zoom_level"]
+[connection signal="new_zoom_level" from="Camera3D" to="BuildingManager" method="_on_camera_3d_new_zoom_level"]
+[connection signal="new_zoom_level" from="Camera3D" to="RoomManager" method="_on_camera_3d_new_zoom_level"]
+[connection signal="new_zoom_level" from="Camera3D" to="AndroidLocationTracker" method="_on_camera_3d_new_zoom_level"]
 [connection signal="select_structure" from="Camera3D" to="UIRoot" method="_on_camera_3d_select_structure"]
 [connection signal="cancel_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_cancel_navigation"]
+[connection signal="snap_camera_to_location" from="UIRoot" to="AndroidLocationTracker" method="_on_ui_root_snap_camera_to_location"]
 [connection signal="spawn_specific_structure" from="UIRoot" to="StructureSpawner" method="_on_ui_root_spawn_specific_structure"]
 [connection signal="start_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_start_navigation"]
 [connection signal="zoom_in_button" from="UIRoot" to="Camera3D" method="_on_ui_root_zoom_in_button"]
 [connection signal="zoom_out_button" from="UIRoot" to="Camera3D" method="_on_ui_root_zoom_out_button"]
+[connection signal="snap_camera" from="AndroidLocationTracker" to="Camera3D" method="_on_android_location_tracker_snap_camera"]
