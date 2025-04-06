@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://1ktnilof3tgs" path="res://map_images/map-242.png" id="3_11my7"]
 
 [node name="EngineeringAndTechnologyBuildingNode3D" type="Node3D"]
-transform = Transform3D(0.330932, -4.99693e-08, -0.113949, -5.28485e-08, -0.35, -7.894e-14, -0.113949, 1.72058e-08, -0.330932, 0, 0, 0)
+transform = Transform3D(-0.0618579, -5.40779e-09, -0.179649, 1.66103e-08, -0.19, 0, -0.179649, -1.57054e-08, 0.0618579, 0, 0, 0)
 script = ExtResource("1_iouqj")
 
 [node name="Sprite3DLevel1" type="Sprite3D" parent="."]

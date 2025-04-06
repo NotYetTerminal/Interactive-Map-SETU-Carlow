@@ -17,6 +17,10 @@ var building_texture_node: Node3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
+# Set the scale on instantiation
+func _ready() -> void:
+	var parent_base_map: BaseMap = get_parent_structure()
+	set_icon_scale(parent_base_map.mesh_instance_3d.scale.x)
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
@@ -146,9 +150,10 @@ func current_firestore_path() -> String:
 # Adds in the texture for the building
 func add_map_texture() -> void:
 	if map_textures_dictionary.has(structure_name):
-		var building_texture_scene: PackedScene = map_textures_dictionary[structure_name]
-		building_texture_node = building_texture_scene.instantiate()
-		add_child(building_texture_node)
+		if building_texture_node == null:
+			var building_texture_scene: PackedScene = map_textures_dictionary[structure_name]
+			building_texture_node = building_texture_scene.instantiate()
+			add_child(building_texture_node)
 	else:
 		print("Not found key: " + structure_name)
 		print(map_textures_dictionary)

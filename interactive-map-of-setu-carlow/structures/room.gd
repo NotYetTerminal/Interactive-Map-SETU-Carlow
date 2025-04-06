@@ -12,6 +12,10 @@ var waypoints_updated_time: int
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
+# Set the scale on instantiation
+func _ready() -> void:
+	var parent_building: Building = get_parent_structure()
+	set_icon_scale(parent_building.mesh_instance_3d.scale.x)
 
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:

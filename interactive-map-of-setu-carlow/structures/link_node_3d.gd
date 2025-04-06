@@ -13,6 +13,11 @@ var current_colour: Color
 @onready var arrow_mesh_instance_3d_2: MeshInstance3D = $ArrowHolderNode3D/ArrowMeshInstance3D2
 var arrow_active: bool = false
 
+# Set the scale on instantiation
+func _ready() -> void:
+	var parent_waypoint: Waypoint = get_parent_node_3d()
+	set_icon_scale(parent_waypoint.mesh_instance_3d.scale.x)
+
 
 func set_link_holder_visibility(seen: bool) -> void:
 	link_holder_node_3d.visible = seen

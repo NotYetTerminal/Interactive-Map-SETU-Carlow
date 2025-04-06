@@ -23,6 +23,13 @@ var g_cost: float
 var h_cost: float
 var from_waypoint: Waypoint
 
+# Set the scale on instantiation
+func _ready() -> void:
+	var parent_structure: Structure = get_parent_structure()
+	@warning_ignore("unsafe_property_access")
+	@warning_ignore("unsafe_call_argument")
+	set_icon_scale(parent_structure.mesh_instance_3d.scale.x)
+
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary, call_others: bool = true) -> Array[String]:
 	# Do not run update_links first time as not all Waypoints are spawned yet
@@ -165,6 +172,7 @@ func update_links(call_others: bool) -> void:
 		# TODO Maybe don't have both link textures showing
 		link.set_target_waypoint_and_feature(target_waypoint, feature)
 		link.set_link_holder_visibility(Globals.edit_mode)
+		link.set_arrow_holder_visibility(false)
 	
 	# Deleting links
 	var remove_links_waypoint_ids: Array[String] = []

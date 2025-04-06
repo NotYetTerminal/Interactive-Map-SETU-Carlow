@@ -57,6 +57,7 @@ visible = false
 mesh = SubResource("CylinderMesh_5dvka")
 
 [node name="ArrowHolderNode3D" type="Node3D" parent="."]
+visible = false
 
 [node name="ArrowMeshInstance3D" type="MeshInstance3D" parent="ArrowHolderNode3D"]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.25, 0, 0.4)

@@ -23,10 +23,10 @@ var rotation_speed: float = PI / 180
 var rotating: int = 0
 var start_angle: float = 0
 
-var camera_x_positive_limit: float = 10
+var camera_x_positive_limit: float = 20
 var camera_x_negative_limit: float = -10
 var camera_z_positive_limit: float = 20
-var camera_z_negative_limit: float = -10
+var camera_z_negative_limit: float = -20
 
 func _ready() -> void:
 	var screen_size: Vector2 = get_viewport().get_visible_rect().size
