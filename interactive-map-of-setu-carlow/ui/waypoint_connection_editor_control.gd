@@ -39,7 +39,7 @@ func set_waypoint_editor_as_editable(connected_waypoints_dictionary: Dictionary[
 	waypoint_option_button.set_item_disabled(0, true)
 
 	var index: int = 1
-	for waypoint_id: String in all_waypoints_ids_array:
+	for waypoint_id: String in all_waypoints_ids_array.slice(0, 15):
 		waypoint_option_button.add_item(waypoint_id)
 		if connected_waypoints_dictionary.has(waypoint_id):
 			waypoint_option_button.set_item_disabled(index, true)

@@ -130,7 +130,7 @@ func get_closest_waypoint() -> Waypoint:
 	var closest_distance: float = 10000
 	var closest_waypoint: Waypoint
 	for waypoint: Waypoint in waypoints_node.get_children():
-		var distance: float = global_position.distance_to(waypoint.global_position)
+		var distance: float = global_position.distance_to(waypoint.global_position) + (waypoint.floor_number - 1)
 		if distance < closest_distance:
 			closest_distance = distance
 			closest_waypoint = waypoint
