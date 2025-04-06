@@ -168,7 +168,7 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 			else:
 				structure_document.document[child_structure_collection_name] = parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
 	
-	if structure_type == Structures.Base_Map:
+	if structure_type == Structures.Base_Map and len(parent_document.document.keys()) != 0:
 		Globals.offline_data = parent_document.document
 
 # Clean up the data from Firebase for easier access

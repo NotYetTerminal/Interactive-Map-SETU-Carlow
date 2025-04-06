@@ -56,6 +56,7 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 var selected_structure: Structure
 var starting_waypoint: Waypoint
 var end_waypoint: Waypoint
+var spawning_structure: bool = false
 
 
 func _input(event: InputEvent) -> void:
@@ -88,7 +89,6 @@ func change_text_edits() -> void:
 					for inner_scene2: Control in inner_scene.get_children():
 						if inner_scene2 is LineEdit:
 							(inner_scene2 as LineEdit).editable = selected_structure != null and Globals.edit_mode
-				
 
 # Called when a structure is selected
 func select_structure(structure: Structure) -> void:
@@ -106,6 +106,7 @@ func select_structure(structure: Structure) -> void:
 		if selected_structure.just_moved:
 			selected_structure.just_moved = false
 			_on_save_button_pressed()
+			spawning_structure = false
 	else:
 		id_line_edit.text = ""
 		longitude_line_edit.text = ""
@@ -259,9 +260,10 @@ func _on_save_button_pressed() -> void:
 
 
 func show_input_message(message: String) -> void:
-	input_message_label.text = message
-	input_message_panel.visible = true
-	input_message_close_button.visible = true
+	if not spawning_structure:
+		input_message_label.text = message
+		input_message_panel.visible = true
+		input_message_close_button.visible = true
 
 
 func show_input_message_mid_action(message: String) -> void:
@@ -306,6 +308,7 @@ func _on_add_button_pressed() -> void:
 func _on_building_button_pressed() -> void:
 	if selected_structure is not Waypoint:
 		add_structure_panel.visible = false
+		spawning_structure = true
 		spawn_specific_structure.emit(selected_structure, Structures.BuildingStruct)
 
 

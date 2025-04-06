@@ -9,10 +9,10 @@ transform = Transform3D(0.330932, -4.99693e-08, -0.113949, -5.28485e-08, -0.35, 
 script = ExtResource("1_n4nkw")
 
 [node name="Sprite3DLevel1" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 1.06581e-14, -2.30926e-14, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.53569, -2.31886e-07, 7.98132)
+transform = Transform3D(-1, 8.9407e-08, -1.06581e-14, 1.95399e-14, -4.37114e-08, 1, 8.9407e-08, 1, 4.37114e-08, -1.52091, 2.29648e-07, 8.1868)
 texture = ExtResource("2_n4nkw")
 
 [node name="Sprite3DLevel2" type="Sprite3D" parent="."]
-transform = Transform3D(0.96, -2.98023e-08, 1.4877e-14, -4.61853e-14, -4.19629e-08, -0.96, 2.98023e-08, 0.96, -4.19629e-08, 1.79, 0, 7.171)
+transform = Transform3D(-0.96, 8.9407e-08, -4.66294e-14, 7.10543e-14, -4.19629e-08, 0.96, 8.9407e-08, 0.96, 4.19629e-08, -1.782, 0, 7.334)
 visible = false
 texture = ExtResource("3_3ysn5")
