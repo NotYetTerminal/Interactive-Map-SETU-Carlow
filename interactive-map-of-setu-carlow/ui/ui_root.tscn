@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://qd00gyyuopt6"]
+[gd_scene load_steps=14 format=3 uid="uid://qd00gyyuopt6"]
 
 [ext_resource type="PackedScene" uid="uid://c8wl51gue5ps3" path="res://ui/admin_ui_root.tscn" id="1_51cd5"]
 [ext_resource type="Script" uid="uid://bsvvj3gxdj0a6" path="res://ui/ui_root.gd" id="1_h3dkj"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ch4iru88hoqc5" path="res://icons/downstairs.png" id="6_wgvx6"]
 [ext_resource type="Texture2D" uid="uid://cmlswvmlpo33i" path="res://icons/zoom-in.png" id="7_5a6dn"]
 [ext_resource type="Texture2D" uid="uid://cpoeuaw0honi1" path="res://icons/zoom-out.png" id="8_1cbwd"]
+[ext_resource type="Texture2D" uid="uid://cnrdpkx8kmoy3" path="res://icons/pin.png" id="8_bcxn4"]
 [ext_resource type="Script" uid="uid://bat3oll7lrwuc" path="res://ui/controls_label.gd" id="10_h72ba"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apxja"]
@@ -159,14 +160,20 @@ grow_vertical = 2
 text = "Edit Mode"
 script = ExtResource("3_c4mcg")
 
-[node name="LocationButton" type="Button" parent="ScreenElementsControl2/RightControl"]
-visible = false
+[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="ScreenElementsControl2/RightControl"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.8
 anchor_right = 1.0
-anchor_bottom = 0.15
-text = "Find Location"
+anchor_bottom = 0.25
+mouse_filter = 2
+alignment_horizontal = 2
+
+[node name="LocationButton" type="Button" parent="ScreenElementsControl2/RightControl/AspectRatioContainer3"]
+visible = false
+layout_mode = 2
+icon = ExtResource("8_bcxn4")
+icon_alignment = 1
+expand_icon = true
 
 [node name="AdminUIRoot" parent="." instance=ExtResource("1_51cd5")]
 visible = false
@@ -231,7 +238,7 @@ script = ExtResource("10_h72ba")
 [connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="." method="_on_admin_check_button_edit_mode_toggled"]
 [connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="AdminUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
 [connection signal="edit_mode_toggled" from="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" to="UserUIRoot" method="_on_admin_check_button_edit_mode_toggled"]
-[connection signal="button_down" from="ScreenElementsControl2/RightControl/LocationButton" to="." method="_on_location_button_button_down"]
+[connection signal="button_down" from="ScreenElementsControl2/RightControl/AspectRatioContainer3/LocationButton" to="." method="_on_location_button_button_down"]
 [connection signal="cancel_login" from="AdminUIRoot" to="ScreenElementsControl2/RightControl/Panel/AdminCheckButton" method="_on_admin_ui_root_cancel_login"]
 [connection signal="spawn_specific_structure" from="AdminUIRoot" to="." method="_on_admin_ui_root_spawn_specific_structure"]
 [connection signal="cancel_navigation" from="UserUIRoot" to="." method="_on_user_ui_root_cancel_navigation"]

@@ -5,7 +5,7 @@ signal update_floor_number()
 
 @onready var floor_indicator_label: Label = $LeftControl/AspectRatioContainer3/FloorIndicatorLabel
 @onready var edit_mode_panel: Panel = $RightControl/Panel
-@onready var location_button: Button = $RightControl/LocationButton
+@onready var location_button: Button = $RightControl/AspectRatioContainer3/LocationButton
 
 # Used by floor indicator label
 var floor_name_array: Array[String] = ["Ground Floor", "First Floor", "Second Floor"]
