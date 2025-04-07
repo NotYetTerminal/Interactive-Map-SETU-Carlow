@@ -22,7 +22,7 @@ ambient_light_source = 1
 albedo_color = Color(0, 0, 0, 1)
 metallic_specular = 0.0
 emission_enabled = true
-emission = Color(1, 0.368627, 0, 1)
+emission = Color(0.117647, 0.564706, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_eji0w"]
 material = SubResource("StandardMaterial3D_qw60f")

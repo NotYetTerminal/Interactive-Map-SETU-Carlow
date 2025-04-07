@@ -72,7 +72,7 @@ alignment_horizontal = 0
 
 [node name="FloorIndicatorLabel" type="Label" parent="ScreenElementsControl2/LeftControl/AspectRatioContainer3"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 50
 text = "Ground Floor"
 vertical_alignment = 1
 

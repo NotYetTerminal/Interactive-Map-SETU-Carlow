@@ -14,6 +14,7 @@ var waypoint_connections: Dictionary[String, String] = {}
 
 # Contains a link for each connection { waypoint_id: String, link: Node3D }
 var links_dictionary: Dictionary[String, Node3D] = {}
+var link_colour: Color = Color.DEEP_SKY_BLUE
 
 # Pathfinding variables
 var f_cost: float:
@@ -83,8 +84,8 @@ func update_visibility() -> void:
 		mesh_instance_3d.visible = should_be_visible
 		collision_shape_3d.disabled = true
 		for link: Link in links_dictionary.values():
-			link.set_link_holder_visibility(should_be_visible and link.current_colour == Color.LIGHT_GREEN)
-			link.set_arrow_holder_visibility(should_be_visible and link.current_colour == Color.LIGHT_GREEN and link.arrow_active)
+			link.set_link_holder_visibility(should_be_visible and link.current_colour == link_colour)
+			link.set_arrow_holder_visibility(should_be_visible and link.current_colour == link_colour and link.arrow_active)
 			link.set_texture_visibility(floor_number == Globals.current_floor)
 
 # Update the details when editing
@@ -232,7 +233,7 @@ func change_link_colour(waypoint_id: String, new_colour: Color, direction_forwar
 	if links_dictionary.has(waypoint_id):
 		var link: Link = links_dictionary[waypoint_id]
 		link.change_colour(new_colour)
-		if new_colour == Color.LIGHT_GREEN:
+		if new_colour == link_colour:
 			link.set_link_holder_visibility(true)
 			link.arrow_active = direction_forward
 		else:
@@ -247,11 +248,11 @@ func finish_pathfinding(to_waypoint: Waypoint, starting_structure: Structure) ->
 	# If this waypoint is part of the starting_structure stop revealing path
 	if starting_structure != get_parent_structure():
 		if from_waypoint != null:
-			change_link_colour(from_waypoint.id, Color.LIGHT_GREEN, false)
+			change_link_colour(from_waypoint.id, link_colour, false)
 			distance += from_waypoint.finish_pathfinding(self, starting_structure)
 	# This will run for everyone except the target
 	if to_waypoint != null:
-		change_link_colour(to_waypoint.id, Color.LIGHT_GREEN, true)
+		change_link_colour(to_waypoint.id, link_colour, true)
 		distance += calculate_distance_to_waypoint(to_waypoint)
 	finished_pathfinding = true
 	update_visibility()
@@ -275,10 +276,10 @@ func calculate_distance_to_waypoint(to_waypoint: Waypoint) -> float:
 # Reset pathfinding variables and colour
 func reset(to_waypoint: Waypoint = null) -> void:
 	if from_waypoint != null:
-		change_link_colour(from_waypoint.id, Color.LIGHT_SALMON, false)
+		change_link_colour(from_waypoint.id, Color.DODGER_BLUE, false)
 	# This will run for everyone except the target
 	if to_waypoint != null:
-		change_link_colour(to_waypoint.id, Color.LIGHT_SALMON, false)
+		change_link_colour(to_waypoint.id, Color.DODGER_BLUE, false)
 	
 	finished_pathfinding = false
 	update_visibility()

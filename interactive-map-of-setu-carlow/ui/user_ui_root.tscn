@@ -145,38 +145,60 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_n81ai")
 placeholder_text = "Go to..."
 caret_blink = true
 
-[node name="DistanceLabel" type="Label" parent="SearchElementsControl"]
-visible = false
+[node name="ThirdHBoxContainer" type="HBoxContainer" parent="SearchElementsControl"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.01
 anchor_top = 0.8
-anchor_right = 0.01
+anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="DistanceLabel" type="Label" parent="SearchElementsControl/ThirdHBoxContainer"]
+visible = false
+layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 vertical_alignment = 1
 
-[node name="NavigationButton" type="Button" parent="SearchElementsControl"]
-layout_direction = 3
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.8
-anchor_right = 0.2
-anchor_bottom = 0.8
-theme_override_font_sizes/font_size = 30
+[node name="HFlowContainer" type="HFlowContainer" parent="SearchElementsControl/ThirdHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="PaddingControl" type="Control" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer"]
+layout_mode = 2
+
+[node name="StairsCheckButton" type="CheckButton" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 40
+button_pressed = true
+text = "Use Stairs: "
+
+[node name="PaddingControl" type="Control" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="PaddingControl2" type="Control" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer"]
+layout_mode = 2
+
+[node name="NavigationButton" type="Button" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 40
 text = "Start Navigation"
 script = ExtResource("4_j3kvc")
 
-[node name="StairsCheckButton" type="CheckButton" parent="SearchElementsControl/NavigationButton"]
-layout_direction = 2
-layout_mode = 0
-offset_left = -220.0
-offset_right = -24.0
-offset_bottom = 42.0
-theme_override_font_sizes/font_size = 30
-button_pressed = true
-text = "Use Stairs: "
+[node name="PaddingControl" type="Control" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 
 [node name="InformationPopupElementsControl" type="Control" parent="."]
 visible = false
@@ -284,14 +306,14 @@ expand_icon = true
 [connection signal="_show_building_information" from="." to="InformationPopupElementsControl" method="show_building_information"]
 [connection signal="_show_room_information" from="." to="InformationPopupElementsControl" method="show_room_information"]
 [connection signal="cancel_navigation" from="." to="SearchElementsControl" method="_on_user_ui_root_cancel_navigation"]
-[connection signal="cancel_navigation" from="." to="SearchElementsControl/NavigationButton" method="_on_user_ui_root_cancel_navigation"]
-[connection signal="start_navigation" from="." to="SearchElementsControl/NavigationButton" method="_on_user_ui_root_start_navigation"]
+[connection signal="cancel_navigation" from="." to="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton" method="_on_user_ui_root_cancel_navigation"]
+[connection signal="start_navigation" from="." to="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton" method="_on_user_ui_root_start_navigation"]
 [connection signal="set_from_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_from_search_structure"]
 [connection signal="set_to_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_to_search_structure"]
 [connection signal="text_changed" from="SearchElementsControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="." method="_on_from_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="SearchPanel" method="_on_from_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="SearchPanel" method="_on_to_search_bar_line_edit_text_changed"]
-[connection signal="button_down" from="SearchElementsControl/NavigationButton" to="." method="_on_navigation_button_button_down"]
+[connection signal="button_down" from="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton" to="." method="_on_navigation_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/AspectRatioContainer/FromButton" to="." method="_on_from_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/AspectRatioContainer2/ToButton" to="." method="_on_to_button_button_down"]

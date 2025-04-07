@@ -59,7 +59,7 @@ func change_colour(new_colour: Color) -> void:
 	arrow_mesh_instance_3d.set_surface_override_material(0, material)
 	arrow_mesh_instance_3d_2.set_surface_override_material(0, material)
 	
-	if new_colour == Color.LIGHT_GREEN:
+	if new_colour == Color.DEEP_SKY_BLUE:
 		feature_sprite_3d.change_texture_colour(Color.YELLOW)
 	else:
 		feature_sprite_3d.change_texture_colour(Color.WHITE)
