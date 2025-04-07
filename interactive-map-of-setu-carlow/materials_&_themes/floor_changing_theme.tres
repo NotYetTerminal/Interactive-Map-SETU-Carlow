@@ -1,0 +1,44 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://btoscehnl122x"]
+
+[ext_resource type="StyleBox" uid="uid://hqxm7n0pds88" path="res://materials_&_themes/normal_floor_changing_style_box_flat.tres" id="1_y701j"]
+[ext_resource type="StyleBox" uid="uid://decr4xnddcwh" path="res://materials_&_themes/hover_floor_changing_style_box_flat.tres" id="2_a1mwp"]
+[ext_resource type="StyleBox" uid="uid://d2rjlfpbh2gsx" path="res://materials_&_themes/pressed_floor_changing_style_box_flat.tres" id="2_k77yv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ii0eq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a1mwp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_20gl7"]
+
+[resource]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(0.109804, 0.109804, 0.109804, 0.784314)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/styles/disabled = ExtResource("2_k77yv")
+Button/styles/focus = SubResource("StyleBoxEmpty_ii0eq")
+Button/styles/hover = ExtResource("2_a1mwp")
+Button/styles/hover_pressed = ExtResource("2_a1mwp")
+Button/styles/normal = ExtResource("1_y701j")
+Button/styles/pressed = ExtResource("2_k77yv")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/styles/normal = ExtResource("1_y701j")
+LineEdit/colors/caret_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_color = Color(0.114897, 0.114897, 0.114897, 1)
+LineEdit/colors/font_placeholder_color = Color(0.11, 0.11, 0.11, 0.784314)
+LineEdit/colors/font_uneditable_color = Color(0.11, 0.11, 0.11, 0.784314)
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_a1mwp")
+LineEdit/styles/normal = ExtResource("1_y701j")
+LineEdit/styles/read_only = ExtResource("2_k77yv")
+Panel/styles/panel = ExtResource("2_k77yv")
+PopupMenu/colors/font_color = Color(0, 0, 0, 1)
+PopupMenu/colors/font_disabled_color = Color(0.597176, 0.597176, 0.597176, 0.8)
+PopupMenu/colors/font_hover_color = Color(0, 0, 0, 1)
+PopupMenu/styles/hover = ExtResource("2_a1mwp")
+PopupMenu/styles/panel = ExtResource("1_y701j")
+TextEdit/colors/caret_color = Color(0, 0, 0, 1)
+TextEdit/colors/font_color = Color(0.0807834, 0.0807834, 0.0807832, 1)
+TextEdit/styles/focus = SubResource("StyleBoxEmpty_20gl7")
+TextEdit/styles/normal = ExtResource("1_y701j")

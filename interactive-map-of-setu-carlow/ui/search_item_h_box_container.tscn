@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7ngcwe2n7hh"]
+[gd_scene load_steps=9 format=3 uid="uid://c7ngcwe2n7hh"]
 
 [ext_resource type="Texture2D" uid="uid://c0aynm4yf4nya" path="res://icons/right-up.png" id="1_cgbd0"]
 [ext_resource type="Script" uid="uid://bwqlfdnksakcn" path="res://ui/search_item_h_box_container.gd" id="1_pqgas"]
 [ext_resource type="Texture2D" uid="uid://ciif6acyem82o" path="res://icons/right-down.png" id="2_fers5"]
+[ext_resource type="Theme" uid="uid://bspim5e45tqvk" path="res://materials_&_themes/from_theme.tres" id="2_spwo8"]
+[ext_resource type="Theme" uid="uid://cg0w3ronyt11o" path="res://materials_&_themes/to_theme.tres" id="4_h2ehw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_spwo8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2ehw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xm3kn"]
 
 [node name="SearchItemHBoxContainer" type="HBoxContainer"]
 offset_right = 86.0
@@ -15,14 +23,17 @@ layout_mode = 2
 [node name="NameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxEmpty_spwo8")
 
 [node name="LocationLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxEmpty_h2ehw")
 
 [node name="ExtraInformationLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xm3kn")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -35,8 +46,13 @@ layout_mode = 2
 [node name="FromButton" type="Button" parent="HBoxContainer/AspectRatioContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme = ExtResource("2_spwo8")
 icon = ExtResource("1_cgbd0")
 expand_icon = true
+
+[node name="PaddingControl" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
 
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -44,8 +60,13 @@ layout_mode = 2
 [node name="ToButton" type="Button" parent="HBoxContainer/AspectRatioContainer2"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme = ExtResource("4_h2ehw")
 icon = ExtResource("2_fers5")
 expand_icon = true
+
+[node name="PaddingControl2" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
 
 [connection signal="button_down" from="HBoxContainer/AspectRatioContainer/FromButton" to="." method="_on_from_button_button_down"]
 [connection signal="button_down" from="HBoxContainer/AspectRatioContainer2/ToButton" to="." method="_on_to_button_button_down"]

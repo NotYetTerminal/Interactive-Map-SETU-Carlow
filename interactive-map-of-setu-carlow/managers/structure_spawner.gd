@@ -86,7 +86,7 @@ func spawn_room(room_id: String, room_data: Dictionary, parent: Structure) -> vo
 func spawn_structure(structure_id: String, structure_data: Dictionary, parent: Structure, structure_type: Structures) -> Structure:
 	# Create new scene
 	var new_structure: Structure
-	match(structure_type):
+	match structure_type:
 		Structures.BuildingStruct:
 			new_structure = building_scene.instantiate()
 			# Add to Buildings holder
@@ -105,7 +105,7 @@ func spawn_structure(structure_id: String, structure_data: Dictionary, parent: S
 	var _fields: Array[String] = new_structure.save_details(structure_id, structure_data)
 	
 	# Add structure to manager
-	match(structure_type):
+	match structure_type:
 		Structures.BuildingStruct:
 			building_manager.add_new_building(new_structure as Building)
 		Structures.RoomStruct:
@@ -123,7 +123,7 @@ func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Str
 		'latitude': parent.latitude,
 	}
 	# Assign an id for new structure
-	match(structure_type):
+	match structure_type:
 		Structures.BuildingStruct:
 			structure_id = "Building_"
 			default_data['name'] = ''

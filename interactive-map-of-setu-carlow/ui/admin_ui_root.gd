@@ -18,25 +18,25 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var name_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer
 @onready var name_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer/NameLineEdit
 @onready var description_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer
-@onready var description_text_edit: TextEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/DescriptionTextEdit
+@onready var description_text_edit: TextEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/HBoxContainer/VBoxContainer/DescriptionTextEdit
 @onready var building_letter_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterHBoxContainer
 @onready var building_letter_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterHBoxContainer/BuildingLetterLineEdit
-@onready var lecturers_v_box_container: VBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer
-@onready var lecturers_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer/LecturersLineEdit
+@onready var lecturers_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersHBoxContainer
+@onready var lecturers_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersHBoxContainer/LecturersLineEdit
 @onready var floor_number_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberHBoxContainer
 @onready var floor_number_spin_box: SpinBox = $InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberHBoxContainer/FloorNumberSpinBox
 @onready var parent_h_box_container: HBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentHBoxContainer
 @onready var parent_line_edit: LineEdit = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentHBoxContainer/ParenLineEdit
 @onready var waypoint_connections_scroll_container: ScrollContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer
 @onready var waypoint_connections_editors_v_box_container: WaypointConnectionsEditorsVBoxContainer = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer
-@onready var waypoints_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointsUpdatedTimeLabel
-@onready var buildings_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingsUpdatedTimeLabel
-@onready var rooms_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/RoomsUpdatedTimeLabel
+@onready var waypoints_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer/WaypointsUpdatedTimeLabel
+@onready var buildings_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer2/BuildingsUpdatedTimeLabel
+@onready var rooms_updated_time_label: Label = $InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer3/RoomsUpdatedTimeLabel
 
 @onready var button_pusher_control: Control = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonPusherControl
-@onready var save_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/SaveButton
-@onready var delete_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/DeleteButton
-@onready var add_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/AddButton
+@onready var save_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer/SaveButton
+@onready var delete_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer/DeleteButton
+@onready var add_button: Button = $InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer/AddButton
 
 # Window panels
 @onready var delete_confirmation_panel: Panel = $DeletionConfirmationPanel
@@ -54,8 +54,6 @@ enum Structures { BuildingStruct, RoomStruct, WaypointStruct }
 @onready var password_line_edit: LineEdit = $LoginPanel/PasswordLineEdit
 
 var selected_structure: Structure
-var starting_waypoint: Waypoint
-var end_waypoint: Waypoint
 var spawning_structure: bool = false
 
 
@@ -93,7 +91,7 @@ func change_text_edits() -> void:
 # Called when a structure is selected
 func select_structure(structure: Structure) -> void:
 	# Change last selection colour back
-	if selected_structure != null && selected_structure is Waypoint && selected_structure != starting_waypoint && selected_structure != end_waypoint:
+	if selected_structure != null && selected_structure is Waypoint:
 		(selected_structure as Waypoint).change_colour(Color.LIGHT_GRAY)
 	
 	selected_structure = structure
@@ -115,7 +113,7 @@ func select_structure(structure: Structure) -> void:
 	name_h_box_container.visible = false
 	description_v_box_container.visible = false
 	building_letter_h_box_container.visible = false
-	lecturers_v_box_container.visible = false
+	lecturers_h_box_container.visible = false
 	floor_number_h_box_container.visible = false
 	parent_h_box_container.visible = false
 	waypoint_connections_scroll_container.visible = false
@@ -139,8 +137,7 @@ func select_structure(structure: Structure) -> void:
 		structure_type_label.text = 'Room'
 		show_room_details(selected_structure as Room)
 	elif selected_structure is Waypoint:
-		if selected_structure != starting_waypoint && selected_structure != end_waypoint:
-			(selected_structure as Waypoint).change_colour(Color.BLACK)
+		(selected_structure as Waypoint).change_colour(Color.BLACK)
 		structure_type_label.text = 'Waypoint'
 		show_waypoint_details(selected_structure as Waypoint)
 
@@ -173,7 +170,7 @@ func show_room_details(select_struct: Room) -> void:
 	description_text_edit.text = select_struct.description
 	description_v_box_container.visible = true
 	lecturers_line_edit.text = select_struct.lectures
-	lecturers_v_box_container.visible = true
+	lecturers_h_box_container.visible = true
 	floor_number_spin_box.value = select_struct.floor_number
 	floor_number_h_box_container.visible = true
 	parent_line_edit.text = select_struct.get_parent_structure().structure_name

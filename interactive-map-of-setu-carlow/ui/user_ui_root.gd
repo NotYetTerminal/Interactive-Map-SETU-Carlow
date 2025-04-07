@@ -34,6 +34,7 @@ func _ready() -> void:
 
 func _on_to_search_bar_line_edit_text_changed(new_text: String) -> void:
 	if new_text == "":
+		to_structure = null
 		hide_search_panel()
 	else:
 		show_search_panel()
@@ -41,6 +42,7 @@ func _on_to_search_bar_line_edit_text_changed(new_text: String) -> void:
 
 func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
 	if new_text == "":
+		from_structure = null
 		hide_search_panel()
 	else:
 		show_search_panel()
@@ -83,12 +85,14 @@ func select_structure(selected_structure: Structure) -> void:
 func _on_from_button_button_down() -> void:
 	if current_selected_structure != null:
 		from_structure = current_selected_structure
+		information_popup_elements_control.visible = false
 		_set_from_structure.emit(from_structure)
 
 
 func _on_to_button_button_down() -> void:
 	if current_selected_structure != null:
 		to_structure = current_selected_structure
+		information_popup_elements_control.visible = false
 		_set_to_structure.emit(to_structure)
 
 
@@ -108,11 +112,15 @@ func pathfinding_distance(distance: float) -> void:
 
 func _on_search_panel_set_from_search_structure(structure: Structure) -> void:
 	from_structure = structure
-	hide_search_panel()
-	_set_from_structure.emit(from_structure)
+	update_search()
 
 
 func _on_search_panel_set_to_search_structure(structure: Structure) -> void:
 	to_structure = structure
+	update_search()
+
+
+func update_search() -> void:
 	hide_search_panel()
+	_set_from_structure.emit(from_structure)
 	_set_to_structure.emit(to_structure)

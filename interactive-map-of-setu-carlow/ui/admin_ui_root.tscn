@@ -1,18 +1,37 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8wl51gue5ps3"]
+[gd_scene load_steps=18 format=3 uid="uid://c8wl51gue5ps3"]
 
 [ext_resource type="Script" uid="uid://cwgu3ewfahq8d" path="res://ui/admin_ui_root.gd" id="1_sfv4s"]
 [ext_resource type="PackedScene" uid="uid://drcokpawtdag" path="res://ui/waypoint_connection_editor_control.tscn" id="2_t38xn"]
 [ext_resource type="Script" uid="uid://owfvj1a4gkwy" path="res://ui/waypoint_connections_editors_v_box_container.gd" id="2_wns07"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0mpdg"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0mpdg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8qhju"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_84ldt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_77cx3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h5bgm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t5en2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_846x2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_srici"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xm1sh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_174c5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ma7vu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6j0da"]
 bg_color = Color(0, 0, 0, 0.4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cgbs0"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nj6tk"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_carlm"]
-bg_color = Color(0.733333, 0.733333, 0.733333, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ftf5o"]
 
 [node name="AdminUIRoot" type="Control"]
 layout_mode = 3
@@ -31,7 +50,6 @@ anchor_left = 0.02
 anchor_top = 0.02
 anchor_right = 0.3
 anchor_bottom = 0.7
-theme_override_styles/panel = SubResource("StyleBoxFlat_0mpdg")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="InformationPanel"]
 layout_mode = 1
@@ -52,13 +70,20 @@ size_flags_vertical = 3
 
 [node name="StructureTypeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0mpdg")
 text = "Base Map"
 
 [node name="IDHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/IDHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
 [node name="IDLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/IDHBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8qhju")
 text = "ID: "
 
 [node name="IDLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/IDHBoxContainer"]
@@ -66,7 +91,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 editable = false
 
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/IDHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
 [node name="LocationHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+layout_mode = 2
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 
 [node name="LongitudeVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
@@ -75,11 +112,16 @@ size_flags_horizontal = 3
 
 [node name="LongitudeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/LongitudeVBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_84ldt")
 text = "Longitude: "
 
 [node name="LongitudeLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/LongitudeVBoxContainer"]
 layout_mode = 2
 editable = false
+
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
 
 [node name="LatitudeVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
 layout_mode = 2
@@ -87,16 +129,29 @@ size_flags_horizontal = 3
 
 [node name="LatitudeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/LatitudeVBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_77cx3")
 text = "Latitude: "
 
 [node name="LatitudeLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/LatitudeVBoxContainer"]
 layout_mode = 2
 editable = false
 
+[node name="PaddingControl3" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
 [node name="MoveButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "Move"
+
+[node name="PaddingControl4" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 
 [node name="NameHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
@@ -104,26 +159,61 @@ layout_mode = 2
 
 [node name="NameLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_h5bgm")
 text = "Name: "
 
 [node name="NameLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-editable = false
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/NameHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl3" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 
 [node name="DescriptionVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="DescriptionLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_t5en2")
 text = "Description: "
 
-[node name="DescriptionTextEdit" type="TextEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
+[node name="HBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer"]
+clip_contents = true
 layout_mode = 2
-editable = false
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DescriptionTextEdit" type="TextEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/HBoxContainer/VBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_horizontal = 3
 wrap_mode = 1
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/DescriptionVBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl4" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 
 [node name="BuildingLetterHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
@@ -131,24 +221,41 @@ layout_mode = 2
 
 [node name="BuildingLetterLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterHBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_846x2")
 text = "Building Letter: "
 
 [node name="BuildingLetterLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-editable = false
 
-[node name="LecturersVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/BuildingLetterHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl5" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="LecturersHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="LecturersLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer"]
+[node name="LecturersLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersHBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_srici")
 text = "Lecturers: "
 
-[node name="LecturersLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersVBoxContainer"]
+[node name="LecturersLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersHBoxContainer"]
 layout_mode = 2
-editable = false
+size_flags_horizontal = 3
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl6" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 
 [node name="FloorNumberHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
@@ -157,6 +264,7 @@ layout_mode = 2
 [node name="FloorNumberLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xm1sh")
 text = "Floor Number: "
 
 [node name="FloorNumberSpinBox" type="SpinBox" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberHBoxContainer"]
@@ -164,7 +272,14 @@ layout_mode = 2
 min_value = 1.0
 max_value = 3.0
 value = 1.0
-editable = false
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl7" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 
 [node name="ParentHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
@@ -172,12 +287,25 @@ layout_mode = 2
 
 [node name="ParentLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentHBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_174c5")
 text = "Parent:"
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
 
 [node name="ParenLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 editable = false
+
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ParentHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl8" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 
 [node name="WaypointConnectionsScrollContainer" type="ScrollContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 visible = false
@@ -192,6 +320,7 @@ size_flags_vertical = 3
 
 [node name="WaypointConnectionsLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ma7vu")
 text = "Waypoint Connections IDs: "
 
 [node name="WaypointConnectionsEditorsVBoxContainer" type="VBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer"]
@@ -199,42 +328,116 @@ layout_mode = 2
 script = ExtResource("2_wns07")
 waypoint_connection_editor_scene = ExtResource("2_t38xn")
 
-[node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+[node name="PaddingControl9" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="TimeHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+layout_mode = 2
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer"]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Waypoints Updated Time: "
 autowrap_mode = 2
 
-[node name="BuildingsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl10" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="TimeHBoxContainer2" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+layout_mode = 2
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer2"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="BuildingsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer2"]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Buildings Updated Time: "
 autowrap_mode = 2
 
-[node name="RoomsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer2"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl11" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="TimeHBoxContainer3" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+layout_mode = 2
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer3"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="RoomsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer3"]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Rooms Updated Time: "
 autowrap_mode = 2
+
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer3"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
 
 [node name="ButtonPusherControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SaveButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+[node name="ButtonsHBoxContainer" type="HBoxContainer" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
 layout_mode = 2
+
+[node name="PaddingControl" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 disabled = true
 text = "Save"
 
-[node name="DeleteButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+[node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
+
+[node name="DeleteButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 disabled = true
 text = "Delete"
 
-[node name="AddButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+[node name="PaddingControl3" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
+
+[node name="AddButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 disabled = true
 text = "Add New Structure"
+
+[node name="PaddingControl4" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="PaddingControl12" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 
 [node name="DeletionConfirmationPanel" type="Panel" parent="."]
 visible = false
@@ -271,6 +474,7 @@ alignment = 1
 
 [node name="ConfirmationLabel" type="Label" parent="DeletionConfirmationPanel/Panel/VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_nj6tk")
 text = "Confirm deletion of the selected?"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -282,6 +486,10 @@ alignment = 1
 [node name="DeleteButton" type="Button" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Delete"
+
+[node name="PaddingControl" type="Control" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
 
 [node name="DeleteCancelButton" type="Button" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -307,10 +515,9 @@ anchor_bottom = 0.5
 offset_left = -110.0
 offset_top = -60.0
 offset_right = 110.0
-offset_bottom = 60.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cgbs0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="AddStructurePanel/Panel"]
 layout_mode = 1
@@ -320,9 +527,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -68.0
+offset_top = -38.5
 offset_right = 100.0
-offset_bottom = 68.0
+offset_bottom = 38.5
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -332,6 +539,7 @@ layout_mode = 2
 text = "Add Building"
 
 [node name="RoomButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Add Room"
 
@@ -350,7 +558,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_carlm")
 
 [node name="EmailLineEdit" type="LineEdit" parent="LoginPanel"]
 layout_mode = 1
@@ -437,7 +644,6 @@ offset_right = 135.0
 offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cgbs0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="InputMessagePanel/Panel"]
 layout_mode = 1
@@ -457,6 +663,7 @@ alignment = 1
 [node name="InputMessageLabel" type="Label" parent="InputMessagePanel/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ftf5o")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -469,9 +676,9 @@ text = "Close"
 [connection signal="add_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_add_connection_waypoint_id"]
 [connection signal="delete_connection_waypoint_id" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_delete_connection_waypoint_id"]
 [connection signal="update_connection_feature" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/WaypointConnectionsScrollContainer/WaypointConnectionsVBoxContainer/WaypointConnectionsEditorsVBoxContainer" to="." method="_on_waypoint_connections_editors_v_box_container_update_connection_feature"]
-[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
-[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="pressed" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
 [connection signal="pressed" from="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer/DeleteButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer/DeleteCancelButton" to="." method="_on_delete_cancel_button_pressed"]
 [connection signal="pressed" from="AddStructurePanel/Panel/VBoxContainer/BuildingButton" to="." method="_on_building_button_pressed"]

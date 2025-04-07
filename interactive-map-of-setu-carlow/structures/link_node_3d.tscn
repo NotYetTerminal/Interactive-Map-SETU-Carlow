@@ -40,6 +40,7 @@ skeleton = NodePath("../../..")
 
 [node name="FeatureSprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.1, 0)
+flip_h = true
 flip_v = true
 axis = 1
 billboard = 2

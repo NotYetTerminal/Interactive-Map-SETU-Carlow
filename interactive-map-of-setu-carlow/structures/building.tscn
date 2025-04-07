@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dadi0hcmivqx"]
+[gd_scene load_steps=16 format=3 uid="uid://dadi0hcmivqx"]
 
 [ext_resource type="Script" uid="uid://cgn3e5ij7winf" path="res://structures/building.gd" id="1_0u58k"]
 [ext_resource type="PackedScene" uid="uid://dusn1bxyvlsya" path="res://map_textures/barrow_centre_node_3d.tscn" id="2_ysdoa"]
@@ -6,12 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://dc0fvyikedoll" path="res://map_textures/catering_services_building_node_3d.tscn" id="4_58qnn"]
 [ext_resource type="PackedScene" uid="uid://bausw5o86wtvy" path="res://map_textures/burrin_building_node_3d.tscn" id="5_n2yi7"]
 [ext_resource type="PackedScene" uid="uid://bn8qhs1o2a227" path="res://map_textures/nore_building_node_3d.tscn" id="6_386ko"]
+[ext_resource type="PackedScene" uid="uid://by1sxj5fkov6w" path="res://map_textures/cim_node_3d.tscn" id="7_fif5c"]
+[ext_resource type="PackedScene" uid="uid://bfu3hgsbo44i5" path="res://map_textures/dargan_building_node_3d.tscn" id="8_s5jls"]
+[ext_resource type="PackedScene" uid="uid://cewna2ltwb876" path="res://map_textures/engineering_and_technology_building_node_3d.tscn" id="9_5n42u"]
+[ext_resource type="PackedScene" uid="uid://dhkumpc5u6urh" path="res://map_textures/gaa_stand_node_3d.tscn" id="10_1e246"]
+[ext_resource type="PackedScene" uid="uid://bpno0u022crwt" path="res://map_textures/haughton_building_node_3d.tscn" id="11_hebsq"]
+[ext_resource type="PackedScene" uid="uid://c8j8puoqeglxg" path="res://map_textures/centre_for_aerospace_engineering_node_3d.tscn" id="11_s5jls"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mvu2m"]
 albedo_color = Color(0, 0, 0, 1)
 metallic_specular = 0.0
 emission_enabled = true
-emission = Color(0.376953, 0.667924, 1, 1)
+emission = Color(0.42, 0.2, 0.8, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_non5c"]
 material = SubResource("StandardMaterial3D_mvu2m")
@@ -26,7 +32,13 @@ script = ExtResource("1_0u58k")
 map_textures_dictionary = Dictionary[String, PackedScene]({
 "Barrow Centre": ExtResource("2_ysdoa"),
 "Burrin Building": ExtResource("5_n2yi7"),
+"CIM": ExtResource("7_fif5c"),
 "Catering Services Building": ExtResource("4_58qnn"),
+"Centre for Aerospace Engineering": ExtResource("11_s5jls"),
+"Dargan Building": ExtResource("8_s5jls"),
+"Engineering and Technology Building": ExtResource("9_5n42u"),
+"GAA Stand": ExtResource("10_1e246"),
+"Haughton Building": ExtResource("11_hebsq"),
 "LRC": ExtResource("3_cy3fr"),
 "Nore Building": ExtResource("6_386ko")
 })

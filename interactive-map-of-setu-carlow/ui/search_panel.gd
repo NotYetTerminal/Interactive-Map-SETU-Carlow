@@ -8,10 +8,10 @@ var building_manager: BuildingManager
 var room_manager: RoomManager
 
 @export var search_item_h_box_container_scene: PackedScene
-
 @onready var v_box_container: VBoxContainer = $ScrollContainer/VBoxContainer
 
 var search_item_h_box_containers: Array[SearchItemHBoxContainer] = []
+var h_seperators: Array[HSeparator] = []
 var top_search_bar_active: bool = true
 
 
@@ -100,11 +100,14 @@ func set_up_search_items(search_text: String) -> void:
 	# Hide all items
 	for search_item_h_box_container: SearchItemHBoxContainer in search_item_h_box_containers:
 		search_item_h_box_container.visible = false
+	for h_seperator: HSeparator in h_seperators:
+		h_seperator.visible = false
 	
 	var index: int = 0
 	var room: Room
 	var building: Building
 	var search_item_h_box_container: SearchItemHBoxContainer
+	var h_seperator: HSeparator
 	var _error: int
 	for structure: Structure in result_array:
 		# Only add new items if there are more search results
@@ -114,9 +117,15 @@ func set_up_search_items(search_text: String) -> void:
 			_error = search_item_h_box_container.connect("from_button_pressed", _on_search_item_h_box_container_from_button_pressed)
 			_error = search_item_h_box_container.connect("to_button_pressed", _on_search_item_h_box_container_to_button_pressed)
 			search_item_h_box_containers.append(search_item_h_box_container)
+			h_seperator = HSeparator.new()
+			v_box_container.add_child(h_seperator)
+			h_seperators.append(h_seperator)
 		else:
 			search_item_h_box_container = search_item_h_box_containers[index]
 			search_item_h_box_container.visible = true
+			h_seperator = h_seperators[index]
+			h_seperator.visible = true
+			
 		
 		if structure is Room:
 			room = structure as Room

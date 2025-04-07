@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bw4ru2pi3ea3r"]
+[gd_scene load_steps=18 format=3 uid="uid://bw4ru2pi3ea3r"]
 
 [ext_resource type="Script" uid="uid://xoghmb5exj06" path="res://ui/user_ui_root.gd" id="1_c31da"]
 [ext_resource type="Script" uid="uid://b564ymo1jwdhu" path="res://ui/information_popup_control.gd" id="2_bnl34"]
@@ -7,35 +7,22 @@
 [ext_resource type="Script" uid="uid://buf3tiq1t6v5h" path="res://ui/search_panel.gd" id="3_m06ik"]
 [ext_resource type="Script" uid="uid://bnhkljakpxy7k" path="res://ui/navigation_button.gd" id="4_j3kvc"]
 [ext_resource type="PackedScene" uid="uid://c7ngcwe2n7hh" path="res://ui/search_item_h_box_container.tscn" id="4_x715j"]
+[ext_resource type="Theme" uid="uid://bspim5e45tqvk" path="res://materials_&_themes/from_theme.tres" id="5_kvlmd"]
+[ext_resource type="Theme" uid="uid://cg0w3ronyt11o" path="res://materials_&_themes/to_theme.tres" id="7_5djvq"]
 [ext_resource type="Texture2D" uid="uid://c0aynm4yf4nya" path="res://icons/right-up.png" id="7_dwrjb"]
 [ext_resource type="Texture2D" uid="uid://ciif6acyem82o" path="res://icons/right-down.png" id="8_72rlj"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnrph"]
-bg_color = Color(0.733333, 0.733333, 0.733333, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydxl4"]
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
-shadow_size = 2
-shadow_offset = Vector2(1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u0pg2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n81ai"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ot7it"]
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kvlmd"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5o45k"]
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5djvq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vmw2w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ukh56"]
 
 [node name="UserUIRoot" type="Control"]
 layout_mode = 3
@@ -55,7 +42,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_fnrph")
 script = ExtResource("3_m06ik")
 search_item_h_box_container_scene = ExtResource("4_x715j")
 
@@ -89,7 +75,7 @@ anchors_preset = -1
 anchor_top = 0.1
 anchor_right = 1.0
 anchor_bottom = 0.35
-theme_override_styles/panel = SubResource("StyleBoxFlat_ydxl4")
+theme = ExtResource("5_kvlmd")
 
 [node name="FromSearchBarHSplitContainer" type="HSplitContainer" parent="SearchElementsControl/FromSearchBarPanel"]
 layout_mode = 1
@@ -127,7 +113,7 @@ anchors_preset = -1
 anchor_top = 0.45
 anchor_right = 1.0
 anchor_bottom = 0.7
-theme_override_styles/panel = SubResource("StyleBoxFlat_ydxl4")
+theme = ExtResource("7_5djvq")
 
 [node name="ToSearchBarHSplitContainer" type="HSplitContainer" parent="SearchElementsControl/ToSearchBarPanel"]
 layout_mode = 1
@@ -171,25 +157,13 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 vertical_alignment = 1
 
-[node name="DistancePanel" type="Panel" parent="SearchElementsControl/DistanceLabel"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_right = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ot7it")
-
 [node name="NavigationButton" type="Button" parent="SearchElementsControl"]
 layout_direction = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.8
 anchor_right = 0.2
-anchor_bottom = 1.0
+anchor_bottom = 0.8
 theme_override_font_sizes/font_size = 30
 text = "Start Navigation"
 script = ExtResource("4_j3kvc")
@@ -198,24 +172,11 @@ script = ExtResource("4_j3kvc")
 layout_direction = 2
 layout_mode = 0
 offset_left = -220.0
-offset_right = -22.0
-offset_bottom = 50.0
+offset_right = -24.0
+offset_bottom = 42.0
 theme_override_font_sizes/font_size = 30
 button_pressed = true
-text = "Use stairs:"
-
-[node name="DistancePanel" type="Panel" parent="SearchElementsControl/NavigationButton/StairsCheckButton"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_right = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_ot7it")
+text = "Use Stairs: "
 
 [node name="InformationPopupElementsControl" type="Control" parent="."]
 visible = false
@@ -236,7 +197,6 @@ anchor_right = 0.85
 anchor_bottom = 0.65
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_5o45k")
 
 [node name="InformationScrollContainer" type="ScrollContainer" parent="InformationPopupElementsControl/InformationPopupControl"]
 layout_mode = 1
@@ -258,6 +218,7 @@ size_flags_vertical = 3
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kvlmd")
 text = "Barrow"
 
 [node name="LecturersLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer"]
@@ -265,6 +226,7 @@ custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5djvq")
 text = "Lecturers: "
 autowrap_mode = 3
 
@@ -272,6 +234,7 @@ autowrap_mode = 3
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vmw2w")
 text = "Building Letter: "
 
 [node name="DescriptionLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer"]
@@ -280,6 +243,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ukh56")
 text = "This is a long piece of text fnjvhuufuerhuvnjdfvfndsfiowjsf;jv jsdfvmdfvdfvdfvbhbhhbfvjnf fudid hgh fhfuhe fh udd hf dfh fduf udfb dhd fh dfhbdf  jkfd dfkhh kfd fh df hf hkdfh klfdbhkfdbkvf bhkfdbfv b vfb bkkfvjkvfnnjvjkfjkkj dkbv fbhk fvfd ew  we de sf sd feyiweu hlew uifhlueflewfhwuehfl eufhwehfwlhwefhsfsjsdkhfj s"
 autowrap_mode = 3
 
@@ -294,6 +258,7 @@ anchor_bottom = 0.7
 
 [node name="FromButton" type="Button" parent="InformationPopupElementsControl/AspectRatioContainer"]
 layout_mode = 2
+theme = ExtResource("5_kvlmd")
 icon = ExtResource("7_dwrjb")
 icon_alignment = 1
 expand_icon = true
@@ -309,6 +274,7 @@ anchor_bottom = 0.7
 
 [node name="ToButton" type="Button" parent="InformationPopupElementsControl/AspectRatioContainer2"]
 layout_mode = 2
+theme = ExtResource("7_5djvq")
 icon = ExtResource("8_72rlj")
 icon_alignment = 1
 expand_icon = true

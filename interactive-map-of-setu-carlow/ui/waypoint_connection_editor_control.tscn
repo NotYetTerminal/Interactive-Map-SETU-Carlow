@@ -48,10 +48,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
+[node name="PaddingControl" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
 [node name="EditorButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4
+flat = true
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_wblgo")
