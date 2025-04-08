@@ -17,8 +17,8 @@ signal _set_to_structure(to_structure: Structure)
 
 @onready var search_panel: SearchPanel = $SearchPanel
 @onready var distance_label: Label = $SearchElementsControl/ThirdHBoxContainer/DistanceLabel
+@onready var h_flow_container: HFlowContainer = $SearchElementsControl/ThirdHBoxContainer/HFlowContainer
 @onready var stairs_check_button: CheckButton = $SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer/StairsCheckButton
-@onready var navigation_button: Button = $SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton
 @onready var information_popup_elements_control: Control = $InformationPopupElementsControl
 
 # For pathfinding
@@ -50,15 +50,13 @@ func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
 
 func show_search_panel() -> void:
 	distance_label.visible = false
-	stairs_check_button.visible = false
-	navigation_button.visible = false
+	h_flow_container.visible = false
 	search_panel.visible = true
 
 
 func hide_search_panel() -> void:
 	distance_label.visible = currently_navigating
-	stairs_check_button.visible = false
-	navigation_button.visible = true
+	h_flow_container.visible = true
 	search_panel.visible = false
 
 

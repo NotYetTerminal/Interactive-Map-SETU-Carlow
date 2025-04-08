@@ -47,7 +47,7 @@ func location_listener(location_data: Dictionary) -> void:
 	longitude = location_data["longitude"]
 	latitude = location_data["latitude"]
 	set_structure_global_position()
-	var accuracy_level: float = location_data["accuracy"]
+	var accuracy_level: float = min(location_data["accuracy"], 90)
 	accuracy_mesh_instance_3d.scale = Vector3(accuracy_level, accuracy_level, accuracy_level)
 
 

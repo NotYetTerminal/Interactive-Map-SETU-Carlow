@@ -98,6 +98,7 @@ func update_details(details: Dictionary, call_others: bool = true) -> void:
 	parent_structure.get_offline_data_waypoints()[id] = details
 	await Globals.save_data(id, fields, parent_structure.get_firestore_path() + "/Waypoints", details)
 	
+	saved = true
 	parent_structure.update_waypoints_time(int(Time.get_unix_time_from_system()))
 
 # Delete the structure and data related to it

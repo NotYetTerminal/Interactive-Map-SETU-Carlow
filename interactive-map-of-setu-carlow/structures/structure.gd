@@ -9,6 +9,7 @@ var structure_name: String
 
 var mouse_editing: bool = false
 var just_moved: bool = false
+var saved: bool = false
 
 
 func _process(_delta: float) -> void:

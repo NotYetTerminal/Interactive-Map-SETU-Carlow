@@ -69,6 +69,7 @@ func update_details(details: Dictionary) -> void:
 	room_dictionary[id] = details
 	await Globals.save_data(id, fields, current_firestore_path(), details)
 	
+	saved = true
 	building.update_rooms_time(int(Time.get_unix_time_from_system()))
 
 # Used by children to update time

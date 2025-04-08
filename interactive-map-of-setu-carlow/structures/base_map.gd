@@ -47,6 +47,8 @@ func update_details(details: Dictionary) -> void:
 	
 	Globals.offline_data[id] = details
 	await Globals.save_data(id, fields, current_firestore_path(), details)
+	
+	saved = true
 
 # Used by children to update time
 func update_buildings_time(new_time: int) -> void:

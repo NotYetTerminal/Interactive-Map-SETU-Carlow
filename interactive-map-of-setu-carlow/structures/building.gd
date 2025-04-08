@@ -76,6 +76,7 @@ func update_details(details: Dictionary) -> void:
 	buildings_dictionary[id] = details
 	await Globals.save_data(id, fields, current_firestore_path(), details)
 	
+	saved = true
 	base_map.update_buildings_time(int(Time.get_unix_time_from_system()))
 
 # Used by children to update time

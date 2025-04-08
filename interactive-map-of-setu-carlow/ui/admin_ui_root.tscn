@@ -1,8 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://c8wl51gue5ps3"]
+[gd_scene load_steps=20 format=3 uid="uid://c8wl51gue5ps3"]
 
 [ext_resource type="Script" uid="uid://cwgu3ewfahq8d" path="res://ui/admin_ui_root.gd" id="1_sfv4s"]
 [ext_resource type="PackedScene" uid="uid://drcokpawtdag" path="res://ui/waypoint_connection_editor_control.tscn" id="2_t38xn"]
 [ext_resource type="Script" uid="uid://owfvj1a4gkwy" path="res://ui/waypoint_connections_editors_v_box_container.gd" id="2_wns07"]
+[ext_resource type="Theme" uid="uid://bspim5e45tqvk" path="res://materials_&_themes/from_theme.tres" id="4_nj6tk"]
+[ext_resource type="Theme" uid="uid://cg0w3ronyt11o" path="res://materials_&_themes/to_theme.tres" id="5_8qhju"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0mpdg"]
 
@@ -411,6 +413,7 @@ layout_mode = 2
 [node name="SaveButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_nj6tk")
 disabled = true
 text = "Save"
 
@@ -421,6 +424,7 @@ layout_mode = 2
 [node name="DeleteButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_8qhju")
 disabled = true
 text = "Delete"
 
@@ -431,6 +435,7 @@ layout_mode = 2
 [node name="AddButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_nj6tk")
 disabled = true
 text = "Add New Structure"
 
@@ -488,6 +493,7 @@ alignment = 1
 
 [node name="DeleteButton" type="Button" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_8qhju")
 text = "Delete"
 
 [node name="PaddingControl" type="Control" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
@@ -496,6 +502,7 @@ layout_mode = 2
 
 [node name="DeleteCancelButton" type="Button" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("4_nj6tk")
 text = "Cancel"
 
 [node name="AddStructurePanel" type="Panel" parent="."]
@@ -539,19 +546,23 @@ alignment = 1
 
 [node name="BuildingButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("4_nj6tk")
 text = "Add Building"
 
 [node name="RoomButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 visible = false
 layout_mode = 2
+theme = ExtResource("4_nj6tk")
 text = "Add Room"
 
 [node name="WaypointButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("4_nj6tk")
 text = "Add Waypoint"
 
 [node name="AddStructureCancelButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_8qhju")
 text = "Cancel"
 
 [node name="LoginPanel" type="Panel" parent="."]
@@ -607,6 +618,7 @@ offset_right = -25.0
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("4_nj6tk")
 text = "Login"
 
 [node name="CancelButton" type="Button" parent="LoginPanel"]
@@ -622,6 +634,7 @@ offset_right = 80.0
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("5_8qhju")
 text = "Cancel"
 
 [node name="InputMessagePanel" type="Panel" parent="."]

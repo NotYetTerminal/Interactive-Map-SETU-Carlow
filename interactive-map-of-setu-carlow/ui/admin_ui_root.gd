@@ -64,12 +64,12 @@ func _input(event: InputEvent) -> void:
 
 # Enable or disable buttons
 func check_save_and_delete_buttons() -> void:
-	save_button.disabled = selected_structure == null or not Globals.edit_mode or (selected_structure != null and selected_structure.mouse_editing)
+	save_button.disabled = selected_structure == null or (selected_structure != null and selected_structure.mouse_editing)
 	# Delete button not used for Base Map
-	delete_button.disabled = selected_structure == null or selected_structure is BaseMap or not Globals.edit_mode or (selected_structure != null and selected_structure.mouse_editing)
+	delete_button.disabled = selected_structure == null or selected_structure is BaseMap or (selected_structure != null and selected_structure.mouse_editing)
 	# Add button not used for Waypoints
-	add_button.disabled = selected_structure == null or selected_structure is Waypoint or not Globals.edit_mode or (selected_structure != null and selected_structure.mouse_editing)
-	move_button.disabled = selected_structure == null or not Globals.edit_mode or (selected_structure != null and selected_structure.mouse_editing)
+	add_button.disabled = selected_structure == null or selected_structure is Waypoint or (selected_structure != null and (selected_structure.mouse_editing or not selected_structure.saved))
+	move_button.disabled = selected_structure == null or (selected_structure != null and selected_structure.mouse_editing)
 
 # Change the editable status of all Text Edits
 func change_text_edits() -> void:
@@ -253,6 +253,8 @@ func _on_save_button_pressed() -> void:
 	show_input_message_mid_action("Saving")
 	@warning_ignore("redundant_await")
 	await selected_structure.update_details(details)
+	selected_structure.update_visibility()
+	check_save_and_delete_buttons()
 	close_input_message_finished_action()
 
 
@@ -312,12 +314,14 @@ func _on_building_button_pressed() -> void:
 func _on_room_button_pressed() -> void:
 	if selected_structure is not Waypoint:
 		add_structure_panel.visible = false
+		spawning_structure = true
 		spawn_specific_structure.emit(selected_structure, Structures.RoomStruct)
 
 
 func _on_waypoint_button_pressed() -> void:
 	if selected_structure is not Waypoint:
 		add_structure_panel.visible = false
+		spawning_structure = true
 		spawn_specific_structure.emit(selected_structure, Structures.WaypointStruct)
 
 # Close structure select screen

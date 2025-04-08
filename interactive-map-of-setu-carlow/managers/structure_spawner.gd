@@ -39,6 +39,7 @@ func spawn_base_map(map_data: Dictionary) -> void:
 	
 	# Create new scene
 	var new_base_map: BaseMap = base_map_scene.instantiate()
+	new_base_map.saved = true
 	get_parent().add_child(new_base_map)
 	var _fields: Array[String] = new_base_map.save_details(base_map_id, base_map_data)
 	
@@ -46,7 +47,8 @@ func spawn_base_map(map_data: Dictionary) -> void:
 		# Spawn Waypoints
 		for waypoint_id: String in base_map_data["Waypoints"]:
 			var structure_data: Dictionary = base_map_data["Waypoints"][waypoint_id]
-			var _structure: Structure = spawn_structure(waypoint_id, structure_data, new_base_map, Structures.WaypointStruct) 
+			var structure: Structure = spawn_structure(waypoint_id, structure_data, new_base_map, Structures.WaypointStruct)
+			structure.saved = true
 	
 	if base_map_data.has('Buildings'):
 		# Spawn Buildings
@@ -58,12 +60,14 @@ func spawn_base_map(map_data: Dictionary) -> void:
 func spawn_building(building_id: String, building_data: Dictionary, parent: Structure) -> void:
 	# Spawn this building
 	var parent_building: Structure = spawn_structure(building_id, building_data, parent, Structures.BuildingStruct)
+	parent_building.saved = true
 	
 	if building_data.has('Waypoints'):
 		# Spawn Waypoints
 		for waypoint_id: String in building_data["Waypoints"]:
 			var structure_data: Dictionary = building_data["Waypoints"][waypoint_id]
-			var _structure: Structure = spawn_structure(waypoint_id, structure_data, parent_building, Structures.WaypointStruct)
+			var structure: Structure = spawn_structure(waypoint_id, structure_data, parent_building, Structures.WaypointStruct)
+			structure.saved = true
 	
 	if building_data.has('Rooms'):
 		# Spawn Rooms
@@ -75,12 +79,14 @@ func spawn_building(building_id: String, building_data: Dictionary, parent: Stru
 func spawn_room(room_id: String, room_data: Dictionary, parent: Structure) -> void:
 	# Spawn this room
 	var parent_room: Structure = spawn_structure(room_id, room_data, parent, Structures.RoomStruct)
+	parent_room.saved = true
 	
 	if room_data.has('Waypoints'):
 		# Spawn Waypoints
 		for waypoint_id: String in room_data["Waypoints"]:
 			var structure_data: Dictionary = room_data["Waypoints"][waypoint_id]
-			var _structure: Structure = spawn_structure(waypoint_id, structure_data, parent_room, Structures.WaypointStruct)
+			var structure: Structure = spawn_structure(waypoint_id, structure_data, parent_room, Structures.WaypointStruct)
+			structure.saved = true
 
 
 func spawn_structure(structure_id: String, structure_data: Dictionary, parent: Structure, structure_type: Structures) -> Structure:
@@ -137,7 +143,7 @@ func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Str
 			default_data['name'] = ''
 			default_data['description'] = ''
 			default_data['lecturers'] = ''
-			default_data['floor_number'] = 1
+			default_data['floor_number'] = Globals.current_floor
 			
 			default_data['waypoints_updated_time'] = 0
 		Structures.WaypointStruct:
@@ -145,7 +151,7 @@ func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Str
 			if parent is Room:
 				default_data['floor_number'] = (parent as Room).floor_number
 			else:
-				default_data['floor_number'] = 1
+				default_data['floor_number'] = Globals.current_floor
 			default_data['waypoint_connections'] = {}
 	
 	structure_id += str(int(Time.get_unix_time_from_system()))
