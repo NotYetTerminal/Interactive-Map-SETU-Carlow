@@ -4,9 +4,9 @@ class_name SearchItemHBoxContainer
 signal from_button_pressed(struct: Structure)
 signal to_button_pressed(struct: Structure)
 
-@onready var name_label: Label = $VBoxContainer/NameLabel
-@onready var location_label: Label = $VBoxContainer/LocationLabel
-@onready var extra_information_label: Label = $VBoxContainer/ExtraInformationLabel
+@onready var name_label: Label = $ScrollContainer/VBoxContainer/NameLabel
+@onready var location_label: Label = $ScrollContainer/VBoxContainer/LocationLabel
+@onready var extra_information_label: Label = $ScrollContainer/VBoxContainer/ExtraInformationLabel
 
 var structure: Structure
 

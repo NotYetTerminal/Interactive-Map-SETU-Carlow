@@ -50,12 +50,14 @@ func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
 
 func show_search_panel() -> void:
 	distance_label.visible = false
+	stairs_check_button.visible = false
 	navigation_button.visible = false
 	search_panel.visible = true
 
 
 func hide_search_panel() -> void:
 	distance_label.visible = currently_navigating
+	stairs_check_button.visible = false
 	navigation_button.visible = true
 	search_panel.visible = false
 
