@@ -253,7 +253,8 @@ func _on_save_button_pressed() -> void:
 	show_input_message_mid_action("Saving")
 	@warning_ignore("redundant_await")
 	await selected_structure.update_details(details)
-	selected_structure.update_visibility()
+	if selected_structure != null:
+		selected_structure.update_visibility()
 	check_save_and_delete_buttons()
 	close_input_message_finished_action()
 

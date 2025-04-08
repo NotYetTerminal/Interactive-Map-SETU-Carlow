@@ -142,7 +142,7 @@ func _on_ui_root_spawn_specific_structure(parent: Structure, structure_type: Str
 			structure_id = "Room_"
 			default_data['name'] = ''
 			default_data['description'] = ''
-			default_data['lecturers'] = ''
+			default_data['lecturers'] = 'None'
 			default_data['floor_number'] = Globals.current_floor
 			
 			default_data['waypoints_updated_time'] = 0
