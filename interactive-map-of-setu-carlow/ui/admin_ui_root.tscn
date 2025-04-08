@@ -341,10 +341,11 @@ layout_mode = 2
 
 [node name="WaypointsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer"]
 visible = false
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Waypoints Updated Time: "
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer"]
 custom_minimum_size = Vector2(5, 0)
@@ -363,10 +364,11 @@ layout_mode = 2
 
 [node name="BuildingsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer2"]
 visible = false
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Buildings Updated Time: "
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer2"]
 custom_minimum_size = Vector2(5, 0)
@@ -385,10 +387,11 @@ layout_mode = 2
 
 [node name="RoomsUpdatedTimeLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer3"]
 visible = false
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Rooms Updated Time: "
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="PaddingControl2" type="Control" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/TimeHBoxContainer3"]
 custom_minimum_size = Vector2(5, 0)

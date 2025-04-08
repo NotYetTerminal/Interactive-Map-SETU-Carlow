@@ -3,6 +3,13 @@ extends Control
 @onready var to_search_bar_line_edit: LineEdit = $ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit
 @onready var from_search_bar_line_edit: LineEdit = $FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit
 @onready var from_search_bar_panel: Panel = $FromSearchBarPanel
+@onready var h_flow_container: HFlowContainer = $ThirdHBoxContainer/HFlowContainer
+
+
+func _ready() -> void:
+	var os_name: String = OS.get_name()
+	if os_name == "Android" or (os_name == "Web" and OS.has_feature("web_android")):
+		h_flow_container.size_flags_horizontal = Control.SIZE_FILL
 
 
 func _on_user_ui_root__set_to_structure(to_structure: Structure) -> void:

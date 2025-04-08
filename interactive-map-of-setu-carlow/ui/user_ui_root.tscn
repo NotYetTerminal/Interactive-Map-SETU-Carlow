@@ -159,6 +159,11 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
 vertical_alignment = 1
 
+[node name="ExpandControl" type="Control" parent="SearchElementsControl/ThirdHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
 [node name="HFlowContainer" type="HFlowContainer" parent="SearchElementsControl/ThirdHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -174,7 +179,7 @@ layout_mode = 2
 [node name="StairsCheckButton" type="CheckButton" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 35
 button_pressed = true
 text = "Use Stairs: "
 
@@ -210,7 +215,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_bnl34")
 
-[node name="InformationPopupControl" type="Panel" parent="InformationPopupElementsControl"]
+[node name="InformationPopupPanel" type="Panel" parent="InformationPopupElementsControl"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15
@@ -220,7 +225,7 @@ anchor_bottom = 0.65
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="InformationScrollContainer" type="ScrollContainer" parent="InformationPopupElementsControl/InformationPopupControl"]
+[node name="InformationScrollContainer" type="ScrollContainer" parent="InformationPopupElementsControl/InformationPopupPanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.02
@@ -231,19 +236,21 @@ mouse_filter = 0
 mouse_force_pass_scroll_events = false
 script = ExtResource("2_uj4s2")
 
-[node name="InformationPopupVBoxContainer" type="VBoxContainer" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer"]
+[node name="InformationPopupVBoxContainer" type="VBoxContainer" parent="InformationPopupElementsControl/InformationPopupPanel/InformationScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="NameLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer"]
+[node name="NameLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupPanel/InformationScrollContainer/InformationPopupVBoxContainer"]
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxEmpty_kvlmd")
-text = "Barrow"
+text = "Barrow tmlpt ftrnste nsrt nrsonatnrsnetnrse trt erst oar"
+autowrap_mode = 3
 
-[node name="LecturersLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer"]
+[node name="LecturersLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupPanel/InformationScrollContainer/InformationPopupVBoxContainer"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -252,14 +259,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_5djvq")
 text = "Lecturers: "
 autowrap_mode = 3
 
-[node name="BuildingLetterLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer"]
+[node name="BuildingLetterLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupPanel/InformationScrollContainer/InformationPopupVBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxEmpty_vmw2w")
 text = "Building Letter: "
 
-[node name="DescriptionLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupControl/InformationScrollContainer/InformationPopupVBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="InformationPopupElementsControl/InformationPopupPanel/InformationScrollContainer/InformationPopupVBoxContainer"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_horizontal = 3

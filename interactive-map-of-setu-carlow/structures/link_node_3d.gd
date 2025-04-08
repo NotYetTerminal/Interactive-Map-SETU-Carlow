@@ -9,8 +9,6 @@ var current_colour: Color
 @onready var feature_sprite_3d: FeatureSprite3D = $FeatureSprite3D
 
 @onready var arrow_holder_node_3d: Node3D = $ArrowHolderNode3D
-@onready var arrow_mesh_instance_3d: MeshInstance3D = $ArrowHolderNode3D/ArrowMeshInstance3D
-@onready var arrow_mesh_instance_3d_2: MeshInstance3D = $ArrowHolderNode3D/ArrowMeshInstance3D2
 var arrow_active: bool = false
 
 # Set the scale on instantiation
@@ -56,8 +54,6 @@ func change_colour(new_colour: Color) -> void:
 	material.emission_enabled = true
 	material.emission = new_colour
 	mesh_instance_3d.set_surface_override_material(0, material)
-	arrow_mesh_instance_3d.set_surface_override_material(0, material)
-	arrow_mesh_instance_3d_2.set_surface_override_material(0, material)
 	
 	if new_colour == Color.DEEP_SKY_BLUE:
 		feature_sprite_3d.change_texture_colour(Color.YELLOW)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bul6vw37l1nww"]
+[gd_scene load_steps=13 format=3 uid="uid://bul6vw37l1nww"]
 
 [ext_resource type="Script" uid="uid://c3wva0wuuwaly" path="res://structures/link_node_3d.gd" id="1_dxmlh"]
 [ext_resource type="Texture2D" uid="uid://b6n2ny7me3kyh" path="res://icons/stop-sign.png" id="2_7u4xk"]
@@ -7,14 +7,14 @@
 [ext_resource type="Texture2D" uid="uid://ch4iru88hoqc5" path="res://icons/downstairs.png" id="5_4157d"]
 [ext_resource type="Texture2D" uid="uid://ck8cpj7uhk3uv" path="res://icons/stairs.png" id="6_uykew"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_il17l"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pquyl"]
 albedo_color = Color(0, 0, 0, 1)
 metallic_specular = 0.0
 emission_enabled = true
 emission = Color(0.118, 0.565, 1, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_6i5er"]
-material = SubResource("StandardMaterial3D_il17l")
+[sub_resource type="BoxMesh" id="BoxMesh_tikhf"]
+material = SubResource("StandardMaterial3D_pquyl")
 size = Vector3(0.1, 0.1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kg0cu"]
@@ -29,6 +29,16 @@ top_radius = 3.5
 bottom_radius = 3.5
 height = 0.1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_il17l"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.08, 0.32, 0.8, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6i5er"]
+material = SubResource("StandardMaterial3D_il17l")
+size = Vector3(0.1, 0.1, 0.5)
+
 [node name="LinkNode3D" type="Node3D"]
 script = ExtResource("1_dxmlh")
 
@@ -37,7 +47,7 @@ visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LinkHolderNode3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
-mesh = SubResource("BoxMesh_6i5er")
+mesh = SubResource("BoxMesh_tikhf")
 skeleton = NodePath("../../..")
 
 [node name="FeatureSprite3D" type="Sprite3D" parent="."]
@@ -60,13 +70,14 @@ visible = false
 mesh = SubResource("CylinderMesh_5dvka")
 
 [node name="ArrowHolderNode3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 visible = false
 
 [node name="ArrowMeshInstance3D" type="MeshInstance3D" parent="ArrowHolderNode3D"]
-transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.25, 0, 0.4)
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.125, 0, 0.2)
 mesh = SubResource("BoxMesh_6i5er")
 skeleton = NodePath("../..")
 
 [node name="ArrowMeshInstance3D2" type="MeshInstance3D" parent="ArrowHolderNode3D"]
-transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -0.25, 0, 0.4)
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -0.125, 0, 0.2)
 mesh = SubResource("BoxMesh_6i5er")
