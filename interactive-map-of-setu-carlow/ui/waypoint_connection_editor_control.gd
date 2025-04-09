@@ -11,7 +11,7 @@ signal change_feature(waypoint_id: String, new_feature: String)
 
 var delete_button_active: bool = false
 
-const ALL_FEATURES: Array[String] = ['None', 'Stairs', 'Closed']
+const ALL_FEATURES: Array[String] = ['None', 'Stairs', 'Closed', 'Elevator']
 
 
 func set_waypoint_editor_as_read_only(waypoint_id: String, selected_feature: String) -> void:

@@ -88,13 +88,15 @@ func do_pathfinding(starting_waypoint: Waypoint, end_waypoint: Waypoint, allow_s
 				current.global_position.distance_to(neighbour.global_position) +
 				abs(current.floor_number - neighbour.floor_number)
 			)
+			if current.waypoint_connections[neighbour_id] == 'Elevator':
+				new_distance_to_neighbour += 5
 			
 			if new_waypoint or new_distance_to_neighbour < neighbour.g_cost:
 				neighbour.g_cost = new_distance_to_neighbour
 				neighbour.from_waypoint = current
 				
 				if new_waypoint:
-					neighbour.h_cost = neighbour.global_position.distance_to(end_waypoint.global_position) + abs(current.floor_number - neighbour.floor_number)
+					neighbour.h_cost = neighbour.global_position.distance_to(end_waypoint.global_position) + abs(neighbour.floor_number - end_waypoint.floor_number)
 					remaining_waypoints_list.append(neighbour)
 				
 				print("F Cost: " + str(neighbour.f_cost))

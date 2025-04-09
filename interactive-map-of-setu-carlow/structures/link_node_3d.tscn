@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bul6vw37l1nww"]
+[gd_scene load_steps=14 format=3 uid="uid://bul6vw37l1nww"]
 
 [ext_resource type="Script" uid="uid://c3wva0wuuwaly" path="res://structures/link_node_3d.gd" id="1_dxmlh"]
 [ext_resource type="Texture2D" uid="uid://b6n2ny7me3kyh" path="res://icons/stop-sign.png" id="2_7u4xk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dkr5diepn435n" path="res://icons/upstairs.png" id="4_okwx8"]
 [ext_resource type="Texture2D" uid="uid://ch4iru88hoqc5" path="res://icons/downstairs.png" id="5_4157d"]
 [ext_resource type="Texture2D" uid="uid://ck8cpj7uhk3uv" path="res://icons/stairs.png" id="6_uykew"]
+[ext_resource type="Texture2D" uid="uid://pmhy4ki0jntj" path="res://icons/elevator.png" id="7_tikhf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pquyl"]
 albedo_color = Color(0, 0, 0, 1)
@@ -52,6 +53,7 @@ skeleton = NodePath("../../..")
 
 [node name="FeatureSprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.1, 0)
+visible = false
 flip_h = true
 flip_v = true
 axis = 1
@@ -60,6 +62,7 @@ script = ExtResource("3_f8xy2")
 feature_images_dictionary = Dictionary[String, CompressedTexture2D]({
 "Closed": ExtResource("2_7u4xk"),
 "Downstairs": ExtResource("5_4157d"),
+"Elevator": ExtResource("7_tikhf"),
 "Stairs": ExtResource("6_uykew"),
 "Upstairs": ExtResource("4_okwx8")
 })

@@ -10,6 +10,7 @@ var current_colour: Color
 
 @onready var arrow_holder_node_3d: Node3D = $ArrowHolderNode3D
 var arrow_active: bool = false
+var feature_active: bool = false
 
 # Set the scale on instantiation
 func _ready() -> void:
@@ -22,7 +23,7 @@ func set_link_holder_visibility(seen: bool) -> void:
 
 
 func set_arrow_holder_visibility(seen: bool) -> void:
-	arrow_holder_node_3d.visible = seen
+	arrow_holder_node_3d.visible = seen and not feature_active
 
 
 func set_texture_visibility(seen: bool) -> void:
@@ -32,7 +33,8 @@ func set_texture_visibility(seen: bool) -> void:
 func set_target_waypoint_and_feature(new_target_waypoint: Waypoint, feature: String) -> void:
 	target_waypoint = new_target_waypoint
 	if target_waypoint != null:
-		look_at(target_waypoint.global_position)
+		if target_waypoint.global_position != global_position:
+			look_at(target_waypoint.global_position)
 		var half_distance_to_other: float = global_position.distance_to(target_waypoint.global_position) / 2
 		link_holder_node_3d.scale.z = half_distance_to_other
 		arrow_holder_node_3d.position.z = -half_distance_to_other
@@ -43,9 +45,15 @@ func set_target_waypoint_and_feature(new_target_waypoint: Waypoint, feature: Str
 				feature = "Upstairs"
 			elif target_waypoint.floor_number < parent_waypoint.floor_number:
 				feature = "Downstairs"
-		feature_sprite_3d.set_feature_image(feature)
+		elif feature == 'Elevator' and target_waypoint.floor_number == 3:
+			feature = 'None'
+			
+		feature_active = feature_sprite_3d.set_feature_image(feature)
 		feature_sprite_3d.position.z = -half_distance_to_other
 		feature_sprite_3d.global_rotation = Vector3(0, PI, 0)
+		
+		# Hide arrows if the feature is shown
+		arrow_holder_node_3d.visible = not feature_active
 
 # Change colour of Link from parent Waypoint
 func change_colour(new_colour: Color) -> void:

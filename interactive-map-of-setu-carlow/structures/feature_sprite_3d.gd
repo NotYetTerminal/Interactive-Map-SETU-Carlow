@@ -5,16 +5,18 @@ class_name FeatureSprite3D
 @onready var cylinder_backround_mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 
 
-func set_feature_image(feature: String) -> void:
+func set_feature_image(feature: String) -> bool:
 	if feature_images_dictionary.has(feature):
 		texture = feature_images_dictionary[feature]
 		if feature == "Closed":
 			cylinder_backround_mesh_instance_3d.visible = false
 		else:
 			cylinder_backround_mesh_instance_3d.visible = true
+		return true
 	else:
 		texture = null
 		cylinder_backround_mesh_instance_3d.visible = false
+		return false
 
 
 func change_texture_colour(new_colour: Color) -> void:
