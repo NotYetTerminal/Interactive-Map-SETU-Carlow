@@ -12,3 +12,4 @@ Flaticons used:
 <a href="https://www.flaticon.com/free-icons/stairs" title="stairs icons">Stairs icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/location" title="location icons">Location icons created by Vitaly Gorbachev - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/lift" title="lift icons">Lift icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/loading" title="loading icons">Loading icons created by icon wind - Flaticon</a>
