@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://diterjcn2xfq1" path="res://icons/remove.png" id="4_q6k50"]
 
 [node name="WaypointConnectionEditorControl" type="Control"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 70)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -19,40 +19,43 @@ size_flags_horizontal = 3
 mouse_filter = 1
 script = ExtResource("1_rdmwk")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -122.5
+offset_top = -33.0
+offset_right = 122.5
+offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 alignment = 1
 
-[node name="WaypointOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="WaypointOptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="FeatureOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="FeatureOptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="PaddingControl" type="Control" parent="VBoxContainer/HBoxContainer"]
+[node name="PaddingControl" type="Control" parent="HBoxContainer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="EditorButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="EditorButton" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4
@@ -63,5 +66,5 @@ script = ExtResource("2_wblgo")
 new_texture = ExtResource("3_jxdcb")
 delete_texture = ExtResource("4_q6k50")
 
-[connection signal="item_selected" from="VBoxContainer/HBoxContainer/VBoxContainer/FeatureOptionButton" to="." method="_on_feature_option_button_item_selected"]
-[connection signal="button_down" from="VBoxContainer/HBoxContainer/EditorButton" to="." method="_on_editor_button_button_down"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/FeatureOptionButton" to="." method="_on_feature_option_button_item_selected"]
+[connection signal="button_down" from="HBoxContainer/EditorButton" to="." method="_on_editor_button_button_down"]

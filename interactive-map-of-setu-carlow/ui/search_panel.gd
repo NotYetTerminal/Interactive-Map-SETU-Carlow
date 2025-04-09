@@ -46,7 +46,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 				structure_array = description_match_dictionary[text_count]
 				structure_array.append(room)
 			elif room.lectures.containsn(searching_text):
-				lecturers_match_array.append(searching_text)
+				lecturers_match_array.append(room)
 			elif room.get_parent_structure().structure_name == searching_text:
 				name_match_array.push_front(room)
 			elif room.get_parent_structure().structure_name.containsn(searching_text):

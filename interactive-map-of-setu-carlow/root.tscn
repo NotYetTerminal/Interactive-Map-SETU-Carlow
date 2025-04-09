@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c632xxyai4jm5"]
+[gd_scene load_steps=25 format=3 uid="uid://c632xxyai4jm5"]
 
 [ext_resource type="Script" uid="uid://bp3iud5jniv3d" path="res://firebase/firebase_connector.gd" id="1_jrn7t"]
 [ext_resource type="Script" uid="uid://1aocp5yma75r" path="res://managers/structure_spawner.gd" id="4_66h5g"]
@@ -40,6 +40,42 @@ emission = Color(0.666667, 0.666667, 0.666667, 1)
 material = SubResource("StandardMaterial3D_eji0w")
 radius = 0.1
 height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qwhpj"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.230315, 0.230315, 0.230315, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qt76e"]
+material = SubResource("StandardMaterial3D_qwhpj")
+size = Vector2(1, 38)
+center_offset = Vector3(0, 0, 19)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_eji0w"]
+material = SubResource("StandardMaterial3D_qwhpj")
+size = Vector2(0.5, 14)
+center_offset = Vector3(0, 0, 7)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qwhpj"]
+material = SubResource("StandardMaterial3D_qwhpj")
+size = Vector2(0.5, 36)
+center_offset = Vector3(0, 0, 18)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sq7yr"]
+material = SubResource("StandardMaterial3D_qwhpj")
+size = Vector2(0.5, 18)
+center_offset = Vector3(0, 0, 9)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_r3r3k"]
+material = SubResource("StandardMaterial3D_qwhpj")
+size = Vector2(0.5, 60)
+center_offset = Vector3(0, 0, 30)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qw60f"]
+material = SubResource("StandardMaterial3D_qwhpj")
+size = Vector2(0.5, 12)
+center_offset = Vector3(0, 0, 6)
 
 [node name="Root" type="Node"]
 
@@ -84,6 +120,42 @@ mesh = SubResource("SphereMesh_eji0w")
 
 [node name="AccuracyMeshInstance3D" type="MeshInstance3D" parent="AndroidLocationTracker"]
 mesh = SubResource("SphereMesh_qwhpj")
+
+[node name="Environment" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1, 0)
+
+[node name="RoadMeshInstance3D" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(0.951057, 0, -0.309017, 0, 1, 0, 0.309017, 0, 0.951057, -1.216, 0, -37.1)
+mesh = SubResource("PlaneMesh_qt76e")
+
+[node name="RoadMeshInstance3D2" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(0.945518, 0, 0.325568, 0, 1, 0, -0.325568, 0, 0.945518, -12.881, 0, -1.4)
+mesh = SubResource("PlaneMesh_eji0w")
+skeleton = NodePath("../RoadMeshInstance3D")
+
+[node name="RoadMeshInstance3D3" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(0.999848, 0, 0.0174524, 0, 1, 0, -0.0174524, 0, 0.999848, -8.344, -5.96046e-08, 11.7572)
+mesh = SubResource("PlaneMesh_qwhpj")
+skeleton = NodePath("../RoadMeshInstance3D")
+
+[node name="RoadMeshInstance3D4" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(-0.766044, 0, 0.642788, 0, 1, 0, -0.642788, 0, -0.766044, -7.73212, 0, 47.5822)
+mesh = SubResource("PlaneMesh_sq7yr")
+skeleton = NodePath("../RoadMeshInstance3D")
+
+[node name="RoadMeshInstance3D5" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(-0.927184, 0, 0.374606, 0, 1, 0, -0.374606, 0, -0.927184, 3.75415, 0, 33.9238)
+mesh = SubResource("PlaneMesh_r3r3k")
+skeleton = NodePath("../RoadMeshInstance3D")
+
+[node name="RoadMeshInstance3D6" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 26.1618, -1.19209e-07, -21.5658)
+mesh = SubResource("PlaneMesh_qw60f")
+skeleton = NodePath("../RoadMeshInstance3D")
+
+[node name="RoadMeshInstance3D7" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(0.866026, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866026, -12.9708, 3.09944e-06, -0.992834)
+mesh = SubResource("PlaneMesh_qt76e")
 
 [connection signal="admin_logged_in" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_admin_logged_in"]
 [connection signal="incorrect_login" from="FirebaseConnector" to="UIRoot" method="_on_firebase_connector_incorrect_login"]

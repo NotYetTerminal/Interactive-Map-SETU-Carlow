@@ -22,8 +22,11 @@ func _ready() -> void:
 
 func show_room_information(room_name: String, lecturers: String, description: String) -> void:
 	name_label.text = room_name
-	lecturers_label.text = "Lecturers: " + lecturers
-	lecturers_label.visible = true
+	if lecturers.to_lower() != "none":
+		lecturers_label.text = "Lecturers: " + lecturers
+		lecturers_label.visible = true
+	else:
+		lecturers_label.visible = false
 	building_letter_label.visible = false
 	description_label.text = description
 	visible = true

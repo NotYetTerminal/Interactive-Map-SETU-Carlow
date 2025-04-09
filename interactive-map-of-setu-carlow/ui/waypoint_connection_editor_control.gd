@@ -5,9 +5,9 @@ signal add_connection(waypoint_id: String)
 signal delete_connection(waypoint_id: String)
 signal change_feature(waypoint_id: String, new_feature: String)
 
-@onready var waypoint_option_button: OptionButton = $VBoxContainer/HBoxContainer/VBoxContainer/WaypointOptionButton
-@onready var editor_button: EditorButton = $VBoxContainer/HBoxContainer/EditorButton
-@onready var feature_option_button: OptionButton = $VBoxContainer/HBoxContainer/VBoxContainer/FeatureOptionButton
+@onready var waypoint_option_button: OptionButton = $HBoxContainer/VBoxContainer/WaypointOptionButton
+@onready var editor_button: EditorButton = $HBoxContainer/EditorButton
+@onready var feature_option_button: OptionButton = $HBoxContainer/VBoxContainer/FeatureOptionButton
 
 var delete_button_active: bool = false
 
