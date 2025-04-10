@@ -213,6 +213,15 @@ func save_map_data(id: String, fields: Array[String], parent_collection_path: St
 	var parent_collection: FirestoreCollection = Firebase.Firestore.collection(parent_collection_path)
 	
 	var firestore_documents_list: Array = await Firebase.Firestore.list(parent_collection_path)
+	var remove_list: Array = []
+	@warning_ignore("untyped_declaration")
+	for item in firestore_documents_list:
+		if typeof(item) == TYPE_STRING:
+			remove_list.append(item)
+	@warning_ignore("untyped_declaration")
+	for item in remove_list:
+		firestore_documents_list.erase(item)
+	
 	var single_firestore_document_list: Array = firestore_documents_list.filter(func(x: FirestoreDocument) -> bool: return x.doc_name == id)
 	
 	if single_firestore_document_list.is_empty():
