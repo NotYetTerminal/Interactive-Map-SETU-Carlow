@@ -21,6 +21,7 @@ func set_managers(building_man: BuildingManager, room_man: RoomManager) -> void:
 
 
 func general_search(searching_text: String) -> Array[Structure]:
+	searching_text = searching_text.to_lower()
 	var building_array: Array = building_manager.get_all_buildings()
 	var room_array: Array = room_manager.get_all_rooms()
 	
@@ -34,7 +35,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 		
 		# Search through Rooms first as they might also come up if the parent Building name is searched
 		for room: Room in room_array:
-			if room.structure_name == searching_text:
+			if room.structure_name.to_lower() == searching_text:
 				name_match_array.push_front(room)
 			elif room.structure_name.containsn(searching_text):
 				name_match_array.append(room)
@@ -47,16 +48,16 @@ func general_search(searching_text: String) -> Array[Structure]:
 				structure_array.append(room)
 			elif room.lectures.containsn(searching_text):
 				lecturers_match_array.append(room)
-			elif room.get_parent_structure().structure_name == searching_text:
+			elif room.get_parent_structure().structure_name.to_lower() == searching_text:
 				name_match_array.push_front(room)
 			elif room.get_parent_structure().structure_name.containsn(searching_text):
 				name_match_array.push_front(room)
 		
 		for building: Building in building_array:
-			if building.structure_name == searching_text:
+			if building.structure_name.to_lower() == searching_text:
 				name_match_array.push_front(building)
 			elif building.structure_name.containsn(searching_text):
-				name_match_array.append(building)
+				name_match_array.push_front(building)
 			elif building.description.containsn(searching_text):
 				var text_count: int = building.description.countn(searching_text)
 				if not description_match_dictionary.has(text_count):
