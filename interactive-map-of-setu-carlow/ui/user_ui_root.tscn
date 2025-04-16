@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bw4ru2pi3ea3r"]
+[gd_scene load_steps=20 format=3 uid="uid://bw4ru2pi3ea3r"]
 
 [ext_resource type="Script" uid="uid://xoghmb5exj06" path="res://ui/user_ui_root.gd" id="1_c31da"]
 [ext_resource type="Script" uid="uid://b564ymo1jwdhu" path="res://ui/information_popup_control.gd" id="2_bnl34"]
@@ -7,7 +7,9 @@
 [ext_resource type="Script" uid="uid://buf3tiq1t6v5h" path="res://ui/search_panel.gd" id="3_m06ik"]
 [ext_resource type="Script" uid="uid://bnhkljakpxy7k" path="res://ui/navigation_button.gd" id="4_j3kvc"]
 [ext_resource type="PackedScene" uid="uid://c7ngcwe2n7hh" path="res://ui/search_item_h_box_container.tscn" id="4_x715j"]
+[ext_resource type="StyleBox" uid="uid://c86hd1bji3rj5" path="res://materials_&_themes/normal_from_style_box_flat.tres" id="5_5djvq"]
 [ext_resource type="Theme" uid="uid://bspim5e45tqvk" path="res://materials_&_themes/from_theme.tres" id="5_kvlmd"]
+[ext_resource type="StyleBox" uid="uid://bxyrprwejw8io" path="res://materials_&_themes/normal_to_style_box_flat.tres" id="6_vmw2w"]
 [ext_resource type="Theme" uid="uid://cg0w3ronyt11o" path="res://materials_&_themes/to_theme.tres" id="7_5djvq"]
 [ext_resource type="Texture2D" uid="uid://c0aynm4yf4nya" path="res://icons/right-up.png" id="7_dwrjb"]
 [ext_resource type="Texture2D" uid="uid://ciif6acyem82o" path="res://icons/right-down.png" id="8_72rlj"]
@@ -68,6 +70,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_dwkun")
+normal_from_style_box_flat = ExtResource("5_5djvq")
+normal_to_style_box_flat = ExtResource("6_vmw2w")
 
 [node name="FromSearchBarPanel" type="Panel" parent="SearchElementsControl"]
 layout_mode = 1

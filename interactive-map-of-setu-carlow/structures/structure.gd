@@ -67,6 +67,10 @@ func get_firestore_path() -> String:
 func update_visibility() -> void:
 	pass
 
+# Set the from and to colours
+func set_mesh_colour(_new_colour: Color = Color.BLACK) -> void:
+	pass
+
 # Set the position of the structue based on the GPS coordinates
 func set_structure_global_position() -> void:
 	var this_position: Vector3 = equirectangular_conversion(longitude, latitude)

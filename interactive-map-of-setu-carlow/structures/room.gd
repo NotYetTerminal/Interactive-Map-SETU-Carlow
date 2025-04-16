@@ -145,6 +145,15 @@ func update_visibility() -> void:
 		waypoint.update_visibility()
 
 
+func set_mesh_colour(new_colour: Color = Color("ff7033")) -> void:
+	var material: StandardMaterial3D = StandardMaterial3D.new()
+	material.albedo_color = Color.BLACK
+	material.metallic_specular = 0
+	material.emission_enabled = true
+	material.emission = new_colour
+	mesh_instance_3d.set_surface_override_material(0, material)
+
+
 func set_icon_scale(new_scale: float) -> void:
 	mesh_instance_3d.scale = Vector3(new_scale, new_scale, new_scale)
 	collision_shape_3d.scale = Vector3(new_scale, new_scale, new_scale)

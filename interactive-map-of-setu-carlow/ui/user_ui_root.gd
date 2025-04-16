@@ -62,14 +62,24 @@ func hide_search_panel() -> void:
 
 func _on_navigation_button_button_down() -> void:
 	if currently_navigating:
-		currently_navigating = false
-		cancel_navigation.emit()
-		distance_label.visible = false
-		from_structure = null
-		to_structure = null
+		clear_navigation()
 	elif from_structure != null and to_structure != null:
+		from_structure.set_mesh_colour(Color.LAWN_GREEN)
+		to_structure.set_mesh_colour(Color.RED)
 		currently_navigating = true
 		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)
+
+
+func clear_navigation() -> void:
+	if from_structure != null:
+		from_structure.set_mesh_colour()
+	if to_structure != null:
+		to_structure.set_mesh_colour()
+	currently_navigating = false
+	cancel_navigation.emit()
+	distance_label.visible = false
+	from_structure = null
+	to_structure = null
 
 
 func select_structure(selected_structure: Structure) -> void:
@@ -118,9 +128,7 @@ func _on_to_button_button_down() -> void:
 
 func _on_admin_check_button_edit_mode_toggled() -> void:
 	if not Globals.edit_mode:
-		currently_navigating = false
-		cancel_navigation.emit()
-		distance_label.visible = false
+		clear_navigation()
 	visible = not Globals.edit_mode
 	information_popup_elements_control.visible = false
 
