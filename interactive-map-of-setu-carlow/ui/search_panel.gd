@@ -191,7 +191,20 @@ func set_search_item_details(search_item_h_box_container: SearchItemHBoxContaine
 			extra_information = room.description
 		else:
 			extra_information = room.lectures + ". " + room.description
-		search_item_h_box_container.set_details(room, room.structure_name, room.get_parent_structure().structure_name, extra_information)
+		var floor_string: String = " - "
+		match room.floor_number:
+			1:
+				floor_string += "Ground Floor"
+			2:
+				floor_string += "First Floor"
+			3:
+				floor_string += "Second Floor"
+		search_item_h_box_container.set_details(
+			room,
+			room.structure_name,
+			room.get_parent_structure().structure_name + floor_string,
+			extra_information
+		)
 	elif structure is Building:
 		var building: Building = structure as Building
 		search_item_h_box_container.set_details(building, building.structure_name, building.building_letter, building.description)
