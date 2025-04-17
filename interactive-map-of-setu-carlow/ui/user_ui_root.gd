@@ -17,7 +17,7 @@ signal _set_to_structure(to_structure: Structure)
 
 @onready var search_panel: SearchPanel = $SearchPanel
 @onready var distance_label: Label = $SearchElementsControl/ThirdHBoxContainer/DistanceLabel
-@onready var h_flow_container: HFlowContainer = $SearchElementsControl/ThirdHBoxContainer/HFlowContainer
+@onready var third_h_box_container: HBoxContainer = $SearchElementsControl/ThirdHBoxContainer
 @onready var stairs_check_button: CheckButton = $SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer/StairsCheckButton
 @onready var information_popup_elements_control: Control = $InformationPopupElementsControl
 
@@ -49,14 +49,13 @@ func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
 
 
 func show_search_panel() -> void:
-	distance_label.visible = false
-	h_flow_container.visible = false
+	third_h_box_container.visible = false
 	search_panel.visible = true
 
 
 func hide_search_panel() -> void:
 	distance_label.visible = currently_navigating
-	h_flow_container.visible = true
+	third_h_box_container.visible = true
 	search_panel.visible = false
 
 
@@ -152,3 +151,7 @@ func update_search() -> void:
 	hide_search_panel()
 	_set_from_structure.emit(from_structure)
 	_set_to_structure.emit(to_structure)
+
+
+func load_bookmarks() -> void:
+	search_panel.load_bookmarks()

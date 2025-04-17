@@ -300,7 +300,8 @@ func reset(to_waypoint: Waypoint = null) -> void:
 
 
 func set_icon_scale(new_scale: float) -> void:
-	mesh_instance_3d.scale = Vector3(new_scale, new_scale, new_scale)
-	collision_shape_3d.scale = Vector3(new_scale, new_scale, new_scale)
+	if Globals.edit_mode:
+		mesh_instance_3d.scale = Vector3(new_scale, new_scale, new_scale)
+		collision_shape_3d.scale = Vector3(new_scale, new_scale, new_scale)
 	for link: Link in links_dictionary.values():
 		link.set_icon_scale(new_scale)

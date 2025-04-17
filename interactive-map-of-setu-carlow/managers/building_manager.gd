@@ -9,6 +9,10 @@ func add_new_building(new_building: Building) -> void:
 	_all_buildings[new_building.id] = new_building
 
 
+func get_building(building_id: String) -> Building:
+	return _all_buildings.get(building_id)
+
+
 func get_all_buildings() -> Array:
 	return _all_buildings.values()
 

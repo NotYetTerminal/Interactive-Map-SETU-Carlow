@@ -152,4 +152,5 @@ func get_all_waypoints_by_distance(from_waypoint_id: String) -> Array[String]:
 
 func _on_camera_3d_new_zoom_level(zoom_level: float) -> void:
 	for waypoint: Waypoint in _all_waypoints.values():
-		waypoint.set_icon_scale(zoom_level)
+		if Globals.current_floor == waypoint.floor_number:
+			waypoint.set_icon_scale(zoom_level)

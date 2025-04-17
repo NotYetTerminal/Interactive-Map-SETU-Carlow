@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7ngcwe2n7hh"]
+[gd_scene load_steps=12 format=3 uid="uid://c7ngcwe2n7hh"]
 
 [ext_resource type="Texture2D" uid="uid://c0aynm4yf4nya" path="res://icons/right-up.png" id="1_cgbd0"]
 [ext_resource type="Script" uid="uid://bwqlfdnksakcn" path="res://ui/search_item_h_box_container.gd" id="1_pqgas"]
 [ext_resource type="Texture2D" uid="uid://ciif6acyem82o" path="res://icons/right-down.png" id="2_fers5"]
 [ext_resource type="Theme" uid="uid://bspim5e45tqvk" path="res://materials_&_themes/from_theme.tres" id="2_spwo8"]
+[ext_resource type="Script" uid="uid://c32tau2b6keun" path="res://ui/editor_button.gd" id="3_3xeqe"]
 [ext_resource type="Theme" uid="uid://cg0w3ronyt11o" path="res://materials_&_themes/to_theme.tres" id="4_h2ehw"]
+[ext_resource type="Texture2D" uid="uid://dewdhkljrf3t4" path="res://icons/plus.png" id="4_sjich"]
+[ext_resource type="Texture2D" uid="uid://diterjcn2xfq1" path="res://icons/remove.png" id="5_4yj5w"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_spwo8"]
 
@@ -50,12 +53,15 @@ alignment = 2
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="FromButton" type="Button" parent="HBoxContainer/AspectRatioContainer"]
+[node name="BookmarkButton" type="Button" parent="HBoxContainer/AspectRatioContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme = ExtResource("2_spwo8")
-icon = ExtResource("1_cgbd0")
+flat = true
+icon_alignment = 1
 expand_icon = true
+script = ExtResource("3_3xeqe")
+new_texture = ExtResource("4_sjich")
+delete_texture = ExtResource("5_4yj5w")
 
 [node name="PaddingControl" type="Control" parent="HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
@@ -64,16 +70,31 @@ layout_mode = 2
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="ToButton" type="Button" parent="HBoxContainer/AspectRatioContainer2"]
+[node name="FromButton" type="Button" parent="HBoxContainer/AspectRatioContainer2"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme = ExtResource("4_h2ehw")
-icon = ExtResource("2_fers5")
+theme = ExtResource("2_spwo8")
+icon = ExtResource("1_cgbd0")
 expand_icon = true
 
 [node name="PaddingControl2" type="Control" parent="HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[connection signal="button_down" from="HBoxContainer/AspectRatioContainer/FromButton" to="." method="_on_from_button_button_down"]
-[connection signal="button_down" from="HBoxContainer/AspectRatioContainer2/ToButton" to="." method="_on_to_button_button_down"]
+[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="ToButton" type="Button" parent="HBoxContainer/AspectRatioContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme = ExtResource("4_h2ehw")
+icon = ExtResource("2_fers5")
+expand_icon = true
+
+[node name="PaddingControl3" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[connection signal="button_down" from="HBoxContainer/AspectRatioContainer/BookmarkButton" to="." method="_on_bookmark_button_button_down"]
+[connection signal="button_down" from="HBoxContainer/AspectRatioContainer2/FromButton" to="." method="_on_from_button_button_down"]
+[connection signal="button_down" from="HBoxContainer/AspectRatioContainer3/ToButton" to="." method="_on_to_button_button_down"]
