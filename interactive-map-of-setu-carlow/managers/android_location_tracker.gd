@@ -16,11 +16,11 @@ func _ready() -> void:
 		#The rest of your startup code goes here as usual
 		var _result: int = get_tree().on_request_permissions_result.connect(permission_check)
 
-		#NOTE: OS.request_permissions() should be called from a button the user actively touches after being informed of 
+		#NOTE: OS.request_permissions() should be called from a button the user actively touches after being informed of
 		#what the button will enable.  This is placed in _ready() only to indicate this must be called, and how to structure
 		#handling the 2 paths code can follow after calling it.
 
-		var allowed: bool = OS.request_permissions() 
+		var allowed: bool = OS.request_permissions()
 		if allowed:
 			enable_GPS()
 

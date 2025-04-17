@@ -38,7 +38,7 @@ func set_target_waypoint_and_feature(new_target_waypoint: Waypoint, feature: Str
 		var half_distance_to_other: float = global_position.distance_to(target_waypoint.global_position) / 2
 		link_holder_node_3d.scale.z = half_distance_to_other
 		arrow_holder_node_3d.position.z = -half_distance_to_other
-		
+
 		if feature == "Stairs":
 			var parent_waypoint: Waypoint = get_parent()
 			if target_waypoint.floor_number > parent_waypoint.floor_number:
@@ -47,11 +47,11 @@ func set_target_waypoint_and_feature(new_target_waypoint: Waypoint, feature: Str
 				feature = "Downstairs"
 		elif feature == 'Elevator' and target_waypoint.floor_number == 3:
 			feature = 'None'
-			
+
 		feature_active = feature_sprite_3d.set_feature_image(feature)
 		feature_sprite_3d.position.z = -half_distance_to_other
 		feature_sprite_3d.global_rotation = Vector3(0, PI, 0)
-		
+
 		# Hide arrows if the feature is shown
 		arrow_holder_node_3d.visible = not feature_active
 
@@ -62,7 +62,7 @@ func change_colour(new_colour: Color) -> void:
 	material.emission_enabled = true
 	material.emission = new_colour
 	mesh_instance_3d.set_surface_override_material(0, material)
-	
+
 	if new_colour == Color.DEEP_SKY_BLUE:
 		feature_sprite_3d.change_texture_colour(Color.YELLOW)
 	else:

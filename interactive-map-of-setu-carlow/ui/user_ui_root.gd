@@ -98,11 +98,11 @@ func _on_from_button_button_down() -> void:
 			if to_structure != null:
 				temp = to_structure
 			_on_navigation_button_button_down()
-		
+
 		from_structure = current_selected_structure
 		information_popup_elements_control.visible = false
 		_set_from_structure.emit(from_structure)
-		
+
 		if temp != null:
 			current_selected_structure = temp
 			_on_to_button_button_down()
@@ -115,11 +115,11 @@ func _on_to_button_button_down() -> void:
 			if from_structure != null:
 				temp = from_structure
 			_on_navigation_button_button_down()
-		
+
 		to_structure = current_selected_structure
 		information_popup_elements_control.visible = false
 		_set_to_structure.emit(to_structure)
-		
+
 		if temp != null:
 			current_selected_structure = temp
 			_on_from_button_button_down()

@@ -93,9 +93,9 @@ func select_structure(structure: Structure) -> void:
 	# Change last selection colour back
 	if selected_structure != null && selected_structure is Waypoint:
 		(selected_structure as Waypoint).change_colour(Color.LIGHT_GRAY)
-	
+
 	selected_structure = structure
-	
+
 	# Set common values
 	if selected_structure != null:
 		id_line_edit.text = selected_structure.id
@@ -109,7 +109,7 @@ func select_structure(structure: Structure) -> void:
 		id_line_edit.text = ""
 		longitude_line_edit.text = ""
 		latitude_line_edit.text = ""
-	
+
 	name_h_box_container.visible = false
 	description_v_box_container.visible = false
 	building_letter_h_box_container.visible = false
@@ -117,15 +117,15 @@ func select_structure(structure: Structure) -> void:
 	floor_number_h_box_container.visible = false
 	parent_h_box_container.visible = false
 	waypoint_connections_scroll_container.visible = false
-	
+
 	button_pusher_control.visible = true
 	waypoints_updated_time_label.visible = false
 	buildings_updated_time_label.visible = false
 	rooms_updated_time_label.visible = false
-	
+
 	change_text_edits()
 	check_save_and_delete_buttons()
-	
+
 	# Set individual ones
 	if selected_structure is BaseMap:
 		structure_type_label.text = 'Base Map'
@@ -194,7 +194,7 @@ func show_waypoint_details(select_struct: Waypoint) -> void:
 func _on_save_button_pressed() -> void:
 	if selected_structure == null:
 		return
-	
+
 	var longitude_value: float = longitude_line_edit.text.to_float()
 	var latitude_value: float = latitude_line_edit.text.to_float()
 	if longitude_value < -6.938 or longitude_value > -6.931:
@@ -203,7 +203,7 @@ func _on_save_button_pressed() -> void:
 	elif latitude_value < 52.822 or latitude_value > 52.83:
 		show_input_message("Latitude must be between 52.822 and 52.83")
 		return
-	
+
 	# Common values
 	var details: Dictionary = {
 		'longitude': longitude_value,
@@ -222,11 +222,11 @@ func _on_save_button_pressed() -> void:
 		elif building_letter_line_edit.text == "":
 			show_input_message("Building Letter must not be empty.")
 			return
-		
+
 		details['name'] = name_line_edit.text
 		details['description'] = description_text_edit.text
 		details['building_letter'] = building_letter_line_edit.text
-		
+
 		details['waypoints_updated_time'] = (selected_structure as Building).waypoints_updated_time
 		details['rooms_updated_time'] = (selected_structure as Building).rooms_updated_time
 	elif selected_structure is Room:
@@ -236,12 +236,12 @@ func _on_save_button_pressed() -> void:
 		elif description_text_edit.text == "":
 			show_input_message("Description must not be empty.")
 			return
-		
+
 		details['name'] = name_line_edit.text
 		details['description'] = description_text_edit.text
 		details['lecturers'] = lecturers_line_edit.text
 		details['floor_number'] = int(floor_number_spin_box.value)
-		
+
 		details['waypoints_updated_time'] = (selected_structure as Room).waypoints_updated_time
 	elif selected_structure is Waypoint:
 		details['floor_number'] = int(floor_number_spin_box.value)
@@ -249,7 +249,7 @@ func _on_save_button_pressed() -> void:
 		for waypoint_id: String in waypoint_connections_editors_v_box_container.connected_waypoints_dictionary.keys():
 			waypoint_dictionary[waypoint_id] = waypoint_connections_editors_v_box_container.connected_waypoints_dictionary[waypoint_id]
 		details['waypoint_connections'] = waypoint_dictionary
-	
+
 	show_input_message_mid_action("Saving")
 	@warning_ignore("redundant_await")
 	await selected_structure.update_details(details)

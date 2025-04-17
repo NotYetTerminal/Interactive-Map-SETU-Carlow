@@ -65,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			touch_points[input_event.index] = input_event.position
 		else:
 			var _exists: bool = touch_points.erase(input_event.index)
-		
+
 		if touch_points.size() == 1:
 			start_distance = 0
 			ray_cast_select(input_event)
@@ -74,7 +74,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			var touch_point_positions: Array[Vector2] = touch_points.values()
 			start_distance = touch_point_positions[0].distance_to(touch_point_positions[1])
 			start_angle = (touch_point_positions[0] - touch_point_positions[1]).angle()
-		
+
 	elif event is InputEventScreenDrag:
 		var input_event: InputEventScreenDrag = event as InputEventScreenDrag
 		touch_points[input_event.index] = input_event.position
@@ -92,7 +92,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif zoom_factor > 0:
 				zoom_in(touch_zoom_amount * zoom_factor)
 			start_distance = current_distance
-			
+
 			var current_angle: float = (touch_point_positions[0] - touch_point_positions[1]).angle()
 			var final_angle: float = current_angle - start_angle
 			if final_angle < -PI/300:
@@ -100,7 +100,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif final_angle > PI/300:
 				rotation.y -= rotation_speed
 			start_angle = current_angle
-	
+
 	elif event is InputEventKey:
 		var input_event: InputEventKey = event as InputEventKey
 		if input_event.pressed:
@@ -130,15 +130,15 @@ func ray_cast_select(event: InputEvent) -> void:
 	var from: Vector3 = project_ray_origin(input_position)
 	var to: Vector3 = from + project_ray_normal(input_position) * ray_length
 	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
-	
+
 	var ray_query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
 	ray_query.from = from
 	ray_query.to = to
 	var raycast_result: Dictionary = space.intersect_ray(ray_query)
-	
+
 	print()
 	print(raycast_result)
-	
+
 	if raycast_result.has("collider") and raycast_result["collider"] is Structure:
 		var structure: Structure = raycast_result["collider"]
 		# Disable snapping when editing

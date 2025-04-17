@@ -18,23 +18,23 @@ func _ready() -> void:
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in
-	
+
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"] else "",
 		"latitude" if latitude != details["latitude"] else "",
 		"waypoints_updated_time" if waypoints_updated_time != details["waypoints_updated_time"] else "",
 		"buildings_updated_time" if buildings_updated_time != details["buildings_updated_time"] else ""
 	]
-	
+
 	longitude = details["longitude"]
 	latitude = details["latitude"]
-	
+
 	Globals.base_longitude = longitude
 	Globals.base_latitude = latitude
-	
+
 	waypoints_updated_time = details["waypoints_updated_time"]
 	buildings_updated_time = details["buildings_updated_time"]
-	
+
 	set_structure_global_position()
 	return changed_fields
 
@@ -44,10 +44,10 @@ func update_details(details: Dictionary) -> void:
 	var base_map_data: Dictionary = Globals.offline_data[id]
 	details['Buildings'] = base_map_data['Buildings']
 	details['Waypoints'] = base_map_data['Waypoints']
-	
+
 	Globals.offline_data[id] = details
 	await Globals.save_data(id, fields, current_firestore_path(), details)
-	
+
 	saved = true
 
 # Used by children to update time

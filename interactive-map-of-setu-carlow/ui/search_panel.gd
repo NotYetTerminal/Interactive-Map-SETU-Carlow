@@ -60,7 +60,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 	searching_text = searching_text.to_lower()
 	var building_array: Array = building_manager.get_all_buildings()
 	var room_array: Array = room_manager.get_all_rooms()
-	
+
 	# Longer text search
 	if searching_text.length() > 2:
 		var name_match_array: Array[Structure] = []
@@ -68,7 +68,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 		# Stores the amount of times text occured and a list of Structures { count: int, Structures: Array[Structure] }
 		var description_match_dictionary: Dictionary[int, Array] = {}
 		var structure_array: Array[Structure]
-		
+
 		# Search through Rooms first as they might also come up if the parent Building name is searched
 		for room: Room in room_array:
 			if room.structure_name.to_lower() == searching_text:
@@ -88,7 +88,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 				name_match_array.push_front(room)
 			elif room.get_parent_structure().structure_name.containsn(searching_text):
 				name_match_array.push_front(room)
-		
+
 		for building: Building in building_array:
 			if building.structure_name.to_lower() == searching_text:
 				name_match_array.push_front(building)
@@ -101,7 +101,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 					description_match_dictionary[text_count] = new_array
 				structure_array = description_match_dictionary[text_count]
 				structure_array.append(building)
-		
+
 		var result_array: Array[Structure] = []
 		result_array.append_array(name_match_array)
 		result_array.append_array(lecturers_match_array)
@@ -111,7 +111,7 @@ func general_search(searching_text: String) -> Array[Structure]:
 		for counter: int in counter_array:
 			structure_array = description_match_dictionary[counter]
 			result_array.append_array(structure_array)
-		
+
 		return result_array
 	# Short search - only look at Building letters
 	elif searching_text.length() == 1:
@@ -121,25 +121,25 @@ func general_search(searching_text: String) -> Array[Structure]:
 			if building.building_letter.capitalize() == searching_text.capitalize():
 				location_match_array.append(building)
 				break
-		
+
 		for room: Room in room_array:
 			if room.get_parent_structure().building_letter.capitalize() == searching_text.capitalize():
 				location_match_array.append(room)
-		
+
 		return location_match_array
-	
+
 	return []
 
 
 func set_up_search_items(search_text: String) -> void:
 	var result_array: Array[Structure] = general_search(search_text)
-	
+
 	# Hide all items
 	for search_item_h_box_container: SearchItemHBoxContainer in search_item_h_box_containers:
 		search_item_h_box_container.visible = false
 	for h_seperator: HSeparator in search_h_seperators:
 		h_seperator.visible = false
-	
+
 	var index: int = 0
 	var search_item_h_box_container: SearchItemHBoxContainer
 	for structure: Structure in result_array:
@@ -155,7 +155,7 @@ func set_up_search_items(search_text: String) -> void:
 			search_item_h_box_container = search_item_h_box_containers[index]
 			search_item_h_box_container.visible = true
 			search_h_seperators[index].visible = true
-		
+
 		search_item_h_box_container.bookmark_button.visible = not bookmark_structure_ids.has(structure.id)
 		set_search_item_details(search_item_h_box_container, structure)
 		index += 1
@@ -169,17 +169,17 @@ func create_new_search_item(
 ) -> SearchItemHBoxContainer:
 	var search_item_h_box_container: SearchItemHBoxContainer = search_item_h_box_container_scene.instantiate()
 	item_v_box_container.add_child(search_item_h_box_container)
-	
+
 	var _error: int = search_item_h_box_container.connect("from_button_pressed", _on_search_item_h_box_container_from_button_pressed)
 	_error = search_item_h_box_container.connect("to_button_pressed", _on_search_item_h_box_container_to_button_pressed)
 	_error = search_item_h_box_container.connect("bookmark_button_pressed", _on_search_item_h_box_container_bookmark_button_pressed)
 	search_item_h_box_container.set_bookmark_button(add_icon)
 	item_h_box_containers.append(search_item_h_box_container)
-	
+
 	var h_seperator: HSeparator = HSeparator.new()
 	item_v_box_container.add_child(h_seperator)
 	item_h_seperators.append(h_seperator)
-	
+
 	return search_item_h_box_container
 
 
@@ -251,7 +251,7 @@ func _on_search_item_h_box_container_bookmark_button_pressed(search_item_h_box_c
 			search_h_seperators,
 			search_v_box_container
 		)
-	
+
 	var file: FileAccess = FileAccess.open("user://bookmarks", FileAccess.WRITE)
 	if file != null and len(bookmark_structure_ids) != 0:
 		var _error: bool = file.store_var(bookmark_structure_ids)
@@ -271,13 +271,13 @@ func move_search_item_over(
 	from_v_box_container.remove_child(search_item_h_box_container)
 	var h_seperator: HSeparator = from_h_seperators.pop_at(index)
 	from_v_box_container.remove_child(h_seperator)
-	
+
 	to_h_box_containers.append(search_item_h_box_container)
 	to_v_box_container.add_child(search_item_h_box_container)
 	h_seperator = HSeparator.new()
 	to_h_seperators.append(h_seperator)
 	to_v_box_container.add_child(h_seperator)
-	
+
 	if bookmark_structure_ids.has(search_item_h_box_container.structure.id):
 		bookmark_structure_ids.erase(search_item_h_box_container.structure.id)
 	else:
@@ -287,7 +287,7 @@ func move_search_item_over(
 func _on_search_button_button_down() -> void:
 	search_button.disabled = true
 	search_scroll_container.visible = true
-	
+
 	bookmark_button.button_pressed = false
 	bookmark_button.disabled = false
 	bookmark_scroll_container.visible = false
@@ -296,7 +296,7 @@ func _on_search_button_button_down() -> void:
 func _on_bookmark_button_button_down() -> void:
 	bookmark_button.disabled = true
 	bookmark_scroll_container.visible = true
-	
+
 	search_button.button_pressed = false
 	search_button.disabled = false
 	search_scroll_container.visible = false

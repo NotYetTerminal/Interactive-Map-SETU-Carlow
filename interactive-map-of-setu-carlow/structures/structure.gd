@@ -21,7 +21,7 @@ func _process(_delta: float) -> void:
 
 		var distance: float = -origin.y/direction.y
 		var xz_position: Vector3 = origin + direction * distance
-		
+
 		global_position = Vector3(xz_position.x, 0, xz_position.z)
 		set_structure_lon_lat()
 
@@ -75,13 +75,13 @@ func set_mesh_colour(_new_colour: Color = Color.BLACK) -> void:
 func set_structure_global_position() -> void:
 	var this_position: Vector3 = equirectangular_conversion(longitude, latitude)
 	var global_base_position: Vector3 = equirectangular_conversion(Globals.base_longitude, Globals.base_latitude)
-	
+
 	global_position = (this_position - global_base_position) / 10
 
 # Set the position of the structue based on the X Z coordinates
 func set_structure_lon_lat() -> void:
 	var this_coordinates: Vector2 = inverse_equirectangular_conversion(global_position.x, global_position.z)
-	
+
 	this_coordinates = (this_coordinates * 10) + Vector2(Globals.base_longitude, Globals.base_latitude)
 	longitude = this_coordinates.x
 	latitude = this_coordinates.y
@@ -91,11 +91,11 @@ func equirectangular_conversion(lon: float, lat: float) -> Vector3:
 	# Convert latitude and longitude to radians
 	var longitude_radians: float = deg_to_rad(lon)
 	var latitude_radians: float = deg_to_rad(lat)
-	
+
 	# Calculate coordinates using the Equirectangular projection
 	var x_coordinate: float = longitude_radians * cos(deg_to_rad(Globals.base_latitude))
 	var z_coordinate: float = latitude_radians
-	
+
 	return Vector3(x_coordinate, 0, z_coordinate) * Globals.EARTH_RADIUS
 
 # Convert using inverse Equirectangular projection

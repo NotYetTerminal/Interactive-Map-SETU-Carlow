@@ -19,7 +19,7 @@ func set_waypoint_editor_as_read_only(waypoint_id: String, selected_feature: Str
 	waypoint_option_button.add_item(waypoint_id)
 	waypoint_option_button.select(0)
 	waypoint_option_button.disabled = true
-	
+
 	var index: int = 0
 	var selected_index: int = 0
 	for feature: String in ALL_FEATURES:
@@ -29,7 +29,7 @@ func set_waypoint_editor_as_read_only(waypoint_id: String, selected_feature: Str
 		index += 1
 	feature_option_button.select(selected_index)
 	feature_option_button.visible = true
-	
+
 	_set_delete_button()
 
 
@@ -44,7 +44,7 @@ func set_waypoint_editor_as_editable(connected_waypoints_dictionary: Dictionary[
 		if connected_waypoints_dictionary.has(waypoint_id):
 			waypoint_option_button.set_item_disabled(index, true)
 		index += 1
-	
+
 	waypoint_option_button.select(0)
 	_set_new_button()
 

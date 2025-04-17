@@ -24,7 +24,7 @@ func _on_user_ui_root__set_to_structure(to_structure: Structure) -> void:
 		to_search_bar_line_edit.text = (to_structure as Building).structure_name
 	else:
 		to_search_bar_line_edit.text = ""
-	
+
 	if to_structure != to_structure_in_search:
 		normal_to_style_box_flat.bg_color = Color.WHITE
 		var tween: Tween = create_tween()
@@ -39,7 +39,7 @@ func _on_user_ui_root__set_from_structure(from_structure: Structure) -> void:
 		from_search_bar_line_edit.text = (from_structure as Building).structure_name
 	else:
 		from_search_bar_line_edit.text = ""
-	
+
 	if from_structure != from_structure_in_search:
 		normal_from_style_box_flat.bg_color = Color.WHITE
 		var tween: Tween = create_tween()

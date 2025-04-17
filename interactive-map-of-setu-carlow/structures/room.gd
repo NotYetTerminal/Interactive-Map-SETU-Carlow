@@ -20,11 +20,11 @@ func _ready() -> void:
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in
-	
+
 	# When the structure is created no data is passed to it
 	if details.is_empty():
 		return []
-	
+
 	var changed_fields: Array[String] = [
 		"longitude" if longitude != details["longitude"] else "",
 		"latitude" if latitude != details["latitude"] else "",
@@ -34,18 +34,18 @@ func save_details(id_in: String, details: Dictionary) -> Array[String]:
 		"floor_number" if floor_number != details["floor_number"] else "",
 		"waypoints_updated_time" if waypoints_updated_time != details["waypoints_updated_time"] else ""
 	]
-	
+
 	longitude = details["longitude"]
 	latitude = details["latitude"]
-	
+
 	structure_name = details["name"]
 	description = details["description"]
 	lectures = details["lecturers"]
-	
+
 	floor_number = details["floor_number"]
-	
+
 	waypoints_updated_time = details["waypoints_updated_time"]
-	
+
 	set_structure_global_position()
 	return changed_fields
 
@@ -54,21 +54,21 @@ func update_details(details: Dictionary) -> void:
 	var fields: Array[String] = save_details(id, details)
 	var building: Building = get_parent_structure()
 	var base_map: BaseMap = building.get_parent_structure()
-	
+
 	var room_dictionary: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]
 	if not room_dictionary.has('Rooms'):
 		room_dictionary['Rooms'] = {}
-	
+
 	room_dictionary = room_dictionary['Rooms']
 	if room_dictionary.has(id):
 		var room_data: Dictionary = room_dictionary[id]
 		if not room_data.has('Waypoints'):
 			room_data['Waypoints'] = {}
 		details['Waypoints'] = room_data['Waypoints']
-	
+
 	room_dictionary[id] = details
 	await Globals.save_data(id, fields, current_firestore_path(), details)
-	
+
 	saved = true
 	building.update_rooms_time(int(Time.get_unix_time_from_system()))
 
@@ -77,11 +77,11 @@ func update_waypoints_time(new_time: int) -> void:
 	waypoints_updated_time = new_time
 	var building: Building = get_parent_structure()
 	var base_map: BaseMap = building.get_parent_structure()
-	
+
 	Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]['waypoints_updated_time'] = waypoints_updated_time
 	var structure_data: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms'][id]
 	await Globals.save_data(id, ['waypoints_updated_time'], current_firestore_path(), structure_data)
-	
+
 	building.update_rooms_time(waypoints_updated_time)
 
 # Set global position, and update children
@@ -95,13 +95,13 @@ func delete_itself() -> void:
 	# Delete all Waypoints in the Rooms
 	for waypoint: Waypoint in waypoints_node.get_children():
 		await waypoint.delete_itself()
-	
+
 	var building: Building = get_parent_structure()
 	var base_map: BaseMap = building.get_parent_structure()
 	var rooms_dictionary: Dictionary = Globals.offline_data[base_map.id]['Buildings'][building.id]['Rooms']
 	var _erased: bool = rooms_dictionary.erase(id)
 	building.update_rooms_time(int(Time.get_unix_time_from_system()))
-	
+
 	await Globals.delete_structure(base_map.id + '/Buildings/' + building.id + '/Rooms', id)
 	self.queue_free()
 

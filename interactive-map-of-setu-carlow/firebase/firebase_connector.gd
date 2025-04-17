@@ -30,9 +30,9 @@ func _ready() -> void:
 
 	Globals.firebaseConnector = self
 	Globals.load_offline_data()
-	
+
 	#delete_auth_file()
-	
+
 	# If auth file is saved, then use that
 	var _success: bool = Firebase.Auth.check_auth_file()
 
@@ -113,13 +113,13 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 	var child_structure_updated_time_name: String
 	var child_structure_collection_name: String
 	var child_structure_type: Structures
-	
+
 	# Run for each document in collection
 	for structure_document: FirestoreDocument in await Firebase.Firestore.list(collection_path):
 		clean_structure_document_data(structure_document, structure_type)
 		var sub_collection_path: String = collection_path + "/" + structure_document.doc_name + '/'
 		print(structure_document)
-		
+
 		match structure_type:
 			Structures.Base_Map:
 				# Save to Base_Map document
@@ -136,7 +136,7 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 			Structures.RoomStruct:
 				# Save to Base_Map document id -> Buildings collection -> Building document id -> Rooms collection -> Room document id
 				parent_document.document[ROOMS_COLLECTION][structure_document.doc_name] = structure_document.document
-		
+
 		var new_collection: bool = parent_structure_collection.is_empty() or not parent_structure_collection.has(structure_document.doc_name)
 		if new_collection:
 			waypoints_updated = true
@@ -146,7 +146,7 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 			# Check child structure
 			if structure_type != Structures.RoomStruct:
 				child_structure_updated = structure_document.document[child_structure_updated_time_name] > parent_structure_collection[structure_document.doc_name][child_structure_updated_time_name]
-		
+
 		# Run for Waypoints collection if updated
 		if new_collection || waypoints_updated:
 			structure_document.document[WAYPOINTS_COLLECTION] = {}
@@ -157,7 +157,7 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 				structure_document.document[WAYPOINTS_COLLECTION][waypoint_document.doc_name] = waypoint_document.document
 		else:
 			structure_document.document[WAYPOINTS_COLLECTION] = parent_structure_collection[structure_document.doc_name][WAYPOINTS_COLLECTION]
-		
+
 		if structure_type != Structures.RoomStruct:
 			# Run for child structure collection if updated
 			if new_collection || child_structure_updated:
@@ -167,7 +167,7 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 				await query_structure_data(sub_collection_path + child_structure_collection_name, child_structure_type, structure_document, collection_to_pass)
 			else:
 				structure_document.document[child_structure_collection_name] = parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
-	
+
 	if structure_type == Structures.Base_Map and len(parent_document.document.keys()) != 0:
 		Globals.offline_data = parent_document.document
 
@@ -175,31 +175,31 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 func clean_structure_document_data(structure_document: FirestoreDocument, structure_type: Structures) -> void:
 	structure_document.document['longitude'] = structure_document.document['longitude']['doubleValue']
 	structure_document.document['latitude'] = structure_document.document['latitude']['doubleValue']
-	
+
 	match structure_type:
 			Structures.Base_Map:
 				structure_document.document['waypoints_updated_time'] = str(structure_document.document['waypoints_updated_time']['integerValue']).to_int()
 				structure_document.document['buildings_updated_time'] = str(structure_document.document['buildings_updated_time']['integerValue']).to_int()
-				
+
 			Structures.BuildingStruct:
 				structure_document.document['name'] = structure_document.document['name']['stringValue']
 				structure_document.document['description'] = structure_document.document['description']['stringValue']
 				structure_document.document['building_letter'] = structure_document.document['building_letter']['stringValue']
-				
+
 				structure_document.document['waypoints_updated_time'] = str(structure_document.document['waypoints_updated_time']['integerValue']).to_int()
 				structure_document.document['rooms_updated_time'] = str(structure_document.document['rooms_updated_time']['integerValue']).to_int()
-				
+
 			Structures.RoomStruct:
 				structure_document.document['name'] = structure_document.document['name']['stringValue']
 				structure_document.document['description'] = structure_document.document['description']['stringValue']
 				structure_document.document['lecturers'] = structure_document.document['lecturers']['stringValue']
 				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
-				
+
 				structure_document.document['waypoints_updated_time'] = str(structure_document.document['waypoints_updated_time']['integerValue']).to_int()
-				
+
 			Structures.WaypointStruct:
 				structure_document.document['floor_number'] = str(structure_document.document['floor_number']['integerValue']).to_int()
-				
+
 				var waypoint_connections_dictionary: Dictionary[String, String] = {}
 				var connection_dictionary: Dictionary = structure_document.document['waypoint_connections']['mapValue']
 				if connection_dictionary.has('fields'):
@@ -211,7 +211,7 @@ func clean_structure_document_data(structure_document: FirestoreDocument, struct
 # Save the map data into the cloud
 func save_map_data(id: String, fields: Array[String], parent_collection_path: String, global_structure_offline_data: Dictionary) -> void:
 	var parent_collection: FirestoreCollection = Firebase.Firestore.collection(parent_collection_path)
-	
+
 	var firestore_documents_list: Array = await Firebase.Firestore.list(parent_collection_path)
 	var remove_list: Array = []
 	@warning_ignore("untyped_declaration")
@@ -221,9 +221,9 @@ func save_map_data(id: String, fields: Array[String], parent_collection_path: St
 	@warning_ignore("untyped_declaration")
 	for item in remove_list:
 		firestore_documents_list.erase(item)
-	
+
 	var single_firestore_document_list: Array = firestore_documents_list.filter(func(x: FirestoreDocument) -> bool: return x.doc_name == id)
-	
+
 	if single_firestore_document_list.is_empty():
 		# Create new Structure
 		var _document: FirestoreDocument = await parent_collection.add(id, global_structure_offline_data)
