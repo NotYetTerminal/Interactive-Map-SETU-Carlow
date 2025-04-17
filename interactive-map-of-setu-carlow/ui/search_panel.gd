@@ -9,13 +9,13 @@ var room_manager: RoomManager
 
 @export var search_item_h_box_container_scene: PackedScene
 
-@onready var search_button: Button = $VBoxContainer/HBoxContainer/SearchButton
-@onready var bookmark_button: Button = $VBoxContainer/HBoxContainer/BookmarkButton
+@onready var search_button: Button = $VBoxContainer/VBoxContainer/HBoxContainer/SearchButton
+@onready var bookmark_button: Button = $VBoxContainer/VBoxContainer/HBoxContainer/BookmarkButton
 
-@onready var search_scroll_container: ScrollContainer = $SearchScrollContainer
-@onready var search_v_box_container: VBoxContainer = $SearchScrollContainer/SearchVBoxContainer
-@onready var bookmark_scroll_container: ScrollContainer = $BookmarkScrollContainer
-@onready var bookmark_v_box_container: VBoxContainer = $BookmarkScrollContainer/BookmarkVBoxContainer
+@onready var search_scroll_container: ScrollContainer = $VBoxContainer/SearchScrollContainer
+@onready var search_v_box_container: VBoxContainer = $VBoxContainer/SearchScrollContainer/SearchVBoxContainer
+@onready var bookmark_scroll_container: ScrollContainer = $VBoxContainer/BookmarkScrollContainer
+@onready var bookmark_v_box_container: VBoxContainer = $VBoxContainer/BookmarkScrollContainer/BookmarkVBoxContainer
 
 var search_item_h_box_containers: Array[SearchItemHBoxContainer] = []
 var search_h_seperators: Array[HSeparator] = []

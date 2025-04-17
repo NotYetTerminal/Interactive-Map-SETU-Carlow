@@ -53,20 +53,19 @@ anchors_preset = -1
 anchor_left = 0.02
 anchor_top = 0.2
 anchor_right = 0.98
-anchor_bottom = 0.3
+anchor_bottom = 0.98
 
-[node name="PaddingControl" type="Control" parent="SearchPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 2)
+[node name="VBoxContainer" type="VBoxContainer" parent="SearchPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SearchPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SearchPanel/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PaddingControl" type="Control" parent="SearchPanel/VBoxContainer/HBoxContainer"]
+[node name="PaddingControl" type="Control" parent="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 
-[node name="SearchButton" type="Button" parent="SearchPanel/VBoxContainer/HBoxContainer"]
+[node name="SearchButton" type="Button" parent="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -76,11 +75,11 @@ toggle_mode = true
 button_pressed = true
 text = "Search"
 
-[node name="PaddingControl2" type="Control" parent="SearchPanel/VBoxContainer/HBoxContainer"]
+[node name="PaddingControl2" type="Control" parent="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="BookmarkButton" type="Button" parent="SearchPanel/VBoxContainer/HBoxContainer"]
+[node name="BookmarkButton" type="Button" parent="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -88,41 +87,33 @@ theme_override_font_sizes/font_size = 30
 toggle_mode = true
 text = "Bookmarks"
 
-[node name="PaddingControl3" type="Control" parent="SearchPanel/VBoxContainer/HBoxContainer"]
+[node name="PaddingControl3" type="Control" parent="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="PaddingControl2" type="Control" parent="SearchPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 2)
+[node name="PaddingControl2" type="Control" parent="SearchPanel/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="SearchPanel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="SearchPanel/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="SearchScrollContainer" type="ScrollContainer" parent="SearchPanel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.3
-anchor_right = 0.98
-anchor_bottom = 0.98
+[node name="SearchScrollContainer" type="ScrollContainer" parent="SearchPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="SearchVBoxContainer" type="VBoxContainer" parent="SearchPanel/SearchScrollContainer"]
+[node name="SearchVBoxContainer" type="VBoxContainer" parent="SearchPanel/VBoxContainer/SearchScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BookmarkScrollContainer" type="ScrollContainer" parent="SearchPanel"]
+[node name="BookmarkScrollContainer" type="ScrollContainer" parent="SearchPanel/VBoxContainer"]
 visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.3
-anchor_right = 0.98
-anchor_bottom = 0.98
+layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="BookmarkVBoxContainer" type="VBoxContainer" parent="SearchPanel/BookmarkScrollContainer"]
+[node name="BookmarkVBoxContainer" type="VBoxContainer" parent="SearchPanel/VBoxContainer/BookmarkScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -387,8 +378,8 @@ expand_icon = true
 [connection signal="start_navigation" from="." to="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton" method="_on_user_ui_root_start_navigation"]
 [connection signal="set_from_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_from_search_structure"]
 [connection signal="set_to_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_to_search_structure"]
-[connection signal="button_down" from="SearchPanel/VBoxContainer/HBoxContainer/SearchButton" to="SearchPanel" method="_on_search_button_button_down"]
-[connection signal="button_down" from="SearchPanel/VBoxContainer/HBoxContainer/BookmarkButton" to="SearchPanel" method="_on_bookmark_button_button_down"]
+[connection signal="button_down" from="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer/SearchButton" to="SearchPanel" method="_on_search_button_button_down"]
+[connection signal="button_down" from="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer/BookmarkButton" to="SearchPanel" method="_on_bookmark_button_button_down"]
 [connection signal="text_changed" from="SearchElementsControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="." method="_on_from_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="SearchPanel" method="_on_from_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
