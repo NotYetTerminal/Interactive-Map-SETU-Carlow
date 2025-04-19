@@ -17,11 +17,6 @@ var building_texture_node: Node3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
-# Set the scale on instantiation
-func _ready() -> void:
-	var parent_base_map: BaseMap = get_parent_structure()
-	set_icon_scale(parent_base_map.mesh_instance_3d.scale.x)
-
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in
@@ -190,8 +185,3 @@ func set_mesh_colour(new_colour: Color = Color("6b33cc")) -> void:
 	material.emission_enabled = true
 	material.emission = new_colour
 	mesh_instance_3d.set_surface_override_material(0, material)
-
-
-func set_icon_scale(new_scale: float) -> void:
-	mesh_instance_3d.scale = Vector3(new_scale, new_scale, new_scale)
-	collision_shape_3d.scale = Vector3(new_scale, new_scale, new_scale)

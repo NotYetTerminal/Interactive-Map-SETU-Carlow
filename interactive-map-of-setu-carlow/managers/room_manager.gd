@@ -15,9 +15,3 @@ func get_room(room_id: String) -> Room:
 
 func get_all_rooms() -> Array:
 	return _all_rooms.values()
-
-
-func _on_camera_3d_new_zoom_level(zoom_level: float) -> void:
-	for room: Room in _all_rooms.values():
-		if Globals.current_floor == room.floor_number:
-			room.set_icon_scale(zoom_level)

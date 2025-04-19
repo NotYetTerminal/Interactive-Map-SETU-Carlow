@@ -15,8 +15,3 @@ func get_building(building_id: String) -> Building:
 
 func get_all_buildings() -> Array:
 	return _all_buildings.values()
-
-
-func _on_camera_3d_new_zoom_level(zoom_level: float) -> void:
-	for building: Building in _all_buildings.values():
-		building.set_icon_scale(zoom_level)

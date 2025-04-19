@@ -98,8 +98,3 @@ func update_visibility() -> void:
 		waypoint.update_visibility()
 	for building: Building in buildings_node.get_children():
 		building.update_visibility()
-
-
-func set_icon_scale(new_scale: float) -> void:
-	mesh_instance_3d.scale = Vector3(new_scale, new_scale, new_scale)
-	collision_shape_3d.scale = Vector3(new_scale, new_scale, new_scale)

@@ -12,11 +12,6 @@ var current_colour: Color
 var arrow_active: bool = false
 var feature_active: bool = false
 
-# Set the scale on instantiation
-func _ready() -> void:
-	var parent_waypoint: Waypoint = get_parent_node_3d()
-	set_icon_scale(parent_waypoint.mesh_instance_3d.scale.x)
-
 
 func set_link_holder_visibility(seen: bool) -> void:
 	link_holder_node_3d.visible = seen
@@ -67,9 +62,3 @@ func change_colour(new_colour: Color) -> void:
 		feature_sprite_3d.change_texture_colour(Color.YELLOW)
 	else:
 		feature_sprite_3d.change_texture_colour(Color.WHITE)
-
-
-func set_icon_scale(new_scale: float) -> void:
-	mesh_instance_3d.scale.x = new_scale
-	arrow_holder_node_3d.scale = Vector3(new_scale, new_scale, new_scale) / 1.5
-	feature_sprite_3d.set_icon_scale(new_scale)

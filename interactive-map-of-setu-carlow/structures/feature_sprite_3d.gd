@@ -26,7 +26,3 @@ func change_texture_colour(new_colour: Color) -> void:
 	material.emission_enabled = true
 	material.emission = new_colour
 	cylinder_backround_mesh_instance_3d.set_surface_override_material(0, material)
-
-
-func set_icon_scale(new_scale: float) -> void:
-	scale = Vector3(new_scale, new_scale, new_scale) / 10
