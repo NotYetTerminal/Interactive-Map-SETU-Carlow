@@ -56,4 +56,4 @@ func _on_camera_3d_new_zoom_level(zoom_level: float) -> void:
 
 
 func _on_ui_root_snap_camera_to_location() -> void:
-	snap_camera.emit(position.x, position.z)
+	snap_camera.emit(global_position.x, global_position.z)

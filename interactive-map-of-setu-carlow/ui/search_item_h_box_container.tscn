@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7ngcwe2n7hh"]
+[gd_scene load_steps=9 format=3 uid="uid://c7ngcwe2n7hh"]
 
 [ext_resource type="Texture2D" uid="uid://c0aynm4yf4nya" path="res://icons/right-up.png" id="1_cgbd0"]
 [ext_resource type="Script" uid="uid://bwqlfdnksakcn" path="res://ui/search_item_h_box_container.gd" id="1_pqgas"]
@@ -8,12 +8,6 @@
 [ext_resource type="Theme" uid="uid://cg0w3ronyt11o" path="res://materials_&_themes/to_theme.tres" id="4_h2ehw"]
 [ext_resource type="Texture2D" uid="uid://dewdhkljrf3t4" path="res://icons/plus.png" id="4_sjich"]
 [ext_resource type="Texture2D" uid="uid://diterjcn2xfq1" path="res://icons/remove.png" id="5_4yj5w"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_spwo8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2ehw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xm3kn"]
 
 [node name="SearchItemHBoxContainer" type="HBoxContainer"]
 offset_right = 86.0
@@ -31,20 +25,29 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="NameLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+[node name="NameButton" type="Button" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxEmpty_spwo8")
+text = "NRMTUtntntls\\ves"
+flat = true
+alignment = 0
 
-[node name="LocationLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+[node name="LocationButton" type="Button" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = SubResource("StyleBoxEmpty_h2ehw")
+text = "tnuftnfuntkhhks"
+flat = true
+alignment = 0
 
-[node name="ExtraInformationLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+[node name="ExtraInformationButton" type="Button" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = SubResource("StyleBoxEmpty_xm3kn")
+text = "tsrtssrdR"
+flat = true
+alignment = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -56,6 +59,7 @@ layout_mode = 2
 [node name="BookmarkButton" type="Button" parent="HBoxContainer/AspectRatioContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -73,6 +77,7 @@ layout_mode = 2
 [node name="FromButton" type="Button" parent="HBoxContainer/AspectRatioContainer2"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("2_spwo8")
 icon = ExtResource("1_cgbd0")
 expand_icon = true
@@ -87,6 +92,7 @@ layout_mode = 2
 [node name="ToButton" type="Button" parent="HBoxContainer/AspectRatioContainer3"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("4_h2ehw")
 icon = ExtResource("2_fers5")
 expand_icon = true
@@ -95,6 +101,9 @@ expand_icon = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
+[connection signal="button_down" from="ScrollContainer/VBoxContainer/NameButton" to="." method="_on_name_button_button_down"]
+[connection signal="button_down" from="ScrollContainer/VBoxContainer/LocationButton" to="." method="_on_location_button_button_down"]
+[connection signal="button_down" from="ScrollContainer/VBoxContainer/ExtraInformationButton" to="." method="_on_extra_information_button_button_down"]
 [connection signal="button_down" from="HBoxContainer/AspectRatioContainer/BookmarkButton" to="." method="_on_bookmark_button_button_down"]
 [connection signal="button_down" from="HBoxContainer/AspectRatioContainer2/FromButton" to="." method="_on_from_button_button_down"]
 [connection signal="button_down" from="HBoxContainer/AspectRatioContainer3/ToButton" to="." method="_on_to_button_button_down"]

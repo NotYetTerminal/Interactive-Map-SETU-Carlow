@@ -172,3 +172,8 @@ func _on_ui_root_zoom_out_button() -> void:
 func _on_android_location_tracker_snap_camera(android_position_x: float, android_position_z: float) -> void:
 	position.x = android_position_x
 	position.z = android_position_z
+
+
+func _on_ui_root_snap_camera(structure_position_x: float, structure_position_z: float) -> void:
+	position.x = structure_position_x
+	position.z = structure_position_z

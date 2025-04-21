@@ -166,6 +166,7 @@ mesh = SubResource("PlaneMesh_qt76e")
 [connection signal="pathfinding_distance" from="Pathfinder" to="UIRoot" method="_on_pathfinder_pathfinding_distance"]
 [connection signal="select_structure" from="Camera3D" to="UIRoot" method="_on_camera_3d_select_structure"]
 [connection signal="cancel_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_cancel_navigation"]
+[connection signal="snap_camera" from="UIRoot" to="Camera3D" method="_on_ui_root_snap_camera"]
 [connection signal="snap_camera_to_location" from="UIRoot" to="AndroidLocationTracker" method="_on_ui_root_snap_camera_to_location"]
 [connection signal="spawn_specific_structure" from="UIRoot" to="StructureSpawner" method="_on_ui_root_spawn_specific_structure"]
 [connection signal="start_navigation" from="UIRoot" to="Pathfinder" method="_on_ui_root_start_navigation"]

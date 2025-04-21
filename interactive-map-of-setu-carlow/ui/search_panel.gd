@@ -3,6 +3,7 @@ class_name SearchPanel
 
 signal set_from_search_structure(structure: Structure)
 signal set_to_search_structure(structure: Structure)
+signal snap_to_structure(structure: Structure)
 
 var building_manager: BuildingManager
 var room_manager: RoomManager
@@ -47,13 +48,6 @@ func load_bookmarks() -> void:
 			if structure == null:
 				structure = room_manager.get_room(structure_id)
 			set_search_item_details(bookmark_item_h_box_container, structure)
-		#bookmark_item_h_box_containers = file.get_var(true)
-		#var h_seperator: HSeparator
-		#for bookmark_item_h_box_container: SearchItemHBoxContainer in bookmark_item_h_box_containers:
-			#bookmark_v_box_container.add_child(bookmark_item_h_box_container)
-			#h_seperator = HSeparator.new()
-			#bookmark_v_box_container.add_child(h_seperator)
-			#bookmark_h_seperators.append(h_seperator)
 
 
 func general_search(searching_text: String) -> Array[Structure]:
@@ -173,6 +167,7 @@ func create_new_search_item(
 	var _error: int = search_item_h_box_container.connect("from_button_pressed", _on_search_item_h_box_container_from_button_pressed)
 	_error = search_item_h_box_container.connect("to_button_pressed", _on_search_item_h_box_container_to_button_pressed)
 	_error = search_item_h_box_container.connect("bookmark_button_pressed", _on_search_item_h_box_container_bookmark_button_pressed)
+	_error = search_item_h_box_container.connect("structure_button_pressed", _on_search_item_h_box_container_structure_button_pressed)
 	search_item_h_box_container.set_bookmark_button(add_icon)
 	item_h_box_containers.append(search_item_h_box_container)
 
@@ -282,6 +277,10 @@ func move_search_item_over(
 		bookmark_structure_ids.erase(search_item_h_box_container.structure.id)
 	else:
 		bookmark_structure_ids.append(search_item_h_box_container.structure.id)
+
+
+func _on_search_item_h_box_container_structure_button_pressed(structure: Structure) -> void:
+	snap_to_structure.emit(structure)
 
 
 func _on_search_button_button_down() -> void:

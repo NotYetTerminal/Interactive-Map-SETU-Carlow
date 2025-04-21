@@ -6,6 +6,7 @@ signal start_navigation(from_structure: Structure, to_structure: Structure, allo
 signal zoom_in_button()
 signal zoom_out_button()
 signal snap_camera_to_location()
+signal snap_camera(structure_position_x: float, structure_position_z: float)
 
 @onready var admin_ui_root: AdminUIRoot = $AdminUIRoot
 @onready var user_ui_root: UserUIRoot = $UserUIRoot
@@ -22,6 +23,7 @@ func _on_user_ui_root_cancel_navigation() -> void:
 
 func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: Structure, allow_stairs: bool) -> void:
 	start_navigation.emit(from_structure, to_structure, allow_stairs)
+	snap_camera.emit(from_structure.global_position.x, from_structure.global_position.z)
 
 
 func _on_screen_elements_control_update_floor_number() -> void:
@@ -74,3 +76,7 @@ func _on_firebase_connector_incorrect_login() -> void:
 
 func _on_location_button_button_down() -> void:
 	snap_camera_to_location.emit()
+
+
+func _on_user_ui_root_snap_to_structure(structure: Structure) -> void:
+	snap_camera.emit(structure.global_position.x, structure.global_position.z)

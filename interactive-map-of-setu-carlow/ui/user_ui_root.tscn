@@ -69,6 +69,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 30
 disabled = true
 toggle_mode = true
@@ -83,6 +84,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
 text = "Bookmarks"
@@ -240,6 +242,7 @@ layout_mode = 2
 [node name="StairsCheckButton" type="CheckButton" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 35
 button_pressed = true
 text = "Use Stairs: "
@@ -258,6 +261,7 @@ layout_mode = 2
 [node name="NavigationButton" type="Button" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 40
 text = "Start Navigation"
 script = ExtResource("4_j3kvc")
@@ -348,6 +352,7 @@ anchor_bottom = 0.7
 
 [node name="FromButton" type="Button" parent="InformationPopupElementsControl/AspectRatioContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("5_kvlmd")
 icon = ExtResource("7_dwrjb")
 icon_alignment = 1
@@ -364,6 +369,7 @@ anchor_bottom = 0.7
 
 [node name="ToButton" type="Button" parent="InformationPopupElementsControl/AspectRatioContainer2"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("7_5djvq")
 icon = ExtResource("8_72rlj")
 icon_alignment = 1
@@ -378,6 +384,7 @@ expand_icon = true
 [connection signal="start_navigation" from="." to="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton" method="_on_user_ui_root_start_navigation"]
 [connection signal="set_from_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_from_search_structure"]
 [connection signal="set_to_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_to_search_structure"]
+[connection signal="snap_to_structure" from="SearchPanel" to="." method="_on_search_panel_snap_to_structure"]
 [connection signal="button_down" from="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer/SearchButton" to="SearchPanel" method="_on_search_button_button_down"]
 [connection signal="button_down" from="SearchPanel/VBoxContainer/VBoxContainer/HBoxContainer/BookmarkButton" to="SearchPanel" method="_on_bookmark_button_button_down"]
 [connection signal="text_changed" from="SearchElementsControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="." method="_on_from_search_bar_line_edit_text_changed"]

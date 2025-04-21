@@ -144,6 +144,7 @@ layout_mode = 2
 
 [node name="MoveButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 disabled = true
 text = "Move"
 
@@ -271,6 +272,7 @@ text = "Floor Number: "
 
 [node name="FloorNumberSpinBox" type="SpinBox" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/FloorNumberHBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 min_value = 1.0
 max_value = 3.0
 value = 1.0
@@ -413,6 +415,7 @@ layout_mode = 2
 [node name="SaveButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme = ExtResource("4_nj6tk")
 disabled = true
 text = "Save"
@@ -424,6 +427,7 @@ layout_mode = 2
 [node name="DeleteButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme = ExtResource("5_8qhju")
 disabled = true
 text = "Delete"
@@ -435,6 +439,7 @@ layout_mode = 2
 [node name="AddButton" type="Button" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme = ExtResource("4_nj6tk")
 disabled = true
 text = "Add New Structure"
@@ -493,6 +498,7 @@ alignment = 1
 
 [node name="DeleteButton" type="Button" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("5_8qhju")
 text = "Delete"
 
@@ -502,6 +508,7 @@ layout_mode = 2
 
 [node name="DeleteCancelButton" type="Button" parent="DeletionConfirmationPanel/Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("4_nj6tk")
 text = "Cancel"
 
@@ -546,22 +553,26 @@ alignment = 1
 
 [node name="BuildingButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("4_nj6tk")
 text = "Add Building"
 
 [node name="RoomButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 visible = false
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("4_nj6tk")
 text = "Add Room"
 
 [node name="WaypointButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("4_nj6tk")
 text = "Add Waypoint"
 
 [node name="AddStructureCancelButton" type="Button" parent="AddStructurePanel/Panel/VBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("5_8qhju")
 text = "Cancel"
 
@@ -618,6 +629,7 @@ offset_right = -25.0
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("4_nj6tk")
 text = "Login"
 
@@ -634,6 +646,7 @@ offset_right = 80.0
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("5_8qhju")
 text = "Cancel"
 
@@ -686,6 +699,7 @@ autowrap_mode = 3
 
 [node name="CloseButton" type="Button" parent="InputMessagePanel/Panel/VBoxContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Close"
 
 [connection signal="button_up" from="InformationPanel/ScrollContainer/TextEditVBoxContainer/LocationHBoxContainer/MoveButton" to="." method="_on_move_button_button_up"]

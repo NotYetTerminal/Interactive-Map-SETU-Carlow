@@ -4,6 +4,7 @@ class_name UserUIRoot
 # Signals for outside nodes
 signal start_navigation(from_structure: Structure, to_structure: Structure, allow_stairs: bool)
 signal cancel_navigation
+signal snap_to_structure(structure: Structure)
 
 # Signals for internal nodes
 signal _show_room_information(room_name: String, lecturers: String, description: String)
@@ -160,3 +161,8 @@ func load_bookmarks() -> void:
 func _on_stairs_check_button_pressed() -> void:
 	if currently_navigating and from_structure != null and to_structure != null:
 		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)
+
+
+func _on_search_panel_snap_to_structure(structure: Structure) -> void:
+	hide_search_panel()
+	snap_to_structure.emit(structure)
