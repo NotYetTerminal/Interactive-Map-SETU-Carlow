@@ -155,3 +155,8 @@ func update_search() -> void:
 
 func load_bookmarks() -> void:
 	search_panel.load_bookmarks()
+
+
+func _on_stairs_check_button_pressed() -> void:
+	if currently_navigating and from_structure != null and to_structure != null:
+		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)

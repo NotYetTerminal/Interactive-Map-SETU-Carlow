@@ -384,6 +384,7 @@ expand_icon = true
 [connection signal="text_changed" from="SearchElementsControl/FromSearchBarPanel/FromSearchBarHSplitContainer/FromSearchBarLineEdit" to="SearchPanel" method="_on_from_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="." method="_on_to_search_bar_line_edit_text_changed"]
 [connection signal="text_changed" from="SearchElementsControl/ToSearchBarPanel/ToSearchBarHSplitContainer/ToSearchBarLineEdit" to="SearchPanel" method="_on_to_search_bar_line_edit_text_changed"]
+[connection signal="pressed" from="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer/StairsCheckButton" to="." method="_on_stairs_check_button_pressed"]
 [connection signal="button_down" from="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton" to="." method="_on_navigation_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/AspectRatioContainer/FromButton" to="." method="_on_from_button_button_down"]
 [connection signal="button_down" from="InformationPopupElementsControl/AspectRatioContainer2/ToButton" to="." method="_on_to_button_button_down"]
