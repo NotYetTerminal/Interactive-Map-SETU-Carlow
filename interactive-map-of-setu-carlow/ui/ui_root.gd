@@ -66,8 +66,9 @@ func update_visibility() -> void:
 
 
 func _on_pathfinder_map_fully_updated() -> void:
-	loading_panel.visible = false
+	user_ui_root.load_pathfinding_structures()
 	user_ui_root.load_bookmarks()
+	loading_panel.visible = false
 
 
 func _on_firebase_connector_incorrect_login() -> void:

@@ -67,6 +67,7 @@ func _on_navigation_button_button_down() -> void:
 		from_structure.set_mesh_colour(Color.LAWN_GREEN)
 		to_structure.set_mesh_colour(Color.RED)
 		currently_navigating = true
+		save_pathfinding_structures()
 		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)
 
 
@@ -80,6 +81,7 @@ func clear_navigation() -> void:
 	distance_label.visible = false
 	from_structure = null
 	to_structure = null
+	save_pathfinding_structures()
 
 
 func select_structure(selected_structure: Structure) -> void:
@@ -158,8 +160,41 @@ func load_bookmarks() -> void:
 	search_panel.load_bookmarks()
 
 
+func load_pathfinding_structures() -> void:
+	var file: FileAccess = FileAccess.open("user://pathfinding_structures", FileAccess.READ)
+	if file != null and file.get_length() != 0:
+		var pathfinding_structures: Dictionary = file.get_var()
+		if len(pathfinding_structures.keys()) != 0:
+			var structure_id: String = pathfinding_structures["from_structure_id"]
+			from_structure = building_manager.get_building(structure_id)
+			if from_structure == null:
+				from_structure = room_manager.get_room(structure_id)
+
+			structure_id = pathfinding_structures["to_structure_id"]
+			to_structure = building_manager.get_building(structure_id)
+			if to_structure == null:
+				to_structure = room_manager.get_room(structure_id)
+
+			stairs_check_button.button_pressed = pathfinding_structures["stairs"]
+
+			update_search()
+			_on_navigation_button_button_down()
+
+
+func save_pathfinding_structures() -> void:
+	var file: FileAccess = FileAccess.open("user://pathfinding_structures", FileAccess.WRITE)
+	if file != null:
+		var pathfinding_structures: Dictionary = {}
+		if currently_navigating:
+			pathfinding_structures["from_structure_id"] = from_structure.id
+			pathfinding_structures["to_structure_id"] = to_structure.id
+			pathfinding_structures["stairs"] = stairs_check_button.button_pressed
+		var _error: bool = file.store_var(pathfinding_structures)
+
+
 func _on_stairs_check_button_pressed() -> void:
 	if currently_navigating and from_structure != null and to_structure != null:
+		save_pathfinding_structures()
 		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)
 
 
