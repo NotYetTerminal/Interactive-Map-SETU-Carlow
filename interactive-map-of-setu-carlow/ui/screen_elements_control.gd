@@ -1,4 +1,5 @@
 extends Control
+class_name ScreenElementsControl
 
 # Signals for outside nodes
 signal update_floor_number()

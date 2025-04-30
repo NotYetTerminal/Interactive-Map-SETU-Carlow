@@ -29,7 +29,7 @@ func load_offline_data() -> void:
 		offline_data = file.get_var()
 	else:
 		# The first time the application runs use the data included in the build export
-		file = FileAccess.open("offline_data_cached", FileAccess.READ)
+		file = FileAccess.open("res://offline_data_cached", FileAccess.READ)
 		if file != null:
 			print("Loaded cache")
 			offline_data = file.get_var()

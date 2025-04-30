@@ -29,7 +29,6 @@ size_flags_vertical = 3
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 50
-text = "NRMTUtntntls\\ves"
 flat = true
 alignment = 0
 
@@ -37,7 +36,6 @@ alignment = 0
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 35
-text = "tnuftnfuntkhhks"
 flat = true
 alignment = 0
 
@@ -45,7 +43,6 @@ alignment = 0
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 35
-text = "tsrtssrdR"
 flat = true
 alignment = 0
 
@@ -75,7 +72,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="FromButton" type="Button" parent="HBoxContainer/AspectRatioContainer2"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme = ExtResource("2_spwo8")
@@ -90,7 +87,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="ToButton" type="Button" parent="HBoxContainer/AspectRatioContainer3"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme = ExtResource("4_h2ehw")

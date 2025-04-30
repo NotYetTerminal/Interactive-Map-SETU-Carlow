@@ -11,6 +11,7 @@ signal snap_camera(structure_position_x: float, structure_position_z: float)
 @onready var admin_ui_root: AdminUIRoot = $AdminUIRoot
 @onready var user_ui_root: UserUIRoot = $UserUIRoot
 @onready var loading_panel: Panel = $LoadingPanel
+@onready var screen_elements_control: ScreenElementsControl = $ScreenElementsControl
 
 
 func _on_admin_ui_root_spawn_specific_structure(parent: Structure, structure_type: int) -> void:
@@ -23,6 +24,10 @@ func _on_user_ui_root_cancel_navigation() -> void:
 
 func _on_user_ui_root_start_navigation(from_structure: Structure, to_structure: Structure, allow_stairs: bool) -> void:
 	start_navigation.emit(from_structure, to_structure, allow_stairs)
+	if from_structure is Room:
+		update_floor_to_structure((from_structure as Room).floor_number)
+	else:
+		update_floor_to_structure(1)
 	snap_camera.emit(from_structure.global_position.x, from_structure.global_position.z)
 
 
@@ -80,4 +85,20 @@ func _on_location_button_button_down() -> void:
 
 
 func _on_user_ui_root_snap_to_structure(structure: Structure) -> void:
+	if structure is Room:
+		update_floor_to_structure((structure as Room).floor_number)
+	else:
+		update_floor_to_structure(1)
 	snap_camera.emit(structure.global_position.x, structure.global_position.z)
+
+
+func update_floor_to_structure(floor_number: int) -> void:
+	if Globals.current_floor > floor_number:
+		screen_elements_control._on_floor_down_button_button_down()
+	if Globals.current_floor < floor_number:
+		screen_elements_control._on_floor_up_button_button_down()
+
+	if Globals.current_floor > floor_number:
+		screen_elements_control._on_floor_down_button_button_down()
+	if Globals.current_floor < floor_number:
+		screen_elements_control._on_floor_up_button_button_down()

@@ -246,7 +246,7 @@ layout_mode = 2
 [node name="LecturersLabel" type="Label" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersHBoxContainer"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_srici")
-text = "Lecturers: "
+text = "Personnel: "
 
 [node name="LecturersLineEdit" type="LineEdit" parent="InformationPanel/ScrollContainer/TextEditVBoxContainer/LecturersHBoxContainer"]
 layout_mode = 2
