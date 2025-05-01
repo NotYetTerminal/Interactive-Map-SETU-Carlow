@@ -1,11 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://bw4ru2pi3ea3r"]
+[gd_scene load_steps=19 format=3 uid="uid://bw4ru2pi3ea3r"]
 
 [ext_resource type="Script" uid="uid://xoghmb5exj06" path="res://ui/user_ui_root.gd" id="1_c31da"]
 [ext_resource type="Script" uid="uid://b564ymo1jwdhu" path="res://ui/information_popup_control.gd" id="2_bnl34"]
 [ext_resource type="Script" uid="uid://cm22acnx4fp05" path="res://ui/search_elements_control.gd" id="2_dwkun"]
 [ext_resource type="Script" uid="uid://css5ma0dy5se6" path="res://ui/information_scroll_container.gd" id="2_uj4s2"]
 [ext_resource type="Script" uid="uid://buf3tiq1t6v5h" path="res://ui/search_panel.gd" id="3_m06ik"]
-[ext_resource type="Script" uid="uid://bnhkljakpxy7k" path="res://ui/navigation_button.gd" id="4_j3kvc"]
 [ext_resource type="PackedScene" uid="uid://c7ngcwe2n7hh" path="res://ui/search_item_h_box_container.tscn" id="4_x715j"]
 [ext_resource type="StyleBox" uid="uid://c86hd1bji3rj5" path="res://materials_&_themes/normal_from_style_box_flat.tres" id="5_5djvq"]
 [ext_resource type="Theme" uid="uid://bspim5e45tqvk" path="res://materials_&_themes/from_theme.tres" id="5_kvlmd"]
@@ -263,8 +262,7 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 40
-text = "Start Navigation"
-script = ExtResource("4_j3kvc")
+text = "Navigate"
 
 [node name="PaddingControl" type="Control" parent="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 2)
@@ -380,8 +378,6 @@ expand_icon = true
 [connection signal="_show_building_information" from="." to="InformationPopupElementsControl" method="show_building_information"]
 [connection signal="_show_room_information" from="." to="InformationPopupElementsControl" method="show_room_information"]
 [connection signal="cancel_navigation" from="." to="SearchElementsControl" method="_on_user_ui_root_cancel_navigation"]
-[connection signal="cancel_navigation" from="." to="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton" method="_on_user_ui_root_cancel_navigation"]
-[connection signal="start_navigation" from="." to="SearchElementsControl/ThirdHBoxContainer/HFlowContainer/VBoxContainer2/NavigationButton" method="_on_user_ui_root_start_navigation"]
 [connection signal="set_from_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_from_search_structure"]
 [connection signal="set_to_search_structure" from="SearchPanel" to="." method="_on_search_panel_set_to_search_structure"]
 [connection signal="snap_to_structure" from="SearchPanel" to="." method="_on_search_panel_snap_to_structure"]

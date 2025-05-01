@@ -27,6 +27,8 @@ var current_selected_structure: Structure
 var from_structure: Structure
 var to_structure: Structure
 var currently_navigating: bool = false
+var previous_from_structure: Structure
+var previous_to_structure: Structure
 
 
 func _ready() -> void:
@@ -61,14 +63,16 @@ func hide_search_panel() -> void:
 
 
 func _on_navigation_button_button_down() -> void:
-	if currently_navigating:
-		clear_navigation()
-	elif from_structure != null and to_structure != null:
+	if from_structure != null and to_structure != null and (
+		previous_from_structure != from_structure or previous_to_structure != to_structure
+	):
 		from_structure.set_mesh_colour(Color.LAWN_GREEN)
 		to_structure.set_mesh_colour(Color.RED)
 		currently_navigating = true
 		save_pathfinding_structures()
 		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)
+		previous_from_structure = from_structure
+		previous_to_structure = to_structure
 
 
 func clear_navigation() -> void:

@@ -25,6 +25,8 @@ var bookmark_item_h_box_containers: Array[SearchItemHBoxContainer] = []
 var bookmark_h_seperators: Array[HSeparator] = []
 var bookmark_structure_ids: Array[String] = []
 
+var from_search_bar_active: bool = true
+
 
 func set_managers(building_man: BuildingManager, room_man: RoomManager) -> void:
 	building_manager = building_man
@@ -208,10 +210,12 @@ func set_search_item_details(search_item_h_box_container: SearchItemHBoxContaine
 
 
 func _on_to_search_bar_line_edit_text_changed(new_text: String) -> void:
+	from_search_bar_active = false
 	set_up_search_items(new_text)
 
 
 func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
+	from_search_bar_active = true
 	set_up_search_items(new_text)
 
 
@@ -281,6 +285,10 @@ func move_search_item_over(
 
 func _on_search_item_h_box_container_structure_button_pressed(structure: Structure) -> void:
 	snap_to_structure.emit(structure)
+	if from_search_bar_active:
+		set_from_search_structure.emit(structure)
+	else:
+		set_to_search_structure.emit(structure)
 
 
 func _on_search_button_button_down() -> void:
