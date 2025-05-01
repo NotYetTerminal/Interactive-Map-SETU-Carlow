@@ -39,6 +39,10 @@ func _on_to_search_bar_line_edit_text_changed(new_text: String) -> void:
 	if new_text == "":
 		to_structure = null
 		hide_search_panel()
+		if from_structure == null:
+			clear_navigation()
+			previous_from_structure.set_mesh_colour()
+			previous_to_structure.set_mesh_colour()
 	else:
 		show_search_panel()
 
@@ -47,6 +51,10 @@ func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
 	if new_text == "":
 		from_structure = null
 		hide_search_panel()
+		if to_structure == null:
+			clear_navigation()
+			previous_from_structure.set_mesh_colour()
+			previous_to_structure.set_mesh_colour()
 	else:
 		show_search_panel()
 

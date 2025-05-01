@@ -166,7 +166,9 @@ func query_structure_data(collection_path: String, structure_type: Structures, p
 				var collection_to_pass: Dictionary = {} if new_collection else parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
 				await query_structure_data(sub_collection_path + child_structure_collection_name, child_structure_type, structure_document, collection_to_pass)
 			else:
-				structure_document.document[child_structure_collection_name] = parent_structure_collection[structure_document.doc_name][child_structure_collection_name]
+				var structure_dictionary: Dictionary = parent_structure_collection[structure_document.doc_name]
+				if structure_dictionary.has(child_structure_collection_name):
+					structure_document.document[child_structure_collection_name] = structure_dictionary[child_structure_collection_name]
 
 	if structure_type == Structures.Base_Map and len(parent_document.document.keys()) != 0:
 		Globals.offline_data = parent_document.document
