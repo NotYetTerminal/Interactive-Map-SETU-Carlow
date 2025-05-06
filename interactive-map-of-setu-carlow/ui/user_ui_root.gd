@@ -43,6 +43,8 @@ func _on_to_search_bar_line_edit_text_changed(new_text: String) -> void:
 			clear_navigation()
 			previous_from_structure.set_mesh_colour()
 			previous_to_structure.set_mesh_colour()
+			previous_from_structure = null
+			previous_to_structure = null
 	else:
 		show_search_panel()
 
@@ -55,6 +57,8 @@ func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
 			clear_navigation()
 			previous_from_structure.set_mesh_colour()
 			previous_to_structure.set_mesh_colour()
+			previous_from_structure = null
+			previous_to_structure = null
 	else:
 		show_search_panel()
 
@@ -70,10 +74,14 @@ func hide_search_panel() -> void:
 	search_panel.visible = false
 
 
-func _on_navigation_button_button_down() -> void:
+func _on_navigation_button_button_down(stairs_changed: bool = false) -> void:
 	if from_structure != null and to_structure != null and (
-		previous_from_structure != from_structure or previous_to_structure != to_structure
+		previous_from_structure != from_structure or previous_to_structure != to_structure or stairs_changed
 	):
+		if previous_from_structure != null:
+			previous_from_structure.set_mesh_colour()
+		if previous_to_structure != null:
+			previous_to_structure.set_mesh_colour()
 		from_structure.set_mesh_colour(Color.LAWN_GREEN)
 		to_structure.set_mesh_colour(Color.RED)
 		currently_navigating = true
@@ -106,7 +114,7 @@ func select_structure(selected_structure: Structure) -> void:
 		_show_building_information.emit(building_structure.structure_name, building_structure.building_letter, building_structure.description)
 
 
-func _on_from_button_button_down() -> void:
+func _on_from_button_button_down(call_other: bool = true) -> void:
 	if current_selected_structure != null:
 		var temp: Structure
 		if currently_navigating:
@@ -118,12 +126,12 @@ func _on_from_button_button_down() -> void:
 		information_popup_elements_control.visible = false
 		_set_from_structure.emit(from_structure)
 
-		if temp != null:
+		if temp != null and call_other:
 			current_selected_structure = temp
-			_on_to_button_button_down()
+			_on_to_button_button_down(false)
 
 
-func _on_to_button_button_down() -> void:
+func _on_to_button_button_down(call_other: bool = true) -> void:
 	if current_selected_structure != null:
 		var temp: Structure
 		if currently_navigating:
@@ -135,9 +143,9 @@ func _on_to_button_button_down() -> void:
 		information_popup_elements_control.visible = false
 		_set_to_structure.emit(to_structure)
 
-		if temp != null:
+		if temp != null and call_other:
 			current_selected_structure = temp
-			_on_from_button_button_down()
+			_on_from_button_button_down(false)
 
 
 func _on_admin_check_button_edit_mode_toggled() -> void:
@@ -205,9 +213,7 @@ func save_pathfinding_structures() -> void:
 
 
 func _on_stairs_check_button_pressed() -> void:
-	if currently_navigating and from_structure != null and to_structure != null:
-		save_pathfinding_structures()
-		start_navigation.emit(from_structure, to_structure, stairs_check_button.button_pressed)
+	_on_navigation_button_button_down(true)
 
 
 func _on_search_panel_snap_to_structure(structure: Structure) -> void:

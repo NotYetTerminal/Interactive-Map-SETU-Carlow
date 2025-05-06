@@ -21,6 +21,12 @@ const EARTH_RADIUS: float = 6378137
 
 var current_floor: int = 1
 
+# Disable print statements on export
+func _ready() -> void:
+	var os_name: String = OS.get_name()
+	if os_name == "Android" or os_name == "Web":
+		Engine.print_to_stdout = false
+
 # Load offline data
 func load_offline_data() -> void:
 	var file: FileAccess = FileAccess.open("user://offline_data", FileAccess.READ)
