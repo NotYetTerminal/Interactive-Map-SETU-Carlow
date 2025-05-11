@@ -17,6 +17,9 @@ var building_texture_node: Node3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
+var base_scale: Vector3 = Vector3(0.5, 0.5, 0.5)
+var large_scale: Vector3 = Vector3(1, 1, 1)
+
 # Save details from map_data
 func save_details(id_in: String, details: Dictionary) -> Array[String]:
 	id = id_in
@@ -185,3 +188,9 @@ func set_mesh_colour(new_colour: Color = Color("6b33cc")) -> void:
 	material.emission_enabled = true
 	material.emission = new_colour
 	mesh_instance_3d.set_surface_override_material(0, material)
+	if new_colour == Color("6b33cc"):
+		mesh_instance_3d.scale = base_scale
+		collision_shape_3d.scale = base_scale
+	else:
+		mesh_instance_3d.scale = large_scale
+		collision_shape_3d.scale = large_scale

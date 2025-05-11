@@ -37,30 +37,37 @@ func _ready() -> void:
 
 func _on_to_search_bar_line_edit_text_changed(new_text: String) -> void:
 	if new_text == "":
+		if to_structure != null:
+			to_structure.set_mesh_colour()
 		to_structure = null
 		hide_search_panel()
 		if from_structure == null:
 			clear_navigation()
-			previous_from_structure.set_mesh_colour()
-			previous_to_structure.set_mesh_colour()
-			previous_from_structure = null
-			previous_to_structure = null
+			unset_previous()
 	else:
 		show_search_panel()
 
 
 func _on_from_search_bar_line_edit_text_changed(new_text: String) -> void:
 	if new_text == "":
+		if from_structure != null:
+			from_structure.set_mesh_colour()
 		from_structure = null
 		hide_search_panel()
 		if to_structure == null:
 			clear_navigation()
-			previous_from_structure.set_mesh_colour()
-			previous_to_structure.set_mesh_colour()
-			previous_from_structure = null
-			previous_to_structure = null
+			unset_previous()
 	else:
 		show_search_panel()
+
+
+func unset_previous() -> void:
+	if previous_from_structure != null:
+		previous_from_structure.set_mesh_colour()
+	if previous_to_structure != null:
+		previous_to_structure.set_mesh_colour()
+	previous_from_structure = null
+	previous_to_structure = null
 
 
 func show_search_panel() -> void:
@@ -122,7 +129,10 @@ func _on_from_button_button_down(call_other: bool = true) -> void:
 				temp = to_structure
 			_on_navigation_button_button_down()
 
+		if from_structure != null:
+			from_structure.set_mesh_colour()
 		from_structure = current_selected_structure
+		from_structure.set_mesh_colour(Color.LAWN_GREEN)
 		information_popup_elements_control.visible = false
 		_set_from_structure.emit(from_structure)
 
@@ -139,7 +149,10 @@ func _on_to_button_button_down(call_other: bool = true) -> void:
 				temp = from_structure
 			_on_navigation_button_button_down()
 
+		if to_structure != null:
+			to_structure.set_mesh_colour()
 		to_structure = current_selected_structure
+		to_structure.set_mesh_colour(Color.RED)
 		information_popup_elements_control.visible = false
 		_set_to_structure.emit(to_structure)
 
@@ -161,12 +174,18 @@ func pathfinding_distance(distance: float) -> void:
 
 
 func _on_search_panel_set_from_search_structure(structure: Structure) -> void:
+	if from_structure != null:
+		from_structure.set_mesh_colour()
 	from_structure = structure
+	from_structure.set_mesh_colour(Color.LAWN_GREEN)
 	update_search()
 
 
 func _on_search_panel_set_to_search_structure(structure: Structure) -> void:
+	if to_structure != null:
+		to_structure.set_mesh_colour()
 	to_structure = structure
+	to_structure.set_mesh_colour(Color.RED)
 	update_search()
 
 
@@ -195,6 +214,8 @@ func load_pathfinding_structures() -> void:
 			if to_structure == null:
 				to_structure = room_manager.get_room(structure_id)
 
+			from_structure.set_mesh_colour(Color.LAWN_GREEN)
+			to_structure.set_mesh_colour(Color.RED)
 			stairs_check_button.button_pressed = pathfinding_structures["stairs"]
 
 			update_search()
