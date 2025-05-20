@@ -6,5 +6,4 @@ This repository contains the source code and the documentation for the project. 
  - [Interactive web application.](https://notyetterminal.github.io/map_application/Interactive%20Map%20of%20SETU%20Carlow.html)
  - [Repository for website.](https://github.com/NotYetTerminal/notyetterminal.github.io)
 
-_Project Poster_  
-![Project Poster](Project Documents/Interactive Map of SETU Carlow.png)
+![Project Poster](https://github.com/NotYetTerminal/Interactive-Map-SETU-Carlow/blob/main/Project%20Documents/Interactive%20Map%20of%20SETU%20Carlow.png)
